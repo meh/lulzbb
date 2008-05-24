@@ -1,0 +1,62 @@
+<?php
+/**
+* @package lulzBB-PHP5
+* @category Cache
+
+* @license http://opensource.org/licenses/gpl-3.0.html
+*/
+
+require_once(SOURCE_PATH.'/cache/cache.class.php');
+require_once(SOURCE_PATH.'/database/database.class.php');
+require_once(SOURCE_PATH.'/template/forum/section.template.php');
+
+/**
+* Topic cache class.
+
+* @author cHoBi
+*/
+class TopicCache extends Cache {
+    private $parent;
+    private $topic_id;
+
+    /**
+    * Create the file for the cache.
+
+    * @param    int    $parent      The topic's parent.
+    * @param    int    $topic_id    The topic id.
+    */
+    public function __construct($parent, $topic_id) {
+        $file = "topics/{$topic_id}.html";
+
+        $this->parent   = $parent;
+        $this->topic_id = $topic_id;
+
+        parent::__construct($file);
+    }
+
+    /**
+    * Update the views count of the parent section of the topic.
+    */
+    public function updateViews() {
+        global $database;
+        $database->topic->increaseViewsCount($this->topic_id);
+
+        $file = ROOT_PATH."/output/cache/sections/{$this->parent}.html";
+        $text = @file_get_contents($file);
+
+        preg_match(
+            "|(\d+)<span title='{$this->topic_id}' style='display: none;'/>|ims",
+            $text,
+            $views
+        );
+        $views = $views[1] + 1;
+        $text = preg_replace(
+            "|\d+<span title='{$this->topic_id}' style='display: none;'/>|ims",
+            "{$views}<span title='{$this->topic_id}' style='display: none;'/>",
+            $text
+        );
+
+        @file_put_contents($file, $text);
+    }
+}
+?>

@@ -1,0 +1,74 @@
+1.0.0
+    n> Write groups etc.
+    n> Logging system.
+    n> Fix the database
+    n> Write a configuration panel.
+    n> Fix the bug with the navigator if you go to the last post in the
+       section description.
+    n> ?????
+    n> PROFIT
+
+0.2.3:
+    n> Simple configuration page to add/edit sections.
+    n> Add a pager or something.
+    n> Javascript check for emptyness in topics/post :>
+
+0.2.2:
+
+    y> User groups.
+    y> Caching system.
+    y> Output class.
+    y> Fix the show of the forum by GET. <- FINISH THIS, OutputHome
+       You pass the page to that and it takes care of the content
+       Change the Home:Show to insert in <%CONTENT%> the real content
+       so it takes the real content and not the page, it's OutputHome's job
+       to get the right content etc, because of multiple shit.
+    
+    y> The navigator has to be fixed with no mercy, remove all the $_POST/$_GET['title']
+       and leave there only the level, then just think about some recursive methods to use
+       for massive lulz and queries, also remember the caching system, this will save your
+       ass from death by queries, so remember, OutputNavigator->WIN();
+
+       Already changed some default shit so the things are going easier, the only thing
+       being passed is the frigging id, so i have to separate the thingy from it and get
+       ALL the data of that id (title etc) and with the navigator in a separated way get
+       all the parents etc in a way to get the real path etc, _REMEMBER_ to cache it because
+       it would become fucking huge with the recursive method, k? k
+
+    y> Fix the overall system as said above, the only thing passed is the fucking id and 
+       in the case of the topic the possibile post that a fag wants to read, nothing less
+       nothing more.
+
+    y> Added some ajax default functions and used them, also spent days with a shitty bug
+       i hate you javascript ;_;
+
+    y> Fix the date update, the TIMESTAMP() should work but it's fagging up the place.
+
+0.2.1:
+    y> Setup script that creates the main section.
+    y> Database changes.
+    y> Exception system.
+    y> FAGGOTREE
+    y> Some fixes for empty title/content in topics/posts.
+    y> Min chars in title/content.
+
+0.1.5:
+    y> Simple loging system.
+    y> Posts count in topics.
+    y> Views count in topics.
+    
+0.1.4:
+    y> Add autolog-in after registration
+    y> Show the user's signature.
+    y> Show section info and last post info
+    
+0.1.3:
+    y> Get last post's infos within the getSectionTopics query.
+    y> Make the posts output better.
+    y> Fix No topic thingy.
+    y> Fix the current section div in the topics view, it sucks.
+
+0.1.0:
+    y> Rewrite all the code with better style and design.
+    y> Finish visualization and posting.
+
