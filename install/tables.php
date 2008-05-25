@@ -5,39 +5,45 @@
 * License  http://opensource.org/licenses/gpl-3.0.html
 **/
 
-$config = file('../config/configuration.php');
-foreach ($config as $value) {
-    if (preg_match('/^db(Username|Password|Host|Name|Prefix)/', $value)) {
-        $config = split('=', chop($value));
-
-        switch ($config[0]) {
-            case 'dbUsername':
-            $dbUsername = $config[1];
-            break;
-
-            case 'dbPassword':
-            $dbPassword = $config[1];
-            break;
-
-            case 'dbHost':
-            $dbHost = $config[1];
-            break;
-
-            case 'dbName':
-            $dbName = $config[1];
-            break;
-
-            case 'dbPrefix':
-            $dbPrefix = $config[1];
-            break;
-        }
-    }
+if (((int) phpversion()) == 4) {
+    die("PHP 4 isn't supported yet");
+}
+if (((int) phpversion()) == 5) {
+    $SOURCE_PATH = '../sources/php5';
+}
+if (((int) phpversion()) == 6) {
+    die('LOLNO');
 }
 
-mysql_connect($dbHost, $dbUsername, $dbPassword);
-mysql_select_db($dbName);
+define('SOURCE_PATH', realpath($SOURCE_PATH));
+define('MISC_PATH', realpath('../sources/misc'));
 
-mysql_query('CREATE TABLE '.$dbPrefix.'_sections(
+require_once(MISC_PATH.'/filesystem.php');
+
+// Get the session name.
+$file    = file('../.session.lol');
+$session = $file[0];
+define('SESSION', $session);
+
+require_once(SOURCE_PATH.'/config.class.php');
+require_once(SOURCE_PATH.'/filter.class.php');
+require_once(SOURCE_PATH.'/user.class.php');
+require_once(SOURCE_PATH.'/database/database.class.php');
+session_start();
+define('ROOT_PATH', $_SESSION[SESSION]['ROOT_PATH']);
+
+$Config   = $_SESSION[SESSION]['config'];
+$Filter   = $_SESSION[SESSION]['filter'];
+$Database = new Database();
+$User     = @$_SESSION[SESSION]['user'];
+
+if ($Database->exists()) {
+    die('The installation has already been done.');
+}
+
+$dbPrefix = $Config->get('dbPrefix');
+
+$Database->sendQuery('CREATE TABLE '.$dbPrefix.'_sections(
 id INT UNSIGNED NOT NULL auto_increment,
 parent INT UNSIGNED ,
 type SMALLINT,
@@ -57,7 +63,7 @@ last_user_name TINYTEXT,
 
 primary key(id))');
 
-mysql_query('CREATE TABLE '.$dbPrefix.'_topics(
+$Database->sendQuery('CREATE TABLE '.$dbPrefix.'_topics(
 id INT UNSIGNED NOT NULL auto_increment,
 type smallINT UNSIGNED NOT NULL,
 parent INT UNSIGNED NOT NULL,
@@ -75,11 +81,11 @@ last_user_name TINYTEXT NOT NULL,
 
 primary key(id))');
 
-mysql_query('CREATE TABLE '.$dbPrefix.'_topics_read(
+$Database->sendQuery('CREATE TABLE '.$dbPrefix.'_topics_read(
 topic INT UNSIGNED NOT NULL,
 user INT UNSIGNED NOT NULL)');
 
-mysql_query('CREATE TABLE '.$dbPrefix.'_posts(
+$Database->sendQuery('CREATE TABLE '.$dbPrefix.'_posts(
 topic_id INT UNSIGNED NOT NULL,
 post_id INT UNSIGNED NOT NULL,
 user_id INT UNSIGNED NOT NULL,
@@ -87,7 +93,7 @@ time DATETIME,
 title TINYTEXT NOT NULL,
 content longTEXT NOT NULL)');
 
-mysql_query('CREATE TABLE '.$dbPrefix.'_users(
+$Database->sendQuery('CREATE TABLE '.$dbPrefix.'_users(
 id INT UNSIGNED NOT NULL auto_increment,
 session TINYTEXT,
 name TINYTEXT NOT NULL,
@@ -116,26 +122,30 @@ registration_date DATETIME,
 
 primary KEY(id))');
 
-mysql_query('CREATE TABLE '.$dbPrefix.'_groups(
+$Database->sendQuery('CREATE TABLE '.$dbPrefix.'_groups(
 name VARCHAR(150) NOT NULL,
 username VARCHAR(150) DEFAULT NULL,
 description TEXT DEFAULT NULL,
 
 UNIQUE KEY(name, username))');
 
-mysql_query('INSERT INTO '.$dbPrefix.'_groups
+$Database->sendQuery('INSERT INTO '.$dbPrefix.'_groups
        (name, description)
 VALUES ("Unconfirmed", "LOLOL, THEY HAVE TO CONFIRM, FOR SRS")');
 
-mysql_query('INSERT INTO '.$dbPrefix.'_sections
+$Database->sendQuery('INSERT INTO '.$dbPrefix.'_groups
+       (name, description)
+VALUES ("Administrator", "MODS = FAGS")');
+
+$Database->sendQuery('INSERT INTO '.$dbPrefix.'_sections
        (parent, type, weight, title, subtitle)
 VALUES (0, 1, 1, "Sections", NULL)');
 
-mysql_query('INSERT INTO '.$dbPrefix.'_sections
+$Database->sendQuery('INSERT INTO '.$dbPrefix.'_sections
        (parent, type, weight, title, subtitle) 
 VALUES (0, 0, 2, "Main section", "Main section subtitle")');
 
-mysql_query('INSERT INTO '.$dbPrefix.'_sections
+$Database->sendQuery('INSERT INTO '.$dbPrefix.'_sections
        (parent, type, weight, title, subtitle)
 VALUES (0, 2, 3, NULL, NULL)');
 

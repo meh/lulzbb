@@ -18,11 +18,11 @@ class RegistrationDatabase extends DatabaseBase {
     /**
     * Girls are evil, remember 
     
-    * @param    object    $database   The Database object, recursive object is recursive.
+    * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($database) {
+    public function __construct($Database) {
         $query = new RegistrationQuery();
-        parent::__construct($database, $query);
+        parent::__construct($Database, $query);
     }
     
     /**
@@ -33,8 +33,8 @@ class RegistrationDatabase extends DatabaseBase {
     * @param    string    $email       The email address.
     */
     public function exec($username, $password, $email) {
-        $this->database->sendQuery($this->Query->exec($username, $password, $email));
-        $this->database->group->addUser($username, 'Unconfirmed');
+        $this->Database->sendQuery($this->Query->exec($username, $password, $email));
+        $this->Database->group->addUser($username, 'Unconfirmed');
     } 
 }
 ?>

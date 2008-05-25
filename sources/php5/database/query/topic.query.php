@@ -65,16 +65,16 @@ QUERY;
     }
 
     public function add($user_id, $user_name, $topic_type, $parent, $title, $subtitle) {
-        global $filter;
+        global $Filter;
         $user_id    = (int) $user_id;
         $topic_type = (int) $topic_type;
         $parent     = (int) $parent;
-        $title      = $filter->SQL($title);
-        $subtitle   = '"'.$filter->SQL_HTMLclean($subtitle).'"';
+        $title      = $Filter->SQL($title);
+        $subtitle   = '"'.$Filter->SQL_HTMLclean($subtitle).'"';
 
         $last_post_id   = (int) 1;
         $last_user_id   = (int) $user_id;
-        $last_user_name = $filter->SQL($user_name);
+        $last_user_name = $Filter->SQL($user_name);
 
         if (preg_match('/^""$/', $subtitle)) {
             $subtitle = 'NULL';
@@ -128,7 +128,7 @@ QUERY;
     }
     
     public function getTopicTitle($topic_id) {
-        global $filter;
+        global $Filter;
         $topic_id = (int) $topic_id;
 
         return <<<QUERY
@@ -177,12 +177,12 @@ QUERY;
     }
     
     public function updateLastInfo($topic_id, $post_id, $post_time, $user_id, $user_name) {
-        global $filter;
+        global $Filter;
         $topic_id  = (int) $topic_id;
         $post_id   = (int) $post_id;
-        $post_time = $filter->SQL($post_time);
+        $post_time = $Filter->SQL($post_time);
         $user_id   = (int) $user_id;
-        $user_name = $filter->SQL($user_name);
+        $user_name = $Filter->SQL($user_name);
 
         return <<<QUERY
 

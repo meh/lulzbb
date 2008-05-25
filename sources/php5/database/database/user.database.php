@@ -14,8 +14,8 @@ require_once(SOURCE_PATH.'/database/query/user.query.php');
 /**
 * This class is dedicated to user stuff.
 
-* @property    reference    $login           The login database.
-* @property    reference    $registration    The registration database.
+* @property    object    $login           The login database.
+* @property    object    $registration    The registration database.
 
 * @author cHoBi
 */
@@ -27,17 +27,31 @@ class UserDatabase extends DatabaseBase {
     /**
     * In Lulz we trust.
     
-    * @param    object    $database   The Database object, recursive object is recursive.
+    * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($database) {
-        $query = new UserQuery();
-        parent::__construct($database, $query);
+    public function __construct($Database) {
+        $Query = new UserQuery();
+        parent::__construct($Database, $Query);
        
         // Initiate login and registration databases.
-        $this->login        = new LoginDatabase($database);
-        $this->registration = new RegistrationDatabase($database);
+        $this->login        = new LoginDatabase($Database);
+        $this->registration = new RegistrationDatabase($Database);
     }
     
+    /**
+    * Gets the username of an user.
+
+    * @param    int    $id    The user id.
+
+    * @return    array    The name filtered.
+    */
+    public function getName($id) {
+        $this->Database->sendQuery($this->Query->getName($id));
+        $user = $this->Database->fetchArray();
+
+        return $user['name'];
+    }
+
     /**
     * Checks if the username already exists in the db.
     
@@ -48,7 +62,7 @@ class UserDatabase extends DatabaseBase {
     */
     public function exists($username) {
         $username = trim($username);
-        $query    = $this->database->sendQuery($this->Query->exists($username));
+        $query    = $this->Database->sendQuery($this->Query->exists($username));
 
         if (mysql_fetch_row($query)) {
             return true;
@@ -67,7 +81,7 @@ class UserDatabase extends DatabaseBase {
     *                    FALSE: I'MA 'FIRING MAH LAZOR
     */
     public function emailExists($email) {
-        $query = $this->database->sendQuery($this->Query->emailExists($email));
+        $query = $this->Database->sendQuery($this->Query->emailExists($email));
 
         if (mysql_fetch_row($query)) {
             return true;
@@ -85,9 +99,13 @@ class UserDatabase extends DatabaseBase {
     * @return    array    Normal array with a group for each element.
     */
     public function getGroups($username) {
-        $query = $this->database->sendQuery($this->Query->getGroups($username));
+        $this->Database->sendQuery($this->Query->getGroups($username));
 
-        $groups = mysql_fetch_row($query);
+        $groups = array();
+        while ($group = $this->Database->fetchArray()) {
+            array_push($groups, $group['name']);
+        }
+
         return $groups;
     }
 }

@@ -23,7 +23,7 @@ class TopicFormTemplate extends Template {
     public function __construct($magic, $parent) {
         parent::__construct('forms/send-topic-form.tpl');
 
-        global $filter;
+        global $Filter;
         $this->data['magic']   = $magic;
         $this->data['parent']  = (int) $parent;
 

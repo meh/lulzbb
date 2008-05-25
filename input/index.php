@@ -6,6 +6,11 @@
 * @author cHoBi
 */
 
+if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
+    die("You can't set a php session id, sorry.");
+}
+session_set_cookie_params(60*60*24*365);
+
 $queries = 0;
 
 if (((int) phpversion()) == 4) {
@@ -30,13 +35,15 @@ define('SESSION', $session);
 
 require_once(SOURCE_PATH.'/config.class.php');
 require_once(SOURCE_PATH.'/filter.class.php');
+require_once(SOURCE_PATH.'/user.class.php');
 require_once(SOURCE_PATH.'/database/database.class.php');
 session_start();
 define('ROOT_PATH', $_SESSION[SESSION]['ROOT_PATH']);
 
-$config   = $_SESSION[SESSION]['config'];
-$filter   = $_SESSION[SESSION]['filter'];
-$database = new Database;
+$Config   = $_SESSION[SESSION]['config'];
+$Filter   = $_SESSION[SESSION]['filter'];
+$Database = new Database;
+$User     = @$_SESSION[SESSION]['user'];
 
 // User
 if (isset($_GET['login'])) {

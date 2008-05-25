@@ -11,7 +11,7 @@
 * @author cHoBi
 */
 class Config {
-    private $config = array();
+    private $Config = array();
     
     /**
     * Reads the configuration file and initializes the array with the values.
@@ -38,13 +38,13 @@ class Config {
     /**
     * Gets a config value.
 
-    * @param    string    $config    The value name.
+    * @param    string    $Config    The value name.
 
     * @return    mixed    The value.
     */
-    public function get($config) {
+    public function get($Config) {
         if (isset($this->config)) {
-            return $this->config[$config];
+            return $this->config[$Config];
         }
         else {
             return 'None';

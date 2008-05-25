@@ -38,8 +38,8 @@ class TopicCache extends Cache {
     * Update the views count of the parent section of the topic.
     */
     public function updateViews() {
-        global $database;
-        $database->topic->increaseViewsCount($this->topic_id);
+        global $Database;
+        $Database->topic->increaseViewsCount($this->topic_id);
 
         $file = ROOT_PATH."/output/cache/sections/{$this->parent}.html";
         $text = @file_get_contents($file);

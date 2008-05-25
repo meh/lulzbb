@@ -23,14 +23,14 @@ class SectionTemplate extends Template {
     */
     public function __construct($section_id, $sections, $topics) {
         parent::__construct('forum/section.tpl');
-        global $database;
+        global $Database;
         
         $this->data['section_id'] = $section_id;
         $this->data['sections']   = $sections;
         $this->data['topics']     = $topics;
         $this->data['template']   = array();
 
-        $this->data['title'] = $database->section->getTitle($section_id);
+        $this->data['title'] = $Database->section->getTitle($section_id);
 
         $this->__parse();
     }
@@ -94,7 +94,7 @@ class SectionTemplate extends Template {
         * WORKED :D Leave it here for GREAT JUSTICE
         */
 
-        global $filter;
+        global $Filter;
         
         // Sections
         if (preg_match_all(

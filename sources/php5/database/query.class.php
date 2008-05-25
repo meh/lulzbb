@@ -15,8 +15,8 @@ class Query {
     protected $dbPrefix;
 
     public function __construct() {
-        global $config;    
-        $this->dbPrefix = $config->get('dbPrefix');
+        global $Config;    
+        $this->dbPrefix = $Config->get('dbPrefix');
     }
 }
 ?>

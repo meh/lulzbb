@@ -17,7 +17,7 @@ require_once(SOURCE_PATH.'/database/database.class.php');
 * @author cHoBi
 */
 class Topic extends Output {
-    private $database;
+    private $Database;
 
     /**
     * Get the cache or the data from the db.
@@ -31,8 +31,8 @@ class Topic extends Output {
         }
     
         parent::__construct();
-        global $database;
-        $parent = $database->topic->getParent($topic_id);
+        global $Database;
+        $parent = $Database->topic->getParent($topic_id);
 
         $cache = new TopicCache($parent['id'], $topic_id);
         if (!$cache->isCached()) {
@@ -44,7 +44,7 @@ class Topic extends Output {
             $cache->updateViews();
         }
         else {
-            $database->topic->increaseViewsCount($topic_id);
+            $Database->topic->increaseViewsCount($topic_id);
         }
         
         $this->output = $this->__formPost($cache->get(), $topic_id);
@@ -55,8 +55,8 @@ class Topic extends Output {
     * @access private
     */
     private function __formPost($output, $topic_id) {
-        global $database;
-        $title = $database->topic->getTitle($topic_id);
+        global $Database;
+        $title = $Database->topic->getTitle($topic_id);
 
         if ($this->connected) {
             $form = new PostFormTemplate(

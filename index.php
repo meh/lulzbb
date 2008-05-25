@@ -9,6 +9,7 @@
 if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
     die("You can't set a php session id, sorry.");
 }
+session_set_cookie_params(60*60*24*365);
 
 /**
 * The root path for the forum.
@@ -57,6 +58,7 @@ else {
 
 require_once(SOURCE_PATH.'/config.class.php');
 require_once(SOURCE_PATH.'/filter.class.php');
+require_once(SOURCE_PATH.'/user.class.php');
 require_once(SOURCE_PATH.'/database/database.class.php');
 session_start();
 
@@ -66,25 +68,32 @@ $_SESSION[SESSION]['ROOT_PATH'] = ROOT_PATH;
 * This global var contains the Config object, so it's useful to get
 * and set configurations :D
 
-* @global    reference    $config
+* @global    object    $Config
 */
-$config = $_SESSION[SESSION]['config'] = new Config();
+$Config = $_SESSION[SESSION]['config'] = new Config();
 
 /**
 * This global var contains the Filter object, so you need it to filter
 * input and outputs :3
 
-* @global    reference    $filter
+* @global    object    $Filter
 */
-$filter = $_SESSION[SESSION]['filter'] = new Filter();
+$Filter = $_SESSION[SESSION]['filter'] = new Filter();
 
 /**
 * This global var cointains the Database object, and i think it's obvious
 * why you need it...
 
-* @global    reference    $database
+* @global    object    $Database
 */
-$database = new Database;
+$Database = new Database;
+
+/**
+* This global var contains the User object, obvious object is obviou.
+
+* @global    object    $User
+*/
+$User = @$_SESSION[SESSION]['user'];
 
 /**
 * This global var containst the count of sent queries for the page.

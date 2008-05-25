@@ -17,9 +17,9 @@ class GroupQuery extends Query {
     }
 
     public function add($group, $description) {
-        global $filter;
-        $group       = $filter->SQL($group);
-        $description = $filter->SQL($description);
+        global $Filter;
+        $group       = $Filter->SQL($group);
+        $description = $Filter->SQL($description);
 
         return <<<QUERY
 
@@ -38,9 +38,9 @@ QUERY;
     }
 
     public function addUser($username, $group) {
-        global $filter;
-        $username = $filter->SQL($username);
-        $group    = $filter->SQL($group);
+        global $Filter;
+        $username = $Filter->SQL($username);
+        $group    = $Filter->SQL($group);
 
         return <<<QUERY
 
@@ -59,8 +59,8 @@ QUERY;
     }
 
     public function remove($group) {
-        global $filter;
-        $group = $filter->SQL($group);
+        global $Filter;
+        $group = $Filter->SQL($group);
 
         return <<<QUERY
 
@@ -74,9 +74,9 @@ QUERY;
     }
 
     public function removeUser($username, $group) {
-        global $filter;
-        $username = $filter->SQL($username);
-        $group    = $filter->SQL($group);
+        global $Filter;
+        $username = $Filter->SQL($username);
+        $group    = $Filter->SQL($group);
 
         return <<<QUERY
 
@@ -92,9 +92,9 @@ QUERY;
     }
 
     public function checkUser($username, $group) {
-        global $filter;
-        $username = $filter->SQL($username);
-        $group    = $filter->SQL($group);
+        global $Filter;
+        $username = $Filter->SQL($username);
+        $group    = $Filter->SQL($group);
     }
 }
 ?>

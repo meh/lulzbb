@@ -13,7 +13,6 @@ require_once(SOURCE_PATH.'/show/forum/navigator.show.php');
 /**
 * Navigator class.
 
-* @todo Caching the navigator etc.
 * @author cHoBi
 */
 class Navigator extends Output {

@@ -77,7 +77,7 @@ class Registration extends Send {
     * @access private
     */
     private function __checkUsername($username) {
-        global $database;
+        global $Database;
         $username = trim($username);
         
         if (empty($username)) {
@@ -92,7 +92,7 @@ class Registration extends Send {
             $output = 'The username is too long.';
         }
     
-        else if ($database->user->exists($username)) {
+        else if ($Database->user->exists($username)) {
             $output = 'The username already exists.';
         }
     
@@ -112,7 +112,7 @@ class Registration extends Send {
     * @access private
     */
     private function __checkEmail($data) {
-        global $database;
+        global $Database;
 
         if (isset($data['email'])) {
             $email1 = $email2 = $data['email'];
@@ -135,7 +135,7 @@ class Registration extends Send {
             $output = "The email address isn't valid.";
         }
 
-        else if ($database->user->emailExists($email1)) {
+        else if ($Database->user->emailExists($email1)) {
             $output = 'The email address is already in use.';
         }
         else {
@@ -228,7 +228,7 @@ class Registration extends Send {
     * @access private
     */
     private function __register($data) {
-        global $database;
+        global $Database;
         $username = trim($data['username']);
         $email    = trim($data['email']);
         $password = trim($data['password']);
@@ -237,7 +237,7 @@ class Registration extends Send {
              && $this->__checkEmail(array('email' => $email) == 'Ok.')
              && $this->__checkPassword(array('password' => $password)) == 'Ok.'
            ) {
-            $database->user->registration->exec($username, $password, $email);
+            $Database->user->registration->exec($username, $password, $email);
             $message = new InformativeMessage(
                 'registration_successful',
                  array(

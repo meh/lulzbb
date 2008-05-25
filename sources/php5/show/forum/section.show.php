@@ -16,7 +16,7 @@ require_once(SOURCE_PATH.'/database/database.class.php');
 * @author cHoBi
 */
 class SectionShow extends Show {
-    private $database;
+    private $Database;
 
     /**
     * Initialize the showing class.
@@ -35,12 +35,12 @@ class SectionShow extends Show {
     * @access private
     */
     protected function __update() {
-        global $database;
+        global $Database;
 
         try {
-            if ($database->section->exists($this->id)) {
-                $sections = $database->section->getSections($this->id);
-                $topics   = $database->section->getTopics($this->id);
+            if ($Database->section->exists($this->id)) {
+                $sections = $Database->section->getSections($this->id);
+                $topics   = $Database->section->getTopics($this->id);
             }
             else {
                 die("The section doesn't exist.");

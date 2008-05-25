@@ -25,11 +25,11 @@ class TopicTemplate extends Template {
     */
     public function __construct($magic, $topic_id, $post_id, $posts) {
         parent::__construct('forum/topic.tpl');
-        global $database;
+        global $Database;
     
         $this->data['posts']     = $posts;
         $this->data['magic']     = $magic;
-        $this->data['title']     = $database->topic->getTitle($topic_id);
+        $this->data['title']     = $Database->topic->getTitle($topic_id);
         $this->data['topic_id']  = (int) $topic_id;
         $this->data['post_id']   = isset($post_id) ? $post_id : '';
 

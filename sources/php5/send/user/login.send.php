@@ -74,22 +74,12 @@ class Login extends Send {
     * @access private
     */
     private function __login($username, $password) {
-        global $database;
-        $username = trim($username);
-        $password = trim($password);
+        global $Database;
+        global $User;
     
-        $user = $database->user->login->check($username, $password);
-
+        $user = $Database->user->login->check($username, $password);
         if ($user) {
-            $database->user->login->exec($username);
-            $groups = $database->user->getGroups($username);
-                
-            $_SESSION[SESSION]['user'] = array(
-               'id'     => $user['id']['RAW'],
-               'name'   => $user['name'],
-               'groups' => $groups
-            );
-
+            $User = $_SESSION[SESSION]['user'] = new User($user);
             return true;
         }
         else {

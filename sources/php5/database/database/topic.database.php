@@ -18,11 +18,11 @@ class TopicDatabase extends DatabaseBase {
     /**
     * In the beginning there was a mother, a father and a child. (BAWWWW, I'm bored)
     
-    * @param    object    $database   The Database object, recursive object is recursive.
+    * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($database) {
+    public function __construct($Database) {
         $query = new TopicQuery();
-        parent::__construct($database, $query);
+        parent::__construct($Database, $query);
     }
     
     /**
@@ -33,9 +33,9 @@ class TopicDatabase extends DatabaseBase {
     * @return    bool    True if it exists, false if not.
     */
     public function exists($topic_id) {
-        $this->database->sendQuery($this->Query->exists($topic_id));
+        $this->Database->sendQuery($this->Query->exists($topic_id));
 
-        if ($this->database->fetchArray()) {
+        if ($this->Database->fetchArray()) {
             return true;
         }
         else {
@@ -55,23 +55,25 @@ class TopicDatabase extends DatabaseBase {
     * @return    int    The id of the added topic.
     */
     public function add($parent, $topic_type, $title, $subtitle, $content) {
-        if (!$this->database->section->exists($parent)) {
+        global $User;
+
+        if (!$this->Database->section->exists($parent)) {
             throw new lulzException('section_not_existent');
         }
 
-        $this->database->sendQuery($this->Query->add(
-            $_SESSION[SESSION]['user']['id'],
-            $_SESSION[SESSION]['user']['name']['RAW'],
+        $this->Database->sendQuery($this->Query->add(
+            $User->getId(),
+            $User->getName('RAW'),
             $topic_type,
             $parent,
             $title,
             $subtitle
         ));
         
-        $topic_id = $this->database->misc->getLastTopic();
-        $this->database->post->add($topic_id, $title, $content);
+        $topic_id = $this->Database->misc->getLastTopic();
+        $this->Database->post->add($topic_id, $title, $content);
         
-        $this->database->section->increaseTopicsCount($parent);
+        $this->Database->section->increaseTopicsCount($parent);
 
         return $topic_id;
     }
@@ -97,10 +99,10 @@ class TopicDatabase extends DatabaseBase {
     * @return    array    A post in each element.
     */
     public function getPosts($topic_id) {
-        $query = $this->database->sendQuery($this->Query->getPosts($topic_id));
+        $query = $this->Database->sendQuery($this->Query->getPosts($topic_id));
 
         $posts = array();
-        while ($post = $this->database->fetchArray()) {
+        while ($post = $this->Database->fetchArray()) {
             array_push($posts, $post);
         }
 
@@ -115,8 +117,8 @@ class TopicDatabase extends DatabaseBase {
     * @return    int    The parent id.
     */
     public function getParent($topic_id) {
-        $this->database->sendQuery($this->Query->getParent($topic_id));
-        $parent = $this->database->fetchArray();
+        $this->Database->sendQuery($this->Query->getParent($topic_id));
+        $parent = $this->Database->fetchArray();
 
         return array(
             'id'   => $parent['parent']['RAW'],
@@ -132,8 +134,8 @@ class TopicDatabase extends DatabaseBase {
     * @return    array    A parent in each element.
     */
     public function getNavigator($topic_id, $option) {
-        global $config;
-        global $filter;
+        global $Config;
+        global $Filter;
 
         $parents = array();
         array_push($parents, $this->getInfo($topic_id));
@@ -141,7 +143,7 @@ class TopicDatabase extends DatabaseBase {
 
         $parent = $parents[1];
         while (true) {
-            $parent = $this->database->section->getParentInfo($parent['id']);
+            $parent = $this->Database->section->getParentInfo($parent['id']);
             array_push($parents, $parent);
 
             if ($parent['id'] == 0) {
@@ -160,8 +162,8 @@ class TopicDatabase extends DatabaseBase {
     * @return    string    The title of the topic. (RAW, HTML, POST)
     */
     public function getTitle($topic_id) {
-        $this->database->sendQuery($this->Query->getTopicTitle($topic_id));
-        $result = $this->database->fetchArray();
+        $this->Database->sendQuery($this->Query->getTopicTitle($topic_id));
+        $result = $this->Database->fetchArray();
 
         if (!$result) {
             throw new lulzException('topic_not_existent');
@@ -178,8 +180,8 @@ class TopicDatabase extends DatabaseBase {
     * @return    array    (post_id, post_time, user_id, user_name)
     */
     public function getLastPost($topic_id) {
-        $this->database->sendQuery($this->Query->getLastPost($topic_id));
-        $last = $this->database->fetchArray();
+        $this->Database->sendQuery($this->Query->getLastPost($topic_id));
+        $last = $this->Database->fetchArray();
 
         return array(
             'post_id'   => $last['post_id']['RAW'],
@@ -210,7 +212,7 @@ class TopicDatabase extends DatabaseBase {
     public function updateLastInfo($topic_id) {
         $last = $this->getLastPost($topic_id);
 
-        $this->database->sendQuery($this->Query->updateLastInfo(
+        $this->Database->sendQuery($this->Query->updateLastInfo(
              $topic_id,
              $last['post_id'],
              $last['post_time'],
@@ -226,7 +228,7 @@ class TopicDatabase extends DatabaseBase {
     */
     public function increasePostsCount($topic_id) {
         $query = $this->Query->increasePostsCount($topic_id);
-        $this->database->sendQuery($query);
+        $this->Database->sendQuery($query);
     }
 
     /**
@@ -236,7 +238,7 @@ class TopicDatabase extends DatabaseBase {
     */
     public function increaseViewsCount($topic_id) {
         $query = $this->Query->increaseViewsCount($topic_id);
-        $this->database->sendQuery($query);
+        $this->Database->sendQuery($query);
     }
 }
 ?>

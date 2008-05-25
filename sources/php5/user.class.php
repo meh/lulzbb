@@ -15,6 +15,7 @@ class User {
     private $id;
     private $name;
     private $groups;
+    private $session;
 
     /**
     * Initialize important data, like the name and the groups.
@@ -25,9 +26,10 @@ class User {
         global $Database;
         $Database->user->login->updateSession($id);
 
-        $this->id     = $id;
-        $this->name   = $Database->user->getName($id);
-        $this->groups = $Database->user->getGroups($this->name('RAW'));
+        $this->id      = $id;
+        $this->name    = $Database->user->getName($id);
+        $this->groups  = $Database->user->getGroups($this->getName('RAW'));
+        $this->session = session_id();
     }
 
     /**
@@ -35,7 +37,7 @@ class User {
 
     * @return    int    The user id.
     */
-    public function id() {
+    public function getId() {
         return $this->id;
     }
 
@@ -46,7 +48,7 @@ class User {
 
     * @return    mixed    The user name.
     */
-    public function name($type = '') {
+    public function getName($type) {
         switch ($type) {
             case 'RAW':
             return $this->name['RAW'];
@@ -60,20 +62,28 @@ class User {
             return $this->name['POST'];
             break;
 
-            default:
+            case 'ALL':
             return $this->name;
             break;
         }
     }
 
-    public function isInGroup($groupName) {
+    public function isIn($groupName) {
         foreach ($this->groups as $group) {
-            if ($group == $groupName) {
+            if ($group['RAW'] == $groupName) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    public function removeFrom($groupName) {
+        foreach ($this->groups as $n => $group) {
+            if ($group['RAW'] == $groupName) {
+                unset($this->groups[$n]);
+            }
+        }
     }
 }
 ?>

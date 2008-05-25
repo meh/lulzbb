@@ -2,7 +2,7 @@
 /**
 * @package lulzBB
 * @license http://opensource.org/licenses/gpl-3.0.html
-*
+
 * @author cHoBi
 */
 
@@ -92,6 +92,11 @@ if (isset($_GET['home'])) {
 }
 
 else {
+    if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
+        die("You can't set a php session id, sorry.");
+    }
+    session_set_cookie_params(60*60*24*365);
+
     define('ROOT_PATH', realpath('../'));
     define('MISC_PATH', ROOT_PATH.'/sources/misc');
 
@@ -115,6 +120,7 @@ else {
 
     require_once(SOURCE_PATH.'/config.class.php');
     require_once(SOURCE_PATH.'/filter.class.php');
+    require_once(SOURCE_PATH.'/user.class.php');
     require_once(SOURCE_PATH.'/database/database.class.php');
     session_start();
 
@@ -122,9 +128,10 @@ else {
         die('The session died or something went wrong, refresh to the index please');
     }
 
-    $config   = $_SESSION[SESSION]['config'];
-    $filter   = $_SESSION[SESSION]['filter'];
-    $database = new Database;
+    $Config   = $_SESSION[SESSION]['config'];
+    $Filter   = $_SESSION[SESSION]['filter'];
+    $Database = new Database;
+    $User     = @$_SESSION[SESSION]['user'];
 
     if (isset($_GET['page'])) {
         require_once(SOURCE_PATH.'/template/misc/page.template.php');

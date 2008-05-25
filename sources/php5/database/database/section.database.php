@@ -18,11 +18,18 @@ class SectionDatabase extends DatabaseBase {
     /**
     * Dolphins, they're never related.
     
-    * @param    object    $database   The Database object, recursive object is recursive.
+    * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($database) {
+    public function __construct($Database) {
         $query = new SectionQuery();
-        parent::__construct($database, $query);
+        parent::__construct($Database, $query);
+    }
+
+    /**
+    * 
+    */
+    public function add($parent, $type, $weight, $title, $subtitle) {
+
     }
 
     /**
@@ -37,8 +44,8 @@ class SectionDatabase extends DatabaseBase {
             return true;
         }
 
-        $this->database->sendQuery($this->Query->exists($section_id));
-        $section = $this->database->fetchArray();
+        $this->Database->sendQuery($this->Query->exists($section_id));
+        $section = $this->Database->fetchArray();
 
         if (empty($section) || $section['type']['RAW'] != 0) {
             return false;
@@ -69,8 +76,8 @@ class SectionDatabase extends DatabaseBase {
     * @return    int    The parent id.
     */
     public function getParent($section_id) {
-        $this->database->sendQuery($this->Query->getParent($section_id));
-        $parent = $this->database->fetchArray();
+        $this->Database->sendQuery($this->Query->getParent($section_id));
+        $parent = $this->Database->fetchArray();
 
         return $parent['parent']['RAW'];
     }
@@ -125,8 +132,8 @@ class SectionDatabase extends DatabaseBase {
     * @return    array    A parent in each element.
     */
     public function getNavigator($section_id, $option) {
-        global $config;
-        global $filter;
+        global $Config;
+        global $Filter;
 
         $parents = array();
         
@@ -166,19 +173,19 @@ class SectionDatabase extends DatabaseBase {
     * @return    string    The section title. (RAW, HTML, POST)
     */
     public function getTitle($section_id) {
-        global $config;
-        global $filter;
+        global $Config;
+        global $Filter;
 
         if ($section_id == 0) {
-            $forumName = $config->get('forumName');
+            $forumName = $Config->get('forumName');
 
             $result['title']['RAW']  = $forumName;
-            $result['title']['HTML'] = $filter->HTML($forumName);
-            $result['title']['POST'] = $filter->POST($forumName);
+            $result['title']['HTML'] = $Filter->HTML($forumName);
+            $result['title']['POST'] = $Filter->POST($forumName);
         }
         else {
-            $this->database->sendQuery($this->Query->getTitle($section_id));
-            $result = $this->database->fetchArray();
+            $this->Database->sendQuery($this->Query->getTitle($section_id));
+            $result = $this->Database->fetchArray();
 
             if (!$result) {
                 throw new lulzException('section_not_existent');
@@ -196,13 +203,13 @@ class SectionDatabase extends DatabaseBase {
     * @return    array    A section in each element :D
     */
     public function getSections($section_id) {
-        global $filter;
-        $this->database->sendQuery($this->Query->getSections($section_id));
+        global $Filter;
+        $this->Database->sendQuery($this->Query->getSections($section_id));
 
         $sections = array();
-        while ($section = $this->database->fetchArray()) {
+        while ($section = $this->Database->fetchArray()) {
             foreach ($section as $key => $element) {
-                $section[$key]['HTML'] = $filter->spaces($section[$key]['HTML']);
+                $section[$key]['HTML'] = $Filter->spaces($section[$key]['HTML']);
             }
 
             array_push($sections, $section);
@@ -219,13 +226,13 @@ class SectionDatabase extends DatabaseBase {
     * @return    array    A topic in each element >:3
     */
     public function getTopics($section_id) {
-        global $filter;
-        $this->database->sendQuery($this->Query->getTopics($section_id));
+        global $Filter;
+        $this->Database->sendQuery($this->Query->getTopics($section_id));
 
         $topics = array();
-        while ($topic = $this->database->fetchArray()) {
+        while ($topic = $this->Database->fetchArray()) {
             foreach ($topic as $key => $element) {
-                $topic[$key]['HTML'] = $filter->spaces($topic[$key]['HTML']);
+                $topic[$key]['HTML'] = $Filter->spaces($topic[$key]['HTML']);
             }
 
             array_push($topics, $topic);
@@ -240,14 +247,14 @@ class SectionDatabase extends DatabaseBase {
     * @param    int    $section_id    The section id.
     */
     public function increaseTopicsCount($section_id) {
-        $this->database->sendQuery($this->Query->increaseTopicsCount($section_id));
+        $this->Database->sendQuery($this->Query->increaseTopicsCount($section_id));
 
         foreach ($this->getParents($section_id) as $section) {
             if ($section == 0) {
                 break;
             }
 
-            $this->database->sendQuery($this->Query->increaseTopicsCount($section));
+            $this->Database->sendQuery($this->Query->increaseTopicsCount($section));
         }
     }
 
@@ -257,14 +264,14 @@ class SectionDatabase extends DatabaseBase {
     * @param    int    $section_id    The section id.
     */
     public function increasePostsCount($section_id) {
-        $this->database->sendQuery($this->Query->increasePostsCount($section_id));
+        $this->Database->sendQuery($this->Query->increasePostsCount($section_id));
 
         foreach ($this->getParents($section_id) as $section) {
             if ($section == 0) {
                 break;
             }
 
-            $this->database->sendQuery($this->Query->increasePostsCount($section));
+            $this->Database->sendQuery($this->Query->increasePostsCount($section));
         }
     }
     
@@ -276,8 +283,8 @@ class SectionDatabase extends DatabaseBase {
     * @return    array    (topic_id, topic_title, user_id, user_name)
     */
     public function getLastTopic($section_id) {
-        $this->database->sendQuery($this->Query->getLastTopic($section_id));
-        $last = $this->database->fetchArray();
+        $this->Database->sendQuery($this->Query->getLastTopic($section_id));
+        $last = $this->Database->fetchArray();
 
         return array(
             'topic_id'    => $last['id']['RAW'],
@@ -296,7 +303,7 @@ class SectionDatabase extends DatabaseBase {
     */
     public function getLastPost($section_id) {
         $topic = $this->getLastTopic($section_id);
-        $post  = $this->database->topic->getLastPost($topic['topic_id']);
+        $post  = $this->Database->topic->getLastPost($topic['topic_id']);
 
         return $post;
     }
@@ -326,15 +333,11 @@ class SectionDatabase extends DatabaseBase {
     * Updates the last post informations of a section
     
     * @param    int    $section_id    The section id.
-    
-    * @todo    The parent sections don't get the last post updated
-    *          you still have to do a recursive update to get everything
-    *          right :3
     */
     public function updateLastInfo($section_id) {
         $last = $this->getLast($section_id);
 
-        $this->database->sendQuery($this->Query->updateLastInfo(
+        $this->Database->sendQuery($this->Query->updateLastInfo(
             $section_id,
             $last['topic_id'],
             $last['topic_title'],
@@ -349,7 +352,7 @@ class SectionDatabase extends DatabaseBase {
                 break;
             }
 
-            $this->database->sendQuery($this->Query->updateLastInfo(
+            $this->Database->sendQuery($this->Query->updateLastInfo(
                 $section,
                 $last['topic_id'],
                 $last['topic_title'],

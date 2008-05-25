@@ -52,15 +52,15 @@ class NavigatorShow extends Show {
     * @access private
     */
     private function __createNavigator($type, $id, $option) {
-        global $database;
+        global $Database;
 
         switch ($type) {
             case 'section':
-            $parents = $database->section->getNavigator($id, $option);
+            $parents = $Database->section->getNavigator($id, $option);
             break;
 
             case 'topic':
-            $parents = $database->topic->getNavigator($id, $option);
+            $parents = $Database->topic->getNavigator($id, $option);
             break;
         }
 

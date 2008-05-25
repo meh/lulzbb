@@ -49,7 +49,7 @@ class Topic extends Send {
     * @access private
     */
     protected function __send($data) {
-        global $database;
+        global $Database;
         $magic    = $data['magic'];
         $parent   = $data['parent'];
         $type     = $data['type'];
@@ -80,7 +80,7 @@ class Topic extends Send {
 
             default:
             try {
-                $topic_id = $database->topic->add($parent, $type, $title, $subtitle, $content);
+                $topic_id = $Database->topic->add($parent, $type, $title, $subtitle, $content);
                 $message = new InformativeMessage('topic_sent', array('topic_id' => $topic_id));
             }
             catch (lulzException $e) {
@@ -106,9 +106,9 @@ class Topic extends Send {
     * @access private
     */
     private function __checkData($parent, $title, $subtitle, $content) {
-        global $config;
-        $titleMinLength   = $config->get('titleMinLength');
-        $contentMinLength = $config->get('contentMinLength');
+        global $Config;
+        $titleMinLength   = $Config->get('titleMinLength');
+        $contentMinLength = $Config->get('contentMinLength');
 
         if (empty($parent)) {
             return 'parent';

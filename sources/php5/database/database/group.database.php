@@ -18,11 +18,11 @@ class GroupDatabase extends DatabaseBase {
     /**
     * Guess what?
     
-    * @param    object    $database   The Database object, recursive object is recursive.
+    * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($database) {
+    public function __construct($Database) {
         $query = new GroupQuery();
-        parent::__construct($database, $query);
+        parent::__construct($Database, $query);
     }
     
     /**
@@ -32,7 +32,7 @@ class GroupDatabase extends DatabaseBase {
     * @param    string    $description    The description of the group.
     */
     public function add($group, $description) {
-        $this->database->sendQuery($this->Query->add($group, $description));
+        $this->Database->sendQuery($this->Query->add($group, $description));
     }
 
     /**
@@ -42,7 +42,7 @@ class GroupDatabase extends DatabaseBase {
     * @param    string    $group       The group where to add the user.
     */
     public function addUser($username, $group) {
-        $this->database->sendQuery($this->Query->addUser($username, $group));
+        $this->Database->sendQuery($this->Query->addUser($username, $group));
     }
 
     /**
@@ -51,7 +51,7 @@ class GroupDatabase extends DatabaseBase {
     * @param    string    $group    The group name to remove.
     */
     public function remove($group) {
-        $this->database->sendQuery($this->Query->remove($group));
+        $this->Database->sendQuery($this->Query->remove($group));
     }
 
     /**
@@ -61,7 +61,7 @@ class GroupDatabase extends DatabaseBase {
     * @param    string    $group       The group name.
     */
     public function removeUser($username, $group) {
-        $this->database->sendQuery($this->Query->removeUser($username, $group));
+        $this->Database->sendQuery($this->Query->removeUser($username, $group));
     }
 }
 ?>

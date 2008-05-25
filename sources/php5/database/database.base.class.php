@@ -14,17 +14,17 @@ require_once(SOURCE_PATH.'/exception.class.php');
 * @author cHoBi
 */
 class DatabaseBase {
-    protected $database;
+    protected $Database;
     protected $Query;
 
     /**
     * Just to write less code and use OO programming :>
     *
-    * @param    object    $database    The Database object.
+    * @param    object    $Database    The Database object.
     * @param    object    $query       The Query object.
     */
-    public function __construct($database, $query) {
-        $this->database = $database;
+    public function __construct($Database, $query) {
+        $this->Database = $Database;
         $this->Query    = $query;
     }
 }

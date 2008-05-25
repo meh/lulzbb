@@ -16,7 +16,7 @@ require_once(SOURCE_PATH.'/database/database.class.php');
 * @author cHoBi
 */
 class TopicShow extends Show {
-    private $database;
+    private $Database;
 
     /**
     * Get the post and show them in the template.
@@ -27,7 +27,7 @@ class TopicShow extends Show {
     */
     public function __construct($parent, $topic_id, $post_id) {
         parent::__construct();
-        global $database;
+        global $Database;
 
         $this->data['parent']    = (int) $parent;
         $this->data['topic_id']  = (int) $topic_id;
@@ -41,11 +41,11 @@ class TopicShow extends Show {
     * @access private
     */
     protected function __update() {
-        global $database;
+        global $Database;
 
         try {
-            if ($database->topic->exists($this->data['topic_id'])) {
-                $posts = $database->topic->getPosts($this->data['topic_id']);
+            if ($Database->topic->exists($this->data['topic_id'])) {
+                $posts = $Database->topic->getPosts($this->data['topic_id']);
             }
             else {
                 die("The topic doesn't exist.");

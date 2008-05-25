@@ -45,7 +45,7 @@ class Post extends Send {
     * @access private
     */
     protected function __send($data) {
-        global $database;
+        global $Database;
 
         $topic_id = $data['topic_id'];
         $title    = trim($data['title']);
@@ -63,7 +63,7 @@ class Post extends Send {
 
             default:
             try {
-                $database->post->add($topic_id, $title, $content);
+                $Database->post->add($topic_id, $title, $content);
             }
             catch (lulzException $e) {
                 die($e->getMessage());
@@ -96,10 +96,10 @@ class Post extends Send {
     * @access private
     */
     private function __checkData($title, $content) {
-        global $config;
+        global $Config;
         
-        $titleMinLength   = $config->get('titleMinLength');
-        $contentMinLength = $config->get('contentMinLength');
+        $titleMinLength   = $Config->get('titleMinLength');
+        $contentMinLength = $Config->get('contentMinLength');
 
         $scontent = trim(str_replace("\n", '', $content));
 

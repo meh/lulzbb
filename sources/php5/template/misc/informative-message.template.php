@@ -39,14 +39,14 @@ class InformativeMessageTemplate extends Template {
     * @access private
     */
     private function __parse() {
-        global $filter;
+        global $Filter;
 
         $text = $this->output();
 
         switch ($this->type) {
             case 'registration_successful':
-            $username = @$filter->POST_SQLclean($this->data['username']);
-            $password = @$filter->POST_SQLclean($this->data['password']);
+            $username = @$Filter->POST_SQLclean($this->data['username']);
+            $password = @$Filter->POST_SQLclean($this->data['password']);
 
             $this->message = preg_replace(
                 '|<%REGISTRATION-USERNAME%>|i',

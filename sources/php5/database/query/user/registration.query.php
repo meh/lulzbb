@@ -17,10 +17,10 @@ class RegistrationQuery extends Query {
     }
 
     public function exec($username, $password, $email) {
-        global $filter;
-        $username = $filter->SQL($username);
-        $password = $filter->crypt($password);
-        $email    = $filter->SQL($email);
+        global $Filter;
+        $username = $Filter->SQL($username);
+        $password = $Filter->crypt($password);
+        $email    = $Filter->SQL($email);
 
         return <<<QUERY
         

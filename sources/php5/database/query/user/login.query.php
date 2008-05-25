@@ -17,15 +17,14 @@ class LoginQuery extends Query {
     }
 
     public function check($username, $password) {
-        global $filter;
-        $username = $filter->SQL(trim($username));
-        $password = $filter->crypt($password);
+        global $Filter;
+        $username = $Filter->SQL(trim($username));
+        $password = $Filter->crypt($password);
 
         return <<<QUERY
         
         SELECT
-            {$this->dbPrefix}_users.id,
-            {$this->dbPrefix}_users.name
+            {$this->dbPrefix}_users.id
        
         FROM
             {$this->dbPrefix}_users
@@ -38,10 +37,10 @@ class LoginQuery extends Query {
 QUERY;
     }
 
-    public function exec($username) {
-        global $filter;
-        $username = $filter->SQL(trim($username));
-        $session  = $filter->SQL(session_id());
+    public function updateSession($id) {
+        global $Filter;
+        $id      = (int) $id;
+        $session = $Filter->SQL(session_id());
 
         return <<<QUERY
         
@@ -52,7 +51,7 @@ QUERY;
             {$this->dbPrefix}_users.session = "{$session}"
 
         WHERE
-            {$this->dbPrefix}_users.name = "{$username}"
+            {$this->dbPrefix}_users.id = {$id}
 
 QUERY;
     }

@@ -213,14 +213,14 @@ QUERY;
             $topic_id, $topic_title,
             $post_id, $post_time,
             $user_id, $user_name) {
-        global $filter;
+        global $Filter;
         $section_id  = (int) $section_id;
         $topic_id    = (int) $topic_id;
-        $topic_title = $filter->SQL($topic_title);
+        $topic_title = $Filter->SQL($topic_title);
         $post_id     = (int) $post_id;
-        $post_time   = $filter->SQL($post_time);
+        $post_time   = $Filter->SQL($post_time);
         $user_id     = (int) $user_id;
-        $user_name   = $filter->SQL($user_name);
+        $user_name   = $Filter->SQL($user_name);
 
         return <<<QUERY
 

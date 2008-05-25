@@ -6,6 +6,11 @@
 * @author cHoBi
 */
 
+if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
+    die("You can't set a php session id, sorry.");
+}
+session_set_cookie_params(60*60*24*365);
+
 define('ROOT_PATH', realpath('../'));
 define('MISC_PATH', ROOT_PATH.'/sources/misc');
 

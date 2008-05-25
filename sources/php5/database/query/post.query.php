@@ -17,13 +17,13 @@ class PostQuery extends Query {
         parent::__construct();
     }
 
-    public function add($topic_id, $post_id, $title, $content) {
-        global $filter;
+    public function add($user_id, $topic_id, $post_id, $title, $content) {
+        global $Filter;
         $topic_id = (int) $topic_id;
         $post_id  = (int) $post_id;
-        $user_id  = (int) $_SESSION[SESSION]['user']['id'];
-        $title    = $filter->SQL($title);
-        $content  = $filter->SQL($content);
+        $user_id  = (int) $user_id;;
+        $title    = $Filter->SQL($title);
+        $content  = $Filter->SQL($content);
 
         return <<<QUERY
         

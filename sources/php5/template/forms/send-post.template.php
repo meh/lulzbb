@@ -24,10 +24,10 @@ class PostFormTemplate extends Template {
     public function __construct($magic, $topic_id, $title) {
         parent::__construct('forms/send-post-form.tpl');
         
-        global $filter;
+        global $Filter;
         $this->data['magic']    = $magic;
         $this->data['topic_id'] = (int) $topic_id;
-        $this->data['title']    = $filter->POST($title);
+        $this->data['title']    = $Filter->POST($title);
         
         $this->__parse();
     }

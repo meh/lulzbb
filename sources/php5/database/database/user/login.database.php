@@ -18,11 +18,11 @@ class LoginDatabase extends DatabaseBase {
     /**
     * Always the same, this is the way :D
     
-    * @param    object    $database   The Database object, recursive object is recursive.
+    * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($database) {
+    public function __construct($Database) {
         $query = new LoginQuery();
-        parent::__construct($database, $query);
+        parent::__construct($Database, $query);
     }
     
     /**
@@ -34,8 +34,10 @@ class LoginDatabase extends DatabaseBase {
     * @return    array    (id, name)
     */
     public function check($username, $password) {
-        $this->database->sendQuery($this->Query->check($username, $password));
-        return $this->database->fetchArray();
+        $this->Database->sendQuery($this->Query->check($username, $password));
+        $user = $this->Database->fetchArray();
+
+        return $user['id']['RAW'];
     }
 
     /**
@@ -43,8 +45,8 @@ class LoginDatabase extends DatabaseBase {
     
     * @param    string    $username    The username.
     */
-    public function exec($username) {
-        $this->database->sendQuery($this->Query->exec($username));
+    public function updateSession($id) {
+        $this->Database->sendQuery($this->Query->updateSession($id));
     }
 }
 ?>

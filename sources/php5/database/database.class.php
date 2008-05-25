@@ -46,19 +46,19 @@ class Database {
     * @exception    database_connection    On database connection failure.
     */
     public function __construct() {
-        global $config;
+        global $Config;
         
         $this->mysql = @mysql_connect(
-            $config->get('dbHost'),
-            $config->get('dbUsername'),
-            $config->get('dbPassword')
+            $Config->get('dbHost'),
+            $Config->get('dbUsername'),
+            $Config->get('dbPassword')
         );
 
         if (!$this->mysql) {
             throw new lulzException('database_connection');
         }
         
-        mysql_select_db($config->get('dbName'), $this->mysql);
+        mysql_select_db($Config->get('dbName'), $this->mysql);
 
         $this->user    = new UserDatabase($this);
         $this->group   = new GroupDatabase($this);
@@ -80,9 +80,10 @@ class Database {
     * @exception    database_query    On query failure.
     
     * @return    resource    The response from the mysql database.
+    * @todo Remove the mysql_error();
     */
     public function sendQuery($query) {
-        $this->query = @mysql_query($query);
+        $this->query = @mysql_query($query) or die(mysql_error());
         
         if (!$this->query) {
             throw new lulzException('database_query');
@@ -102,19 +103,53 @@ class Database {
     * @return    array    (RAW => stripslash, OUT => htmlentities, POST => rawurlencode)
     */
     public function fetchArray() {
-        global $filter;
+        global $Filter;
     
         if (!($array = mysql_fetch_array($this->query, MYSQL_ASSOC))) {
             return false;
         }
         
         foreach($array as $key => $element) {
-            $result[$key]['RAW']  = $filter->SQLclean($element);
-            $result[$key]['HTML'] = $filter->HTML_SQLclean($element);
-            $result[$key]['POST'] = $filter->POST_SQLclean($element);
+            $result[$key]['RAW']  = $Filter->SQLclean($element);
+            $result[$key]['HTML'] = $Filter->HTML_SQLclean($element);
+            $result[$key]['POST'] = $Filter->POST_SQLclean($element);
         }
 
         return $result;
+    }
+
+    /**
+    *
+    */
+    public function exists() {
+        global $Config;
+        $dbPrefix = $Config->get('dbPrefix');
+
+        $tables = array(
+            'groups',
+            'posts',
+            'sections',
+            'topics',
+            'topics_read',
+            'users'
+        );
+
+        $query = $this->sendQuery('SHOW TABLES');
+
+        while ($table = mysql_fetch_row($query)) {
+            foreach ($tables as $n => $name) {
+                if ($table[0] == "{$dbPrefix}_{$name}") {
+                    unset($tables[$n]);
+                }
+            }
+        }
+
+        if (empty($tables)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
 ?>

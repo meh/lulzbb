@@ -15,10 +15,27 @@ class UserQuery extends Query {
     public function __construct() {
         parent::__construct();
     }
+
+    public function getName($id) {
+        $id = (int) $id;
+
+        return <<<QUERY
+
+        SELECT
+            {$this->dbPrefix}_users.name
+
+        FROM
+            {$this->dbPrefix}_users
+
+        WHERE
+            {$this->dbPrefix}_users.id = {$id}
+
+QUERY;
+    }
     
     public function exists($username) {
-        global $filter;
-        $username = $filter->SQL($username);
+        global $Filter;
+        $username = $Filter->SQL($username);
 
         return <<<QUERY
         
@@ -35,8 +52,8 @@ QUERY;
     }
     
     public function emailExists($email) {
-        global $filter;
-        $email = $filter->SQL($email);
+        global $Filter;
+        $email = $Filter->SQL($email);
 
         return <<<QUERY
         
@@ -53,8 +70,8 @@ QUERY;
     }
    
     public function getGroups($username) {
-        global $filter;
-        $username = $filter->SQL($username);
+        global $Filter;
+        $username = $Filter->SQL($username);
 
         return <<<QUERY
 

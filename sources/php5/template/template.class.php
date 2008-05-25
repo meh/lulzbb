@@ -26,12 +26,12 @@ class Template {
     * @param    string    $file    The relative path of the template.
     */
     public function __construct($file) {
-        global $config;
+        global $Config;
         
-        $this->template['language']   = $config->get('language');
-        $this->template['forumName']  = $config->get('forumName');
-        $this->template['forumTitle'] = $config->get('forumTitle');
-        $this->template['name']       = $config->get('template');
+        $this->template['language']   = $Config->get('language');
+        $this->template['forumName']  = $Config->get('forumName');
+        $this->template['forumTitle'] = $Config->get('forumTitle');
+        $this->template['name']       = $Config->get('template');
         
         $this->magic = $_SESSION[SESSION]['magic'];
         
@@ -57,6 +57,8 @@ class Template {
     * @access private
     */
     protected function ___parse() {
+        global $User;
+
         $text = $this->plain_text;
 
         $text = preg_replace(
@@ -83,10 +85,10 @@ class Template {
             $text
         );
 
-        if (isset($_SESSION[SESSION]['user'])) {
+        if ($this->connected) {
             $text = preg_replace(
                 '|<%USERNAME%>|i',
-                $_SESSION[SESSION]['user']['name']['HTML'],
+                $User->getName('HTML'),
                 $text
             );
         }
