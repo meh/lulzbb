@@ -15,17 +15,7 @@
         <textarea id="write-content"></textarea>
         <div style="text-align: right">
             <input value="Submit" type="button" 
-                onclick=
-                    "POST(
-                        'middle',
-                        'input/?topic&send',
-                        'type=1&'
-                        + 'parent=<%POST-PARENT%>&'
-                        + 'title='+urlencode('write-title')+'&'
-                        + 'subtitle='+urlencode('write-subtitle')+'&'
-                        + 'content='+urlencode('write-content')+'&'
-                        + 'magic=<%MAGIC%>'
-                     );"/>
+                onclick="sendTopic('<%MAGIC%>', 'middle', <%POST-PARENT%>, 1, getContent('write-title'), getContent('write-subtitle'), getContent('write-content'));"/>
         </div>
     </form>
 </div>

@@ -48,7 +48,7 @@ class Post extends Send {
         global $Database;
 
         $topic_id = $data['topic_id'];
-        $title    = trim($data['title']);
+        $title    = $data['title'];
         $content  = $data['content'];
 
         if ($data['magic'] != $_SESSION[SESSION]['magic']) {

@@ -61,7 +61,6 @@ class UserDatabase extends DatabaseBase {
     *                    FALSE: What about no?
     */
     public function exists($username) {
-        $username = trim($username);
         $query    = $this->Database->sendQuery($this->Query->exists($username));
 
         if (mysql_fetch_row($query)) {

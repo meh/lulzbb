@@ -53,8 +53,8 @@ class Topic extends Send {
         $magic    = $data['magic'];
         $parent   = $data['parent'];
         $type     = $data['type'];
-        $title    = trim($data['title']);
-        $subtitle = trim($data['subtitle']);
+        $title    = $data['title'];
+        $subtitle = $data['subtitle'];
         $content  = $data['content'];
 
         if ($magic != $this->magic) {
@@ -110,11 +110,12 @@ class Topic extends Send {
         $titleMinLength   = $Config->get('titleMinLength');
         $contentMinLength = $Config->get('contentMinLength');
 
+        $title   = trim($title);
+        $content = str_replace("\n", '', trim($content));
+
         if (empty($parent)) {
             return 'parent';
         }
-
-        $scontent = trim(str_replace("\n", '', $content));
 
         if (strlen($title) < $titleMinLength) {
             return 'title';

@@ -35,7 +35,7 @@ QUERY;
     
     public function exists($username) {
         global $Filter;
-        $username = $Filter->SQL($username);
+        $username = $Filter->SQL(trim($username));
 
         return <<<QUERY
         

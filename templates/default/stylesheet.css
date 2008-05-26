@@ -221,6 +221,7 @@ div.footer {
     padding-right: 2px;
     font-size: 10px;
     text-align: left;
+    white-space: pre;
 }
 
 #forum {
@@ -234,7 +235,6 @@ div.footer {
     margin-top: 8px;
     border: 2px solid #880000;
     border-bottom: 0;
-    
     text-align: left;
 }
 
@@ -279,8 +279,8 @@ div.footer {
     padding-bottom: 2px;
     text-align: left;
 }
-#forum table.sections td.section div.section-title { font-size: 12px; }
-#forum table.sections td.section span.section-subtitle { font-size: 10px; }
+#forum table.sections td.section div.section-title { font-size: 12px; white-space: pre; }
+#forum table.sections td.section span.section-subtitle { font-size: 10px; white-space: pre; }
 
 #forum table.sections td.count-topics {
     width: 30px;
@@ -406,11 +406,13 @@ div.footer {
 
 #forum table.topics span.topic-title {
     font-size: 11px;
+    white-space: pre;
 }
 
 #forum table.topics span.topic-subtitle {
     font-size: 10px;
     font-style: italic;
+    white-space: pre;
 }
 
 /* Topic style */

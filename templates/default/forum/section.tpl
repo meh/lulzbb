@@ -3,9 +3,7 @@
         <Sections-Group>
             <Group-Header>
             <div class="group">
-                <div class="group-title">
-                    <%GROUP-TITLE%>
-                </div>
+                <div class="group-title"><%GROUP-TITLE%></div>
 
                 <table class="sections">
                 <tr class="description">
@@ -18,29 +16,14 @@
             <Section-Content>
                 <tr>
                     <td class="section">
-                        <div class="section-title">
-                            <a href="#" class="section-title"
-                                onclick="showSection('middle', <%POST-SECTION-ID%>);">
-                                <%SECTION-TITLE%></a>
-                        </div>
-                        <span class="section-subtitle">
-                            <%SECTION-SUBTITLE%>
-                        </span>
+                        <div class="section-title"><a href="#" class="section-title"  onclick="showSection('middle', <%POST-SECTION-ID%>);"><%SECTION-TITLE%></a></div>
+                        <span class="section-subtitle"><%SECTION-SUBTITLE%></span>
                     </td>
-                    <td class="count-topics">
-                        <%SECTION-TOPICS-COUNT%>
-                    </td>
-                    <td class="count-posts">
-                        <%SECTION-POSTS-COUNT%>
-                    </td>
+                    <td class="count-topics"><%SECTION-TOPICS-COUNT%></td>
+                    <td class="count-posts"><%SECTION-POSTS-COUNT%></td>
                     <td class="last-post">
                         <Last-Info>
-                        <div>
-                            <a href="#" onclick="showTopic('middle', <%POST-SECTION-LAST-TOPIC-ID%>, <%POST-SECTION-LAST-POST-ID%>);">
-                            <%SECTION-LAST-TOPIC-TITLE%></a> by <b><%SECTION-LAST-USER-NICK%></b>
-                        </div>
-                        <span><%SECTION-LAST-POST-TIME%></span>
-                        </Last-Info>
+                        <div><a style="white-space: pre;" href="#" onclick="showTopic('middle', <%POST-SECTION-LAST-TOPIC-ID%>, <%POST-SECTION-LAST-POST-ID%>);"><%SECTION-LAST-TOPIC-TITLE%></a> by <b><%SECTION-LAST-USER-NICK%></b></div><span><%SECTION-LAST-POST-TIME%></span></Last-Info>
                         <No-Info>
                         <div>No topics</div>
                         </No-Info>
@@ -57,9 +40,7 @@
     <Topics>
     <div class="topics">
         <div class="group">
-            <div class="group-title">
-                <%SECTION-TITLE%>
-            </div>
+            <div class="group-title"><%SECTION-TITLE%></div>
         </div>
 
         <table class="topics">
@@ -74,27 +55,13 @@
             <tr class="normal" id="topic<%TOPIC-ID%>">
                 <td class="topic">
                     <div class="topic-title">
-                        <a href="#" class="topic-title"
-                            onclick="showTopic('middle', <%POST-TOPIC-ID%>);">
-                                    <%TOPIC-TITLE%></a>
-                    </div>
-                    <span class="topic-subtitle">
-                        <%TOPIC-SUBTITLE%>
-                    </span>
+                        <a href="#" onclick="showTopic('middle', <%POST-TOPIC-ID%>);"><span class="topic-title"><%TOPIC-TITLE%></span></a></div>
+                    <span class="topic-subtitle"><%TOPIC-SUBTITLE%></span>
                 </td>
-                <td class="author">
-                    <%TOPIC-AUTHOR%>
-                </td>
-                <td class="posts">
-                    <%TOPIC-POSTS-COUNT%>
-                </td>
-                <td class="views">
-                    <%TOPIC-VIEWS-COUNT%>
-                </td>
-                <td class="last-post">
-                    <div><%LAST-POST-NICK%></div>
-                    <span><%LAST-POST-TIME%></span>
-                </td>
+                <td class="author"><%TOPIC-AUTHOR%></td>
+                <td class="posts"><%TOPIC-POSTS-COUNT%></td>
+                <td class="views"><%TOPIC-VIEWS-COUNT%></td>
+                <td class="last-post"><div><%LAST-POST-NICK%></div><span><%LAST-POST-TIME%></span></td>
             </tr>
             </Topic>
             <No-Topic>

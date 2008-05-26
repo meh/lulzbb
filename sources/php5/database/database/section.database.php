@@ -208,10 +208,6 @@ class SectionDatabase extends DatabaseBase {
 
         $sections = array();
         while ($section = $this->Database->fetchArray()) {
-            foreach ($section as $key => $element) {
-                $section[$key]['HTML'] = $Filter->spaces($section[$key]['HTML']);
-            }
-
             array_push($sections, $section);
         }
 
@@ -231,10 +227,6 @@ class SectionDatabase extends DatabaseBase {
 
         $topics = array();
         while ($topic = $this->Database->fetchArray()) {
-            foreach ($topic as $key => $element) {
-                $topic[$key]['HTML'] = $Filter->spaces($topic[$key]['HTML']);
-            }
-
             array_push($topics, $topic);
         }
 

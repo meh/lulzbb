@@ -135,7 +135,11 @@ VALUES ("Unconfirmed", "LOLOL, THEY HAVE TO CONFIRM, FOR SRS")');
 
 $Database->sendQuery('INSERT INTO '.$dbPrefix.'_groups
        (name, description)
-VALUES ("Administrator", "MODS = FAGS")');
+VALUES ("Administrator", "OH SHI-")');
+
+$Database->sendQuery('INSERT INTO '.$dbPrefix.'_groups
+       (name, description)
+VALUES ("Moderator", "MODS = FAGS")');
 
 $Database->sendQuery('INSERT INTO '.$dbPrefix.'_sections
        (parent, type, weight, title, subtitle)

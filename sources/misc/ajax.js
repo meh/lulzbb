@@ -93,23 +93,40 @@ function showRegistration(show_id) {
     GET(show_id, 'output/?register');
 }
 
+// Send functions.
+function sendTopic(magic, show_id, parent, type, title, subtitle, content) {
+    POST(show_id, 'input/?topic&send',
+          'type='+type+'&'
+        + 'parent='+parent+'&'
+        + 'title='+rawurlencode(title)+'&'
+        + 'subtitle='+rawurlencode(subtitle)+'&'
+        + 'content='+rawurlencode(content)+'&'
+        + 'magic='+magic);
+}
+
 // Misc functions
+function getContent(id) {
+    return document.getElementById(id).value;
+}
+
 function urlencode(value) {
-    encoded = document.getElementById(value).value;
+    var encoded = document.getElementById(value).value;
     encoded = encoded.replace(/\?/g, '%3F');
     encoded = encoded.replace(/=/g,  '%3D');
     encoded = encoded.replace(/&/g,  '%26');
     encoded = encoded.replace(/\n/g, '%0A');
+    encoded = encoded.replace(/ /g,  '%20');
 
     return encoded;
 }
 
 function rawurlencode(value) {
-    encoded = value;
+    var encoded = value;
     encoded = encoded.replace(/\?/g, '%3F');
     encoded = encoded.replace(/=/g,  '%3D');
     encoded = encoded.replace(/&/g,  '%26');
     encoded = encoded.replace(/\n/g, '%0A');
+    encoded = encoded.replace(/ /g,  '%20');
 
     return encoded;
 }
