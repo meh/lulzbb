@@ -63,7 +63,7 @@ class Post extends Send {
 
             default:
             try {
-                $Database->post->add($topic_id, $title, $content);
+                $Database->topic->post->add($topic_id, $title, $content);
             }
             catch (lulzException $e) {
                 die($e->getMessage());

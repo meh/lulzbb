@@ -7,6 +7,7 @@
 */
 
 require_once(SOURCE_PATH.'/database/database.base.class.php');
+require_once(SOURCE_PATH.'/database/database/section/group.database.php');
 require_once(SOURCE_PATH.'/database/query/section.query.php');
 
 /**
@@ -15,6 +16,8 @@ require_once(SOURCE_PATH.'/database/query/section.query.php');
 * @author cHoBi
 */
 class SectionDatabase extends DatabaseBase {
+    public $group;
+
     /**
     * Dolphins, they're never related.
     
@@ -23,12 +26,14 @@ class SectionDatabase extends DatabaseBase {
     public function __construct($Database) {
         $query = new SectionQuery();
         parent::__construct($Database, $query);
+
+        $this->group = new SectionGroupDatabase($Database);
     }
 
     /**
     * 
     */
-    public function add($parent, $type, $weight, $title, $subtitle) {
+    public function add($parent, $group, $title, $subtitle) {
 
     }
 
@@ -47,7 +52,7 @@ class SectionDatabase extends DatabaseBase {
         $this->Database->sendQuery($this->Query->exists($section_id));
         $section = $this->Database->fetchArray();
 
-        if (empty($section) || $section['type']['RAW'] != 0) {
+        if (empty($section)) {
             return false;
         }
         else {
@@ -202,16 +207,15 @@ class SectionDatabase extends DatabaseBase {
     
     * @return    array    A section in each element :D
     */
-    public function getSections($section_id) {
-        global $Filter;
-        $this->Database->sendQuery($this->Query->getSections($section_id));
+    public function getGroups($section_id) {
+        $this->Database->sendQuery($this->Query->getGroups($section_id));
 
-        $sections = array();
-        while ($section = $this->Database->fetchArray()) {
-            array_push($sections, $section);
+        $groups = array();
+        while ($group = $this->Database->fetchArray()) {
+            array_push($groups, $group);
         }
 
-        return $sections;
+        return $groups;
     }
 
     /**
@@ -222,7 +226,6 @@ class SectionDatabase extends DatabaseBase {
     * @return    array    A topic in each element >:3
     */
     public function getTopics($section_id) {
-        global $Filter;
         $this->Database->sendQuery($this->Query->getTopics($section_id));
 
         $topics = array();

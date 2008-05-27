@@ -9,6 +9,7 @@
 require_once(SOURCE_PATH.'/database/database.base.class.php');
 require_once(SOURCE_PATH.'/database/database/user/login.database.php');
 require_once(SOURCE_PATH.'/database/database/user/registration.database.php');
+require_once(SOURCE_PATH.'/database/database/user/group.database.php');
 require_once(SOURCE_PATH.'/database/query/user.query.php');
 
 /**
@@ -16,6 +17,7 @@ require_once(SOURCE_PATH.'/database/query/user.query.php');
 
 * @property    object    $login           The login database.
 * @property    object    $registration    The registration database.
+* @property    object    $group           The group database.
 
 * @author cHoBi
 */
@@ -23,6 +25,7 @@ class UserDatabase extends DatabaseBase {
     // Login and Registration database classes
     public $login;
     public $registration;
+    public $group;
 
     /**
     * In Lulz we trust.
@@ -36,6 +39,7 @@ class UserDatabase extends DatabaseBase {
         // Initiate login and registration databases.
         $this->login        = new LoginDatabase($Database);
         $this->registration = new RegistrationDatabase($Database);
+        $this->group        = new UserGroupDatabase($Database);
     }
     
     /**
@@ -88,24 +92,6 @@ class UserDatabase extends DatabaseBase {
         else {
             return false;
         }
-    }
-    
-    /**
-    * Gets the groups where the user is in.
-    
-    * @param    string    $username    The ketchup.
-    
-    * @return    array    Normal array with a group for each element.
-    */
-    public function getGroups($username) {
-        $this->Database->sendQuery($this->Query->getGroups($username));
-
-        $groups = array();
-        while ($group = $this->Database->fetchArray()) {
-            array_push($groups, $group['name']);
-        }
-
-        return $groups;
     }
 }
 ?>

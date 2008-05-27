@@ -39,8 +39,17 @@ class SectionShow extends Show {
 
         try {
             if ($Database->section->exists($this->id)) {
-                $sections = $Database->section->getSections($this->id);
-                $topics   = $Database->section->getTopics($this->id);
+                $groups = $Database->section->getGroups($this->id);
+                foreach ($groups as $n => $group) {
+                    $groups[$n]['data'] = $Database->section->group->getSections($group['id']['RAW']);
+                }
+                
+                $topics = $Database->section->getTopics($this->id);
+
+                if ($this->id == 0 && empty($groups) && empty($topics)) {
+                    $message = new InformativeMessage('The section is empty.');
+                    die($message->output());
+                }
             }
             else {
                 die("The section doesn't exist.");
@@ -52,7 +61,7 @@ class SectionShow extends Show {
 
         $template = new SectionTemplate(
             $this->id,
-            $sections,
+            $groups,
             $topics
         );
 

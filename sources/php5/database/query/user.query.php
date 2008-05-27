@@ -68,23 +68,5 @@ QUERY;
 
 QUERY;
     }
-   
-    public function getGroups($username) {
-        global $Filter;
-        $username = $Filter->SQL($username);
-
-        return <<<QUERY
-
-        SELECT
-            {$this->dbPrefix}_groups.name
-            
-        FROM
-            {$this->dbPrefix}_groups
-
-        WHERE
-            {$this->dbPrefix}_groups.username = "{$username}"
-
-QUERY;
-    }
 }
 ?>

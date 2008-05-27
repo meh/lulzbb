@@ -47,18 +47,18 @@ $Filter   = $_SESSION[SESSION]['filter'];
 $Database = new Database;
 $User     = @$_SESSION[SESSION]['user'];
 
-/**
-* @todo Check on the group etc.
-*/
+if (!$User->isIn('administrator')) {
+    die("You don't have the permissions to change configurations.");
+}
 
-$DATA['command'] = @isset($_POST['command'])
-                        ? $_POST['command']
-                        : $_GET['command'];
+$command = @isset($_POST['command']) ? $_POST['command'] : $_GET['command'];
 
-switch ($_GET['command']) {
-    case 'section_add': 
+switch ($command) {
+    case 'add_section':
+    $DATA['parent'] = @isset($_POST['parent']) ? $_POST['parent'] : $_GET['parent'];
+
     try {
-        $Database->section->add(
+        $Database->section->add();
     }
     catch (lulzException $e) {
 

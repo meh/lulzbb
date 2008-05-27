@@ -16,6 +16,25 @@ class GroupQuery extends Query {
         parent::__construct();
     }
 
+   
+    public function get($username) {
+        global $Filter;
+        $username = $Filter->SQL($username);
+
+        return <<<QUERY
+
+        SELECT
+            {$this->dbPrefix}_user_groups.name
+            
+        FROM
+            {$this->dbPrefix}_user_groups
+
+        WHERE
+            {$this->dbPrefix}_user_groups.username = "{$username}"
+
+QUERY;
+    }
+
     public function add($group, $description) {
         global $Filter;
         $group       = $Filter->SQL($group);
@@ -24,9 +43,9 @@ class GroupQuery extends Query {
         return <<<QUERY
 
         INSERT IGNORE
-            INTO {$this->dbPrefix}_groups(
-                {$this->dbPrefix}_groups.name,
-                {$this->dbPrefix}_groups.description
+            INTO {$this->dbPrefix}_user_groups(
+                {$this->dbPrefix}_user_groups.name,
+                {$this->dbPrefix}_user_groups.description
             )
 
             VALUES(
@@ -45,12 +64,14 @@ QUERY;
         return <<<QUERY
 
         INSERT IGNORE
-            INTO {$this->dbPrefix}_groups(
-                {$this->dbPrefix}_groups.username,
-                {$this->dbPrefix}_groups.name
+            INTO {$this->dbPrefix}_user_groups
+            (
+                {$this->dbPrefix}_user_groups.username,
+                {$this->dbPrefix}_user_groups.name
             )
 
-            VALUES(
+            VALUES
+            (
                 "{$username}",
                 "{$group}"
             )
@@ -65,10 +86,10 @@ QUERY;
         return <<<QUERY
 
         DELETE
-            FROM {$this->dbPrefix}_groups
+            FROM {$this->dbPrefix}_user_groups
 
             WHERE
-                {$this->dbPrefix}_groups.name = "$group"
+                {$this->dbPrefix}_user_groups.name = "$group"
 
 QUERY;
     }
@@ -81,12 +102,12 @@ QUERY;
         return <<<QUERY
 
         DELETE
-            FROM {$this->dbPrefix}_groups
+            FROM {$this->dbPrefix}_user_groups
 
         WHERE
-            {$this->dbPrefix}_groups.name = "{$group}"
+            {$this->dbPrefix}_user_groups.name = "{$group}"
           AND
-            {$this->dbPrefix}_groups.username = "{$username}"
+            {$this->dbPrefix}_user_groups.username = "{$username}"
 
 QUERY;
     }

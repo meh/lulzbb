@@ -21,12 +21,12 @@ class SectionTemplate extends Template {
     * @param    array    $sections      The sections data.
     * @param    array    $topics        The topics data.
     */
-    public function __construct($section_id, $sections, $topics) {
+    public function __construct($section_id, $groups, $topics) {
         parent::__construct('forum/section.tpl');
         global $Database;
         
         $this->data['section_id'] = $section_id;
-        $this->data['sections']   = $sections;
+        $this->data['groups']     = $groups;
         $this->data['topics']     = $topics;
         $this->data['template']   = array();
 
@@ -43,16 +43,12 @@ class SectionTemplate extends Template {
         $text = $this->output();
         $text = $this->__loops($text);
 
-        if (       empty($this->data['section_id'])
-                && empty($this->data['sections'])
-                && empty($this->data['topics'])) {
-            return;
-        }
-
         $sections = '';
-        $sectionGroups = $this->__sectionsGroup($this->data['sections']);
-        foreach ($sectionGroups as $group) {
-            $sections .= $this->__sections($group);
+        if (!empty($this->data['groups'])) {
+            $sectionGroups = $this->__sectionsGroup($this->data['groups']);
+            foreach ($sectionGroups as $group) {
+                $sections .= $this->__sections($group);
+            }
         }
 
         $text = preg_replace(
@@ -270,12 +266,12 @@ class SectionTemplate extends Template {
     * Parse the group header.
     * @access private
     */
-    private function __groupHeader($section) {
+    private function __groupHeader($group) {
         $text = $this->data['template']['group_header'];
         
         $text = preg_replace(
             '|<%GROUP-TITLE%>|i',
-            $section['title']['HTML'],
+            $group['name']['HTML'],
             $text
         );
 
@@ -378,33 +374,32 @@ class SectionTemplate extends Template {
     * Parse the sections group.
     * @access private
     */
-    private function __sectionsGroup($sections) {
-        $groups = array();
+    private function __sectionsGroup($groups) {
+        $rGroups = array();
 
-        $sectionContent = '';
-        foreach ($sections as $section) {
-            if ($section['type']['RAW'] == 1) {
-                $groupHeader = $this->__groupHeader($section);
-            }
-            if ($section['type']['RAW'] == 0) {
-                $sectionContent .= $this->__sectionContent($section);
-            }
-            if ($section['type']['RAW'] == 2) {
-                $groupFooter = $this->__groupFooter($section);
-                array_push(
-                    $groups,
-                    $this->__group(
-                        $groupHeader,
-                        $sectionContent,
-                        $groupFooter
-                    )
-                );
-                
-                $sectionContent = '';
-            }
+        if (empty($groups)) {
+            return '';
         }
 
-        return $groups;
+        foreach ($groups as $group) {
+            $groupHeader = $this->__groupHeader($group);
+            $sectionContent = '';
+            foreach ($group['data'] as $section) {
+                $sectionContent .= $this->__sectionContent($section);
+            }
+            $groupFooter = $this->__groupFooter($group);
+
+            array_push(
+                $rGroups,
+                $this->__group(
+                    $groupHeader,
+                    $sectionContent,
+                    $groupFooter
+                )
+            );
+        }
+
+        return $rGroups;
     }
 
     /**

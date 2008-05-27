@@ -29,7 +29,7 @@ class PostQuery extends Query {
         
         INSERT
             INTO
-                {$this->dbPrefix}_posts
+                {$this->dbPrefix}_topic_posts
                            
             VALUES(
                 {$topic_id},
@@ -49,13 +49,13 @@ QUERY;
         return <<<QUERY
 
             SELECT
-                MAX({$this->dbPrefix}_posts.post_id)
+                MAX({$this->dbPrefix}_topic_posts.post_id)
     
             FROM
-                {$this->dbPrefix}_posts
+                {$this->dbPrefix}_topic_posts
     
             WHERE
-                {$this->dbPrefix}_posts.topic_id = {$topic_id}
+                {$this->dbPrefix}_topic_posts.topic_id = {$topic_id}
             
 QUERY;
     }
@@ -67,17 +67,17 @@ QUERY;
         
             SELECT
                 {$this->dbPrefix}_users.name,
-                {$this->dbPrefix}_posts.time
+                {$this->dbPrefix}_topic_posts.time
             
             FROM
-                {$this->dbPrefix}_posts
+                {$this->dbPrefix}_topic_posts
                 
             INNER JOIN {$this->dbPrefix}_users
-                ON {$this->dbPrefix}_posts.user_id =
+                ON {$this->dbPrefix}_topic_posts.user_id =
                    {$this->dbPrefix}_users.id
                 
             ORDER BY
-                {$this->dbPrefix}_posts.time
+                {$this->dbPrefix}_topic_posts.time
                 
             DESC
             

@@ -24,7 +24,7 @@ class SectionQuery extends Query {
         return <<<QUERY
 
         SELECT
-            {$this->dbPrefix}_sections.type
+            {$this->dbPrefix}_sections.id
 
         FROM
             {$this->dbPrefix}_sections
@@ -41,10 +41,14 @@ QUERY;
         return <<<QUERY
 
         SELECT
-            {$this->dbPrefix}_sections.parent
+            {$this->dbPrefix}_section_groups.parent
 
         FROM
             {$this->dbPrefix}_sections
+
+        INNER JOIN {$this->dbPrefix}_section_groups
+            ON {$this->dbPrefix}_sections.group_id =
+               {$this->dbPrefix}_section_groups.id
 
         WHERE
             {$this->dbPrefix}_sections.id = {$section_id}
@@ -69,35 +73,25 @@ QUERY;
 QUERY;
     }
 
-    public function getSections($section_id) {
+    public function getGroups($section_id) {
         $section_id = (int) $section_id;
 
         return <<<QUERY
         
         SELECT
-            {$this->dbPrefix}_sections.id,
-            {$this->dbPrefix}_sections.type,
-            {$this->dbPrefix}_sections.title,
-            {$this->dbPrefix}_sections.subtitle,
+            {$this->dbPrefix}_section_groups.id,
+            {$this->dbPrefix}_section_groups.name,
+            {$this->dbPrefix}_section_groups.weight,
+            {$this->dbPrefix}_section_groups.parent
 
-            {$this->dbPrefix}_sections.count_topics,
-            {$this->dbPrefix}_sections.count_posts,
-
-            {$this->dbPrefix}_sections.last_topic_id,
-            {$this->dbPrefix}_sections.last_topic_title,
-            {$this->dbPrefix}_sections.last_post_id,
-            {$this->dbPrefix}_sections.last_post_time,
-            {$this->dbPrefix}_sections.last_user_id,
-            {$this->dbPrefix}_sections.last_user_name
-            
         FROM
-            {$this->dbPrefix}_sections
+            {$this->dbPrefix}_section_groups
 
         WHERE
-            {$this->dbPrefix}_sections.parent = {$section_id}
+            {$this->dbPrefix}_section_groups.parent = {$section_id}
             
         ORDER BY
-            {$this->dbPrefix}_sections.weight
+            {$this->dbPrefix}_section_groups.weight
 
 QUERY;
     }

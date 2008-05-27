@@ -7,6 +7,7 @@
 */
 
 require_once(SOURCE_PATH.'/database/database.base.class.php');
+require_once(SOURCE_PATH.'/database/database/topic/post.database.php');
 require_once(SOURCE_PATH.'/database/query/topic.query.php');
 
 /**
@@ -15,6 +16,8 @@ require_once(SOURCE_PATH.'/database/query/topic.query.php');
 * @author cHoBi
 */
 class TopicDatabase extends DatabaseBase {
+    public $post;
+
     /**
     * In the beginning there was a mother, a father and a child. (BAWWWW, I'm bored)
     
@@ -23,6 +26,8 @@ class TopicDatabase extends DatabaseBase {
     public function __construct($Database) {
         $query = new TopicQuery();
         parent::__construct($Database, $query);
+
+        $this->post = new PostDatabase($Database);
     }
     
     /**
@@ -71,7 +76,7 @@ class TopicDatabase extends DatabaseBase {
         ));
         
         $topic_id = $this->Database->misc->getLastTopic();
-        $this->Database->post->add($topic_id, $title, $content);
+        $this->Database->topic->post->add($topic_id, $title, $content);
         
         $this->Database->section->increaseTopicsCount($parent);
 

@@ -7,14 +7,14 @@
 */
 
 require_once(SOURCE_PATH.'/database/database.base.class.php');
-require_once(SOURCE_PATH.'/database/query/group.query.php');
+require_once(SOURCE_PATH.'/database/query/user/group.query.php');
 
 /**
 * This class is dedicated to group stuff.
 *
 * @author cHoBi
 */
-class GroupDatabase extends DatabaseBase {
+class UserGroupDatabase extends DatabaseBase {
     /**
     * Guess what?
     
@@ -25,6 +25,24 @@ class GroupDatabase extends DatabaseBase {
         parent::__construct($Database, $query);
     }
     
+    /**
+    * Gets the groups where the user is in.
+    
+    * @param    string    $username    The ketchup.
+    
+    * @return    array    Normal array with a group for each element.
+    */
+    public function get($username) {
+        $this->Database->sendQuery($this->Query->get($username));
+
+        $groups = array();
+        while ($group = $this->Database->fetchArray()) {
+            array_push($groups, $group['name']);
+        }
+
+        return $groups;
+    }
+
     /**
     * Adds a group.
     

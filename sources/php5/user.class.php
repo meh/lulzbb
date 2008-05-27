@@ -28,7 +28,7 @@ class User {
 
         $this->id      = $id;
         $this->name    = $Database->user->getName($id);
-        $this->groups  = $Database->user->getGroups($this->getName('RAW'));
+        $this->groups  = $Database->user->group->get($this->getName('RAW'));
         $this->session = session_id();
     }
 
@@ -69,8 +69,10 @@ class User {
     }
 
     public function isIn($groupName) {
+        $groupName = strtolower($groupName);
+
         foreach ($this->groups as $group) {
-            if ($group['RAW'] == $groupName) {
+            if (strtolower($group['RAW']) == $groupName) {
                 return true;
             }
         }

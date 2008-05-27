@@ -43,10 +43,17 @@ if ($Database->exists()) {
 
 $dbPrefix = $Config->get('dbPrefix');
 
+$Database->sendQuery('CREATE TABLE '.$dbPrefix.'_section_groups(
+id INT UNSIGNED NOT NULL auto_increment,
+parent INT UNSIGNED,
+weight INT,
+name TINYTEXT,
+
+PRIMARY KEY(id))');
+
 $Database->sendQuery('CREATE TABLE '.$dbPrefix.'_sections(
 id INT UNSIGNED NOT NULL auto_increment,
-parent INT UNSIGNED ,
-type SMALLINT,
+group_id INT UNSIGNED NOT NULL,
 weight INT,
 title TINYTEXT,
 subtitle TINYTEXT,
@@ -61,7 +68,7 @@ last_post_time DATETIME,
 last_user_id INT UNSIGNED,
 last_user_name TINYTEXT,
 
-primary key(id))');
+PRIMARY KEY(id))');
 
 $Database->sendQuery('CREATE TABLE '.$dbPrefix.'_topics(
 id INT UNSIGNED NOT NULL auto_increment,
@@ -79,13 +86,13 @@ last_post_time DATETIME NOT NULL,
 last_user_id INT UNSIGNED NOT NULL,
 last_user_name TINYTEXT NOT NULL,
 
-primary key(id))');
+PRIMARY KEY(id))');
 
 $Database->sendQuery('CREATE TABLE '.$dbPrefix.'_topics_read(
 topic INT UNSIGNED NOT NULL,
 user INT UNSIGNED NOT NULL)');
 
-$Database->sendQuery('CREATE TABLE '.$dbPrefix.'_posts(
+$Database->sendQuery('CREATE TABLE '.$dbPrefix.'_topic_posts(
 topic_id INT UNSIGNED NOT NULL,
 post_id INT UNSIGNED NOT NULL,
 user_id INT UNSIGNED NOT NULL,
@@ -122,26 +129,26 @@ registration_date DATETIME,
 
 primary KEY(id))');
 
-$Database->sendQuery('CREATE TABLE '.$dbPrefix.'_groups(
+$Database->sendQuery('CREATE TABLE '.$dbPrefix.'_user_groups(
 name VARCHAR(150) NOT NULL,
 username VARCHAR(150) DEFAULT NULL,
 description TEXT DEFAULT NULL,
 
 UNIQUE KEY(name, username))');
 
-$Database->sendQuery('INSERT INTO '.$dbPrefix.'_groups
+$Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups
        (name, description)
 VALUES ("Unconfirmed", "LOLOL, THEY HAVE TO CONFIRM, FOR SRS")');
 
-$Database->sendQuery('INSERT INTO '.$dbPrefix.'_groups
+$Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups
        (name, description)
 VALUES ("Administrator", "OH SHI-")');
 
-$Database->sendQuery('INSERT INTO '.$dbPrefix.'_groups
+$Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups
        (name, description)
 VALUES ("Moderator", "MODS = FAGS")');
 
-$Database->sendQuery('INSERT INTO '.$dbPrefix.'_sections
+/*$Database->sendQuery('INSERT INTO '.$dbPrefix.'_sections
        (parent, type, weight, title, subtitle)
 VALUES (0, 1, 1, "Sections", NULL)');
 
@@ -151,7 +158,7 @@ VALUES (0, 0, 2, "Main section", "Main section subtitle")');
 
 $Database->sendQuery('INSERT INTO '.$dbPrefix.'_sections
        (parent, type, weight, title, subtitle)
-VALUES (0, 2, 3, NULL, NULL)');
+VALUES (0, 2, 3, NULL, NULL)');*/
 
 if ($error = mysql_error()) {
     echo $error;

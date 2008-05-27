@@ -8,10 +8,8 @@
 
 require_once(SOURCE_PATH.'/exception.class.php');
 require_once(SOURCE_PATH.'/database/database/user.database.php');
-require_once(SOURCE_PATH.'/database/database/group.database.php');
 require_once(SOURCE_PATH.'/database/database/section.database.php');
 require_once(SOURCE_PATH.'/database/database/topic.database.php');
-require_once(SOURCE_PATH.'/database/database/post.database.php');
 require_once(SOURCE_PATH.'/database/database/misc.database.php');
 
 /**
@@ -33,10 +31,8 @@ class Database {
 
     // Various database methods
     public $user;
-    public $group;
     public $section;
     public $topic;
-    public $post;
     public $misc;
 
     /**
@@ -61,10 +57,8 @@ class Database {
         mysql_select_db($Config->get('dbName'), $this->mysql);
 
         $this->user    = new UserDatabase($this);
-        $this->group   = new GroupDatabase($this);
         $this->section = new SectionDatabase($this);
         $this->topic   = new TopicDatabase($this);
-        $this->post    = new PostDatabase($this);
         $this->misc    = new MiscDatabase($this);
     }
 
@@ -83,7 +77,7 @@ class Database {
     * @todo Remove the mysql_error();
     */
     public function sendQuery($query) {
-        $this->query = @mysql_query($query) or die(mysql_error());
+        $this->query = @mysql_query($query) or die(nl2br($query).mysql_error());
         
         if (!$this->query) {
             throw new lulzException('database_query');
@@ -126,12 +120,13 @@ class Database {
         $dbPrefix = $Config->get('dbPrefix');
 
         $tables = array(
-            'groups',
-            'posts',
+            'section_groups',
             'sections',
             'topics',
             'topics_read',
-            'users'
+            'topic_posts',
+            'users',
+            'user_groups'
         );
 
         $query = $this->sendQuery('SHOW TABLES');

@@ -39,27 +39,27 @@ QUERY;
         return <<<QUERY
         
         SELECT
-            {$this->dbPrefix}_posts.user_id,
-            {$this->dbPrefix}_posts.post_id,
-            {$this->dbPrefix}_posts.time,
-            {$this->dbPrefix}_posts.title,
-            {$this->dbPrefix}_posts.content,
+            {$this->dbPrefix}_topic_posts.user_id,
+            {$this->dbPrefix}_topic_posts.post_id,
+            {$this->dbPrefix}_topic_posts.time,
+            {$this->dbPrefix}_topic_posts.title,
+            {$this->dbPrefix}_topic_posts.content,
             {$this->dbPrefix}_users.name,
             {$this->dbPrefix}_users.signature
 
         FROM
-            {$this->dbPrefix}_posts
+            {$this->dbPrefix}_topic_posts
         
         INNER JOIN {$this->dbPrefix}_users
             ON
-                {$this->dbPrefix}_posts.topic_id =
+                {$this->dbPrefix}_topic_posts.topic_id =
                 {$topic_id}
               AND
-                {$this->dbPrefix}_posts.user_id =
+                {$this->dbPrefix}_topic_posts.user_id =
                 {$this->dbPrefix}_users.id
             
         ORDER BY
-            {$this->dbPrefix}_posts.post_id
+            {$this->dbPrefix}_topic_posts.post_id
 
 QUERY;
     }
@@ -151,23 +151,23 @@ QUERY;
         return <<<QUERY
 
         SELECT
-            {$this->dbPrefix}_posts.post_id,
-            {$this->dbPrefix}_posts.time,
+            {$this->dbPrefix}_topic_posts.post_id,
+            {$this->dbPrefix}_topic_posts.time,
             {$this->dbPrefix}_users.id,
             {$this->dbPrefix}_users.name
 
         FROM
-            {$this->dbPrefix}_posts
+            {$this->dbPrefix}_topic_posts
 
         INNER JOIN {$this->dbPrefix}_users
-            ON {$this->dbPrefix}_posts.user_id =
+            ON {$this->dbPrefix}_topic_posts.user_id =
                {$this->dbPrefix}_users.id 
 
         WHERE
-            {$this->dbPrefix}_posts.topic_id = {$topic_id}
+            {$this->dbPrefix}_topic_posts.topic_id = {$topic_id}
 
         ORDER BY
-            {$this->dbPrefix}_posts.post_id
+            {$this->dbPrefix}_topic_posts.post_id
 
         DESC
 

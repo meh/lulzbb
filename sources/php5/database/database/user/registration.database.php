@@ -34,7 +34,7 @@ class RegistrationDatabase extends DatabaseBase {
     */
     public function exec($username, $password, $email) {
         $this->Database->sendQuery($this->Query->exec($username, $password, $email));
-        $this->Database->group->addUser($username, 'Unconfirmed');
+        $this->Database->user->group->addUser($username, 'Unconfirmed');
     } 
 }
 ?>
