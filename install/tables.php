@@ -1,8 +1,11 @@
 <?php
 /**
-* Package  lulzBB
-* Author   cHoBi
-* License  http://opensource.org/licenses/gpl-3.0.html
+* @package  lulzBB
+* @category Installation
+
+* @license  http://opensource.org/licenses/gpl-3.0.html
+
+* @author   cHoBi
 **/
 
 if (((int) phpversion()) == 4) {
@@ -136,6 +139,7 @@ description TEXT DEFAULT NULL,
 
 UNIQUE KEY(name, username))');
 
+// User groups creations.
 $Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups
        (name, description)
 VALUES ("Unconfirmed", "LOLOL, THEY HAVE TO CONFIRM, FOR SRS")');
@@ -148,17 +152,15 @@ $Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups
        (name, description)
 VALUES ("Moderator", "MODS = FAGS")');
 
-/*$Database->sendQuery('INSERT INTO '.$dbPrefix.'_sections
-       (parent, type, weight, title, subtitle)
-VALUES (0, 1, 1, "Sections", NULL)');
+// Sections creation.
+$Database->sendQuery('INSERT INTO '.$dbPrefix.'_section_groups
+       (parent, weight, name)
+VALUES (0,      1,      "Sections")
+');
 
 $Database->sendQuery('INSERT INTO '.$dbPrefix.'_sections
-       (parent, type, weight, title, subtitle) 
-VALUES (0, 0, 2, "Main section", "Main section subtitle")');
-
-$Database->sendQuery('INSERT INTO '.$dbPrefix.'_sections
-       (parent, type, weight, title, subtitle)
-VALUES (0, 2, 3, NULL, NULL)');*/
+       (group_id, weight, title,          subtitle)
+VALUES (1,        1,      "Main section", "Main section subtitle.")');
 
 if ($error = mysql_error()) {
     echo $error;

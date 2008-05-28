@@ -29,10 +29,9 @@ define('MISC_PATH', realpath('../sources/misc'));
 require_once(MISC_PATH.'/filesystem.php');
 
 // Get the session name.
-$file    = file('../.session.lol');
-$session = $file[0];
-define('SESSION', $session);
-
+require_once(MISC_PATH.'/session.php');
+define('SESSION', getSession('../'));
+    
 require_once(SOURCE_PATH.'/config.class.php');
 require_once(SOURCE_PATH.'/filter.class.php');
 require_once(SOURCE_PATH.'/user.class.php');

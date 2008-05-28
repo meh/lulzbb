@@ -36,25 +36,19 @@ if (((int) phpversion()) == 6) {
 */
 define('SOURCE_PATH', $sourcePath);
 
-if (!is_file('.session.lol')) {
-    $session = 'lulzBB-'.md5(rand().rand().time());
-
-    $file = fopen('.session.lol', 'w');
-    fwrite($file, $session);
-    fclose($file);
-
-    /**
-    * This is just a trick to prevent other products to override
-    * session data of the current lulzBB.
-    */
-    define('SESSION', $session);
+require_once(MISC_PATH.'/session.php');
+if (!sessionExists()) {
+    $session = createSession();
 }
 else {
-    $file = file('.session.lol');
-    $session = $file[0];
-
-    define('SESSION', $session);
+    $session = getSession();
 }
+
+/**
+* This is just a trick to prevent other products to override
+* session data of the current lulzBB.
+*/
+define('SESSION', $session);
 
 require_once(SOURCE_PATH.'/config.class.php');
 require_once(SOURCE_PATH.'/filter.class.php');
