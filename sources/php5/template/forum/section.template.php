@@ -292,7 +292,7 @@ class SectionTemplate extends Template {
         );
         $text = preg_replace(
             '|<%SECTION-SUBTITLE%>|i',
-            $section['subtitle']['HTML'],
+            (empty($section['subtitle']['HTML']) ? '&nbsp;' : $section['subtitle']['HTML']),
             $text
         );
         $text = preg_replace(

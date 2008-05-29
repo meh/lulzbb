@@ -45,6 +45,34 @@ class SectionGroupDatabase extends DatabaseBase {
     }
 
     /**
+    * Gets the heaviest section in the group.
+
+    * @param    int    $group_id    The group id.
+
+    * @return    int    The heaviest section in the group.
+    */
+    public function heaviest($group_id) {
+        $this->database->sendQuery($this->Query->heaviest($group_id));
+        $section = $this->database->fetchArray();
+
+        return $section['id']['RAW'];
+    }
+
+    /**
+    * Gets the lightest section in the group.
+
+    * @param    int    $group_id    The group id.
+
+    * @return    int    The lightest section in the group.
+    */
+    public function lightest($group_id) {
+        $this->database->sendQuery($this->Query->lightest($group_id));
+        $section = $this->database->fetchArray();
+
+        return $section['id']['RAW'];
+    }
+
+    /**
     * Gets the group's parent id.
 
     * @param    int    $group_id    The group id.

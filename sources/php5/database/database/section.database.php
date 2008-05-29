@@ -31,10 +31,19 @@ class SectionDatabase extends DatabaseBase {
     }
 
     /**
-    * 
-    */
-    public function add($parent, $group, $title, $subtitle) {
+    * Adds a section to a group.
 
+    * @param    int       $group       The group id where to put the section.
+    * @param    int       $weight      The section's weight.
+    * @param    string    $title       The section's title.
+    * @param    string    $subtitle    The section's subtitle.
+    */
+    public function add($group_id, $weight, $title, $subtitle) {
+        if (empty($weight)) {
+            $weight = $this->group->heaviest($group_id)+1;
+        }
+
+        $this->Database->sendQuery($this->Query->add($group_id, $weight, $title, $subtitle));
     }
 
     /**

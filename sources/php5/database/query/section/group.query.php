@@ -35,6 +35,54 @@ class SectionGroupQuery extends Query {
 QUERY;
     }
 
+    public function heaviest($group_id) {
+        $group_id = (int) $group_id;
+
+        return <<<QUERY
+
+        SELECT
+            {$this->dbPrefix}_sections.id
+
+        FROM
+            {$this->dbPrefix}_sections
+
+        WHERE
+            {$this->dbPrefix}_sections.group_id = {$group_id}
+
+        ORDER BY
+            {$this->dbPrefix}_sections.weight
+
+        DESC
+
+        LIMIT 1
+
+QUERY;
+    }
+
+    public function lightest($group_id) {
+        $group_id = (int) $group_id;
+
+        return <<<QUERY
+
+        SELECT
+            {$this->dbPrefix}_sections.id
+
+        FROM
+            {$this->dbPrefix}_sections
+
+        WHERE
+            {$this->dbPrefix}_sections.group_id = {$group_id}
+
+        ORDER BY
+            {$this->dbPrefix}_sections.weight
+
+        ASC
+
+        LIMIT 1
+
+QUERY;
+    }
+
     public function getParent($group_id) {
         $group_id = (int) $group_id;
 

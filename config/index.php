@@ -50,22 +50,27 @@ if (!$User->isIn('administrator')) {
     die("You don't have the permissions to change configurations.");
 }
 
-$command = @isset($_POST['command']) ? $_POST['command'] : $_GET['command'];
-
+$command = @$_REQUEST['command'];
 switch ($command) {
     case 'add_section':
-    $DATA['parent'] = @isset($_POST['parent']) ? $_POST['parent'] : $_GET['parent'];
+    $DATA['group_id'] = @$_REQUEST['group'];
+    $DATA['weight']   = @$_REQUEST['weight'];
+    $DATA['title']    = @$_REQUEST['title'];
+    $DATA['subtitle'] = @$_REQUEST['subtitle'];
 
-    try {
-        $Database->section->add();
+    if (empty($DATA['group_id']) or empty($DATA['weight']) or empty($DATA['title'])) {
+        die('Not enough parameters.');
     }
-    catch (lulzException $e) {
 
-    }
+    $Database->section->add(
+        $DATA['group_id'], $DATA['weight'],
+        $DATA['title'], $DATA['subtitle']
+    );
+    rm('/output/cache/sections/*');
     break;
 
     default:
-    echo "Command not found."
+    echo "Command not found.";
     break;
 }
 ?>

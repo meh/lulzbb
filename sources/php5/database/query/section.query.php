@@ -18,6 +18,33 @@ class SectionQuery extends Query {
         parent::__construct();
     }
 
+    public function add($group_id, $weight, $title, $subtitle) {
+        global $Filter;
+        $group_id = (int) $group_id;
+        $weight   = (int) $weight;
+        $title    = $Filter->SQL($title);
+        $subtitle = $Filter->SQL($subtitle);
+
+        return <<<QUERY
+
+        INSERT
+            INTO {$this->dbPrefix}_sections(
+                {$this->dbPrefix}_sections.group_id,
+                {$this->dbPrefix}_sections.weight,
+                {$this->dbPrefix}_sections.title,
+                {$this->dbPrefix}_sections.subtitle
+            )
+
+            VALUES(
+                {$group_id},
+                {$weight},
+                "{$title}",
+                "{$subtitle}"
+            )
+
+QUERY;
+    }
+
     public function exists($section_id) {
         $section_id = (int) $section_id;
 
