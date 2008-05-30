@@ -1,6 +1,8 @@
 <?php
 /**
 * @package lulzBB-PHP5
+* @category Output
+
 * @license http://opensource.org/licenses/gpl-3.0.html
 */
 

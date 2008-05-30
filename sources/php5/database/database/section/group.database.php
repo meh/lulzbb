@@ -45,6 +45,17 @@ class SectionGroupDatabase extends DatabaseBase {
     }
 
     /**
+    * Adds a group to a parent.
+
+    * @param    int       $parent     The group where to add the group.
+    * @param    int       $weight     The group's weight.
+    * @parma    string    $name       The group's name.
+    */
+    public function add($parent, $weight, $name) {
+        $this->Database->sendQuery($this->Query->add($parent, $weight, $name));
+    }
+
+    /**
     * Gets the heaviest section in the group.
 
     * @param    int    $group_id    The group id.

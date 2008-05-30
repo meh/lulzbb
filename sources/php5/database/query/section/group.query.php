@@ -35,6 +35,30 @@ class SectionGroupQuery extends Query {
 QUERY;
     }
 
+    public function add($parent, $weight, $name) {
+        global $Filter;
+        $parent = (int) $parent;
+        $weight = (int) $weight;
+        $name   = $Filter->SQL($name);
+
+        return <<<QUERY
+
+        INSERT
+            INTO {$this->dbPrefix}_section_groups(
+                {$this->dbPrefix}_section_groups.parent,
+                {$this->dbPrefix}_section_groups.weight,
+                {$this->dbPrefix}_section_groups.name
+            )
+
+            VALUES(
+                {$parent},
+                {$weight},
+                "{$name}"
+            )
+
+QUERY;
+    }
+
     public function heaviest($group_id) {
         $group_id = (int) $group_id;
 

@@ -46,44 +46,16 @@ $Filter   = $_SESSION[SESSION]['filter'];
 $Database = new Database;
 $User     = @$_SESSION[SESSION]['user'];
 
-if (!isset($User) or !$User->isIn('administrator')) {
-    die("You don't have the permissions to change configurations.");
+if (isset($_GET['show'])) {
+    if (isset($_GET['profile'])) {
+        $DATA['user_id'] = @$_REQUEST['id'];
+
+        $template = new UserProfile($DATA['user_id']);
+        echo $template->output();
+    }
 }
 
-$command = @$_REQUEST['command'];
-switch ($command) {
-    case 'add_group':
-    $DATA['parent'] = @$_REQUEST['parent'];
-    $DATA['weight'] = @$_REQUEST['weight'];
-    $DATA['name']   = @$_REQUEST['name'];
+else if (isset($_GET['send'])) {
 
-    if (!isset($DATA['parent']) or !isset($DATA['weight']) or empty($DATA['name'])) {
-        die('Not enough parmeters.');
-    }
-
-    $Database->section->group->add($DATA['parent'], $DATA['weight'], $DATA['name']);
-    rm('/output/cache/sections/*');
-    break;
-
-    case 'add_section':
-    $DATA['group_id'] = @$_REQUEST['group'];
-    $DATA['weight']   = @$_REQUEST['weight'];
-    $DATA['title']    = @$_REQUEST['title'];
-    $DATA['subtitle'] = @$_REQUEST['subtitle'];
-
-    if (!isset($DATA['group_id']) or !isset($DATA['weight']) or empty($DATA['title'])) {
-        die('Not enough parameters.');
-    }
-
-    $Database->section->add(
-        $DATA['group_id'], $DATA['weight'],
-        $DATA['title'], $DATA['subtitle']
-    );
-    rm('/output/cache/sections/*');
-    break;
-
-    default:
-    echo "Command not found.";
-    break;
 }
 ?>
