@@ -80,10 +80,15 @@ class User {
         return false;
     }
 
+    public function addTo($groupName) {
+        array_push($this->groups, $groupName);
+    }
+
     public function removeFrom($groupName) {
         foreach ($this->groups as $n => $group) {
             if ($group['RAW'] == $groupName) {
                 unset($this->groups[$n]);
+                break;
             }
         }
     }

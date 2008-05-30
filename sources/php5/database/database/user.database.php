@@ -53,7 +53,31 @@ class UserDatabase extends DatabaseBase {
         $this->Database->sendQuery($this->Query->getName($id));
         $user = $this->Database->fetchArray();
 
-        return $user['name'];
+        if (isset($user)) {
+            return $user['name'];
+        }
+        else {
+            
+        }
+    }
+
+    /**
+    * Gets the session id of the user.
+
+    * @param    mixed    The user id or name.
+
+    * @return    string    The user's session id.
+    */
+    public function getSession($user) {
+        if (is_numeric($user)) {
+            $this->datatabase->sendQuery($this->Query->getSessionFromId($user));
+        }
+        else if (is_string($user)) {
+            $this->Database->sendQuery($this->Query->getSessionFromName($user));
+        }
+        $session = $this->Database->fetchArray();
+
+        return $session['session']['RAW'];
     }
 
     /**
@@ -65,7 +89,7 @@ class UserDatabase extends DatabaseBase {
     *                    FALSE: What about no?
     */
     public function exists($username) {
-        $query    = $this->Database->sendQuery($this->Query->exists($username));
+        $query = $this->Database->sendQuery($this->Query->exists($username));
 
         if (mysql_fetch_row($query)) {
             return true;

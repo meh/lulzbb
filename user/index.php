@@ -48,6 +48,8 @@ $User     = @$_SESSION[SESSION]['user'];
 
 if (isset($_GET['show'])) {
     if (isset($_GET['profile'])) {
+        require_once(SOURCE_PATH.'/output/user/profile.output.php');
+
         $DATA['user_id'] = @$_REQUEST['id'];
 
         $template = new UserProfile($DATA['user_id']);

@@ -16,6 +16,23 @@ class GroupQuery extends Query {
         parent::__construct();
     }
 
+    public function exists($group) {
+        global $Filter;
+        $group = $Filter->SQL($group);
+
+        return <<<QUERY
+
+        SELECT
+            {$this->dbPrefix}_user_groups.name
+
+        FROM
+            {$this->dbPrefix}_user_groups
+
+        WHERE
+            {$this->dbPrefix}_user_groups.name = "{$group}"
+
+QUERY;
+    }
    
     public function get($username) {
         global $Filter;

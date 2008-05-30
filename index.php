@@ -37,11 +37,11 @@ if (((int) phpversion()) == 6) {
 define('SOURCE_PATH', $sourcePath);
 
 require_once(MISC_PATH.'/session.php');
-if (!sessionExists()) {
-    $session = createSession();
+if (!sessionFileExists()) {
+    $session = createSessionFile();
 }
 else {
-    $session = getSession();
+    $session = getSessionConstant();
 }
 
 /**

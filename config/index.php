@@ -9,11 +9,11 @@
 if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
     die("You can't set a php session id, sorry.");
 }
-session_set_cookie_params(60*60*24*365);
 
 define('ROOT_PATH', realpath('../'));
-define('MISC_PATH', ROOT_PATH.'/sources/misc');
 
+define('MISC_PATH', ROOT_PATH.'/sources/misc');
+require_once(MISC_PATH.'/session.php');
 require_once(MISC_PATH.'/filesystem.php');
 
 if (((int) phpversion()) == 4) {
@@ -27,15 +27,11 @@ if (((int) phpversion()) == 6) {
 }
 define('SOURCE_PATH', realpath($sourcePath));
 
-// Get the session name.
-require_once(MISC_PATH.'/session.php');
-define('SESSION', getSession('../'));
-
 require_once(SOURCE_PATH.'/config.class.php');
 require_once(SOURCE_PATH.'/filter.class.php');
 require_once(SOURCE_PATH.'/user.class.php');
 require_once(SOURCE_PATH.'/database/database.class.php');
-session_start();
+startSession('../');
 
 if (!isset($_SESSION[SESSION])) {
     die('The session died or something went wrong, refresh to the index please');
@@ -46,9 +42,9 @@ $Filter   = $_SESSION[SESSION]['filter'];
 $Database = new Database;
 $User     = @$_SESSION[SESSION]['user'];
 
-if (!isset($User) or !$User->isIn('administrator')) {
+/*if (!isset($User) or !$User->isIn('administrator')) {
     die("You don't have the permissions to change configurations.");
-}
+}*/
 
 $command = @$_REQUEST['command'];
 switch ($command) {
@@ -80,6 +76,32 @@ switch ($command) {
         $DATA['title'], $DATA['subtitle']
     );
     rm('/output/cache/sections/*');
+    break;
+
+    case 'add_user_to_group':
+    $DATA['user']   = @$_REQUEST['user'];
+    $DATA['group']  = @$_REQUEST['group'];
+
+    if (!isset($DATA['user']) or !isset($DATA['group'])) {
+        die('Not enough parameters.');
+    }
+
+    if (is_numeric($DATA['user'])) {
+        $DATA['user'] = $Database->user->getName($DATA['user']);
+    }
+
+    $oldSession = session_id();
+    $newSession = $Database->user->getSession($DATA['user']);
+
+    if (!$Database->user->group->addUser($DATA['user'], $DATA['group'])) {
+        die("The username or the group don't exist.");
+    }
+
+    if (isset($newSession)) {
+        changeSession($newSession);
+        $User->addTo($DATA['group']);
+        changeSession($oldSession);
+    }
     break;
 
     default:

@@ -32,7 +32,42 @@ class UserQuery extends Query {
 
 QUERY;
     }
-    
+
+    public function getSessionFromId($user_id) {
+        $user_id = (int) $user_id;
+
+        return <<<QUERY
+
+        SELECT
+            {$this->dbPrefix}_users.session
+
+        FROM
+            {$this->dbPrefix}_users
+
+        WHERE
+            {$this->dbPrefix}_users.id = {$user_id}
+
+QUERY;
+    }
+
+    public function getSessionFromName($user_name) {
+        global $Filter;
+        $user_name = $Filter->SQL($user_name);
+
+        return <<<QUERY
+
+        SELECT
+            {$this->dbPrefix}_users.session
+
+        FROM
+            {$this->dbPrefix}_users
+
+        WHERE
+            {$this->dbPrefix}_users.name = "{$user_name}"
+
+QUERY;
+    }
+
     public function exists($username) {
         global $Filter;
         $username = $Filter->SQL(trim($username));

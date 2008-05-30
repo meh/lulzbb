@@ -6,12 +6,17 @@
 * @author cHoBi
 */
 
+$queries = 0;
+
 if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
     die("You can't set a php session id, sorry.");
 }
-session_set_cookie_params(60*60*24*365);
 
-$queries = 0;
+define('ROOT_PATH', realpath('../'));
+
+define('MISC_PATH', ROOT_PATH.'/sources/misc'));
+require_once(MISC_PATH.'/session.php');
+require_once(MISC_PATH.'/filesystem.php');
 
 if (((int) phpversion()) == 4) {
     die("PHP 4 isn't supported yet");
@@ -22,22 +27,13 @@ if (((int) phpversion()) == 5) {
 if (((int) phpversion()) == 6) {
     die('LOLNO');
 }
-
 define('SOURCE_PATH', realpath($SOURCE_PATH));
-define('MISC_PATH', realpath('../sources/misc'));
 
-require_once(MISC_PATH.'/filesystem.php');
-
-// Get the session name.
-require_once(MISC_PATH.'/session.php');
-define('SESSION', getSession('../'));
-    
 require_once(SOURCE_PATH.'/config.class.php');
 require_once(SOURCE_PATH.'/filter.class.php');
 require_once(SOURCE_PATH.'/user.class.php');
 require_once(SOURCE_PATH.'/database/database.class.php');
-session_start();
-define('ROOT_PATH', $_SESSION[SESSION]['ROOT_PATH']);
+startSession();
 
 $Config   = $_SESSION[SESSION]['config'];
 $Filter   = $_SESSION[SESSION]['filter'];
