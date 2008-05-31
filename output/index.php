@@ -96,24 +96,24 @@ else {
         die("You can't set a php session id, sorry.");
     }
 
-    define('ROOT_PATH', realpath('../'));
-
-    define('MISC_PATH', ROOT_PATH.'/sources/misc');
-    require_once(MISC_PATH.'/session.php');
-    require_once(MISC_PATH.'/filesystem.php');
-
-    if (((int) phpversion()) == 4) {
+    define('VERSION', (float) phpversion());
+    if ((int) VERSION == 4) {
         die("PHP 4 isn't supported yet");
     }
-    if (((int) phpversion()) == 5) {
-        $sourcePath = ROOT_PATH.'/sources/php5';
-    }
-    if (((int) phpversion()) == 6) {
+    if ((int) VERSION == 6) {
         die('LOLNO');
     }
-    define('SOURCE_PATH', realpath($sourcePath));
     
-    // Get the session name.
+    // Paths
+    define('ROOT_PATH', realpath('../'));
+    define('SOURCE_PATH', ROOT_PATH.'/sources/php'.((int) VERSION));
+    define('MISC_PATH', ROOT_PATH.'/sources/misc');
+    
+    // Misc sources.
+    require_once(MISC_PATH.'/session.php');
+    require_once(MISC_PATH.'/filesystem.php');
+    
+    // Session creation.
     require_once(SOURCE_PATH.'/config.class.php');
     require_once(SOURCE_PATH.'/filter.class.php');
     require_once(SOURCE_PATH.'/user.class.php');

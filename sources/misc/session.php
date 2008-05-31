@@ -56,13 +56,27 @@ function getSessionConstant($relativePath = './') {
 }
 
 /**
+* Sets cookie parameters.
+*/
+function setCookieParams() {
+    $year = 60*60*24*365;
+
+    if (VERSION == 4) {
+        session_set_cookie_params($year);
+    }
+    else if (VERSION >= 5.2) {
+        session_set_cookie_params($year, '/', '', true, true);
+    }
+}
+
+/**
 * Inits the session.
 
 * @param    string    $relativePath    The relative path where to read the session constant.
 */
 function startSession($relativePath = './') {
     define('SESSION', getSessionConstant($relativePath));
-    session_set_cookie_params(60*60*24*365);
+    setCookieParams();
     session_start();
 }
 
@@ -74,6 +88,7 @@ function startSession($relativePath = './') {
 function changeSession($id) {
     session_write_close();
     session_id($id);
+    setCookieParams();
     session_start();
 }
 ?>

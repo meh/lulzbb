@@ -55,32 +55,32 @@ class Post extends Send {
             die('LOLNO');
         }
         
-        // Check for data integrity, switch to give back errors messages.
-        switch ($this->__checkData($title, $content)) {
-            case 'content':
-            $message = new InformativeMessage("The message isn't long enough.");
-            break;
+        try {
+            // Check for data integrity, switch to give back errors messages.
+            switch ($this->__checkData($title, $content)) {
+                case 'content':
+                $message = new InformativeMessage("The message isn't long enough.");
+                break;
 
-            default:
-            try {
+                default:
                 $Database->topic->post->add($topic_id, $title, $content);
-            }
-            catch (lulzException $e) {
-                die($e->getMessage());
-            }
 
-            $message = new InformativeMessage(
-                'post_sent',
-                array(
-                    'topic_id' => $topic_id,
-                    'title'    => $title,
-                    'post_id'  => 'last'
-                )
-            );
-            
-            rm('/output/cache/sections/*');
-            rm("/output/cache/topics/{$topic_id}.html");
-            break;
+                $message = new InformativeMessage(
+                    'post_sent',
+                    array(
+                        'topic_id' => $topic_id,
+                        'title'    => $title,
+                        'post_id'  => 'last'
+                    )
+                );
+        
+                rm('/output/cache/sections/*');
+                rm("/output/cache/topics/{$topic_id}.html");
+                break;
+            }
+        }
+        catch (lulzException $e) {
+            die($e->getMessage());
         }
 
         return $message->output();

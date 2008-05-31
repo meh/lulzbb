@@ -27,10 +27,9 @@ class Logout extends Send {
     * @access private
     */
     protected function __send($data) {
-        unset($_SESSION[SESSION]['user']);
-        
         $template = new InformativeMessage('logout_successful');
-        
+       
+        destroySession();
         return $template->output();
     }
 }

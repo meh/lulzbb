@@ -10,23 +10,24 @@ if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
     die("You can't set a php session id, sorry.");
 }
 
-define('ROOT_PATH', realpath('../'));
+define('VERSION', (float) phpversion());
+if ((int) VERSION == 4) {
+    die("PHP 4 isn't supported yet");
+}
+if ((int) VERSION == 6) {
+    die('LOLNO');
+}
 
+// Paths
+define('ROOT_PATH', realpath('../'));
+define('SOURCE_PATH', ROOT_PATH.'/sources/php'.((int) VERSION));
 define('MISC_PATH', ROOT_PATH.'/sources/misc');
+
+// Misc sources.
 require_once(MISC_PATH.'/session.php');
 require_once(MISC_PATH.'/filesystem.php');
 
-if (((int) phpversion()) == 4) {
-    die("PHP 4 isn't supported yet");
-}
-if (((int) phpversion()) == 5) {
-    $sourcePath = ROOT_PATH.'/sources/php5';
-}
-if (((int) phpversion()) == 6) {
-    die('LOLNO');
-}
-define('SOURCE_PATH', realpath($sourcePath));
-
+// Session creation.
 require_once(SOURCE_PATH.'/config.class.php');
 require_once(SOURCE_PATH.'/filter.class.php');
 require_once(SOURCE_PATH.'/user.class.php');
@@ -42,9 +43,9 @@ $Filter   = $_SESSION[SESSION]['filter'];
 $Database = new Database;
 $User     = @$_SESSION[SESSION]['user'];
 
-/*if (!isset($User) or !$User->isIn('administrator')) {
+if (!isset($User) or !$User->isIn('administrator')) {
     die("You don't have the permissions to change configurations.");
-}*/
+}
 
 $command = @$_REQUEST['command'];
 switch ($command) {
@@ -93,14 +94,14 @@ switch ($command) {
     $oldSession = session_id();
     $newSession = $Database->user->getSession($DATA['user']);
 
-    if (!$Database->user->group->addUser($DATA['user'], $DATA['group'])) {
-        die("The username or the group don't exist.");
-    }
-
     if (isset($newSession)) {
         changeSession($newSession);
         $User->addTo($DATA['group']);
         changeSession($oldSession);
+    }
+    else {
+        stopSession();
+
     }
     break;
 

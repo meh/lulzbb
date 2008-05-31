@@ -54,14 +54,19 @@ class NavigatorShow extends Show {
     private function __createNavigator($type, $id, $option) {
         global $Database;
 
-        switch ($type) {
-            case 'section':
-            $parents = $Database->section->getNavigator($id, $option);
-            break;
+        try {
+            switch ($type) {
+                case 'section':
+                $parents = $Database->section->getNavigator($id, $option);
+                break;
 
-            case 'topic':
-            $parents = $Database->topic->getNavigator($id, $option);
-            break;
+                case 'topic':
+                $parents = $Database->topic->getNavigator($id, $option);
+                break;
+            }
+        }
+        catch (lulzException $e) {
+            die($e->getMessage());
         }
 
         return $parents;

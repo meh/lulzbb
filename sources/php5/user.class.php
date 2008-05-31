@@ -68,6 +68,13 @@ class User {
         }
     }
 
+    /**
+    * Checks if the user is in the group.
+
+    * @param    string    $groupName    The group's name.
+
+    * @return    bool    True if it's in the group, false if it's not.
+    */
     public function isIn($groupName) {
         $groupName = strtolower($groupName);
 
@@ -80,10 +87,22 @@ class User {
         return false;
     }
 
+    /**
+    * Adds the user to the group.
+
+    * @param    string    $groupName    The group's name.
+    */
     public function addTo($groupName) {
+        $Database->user->group->addUser($DATA['user'], $DATA['group']);
+
         array_push($this->groups, $groupName);
     }
 
+    /**
+    * Removes the user from the group.
+
+    * @param    string    $groupName    The group's name.
+    */
     public function removeFrom($groupName) {
         foreach ($this->groups as $n => $group) {
             if ($group['RAW'] == $groupName) {

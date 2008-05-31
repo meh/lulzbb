@@ -24,13 +24,18 @@ class Section extends Output {
     public function __construct($section_id) {
         parent::__construct();
 
-        $cache = new SectionCache($section_id);
-        if (!$cache->isCached()) {
-            $section = new SectionShow($section_id);
-            $cache->put($section->output());
-        }
+        try {
+            $cache = new SectionCache($section_id);
+            if (!$cache->isCached()) {
+                $section = new SectionShow($section_id);
+                $cache->put($section->output());
+            }
 
-        $this->output = $cache->get();
+            $this->output = $cache->get();
+        }
+        catch (lulzException $e) {
+            die($e->getMessage());
+        }
     }
 }
 ?>

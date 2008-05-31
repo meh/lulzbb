@@ -61,35 +61,36 @@ class Topic extends Send {
             die('LOLNO');
         }
 
-        // Check for data integrity, switch to give back errors messages.
-        switch ($this->__checkData($parent, $title, $subtitle, $content)) {
-            case 'parent':
-            $message = new InformativeMessage(
-                  'Where should i add the topic?<br/><br/>'
-                . 'Are you trying to hax me? :('
-            );
-            break;
+        try {
+            // Check for data integrity, switch to give back errors messages.
+            switch ($this->__checkData($parent, $title, $subtitle, $content)) {
+                case 'parent':
+                $message = new InformativeMessage(
+                      'Where should i add the topic?<br/><br/>'
+                    . 'Are you trying to hax me? :('
+                );
+                break;
 
-            case 'title':
-            $message = new InformativeMessage("The topic title isn't long enough.");
-            break;
+                case 'title':
+                $message = new InformativeMessage("The topic title isn't long enough.");
+                break;
 
-            case 'content':
-            $message = new InformativeMessage("The message isn't long enough.");
-            break;
+                case 'content':
+                $message = new InformativeMessage("The message isn't long enough.");
+                break;
 
-            default:
-            try {
+                default:
                 $topic_id = $Database->topic->add($parent, $type, $title, $subtitle, $content);
                 $message = new InformativeMessage('topic_sent', array('topic_id' => $topic_id));
+                        
+                rm('/output/cache/sections/*');
+                break;
             }
-            catch (lulzException $e) {
-                return $e->getMessage();
-            }
-            
-            rm('/output/cache/sections/*');
-            break;
         }
+        catch (lulzException $e) {
+            return $e->getMessage();
+        }
+
 
         return $message->output();
     }

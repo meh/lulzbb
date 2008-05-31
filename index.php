@@ -9,54 +9,47 @@
 if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
     die("You can't set a php session id, sorry.");
 }
-session_set_cookie_params(60*60*24*365);
 
 /**
-* The root path for the forum.
+* The php version.
+*/
+define('VERSION', (float) phpversion());
+if ((int) VERSION == 4) {
+    die("PHP 4 isn't supported yet");
+}
+if ((int) VERSION == 6) {
+    die('LOLNO');
+}
+
+/**
+* The root path of the forum.
 */
 define('ROOT_PATH', dirname(__FILE__));
+
+/**
+* The correct source path for the php version installed on the server.
+*/
+define('SOURCE_PATH', ROOT_PATH.'/sources/php'.((int) VERSION));
 
 /**
 * The path to the portable sources, like filesystem functions and such.
 */
 define('MISC_PATH', ROOT_PATH.'/sources/misc');
+
+// Misc sources.
+require_once(MISC_PATH.'/session.php');
 require_once(MISC_PATH.'/filesystem.php');
 
-if (((int) phpversion()) == 4) {
-    die("PHP 4 isn't supported yet");
-}
-if (((int) phpversion()) == 5) {
-    $sourcePath = ROOT_PATH.'/sources/php5';
-}
-if (((int) phpversion()) == 6) {
-    die('LOLNO');
-}
-/**
-* The correct source path for the php version installed on the server.
-*/
-define('SOURCE_PATH', $sourcePath);
-
-require_once(MISC_PATH.'/session.php');
-if (!sessionFileExists()) {
-    $session = createSessionFile();
-}
-else {
-    $session = getSessionConstant();
-}
-
-/**
-* This is just a trick to prevent other products to override
-* session data of the current lulzBB.
-*/
-define('SESSION', $session);
-
+// Session creation.
 require_once(SOURCE_PATH.'/config.class.php');
 require_once(SOURCE_PATH.'/filter.class.php');
 require_once(SOURCE_PATH.'/user.class.php');
 require_once(SOURCE_PATH.'/database/database.class.php');
-session_start();
 
-$_SESSION[SESSION]['ROOT_PATH'] = ROOT_PATH;
+if (!sessionFileExists()) {
+    createSessionFile();
+}
+startSession();
 
 /**
 * This global var contains the Config object, so it's useful to get

@@ -27,7 +27,6 @@ class TopicShow extends Show {
     */
     public function __construct($parent, $topic_id, $post_id) {
         parent::__construct();
-        global $Database;
 
         $this->data['parent']    = (int) $parent;
         $this->data['topic_id']  = (int) $topic_id;

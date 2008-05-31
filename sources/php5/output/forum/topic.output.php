@@ -32,22 +32,28 @@ class Topic extends Output {
     
         parent::__construct();
         global $Database;
-        $parent = $Database->topic->getParent($topic_id);
 
-        $cache = new TopicCache($parent['id'], $topic_id);
-        if (!$cache->isCached()) {
-            $topic = new TopicShow($parent['id'], $topic_id, $post_id);
-            $cache->put($topic->output());
-        }
+        try {
+            $parent = $Database->topic->getParent($topic_id);
 
-        if (isCached('sections', $parent['id'])) {
-            $cache->updateViews();
-        }
-        else {
-            $Database->topic->increaseViewsCount($topic_id);
-        }
+            $cache = new TopicCache($parent['id'], $topic_id);
+            if (!$cache->isCached()) {
+                $topic = new TopicShow($parent['id'], $topic_id, $post_id);
+                $cache->put($topic->output());
+            }
+
+            if (isCached('sections', $parent['id'])) {
+                $cache->updateViews();
+            }
+            else {
+                $Database->topic->increaseViewsCount($topic_id);
+            }
         
-        $this->output = $this->__formPost($cache->get(), $topic_id);
+            $this->output = $this->__formPost($cache->get(), $topic_id);
+        }
+        catch (lulzExceptions $e) {
+            die($e->getMessage());
+        }
     }
     
     /**

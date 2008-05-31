@@ -8,32 +8,29 @@
 * @author   cHoBi
 **/
 
-if (((int) phpversion()) == 4) {
+define('VERSION', (float) phpversion());
+if ((int) VERSION == 4) {
     die("PHP 4 isn't supported yet");
 }
-if (((int) phpversion()) == 5) {
-    $SOURCE_PATH = '../sources/php5';
-}
-if (((int) phpversion()) == 6) {
+if ((int) VERSION == 6) {
     die('LOLNO');
 }
 
-define('SOURCE_PATH', realpath($SOURCE_PATH));
-define('MISC_PATH', realpath('../sources/misc'));
+// Paths
+define('ROOT_PATH', realpath('../'));
+define('SOURCE_PATH', ROOT_PATH.'/sources/php'.((int) VERSION));
+define('MISC_PATH', ROOT_PATH.'/sources/misc');
 
+// Misc sources.
+require_once(MISC_PATH.'/session.php');
 require_once(MISC_PATH.'/filesystem.php');
 
-// Get the session name.
-$file    = file('../.session.lol');
-$session = $file[0];
-define('SESSION', $session);
-
+// Session creation.
 require_once(SOURCE_PATH.'/config.class.php');
 require_once(SOURCE_PATH.'/filter.class.php');
 require_once(SOURCE_PATH.'/user.class.php');
 require_once(SOURCE_PATH.'/database/database.class.php');
-session_start();
-define('ROOT_PATH', $_SESSION[SESSION]['ROOT_PATH']);
+startSession('../');
 
 $Config   = $_SESSION[SESSION]['config'];
 $Filter   = $_SESSION[SESSION]['filter'];
