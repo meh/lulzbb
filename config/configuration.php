@@ -18,5 +18,7 @@ dbPrefix=The database prefix
 
 ; Misc info
 titleMinLength=3
+titleMaxLength=30
 contentMinLength=5
+elementsPerPage=15
 */?>

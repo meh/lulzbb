@@ -45,6 +45,24 @@ class SectionQuery extends Query {
 QUERY;
     }
 
+    public function getPages($section_id) {
+        global $Config;
+        $section_id = (int) $section_id;
+
+        return <<<QUERY
+
+        SELECT
+            CEIL(COUNT(id)/{$Config->get('elementsPerPage')})
+
+        FROM
+            {$this->dbPrefix}_topics
+
+        WHERE
+            {$this->dbPrefix}_topics.parent = {$section_id}
+
+QUERY;
+    }
+
     public function exists($section_id) {
         $section_id = (int) $section_id;
 
@@ -123,8 +141,14 @@ QUERY;
 QUERY;
     }
 
-    public function getTopics($section_id) {
+    public function getTopics($section_id, $page) {
+        global $Config;
         $section_id = (int) $section_id;
+
+        $elementsPerPage = $Config->get('elementsPerPage');
+
+        $offset = ($elementsPerPage * $page) - $elementsPerPage;
+        $limit  = $offset + $elementsPerPage;
 
         return <<<QUERY
         
@@ -158,6 +182,8 @@ QUERY;
             {$this->dbPrefix}_topics.last_post_time
 
         DESC
+
+        LIMIT {$offset}, {$limit}
         
 QUERY;
     }

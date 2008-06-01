@@ -21,11 +21,12 @@ class SectionCache extends Cache {
     * Initialize the cache and the file.
 
     * @param    int    $section_id    The section id.
+    * @param    int    $page          The page to show.
     */
-    public function __construct($section_id) {
+    public function __construct($section_id, $page) {
         $this->section_id = $section_id;
 
-        $file = "sections/{$section_id}.html";
+        $file = "sections/{$section_id}-{$page}.html";
         parent::__construct($file);
 
         if ($this->cached) {

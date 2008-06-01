@@ -49,6 +49,42 @@ class TopicDatabase extends DatabaseBase {
     }
 
     /**
+    * Gets the page where the topic is.
+
+    * @param    int    $section_id    The section's id.
+    * @param    int    $topic_id      The topic's id.
+
+    * @return    int    The page's number.
+    */
+    public function getPage($topic_id) {
+        $this->Database->sendQuery($this->Query->createTemporaryTable_Page());
+        $this->Database->initializeCounter();
+        $this->Database->sendQuery($this->Query->initializePositions(
+            $this->getParent($topic_id), 
+            $this->getLastPostTime($topic_id))
+        );
+        $query = $this->Database->sendQuery($this->Query->getPage($topic_id));
+        $this->Database->sendQuery($this->Query->destroyTemporaryTable_Page());
+        
+        $position = mysql_fetch_row($query);
+        return $position[0];
+    }
+
+    /**
+    * Gets the last post time of a topic.
+
+    * @param    int    $topic_id    The topic's id.
+
+    * @return    string    The last post timestamp.
+    */
+    public function getLastPostTime($topic_id) {
+        $query = $this->Database->sendQuery($this->Query->getLastPostTime($topic_id));
+        $time = mysql_fetch_row($query);
+
+        return $time[0];
+    }
+
+    /**
     * Inserts a topic.
     
     * @param    int       $topic_type    The type of the topic.

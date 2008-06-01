@@ -166,8 +166,9 @@ else {
         if (isset($_GET['section'])) {
             require_once(SOURCE_PATH.'/output/forum/section.output.php');
             $DATA['section_id'] = $DATA['id'];
+            $DATA['page']       = @$_POST['page'];
 
-            $section = new Section($DATA['section_id']);
+            $section = new Section($DATA['section_id'], $DATA['page']);
             echo $section->output();
             
             echo stats();

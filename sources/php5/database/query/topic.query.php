@@ -32,7 +32,89 @@ class TopicQuery extends Query {
 
 QUERY;
     }
-    
+
+    public function createTemporaryTable_Page() {
+        return <<<QUERY
+
+        CREATE TEMPORARY TABLE tmp_topics(
+            id INT UNSIGNED,
+            position INT UNSIGNED
+        )
+
+        TYPE = HEAP
+
+QUERY;
+    }
+
+    public function destroyTemporaryTable_Page() {
+        return 'DROP TABLE tmp_topics';
+    }
+
+    public function initializePositions($section_id, $last_post_time) {
+        global $Filter;
+        $section_id     = (int) $section_id;
+        $last_post_time = $Filter->SQL($last_post_time);
+
+        return <<<QUERY
+
+        INSERT
+            INTO tmp_topics(id, position)
+
+            SELECT
+                {$this->dbPrefix}_topics.id,
+                @i := (@i + 1) as position
+
+            FROM
+                {$this->dbPrefix}_topics
+
+            WHERE
+                {$this->dbPrefix}_topics.parent = {$section_id}
+              AND
+                {$this->dbPrefix}_topics.last_post_time >= TIMESTAMP("{$last_post_time}")
+
+            ORDER BY
+                {$this->dbPrefix}_topics.last_post_time
+
+            DESC
+
+QUERY;
+    }
+
+    public function getPage($topic_id) {
+        global $Config;
+        $topic_id = (int) $topic_id;
+        
+        return <<<QUERY
+
+        SELECT
+            CEIL(tmp_topics.position/{$Config->get('elementsPerPage')})
+
+        FROM
+            tmp_topics
+
+        WHERE
+            id = {$topic_id};
+
+QUERY;
+    }
+
+    public function getLastPostTime($topic_id) {
+        $topic_id = (int) $topic_id;
+
+        return <<<QUERY
+
+        SELECT
+            {$this->dbPrefix}_topics.last_post_time
+
+        FROM
+            {$this->dbPrefix}_topics
+
+        WHERE
+            {$this->dbPrefix}_topics.id = {$topic_id}
+
+QUERY;
+    }
+
     public function getPosts($topic_id) {
         $topic_id = (int) $topic_id;
         

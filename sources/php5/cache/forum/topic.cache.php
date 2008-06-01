@@ -18,6 +18,7 @@ require_once(SOURCE_PATH.'/template/forum/section.template.php');
 class TopicCache extends Cache {
     private $parent;
     private $topic_id;
+    private $page;
 
     /**
     * Create the file for the cache.
@@ -31,6 +32,8 @@ class TopicCache extends Cache {
         $this->parent   = $parent;
         $this->topic_id = $topic_id;
 
+        $this->__setPage();
+
         parent::__construct($file);
     }
 
@@ -41,7 +44,7 @@ class TopicCache extends Cache {
         global $Database;
         $Database->topic->increaseViewsCount($this->topic_id);
 
-        $file = ROOT_PATH."/output/cache/sections/{$this->parent}.html";
+        $file = ROOT_PATH."/output/cache/sections/{$this->parent}-{$this->page}.html";
         $text = @file_get_contents($file);
 
         preg_match(
@@ -57,6 +60,20 @@ class TopicCache extends Cache {
         );
 
         @file_put_contents($file, $text);
+    }
+
+    private function __setPage() {
+        $path = ROOT_PATH."/output/cache/misc/page.topic.{$this->parent}-{$this->topic_id}.txt";
+
+        if (is_file($path)) {
+            $page = file($path);
+            $this->page = $page[0];
+        }
+        else {
+            global $Database;
+            $this->page = $Database->topic->getPage($this->topic_id);
+            file_put_contents($path, "{$this->page}");
+        }
     }
 }
 ?>

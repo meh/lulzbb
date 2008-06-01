@@ -6,7 +6,7 @@
 * @license http://opensource.org/licenses/gpl-3.0.html
 */
 
-require_once(SOURCE_PATH.'/database/query/post.query.php');
+require_once(SOURCE_PATH.'/database/query/topic/post.query.php');
 require_once(SOURCE_PATH.'/database/database.base.class.php');
 
 /**

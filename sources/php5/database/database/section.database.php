@@ -70,6 +70,20 @@ class SectionDatabase extends DatabaseBase {
     }
 
     /**
+    * Gets the section's number of pages.
+
+    * @param    int    $section_id    The section id.
+
+    * @return    int    The number of pages.
+    */
+    public function getPages($section_id) {
+        $query = $this->Database->sendQuery($this->Query->getPages($section_id));
+        $pages = mysql_fetch_row($query);
+
+        return (int) $pages[0];
+    }
+
+    /**
     * Gets id and title of a section.
 
     * @param    int    $section_id    The section id.
@@ -79,7 +93,7 @@ class SectionDatabase extends DatabaseBase {
     public function getInfo($section_id) {
         $name = $this->getTitle($section_id);
 
-        return array('id' => $section_id, 'name' => $name);
+        return array('id' => (int) $section_id, 'name' => $name);
     }
 
     /**
@@ -93,7 +107,7 @@ class SectionDatabase extends DatabaseBase {
         $this->Database->sendQuery($this->Query->getParent($section_id));
         $parent = $this->Database->fetchArray();
 
-        return $parent['parent']['RAW'];
+        return (int) $parent['parent']['RAW'];
     }
 
     /**
@@ -234,8 +248,8 @@ class SectionDatabase extends DatabaseBase {
     
     * @return    array    A topic in each element >:3
     */
-    public function getTopics($section_id) {
-        $this->Database->sendQuery($this->Query->getTopics($section_id));
+    public function getTopics($section_id, $page) {
+        $this->Database->sendQuery($this->Query->getTopics($section_id, $page));
 
         $topics = array();
         while ($topic = $this->Database->fetchArray()) {

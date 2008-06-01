@@ -16,17 +16,18 @@ require_once(SOURCE_PATH.'/database/database.class.php');
 * @author cHoBi
 */
 class SectionShow extends Show {
-    private $Database;
+    private $page;
 
     /**
     * Initialize the showing class.
 
     * @param    int    $section_id    The section id.
     */
-    public function __construct($section_id) {
+    public function __construct($section_id, $page) {
         parent::__construct();
         
-        $this->id = $section_id;
+        $this->id   = $section_id;
+        $this->page = $page;
         $this->__update();
     }
 
@@ -44,7 +45,7 @@ class SectionShow extends Show {
                     $groups[$n]['data'] = $Database->section->group->getSections($group['id']['RAW']);
                 }
                 
-                $topics = $Database->section->getTopics($this->id);
+                $topics = $Database->section->getTopics($this->id, $this->page);
 
                 if ($this->id == 0 && empty($groups) && empty($topics)) {
                     $message = new InformativeMessage('The section is empty.');

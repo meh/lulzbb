@@ -16,10 +16,8 @@ require_once(SOURCE_PATH.'/database/database/misc.database.php');
 * XBAWKZ HUEG class for database communication.
 
 * @property    object    $user       The user database.
-* @property    object    $group      The group database.
 * @property    object    $section    The section database.
 * @property    object    $topic      The topic database.
-* @property    object    $post       The post database.
 * @property    object    $misc       The misc database.
 
 * @author cHoBi
@@ -113,7 +111,10 @@ class Database {
     }
 
     /**
-    *
+    * Checks if the database already exists.
+    * It just checks if the normal sections exist or not.
+
+    * @return    bool    True if it exists, false if it doesn't.
     */
     public function exists() {
         global $Config;
@@ -145,6 +146,10 @@ class Database {
         else {
             return false;
         }
+    }
+
+    public function initializeCounter() {
+        $this->sendQuery('SET @i = 0');
     }
 }
 ?>

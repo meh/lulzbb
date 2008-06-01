@@ -20,14 +20,17 @@ class Section extends Output {
     * Initialize the section and output the Show or the Cache.
 
     * @param    int    $section_id    The section id to get.
+    * @param    int    $page          The page to show.
     */
-    public function __construct($section_id) {
+    public function __construct($section_id, $page = 1) {
         parent::__construct();
 
         try {
-            $cache = new SectionCache($section_id);
+            $page = ((int) $page < 1) ? 1 : (int) $page;
+
+            $cache = new SectionCache($section_id, $page);
             if (!$cache->isCached()) {
-                $section = new SectionShow($section_id);
+                $section = new SectionShow($section_id, $page);
                 $cache->put($section->output());
             }
 

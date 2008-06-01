@@ -1,7 +1,7 @@
 /**
 * @package lulzBB
 * @author  cHoBi
-* @license http://opensource.org/licenses/gpl-3.0.html
+* @license GPLv3 http://opensource.org/licenses/gpl-3.0.html
 */
 
 function init() {
@@ -68,8 +68,11 @@ function showPage(show_id, page) {
 }
 
 // Forum functions
-function showSection(show_id, section_id) {
-    POST(show_id, 'output/?forum&section', 'id='+section_id);
+function showSection(show_id, section_id, page) {
+    var page = (page == null) ? 1 : page;
+
+
+    POST(show_id, 'output/?forum&section', 'id='+section_id+'&page='+page);
 }
 function showTopic(show_id, topic_id, post_id) {
     var post_id = (post_id == null) ? 1 : post_id;
