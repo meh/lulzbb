@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @category Cache
 
 * @license http://opensource.org/licenses/gpl-3.0.html
@@ -45,7 +45,7 @@ class TopicCache extends Cache {
         $Database->topic->increaseViewsCount($this->topic_id);
 
         $file = ROOT_PATH."/output/cache/sections/{$this->parent}-{$this->page}.html";
-        $text = @file_get_contents($file);
+        $text = file_get_contents($file);
 
         preg_match(
             "|(\d+)<span title='{$this->topic_id}' style='display: none;'/>|ims",
@@ -59,9 +59,12 @@ class TopicCache extends Cache {
             $text
         );
 
-        @file_put_contents($file, $text);
+        file_put_contents($file, $text);
     }
 
+    /**
+    * Updates the $page property.
+    */
     private function __setPage() {
         $path = ROOT_PATH."/output/cache/misc/page.topic.{$this->parent}-{$this->topic_id}.txt";
 
@@ -71,7 +74,14 @@ class TopicCache extends Cache {
         }
         else {
             global $Database;
-            $this->page = $Database->topic->getPage($this->topic_id);
+
+            try {
+                $this->page = $Database->topic->getPage($this->topic_id, $this->parent);
+            }
+            catch (lulzException $e) {
+                die($e->getMessage());
+            }
+
             file_put_contents($path, "{$this->page}");
         }
     }

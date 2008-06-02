@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @category User
 
 * @license http://opensource.org/licenses/gpl-3.0.html
@@ -24,7 +24,7 @@ class User {
     */
     public function __construct($id) {
         global $Database;
-        $Database->user->login->updateSession($id);
+        $Database->user->updateSession($id);
 
         $this->id      = $id;
         $this->name    = $Database->user->getName($id);
@@ -93,7 +93,14 @@ class User {
     * @param    string    $groupName    The group's name.
     */
     public function addTo($groupName) {
-        $Database->user->group->addUser($DATA['user'], $DATA['group']);
+        global $Database;
+
+        try {
+            $Database->user->group->addUser($this->getName('RAW'), $groupName);
+        }
+        catch (lulzException $e) {
+            die($e->getMessage());
+        }
 
         array_push($this->groups, $groupName);
     }
@@ -104,9 +111,20 @@ class User {
     * @param    string    $groupName    The group's name.
     */
     public function removeFrom($groupName) {
+        global $Database;
+
         foreach ($this->groups as $n => $group) {
             if ($group['RAW'] == $groupName) {
                 unset($this->groups[$n]);
+
+                try {
+                    $Database->user->group->removeUser(
+                        $this->getName('RAW'),
+                        $groupName);
+                }
+                catch (lulzException $e) {
+                    die($e->getMessage());
+                }
                 break;
             }
         }

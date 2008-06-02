@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @license http://opensource.org/licenses/gpl-3.0.html
 */
 
@@ -103,5 +103,25 @@ QUERY;
 
 QUERY;
     }
+
+    public function updateSession($id, $session) {
+        global $Filter;
+        $id      = (int) $id;
+        $session = $Filter->SQL($session);
+
+        return <<<QUERY
+        
+        UPDATE
+            {$this->dbPrefix}_users
+
+        SET
+            {$this->dbPrefix}_users.session = "{$session}"
+
+        WHERE
+            {$this->dbPrefix}_users.id = {$id}
+
+QUERY;
+    }
+
 }
 ?>

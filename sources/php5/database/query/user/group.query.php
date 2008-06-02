@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @license http://opensource.org/licenses/gpl-3.0.html
 **/
 

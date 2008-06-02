@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @category Database
 
 * @license http://opensource.org/licenses/gpl-3.0.html
@@ -38,15 +38,6 @@ class LoginDatabase extends DatabaseBase {
         $user = $this->Database->fetchArray();
 
         return $user['id']['RAW'];
-    }
-
-    /**
-    * Logins the user by updating the session id with the actual.
-    
-    * @param    string    $username    The username.
-    */
-    public function updateSession($id) {
-        $this->Database->sendQuery($this->Query->updateSession($id));
     }
 }
 ?>

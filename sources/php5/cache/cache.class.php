@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @category Cache
 
 * @license http://opensource.org/licenses/gpl-3.0.html
@@ -26,7 +26,7 @@ class Cache {
     */
     public function __construct($file) {
         $this->file  = ROOT_PATH."/output/cache/{$file}";
-        $this->cache = @file_get_contents($this->file);
+        $this->cache = file_get_contents($this->file);
 
         if ($this->cache) {
             $this->cached = true;
@@ -67,7 +67,7 @@ class Cache {
     * @param    string    $content    The content to put in the cache.    
     */
     public function put($content) {
-        @file_put_contents($this->file, $content);
+        file_put_contents($this->file, $content);
         $this->cache  = $content;
         $this->cached = true;
     }

@@ -1,112 +1,108 @@
 <?php
 /**
-* @package lulzBB
+* @package API
 * @license http://opensource.org/licenses/gpl-3.0.html
 
 * @author cHoBi
 */
 
-if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
-    die("You can't set a php session id, sorry.");
+if (count($_GET) == 0 && count($_POST) == 0) {
+    die();
 }
-
-define('VERSION', (float) phpversion());
-if ((int) VERSION == 4) {
-    die("PHP 4 isn't supported yet");
-}
-if ((int) VERSION == 6) {
-    die('LOLNO');
-}
-
-// Paths
-define('ROOT_PATH', realpath('../'));
-define('SOURCE_PATH', ROOT_PATH.'/sources/php'.((int) VERSION));
-define('MISC_PATH', ROOT_PATH.'/sources/misc');
-
-// Misc sources.
-require_once(MISC_PATH.'/session.php');
-require_once(MISC_PATH.'/filesystem.php');
-
-// Session creation.
-require_once(SOURCE_PATH.'/config.class.php');
-require_once(SOURCE_PATH.'/filter.class.php');
-require_once(SOURCE_PATH.'/user.class.php');
-require_once(SOURCE_PATH.'/database/database.class.php');
-startSession('../');
-
-if (!isset($_SESSION[SESSION])) {
-    die('The session died or something went wrong, refresh to the index please');
-}
-
-$Config   = $_SESSION[SESSION]['config'];
-$Filter   = $_SESSION[SESSION]['filter'];
-$Database = new Database;
-$User     = @$_SESSION[SESSION]['user'];
 
 if (!isset($User) or !$User->isIn('administrator')) {
     die("You don't have the permissions to change configurations.");
 }
 
-$command = @$_REQUEST['command'];
-switch ($command) {
-    case 'add_group':
-    $DATA['parent'] = @$_REQUEST['parent'];
-    $DATA['weight'] = @$_REQUEST['weight'];
-    $DATA['name']   = @$_REQUEST['name'];
+/**
+* Adds a group of sections.
 
-    if (!isset($DATA['parent']) or !isset($DATA['weight']) or empty($DATA['name'])) {
+* @param    int       $parent    The section where to add the group.
+* @param    int       $weight    The group's weight.
+* @param    string    $name      The group's name.
+*/
+function add_group($parent, $weight, $name) {
+    if (!isset($parent) or !isset($weight) or empty($name)) {
         die('Not enough parmeters.');
     }
 
-    $Database->section->group->add($DATA['parent'], $DATA['weight'], $DATA['name']);
-    rm('/output/cache/sections/*');
-    break;
+    $Database->section->group->add($parent, $weight, $name);
+    rm('/output/cache/sections/*');   
+}
 
-    case 'add_section':
-    $DATA['group_id'] = @$_REQUEST['group'];
-    $DATA['weight']   = @$_REQUEST['weight'];
-    $DATA['title']    = @$_REQUEST['title'];
-    $DATA['subtitle'] = @$_REQUEST['subtitle'];
+/**
+* Adds a section.
 
-    if (!isset($DATA['group_id']) or !isset($DATA['weight']) or empty($DATA['title'])) {
+* @param    int       $group_id    The group where to add the section.
+* @param    int       $weight      The section's weight.
+* @param    string    $title       The section's title.
+* @param    string    $subtitle    The section's subtitle.
+*/
+function add_section($group_id, $weight, $title, $subtitle = '') {
+    if (!isset($group_id) or !isset($weight) or empty($title)) {
         die('Not enough parameters.');
     }
 
-    $Database->section->add(
-        $DATA['group_id'], $DATA['weight'],
-        $DATA['title'], $DATA['subtitle']
-    );
+    $Database->section->add($group_id, $weight, $title, $subtitle);
     rm('/output/cache/sections/*');
-    break;
+}
 
-    case 'add_user_to_group':
-    $DATA['user']   = @$_REQUEST['user'];
-    $DATA['group']  = @$_REQUEST['group'];
+/**
+* Adds a user to a group.
 
-    if (!isset($DATA['user']) or !isset($DATA['group'])) {
+* @param    string    $user     The username.
+* @param    string    $group    The group's name.
+*/
+function add_user_to_group($user, $group) {
+    if (!isset($user) or !isset($group)) {
         die('Not enough parameters.');
     }
 
-    if (is_numeric($DATA['user'])) {
-        $DATA['user'] = $Database->user->getName($DATA['user']);
+    if (is_numeric($user)) {
+        $user = $Database->user->getName($user);
     }
 
     $oldSession = session_id();
-    $newSession = $Database->user->getSession($DATA['user']);
+    $newSession = $Database->user->getSession($user);
 
     if (isset($newSession)) {
         changeSession($newSession);
-        $User->addTo($DATA['group']);
+        $User->addTo($group);
         changeSession($oldSession);
     }
     else {
         stopSession();
-
     }
+}
+
+$command = $_REQUEST['command'];
+switch ($command) {
+    case 'add_group':
+    $DATA['parent'] = $_REQUEST['parent'];
+    $DATA['weight'] = $_REQUEST['weight'];
+    $DATA['name']   = $_REQUEST['name'];
+
+    add_group($DATA['parent'], $DATA['weight'], $DATA['name']);
+    break;
+
+    case 'add_section':
+    $DATA['group_id'] = $_REQUEST['group'];
+    $DATA['weight']   = $_REQUEST['weight'];
+    $DATA['title']    = $_REQUEST['title'];
+    $DATA['subtitle'] = $_REQUEST['subtitle'];
+
+    add_section($DATA['group_id'], $DATA['weight'], $DATA['title'], $DATA['subtitle']);
+    break;
+
+    case 'add_user_to_group':
+    $DATA['user']   = $_REQUEST['user'];
+    $DATA['group']  = $_REQUEST['group'];
+
+    add_user_to_group($DATA['user'], $DATA['group']);
     break;
 
     default:
-    echo "Command not found.";
+    echo 'Command not found.';
     break;
 }
 ?>

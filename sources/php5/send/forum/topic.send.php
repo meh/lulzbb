@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @category Send
 
 * @license http://opensource.org/licenses/gpl-3.0.html
@@ -83,7 +83,7 @@ class Topic extends Send {
                 $topic_id = $Database->topic->add($parent, $type, $title, $subtitle, $content);
                 $message = new InformativeMessage('topic_sent', array('topic_id' => $topic_id));
                         
-                rm('/output/cache/sections/*');
+                rm("/output/cache/sections/{$parent}-*.html");
                 break;
             }
         }

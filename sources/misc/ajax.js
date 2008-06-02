@@ -61,10 +61,10 @@ function POSTraw(url, params) {
 }
 
 function showMenu(show_id) {
-    GET(show_id, 'output/?menu');
+    GET(show_id, '?output&menu');
 }
 function showPage(show_id, page) {
-    GET(show_id, 'output/?page='+page);
+    GET(show_id, '?output&page='+page);
 }
 
 // Forum functions
@@ -72,33 +72,33 @@ function showSection(show_id, section_id, page) {
     var page = (page == null) ? 1 : page;
 
 
-    POST(show_id, 'output/?forum&section', 'id='+section_id+'&page='+page);
+    POST(show_id, '?output&forum&section', 'id='+section_id+'&page='+page);
 }
 function showTopic(show_id, topic_id, post_id) {
     var post_id = (post_id == null) ? 1 : post_id;
 
-    POST(show_id, 'output/?forum&topic&show', 'id='+topic_id+'&post_id=');
+    POST(show_id, '?output&forum&topic&show', 'id='+topic_id+'&post_id=');
 }
 
 // Login functions
 function login(username, password) {
-    POSTraw('input/?login', 'username='+username+'&password='+password);
+    POSTraw('?input&login', 'username='+username+'&password='+password);
 }
 function showLogin(show_id) {
-    GET(show_id, 'output/?login');
+    GET(show_id, '?output&login');
 }
 function logout(show_id) {
-    GET(show_id, 'input/?logout');
+    GET(show_id, '?input&logout');
 }
 
 // Registration functions
 function showRegistration(show_id) {
-    GET(show_id, 'output/?register');
+    GET(show_id, '?output&register');
 }
 
 // Send functions.
 function sendTopic(magic, show_id, parent, type, title, subtitle, content) {
-    POST(show_id, 'input/?topic&send',
+    POST(show_id, '?input&topic&send',
           'type='+type+'&'
         + 'parent='+parent+'&'
         + 'title='+rawurlencode(title)+'&'

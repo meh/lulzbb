@@ -1,6 +1,6 @@
 <?php
 /**
-* Package  lulzBB
+* Package  Misc
 * Author   cHoBi
 * License  http://opensource.org/licenses/gpl-3.0.html
 **/
@@ -10,7 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="<%LANG%>" xml:lang="<%LANG%>">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <title>lulzBB - Configuration</title>
+    <title>Misc - Configuration</title>
 
     <style>
     * { padding: 0; margin: 0; border: 0; }

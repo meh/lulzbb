@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @category Database
 
 * @license http://opensource.org/licenses/gpl-3.0.html
@@ -56,18 +56,20 @@ class TopicDatabase extends DatabaseBase {
 
     * @return    int    The page's number.
     */
-    public function getPage($topic_id) {
-        $this->Database->sendQuery($this->Query->createTemporaryTable_Page());
-        $this->Database->initializeCounter();
-        $this->Database->sendQuery($this->Query->initializePositions(
-            $this->getParent($topic_id), 
+    public function getPage($topic_id, $section_id = 0) {
+        global $Config;
+
+        $section_id = (int) (!empty($section_id)
+                                ? $section_id
+                                : $this->getParent($topic_id));
+                        
+        $query = $this->Database->sendQuery($this->Query->getPosition(
+            $section_id, 
             $this->getLastPostTime($topic_id))
         );
-        $query = $this->Database->sendQuery($this->Query->getPage($topic_id));
-        $this->Database->sendQuery($this->Query->destroyTemporaryTable_Page());
-        
         $position = mysql_fetch_row($query);
-        return $position[0];
+        
+        return ceil($position[0]/$Config->get('elementsPerPage'));
     }
 
     /**

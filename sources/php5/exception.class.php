@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 *
 * @license http://opensource.org/licenses/gpl-3.0.html
 */
@@ -8,7 +8,7 @@
 require_once(SOURCE_PATH.'/show/misc/error-message.show.php');
 
 /**
-* Exception handling for lulzBB.
+* Exception handling for Misc.
 *
 * @author cHoBi
 */

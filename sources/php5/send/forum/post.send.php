@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @category Send
 
 * @license http://opensource.org/licenses/gpl-3.0.html
@@ -47,6 +47,7 @@ class Post extends Send {
     protected function __send($data) {
         global $Database;
 
+        $parent   = $Database->topic->getParent($data['topic_id']);
         $topic_id = $data['topic_id'];
         $title    = $data['title'];
         $content  = $data['content'];
@@ -74,8 +75,8 @@ class Post extends Send {
                     )
                 );
         
-                rm('/output/cache/sections/*');
-                rm("/output/cache/topics/{$topic_id}.html");
+                rm("/output/cache/sections/{$parent}-*.html");
+                rm("/output/cache/topics/{$topic_id}-*.html");
                 break;
             }
         }

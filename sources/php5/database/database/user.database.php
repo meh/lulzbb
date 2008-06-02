@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @category Database
 
 * @license http://opensource.org/licenses/gpl-3.0.html
@@ -78,6 +78,19 @@ class UserDatabase extends DatabaseBase {
         $session = $this->Database->fetchArray();
 
         return $session['session']['RAW'];
+    }
+
+    /**
+    * Updates the session id with the passed one.
+    
+    * @param    string    $username    The username.
+    */
+    public function updateSession($id, $session = 0) {
+        if (empty($session)) {
+            $session = session_id();
+        }
+        
+        $this->Database->sendQuery($this->Query->updateSession($id, $session));
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @category Template
 
 * @license http://opensource.org/licenses/gpl-3.0.html
@@ -23,7 +23,7 @@ class PageTemplate extends Template {
         parent::__construct('misc/page.tpl');
 
         $file = preg_replace('|\.\./|', '', $file);
-        @$this->data['content'] = new Template("/pages/{$file}");
+        $this->data['content'] = new Template("/pages/{$file}");
 
         $this->__parse();
     }

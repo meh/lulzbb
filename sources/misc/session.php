@@ -1,6 +1,6 @@
-﻿<?php
+<?php
 /**
-* @package  lulzBB
+* @package  Misc
 * @category Misc
 
 * @license  http://opensource.org/licenses/gpl-3.0.html
@@ -32,7 +32,7 @@ function sessionFileExists($relativePath = './') {
 * @return    string    Session name.
 */
 function createSessionFile($relativePath = './') {
-    $session = 'lulzBB-'.md5(rand().rand().time());
+    $session = 'Misc-'.md5(rand().rand().time());
 
     $file = fopen('.session.lol', 'w');
     fwrite($file, $session);
@@ -58,7 +58,7 @@ function getSessionConstant($relativePath = './') {
 /**
 * Sets cookie parameters.
 */
-function setCookieParams() {
+function setSessionCookieParams() {
     $year = 60*60*24*365;
 
     if (VERSION == 4) {
@@ -70,13 +70,25 @@ function setCookieParams() {
 }
 
 /**
+*
+*/
+function deleteSessionCookie() {
+    $year = 60*60*24*365;
+    session_set_cookie_params(-$year);
+}
+
+/**
 * Inits the session.
 
 * @param    string    $relativePath    The relative path where to read the session constant.
 */
 function startSession($relativePath = './') {
     define('SESSION', getSessionConstant($relativePath));
-    setCookieParams();
+
+    if ($relativePath == './') {
+    #    setSessionCookieParams();
+    }
+
     session_start();
 }
 
@@ -88,7 +100,21 @@ function startSession($relativePath = './') {
 function changeSession($id) {
     session_write_close();
     session_id($id);
-    setCookieParams();
+    setSessionCookieParams();
     session_start();
+}
+
+/**
+* Destroys the session.
+*/
+function destroySession() {
+    $year = 60*60*24*365;
+
+    deleteSessionCookie();
+    session_unset();
+    session_destroy();
+    
+    $_GET['session'] = true;
+    require_once(ROOT_PATH.'/index.php');
 }
 ?>

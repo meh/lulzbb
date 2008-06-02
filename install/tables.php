@@ -1,12 +1,14 @@
 <?php
 /**
-* @package  lulzBB
+* @package  Misc
 * @category Installation
 
 * @license  http://opensource.org/licenses/gpl-3.0.html
 
 * @author   cHoBi
 **/
+
+ini_set('error_reporting', 'E_CORE_ERROR');
 
 define('VERSION', (float) phpversion());
 if ((int) VERSION == 4) {
@@ -35,7 +37,7 @@ startSession('../');
 $Config   = $_SESSION[SESSION]['config'];
 $Filter   = $_SESSION[SESSION]['filter'];
 $Database = new Database();
-$User     = @$_SESSION[SESSION]['user'];
+$User     = $_SESSION[SESSION]['user'];
 
 if ($Database->exists()) {
     die('The installation has already been done.');
@@ -135,6 +137,11 @@ username VARCHAR(150) DEFAULT NULL,
 description TEXT DEFAULT NULL,
 
 UNIQUE KEY(name, username))');
+
+// Index creation
+$Database->sendQuery('CREATE INDEX topic_id ON '.$dbPrefix.'_topics(id)');
+$Database->sendQuery('CREATE INDEX section_id ON '.$dbPrefix.'_sections(id)');
+$Database->sendQuery('CREATE INDEX group_id ON '.$dbPrefix.'_section_groups(id)');
 
 // User groups creations.
 $Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups

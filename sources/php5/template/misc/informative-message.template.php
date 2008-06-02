@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @category Template
 
 * @license http://opensource.org/licenses/gpl-3.0.html
@@ -45,8 +45,8 @@ class InformativeMessageTemplate extends Template {
 
         switch ($this->type) {
             case 'registration_successful':
-            $username = @$Filter->POST_SQLclean($this->data['username']);
-            $password = @$Filter->POST_SQLclean($this->data['password']);
+            $username = $Filter->POST_SQLclean($this->data['username']);
+            $password = $Filter->POST_SQLclean($this->data['password']);
 
             $this->message = preg_replace(
                 '|<%REGISTRATION-USERNAME%>|i',

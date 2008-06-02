@@ -1,10 +1,12 @@
 <?php
 /**
-* @package lulzBB
+* @package Misc
 * @license http://opensource.org/licenses/gpl-3.0.html
 *
 * @author cHoBi
 */
+
+ini_set('error_reporting', 'E_CORE_ERROR');
 
 if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
     die("You can't set a php session id, sorry.");
@@ -51,13 +53,22 @@ if (!sessionFileExists()) {
 }
 startSession();
 
+if (count($_GET) == 0) {
+    $home = true;
+}
+else {
+    $home = false;
+}
+
 /**
 * This global var contains the Config object, so it's useful to get
 * and set configurations :D
 
 * @global    object    $Config
 */
-$Config = $_SESSION[SESSION]['config'] = new Config();
+$Config = $_SESSION[SESSION]['config']
+    = ($home) ? new Config()
+              : $_SESSION[SESSION]['config'];
 
 /**
 * This global var contains the Filter object, so you need it to filter
@@ -65,7 +76,9 @@ $Config = $_SESSION[SESSION]['config'] = new Config();
 
 * @global    object    $Filter
 */
-$Filter = $_SESSION[SESSION]['filter'] = new Filter();
+$Filter = $_SESSION[SESSION]['filter']
+    = ($home) ? new Filter()
+              : $_SESSION[SESSION]['filter'];
 
 /**
 * This global var cointains the Database object, and i think it's obvious
@@ -80,7 +93,10 @@ $Database = new Database;
 
 * @global    object    $User
 */
-$User = @$_SESSION[SESSION]['user'];
+$User = $_SESSION[SESSION]['user']
+    = isset($_SESSION[SESSION]['user'])
+          ? $_SESSION[SESSION]['user']
+          : NULL;
 
 /**
 * This global var containst the count of sent queries for the page.
@@ -91,7 +107,28 @@ $queries = 0;
 
 $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
 
-$_GET['home'] = TRUE;
-$_GET['page'] = (isset($_GET['page']) ? $_GET['page'] : 'home.php');
-require(ROOT_PATH.'/output/index.php');
+if (!isset($_GET['session'])) {
+    if ($home || isset($_GET['home'])) {
+        $_GET['home'] = TRUE;
+        $_GET['page'] = 'home.php';
+
+        require(ROOT_PATH.'/output/index.php');
+    }
+
+    if (isset($_GET['output'])) {
+        require(ROOT_PATH.'/output/index.php');
+    }
+
+    else if (isset($_GET['input'])) {
+        require(ROOT_PATH.'/input/index.php');
+    }
+
+    else if (isset($_GET['user'])) {
+        require(ROOT_PATH.'/user/index.php');
+    }
+
+    else if (isset($_GET['config'])) {
+        require(ROOT_PATH.'/config/index.php');
+    }
+}
 ?>

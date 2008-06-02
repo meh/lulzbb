@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @license http://opensource.org/licenses/gpl-3.0.html
 */
 
@@ -11,7 +11,7 @@
 * @author cHoBi
 */
 class Config {
-    private $Config = array();
+    private $config;
     
     /**
     * Reads the configuration file and initializes the array with the values.
@@ -54,7 +54,7 @@ class Config {
     /**
     * Sets the template to be used.
 
-    * @todo Rewrite this because it's from the 0.1.0 lulzBB.
+    * @todo Rewrite this because it's from the 0.1.0 Misc.
     */
     public function setTemplate($templateName) {
         $template = ROOT_PATH.'/templates/'.$templateName; // New template name

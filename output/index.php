@@ -1,12 +1,14 @@
 <?php
 /**
-* @package lulzBB
+* @package Misc
 * @license http://opensource.org/licenses/gpl-3.0.html
 
 * @author cHoBi
 */
 
-$queries = 0;
+if (count($_GET) == 0 && count($_POST) == 0) {
+    die();
+}
 
 $time = microtime();
 $time = explode(' ', $time);
@@ -37,29 +39,25 @@ HTML;
 }
 
 if (isset($_GET['home'])) {
-    if (!@isset($_SESSION[SESSION])) {
-        die('The session died or something went wrong, refresh to the index please');
-    }
-
     require_once(SOURCE_PATH.'/show/misc/home.show.php');
 
     if (isset($_GET['forum'])) {
-        $DATA['level'] = @$_GET['level'];
-        $DATA['title'] = @$_GET['title'];
-        $DATA['id']    = @$_GET['id'];
+        $DATA['id']    = $_GET['id'];
 
         if (isset($_GET['section'])) {
             $DATA['section_id'] = $DATA['id'];
+            $DATA['page']       = $_GET['page'];
 
             $page = new Home('section', array(
-                'section_id' => $DATA['section_id']
+                'section_id' => $DATA['section_id'],
+                'page'       => $DATA['page']
             ));
             echo $page->output();
         }
         else if (isset($_GET['topic'])) {
             if (isset($_GET['show'])) {
                 $DATA['topic_id'] = $DATA['id'];
-                $DATA['post_id']  = @$_GET['post_id'];
+                $DATA['post_id']  = $_GET['post_id'];
 
                 $page = new Home('topic', array(
                     'topic_id' => $DATA['topic_id'],
@@ -69,8 +67,8 @@ if (isset($_GET['home'])) {
             }
 
             else if (isset($_GET['send'])) {
-                $DATA['parent']  = @$_GET['parent'];
-                $DATA['s_title'] = @$_GET['s_title'];
+                $DATA['parent']  = $_GET['parent'];
+                $DATA['s_title'] = $_GET['s_title'];
                 $DATA['magic']   = $_SESSION[SESSION]['magic'];
 
                 $form = new TopicFormTemplate(
@@ -92,60 +90,8 @@ if (isset($_GET['home'])) {
 }
 
 else {
-    if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
-        die("You can't set a php session id, sorry.");
-    }
-
-    define('VERSION', (float) phpversion());
-    if ((int) VERSION == 4) {
-        die("PHP 4 isn't supported yet");
-    }
-    if ((int) VERSION == 6) {
-        die('LOLNO');
-    }
-    
-    // Paths
-    define('ROOT_PATH', realpath('../'));
-    define('SOURCE_PATH', ROOT_PATH.'/sources/php'.((int) VERSION));
-    define('MISC_PATH', ROOT_PATH.'/sources/misc');
-    
-    // Misc sources.
-    require_once(MISC_PATH.'/session.php');
-    require_once(MISC_PATH.'/filesystem.php');
-    
-    // Session creation.
-    require_once(SOURCE_PATH.'/config.class.php');
-    require_once(SOURCE_PATH.'/filter.class.php');
-    require_once(SOURCE_PATH.'/user.class.php');
-    require_once(SOURCE_PATH.'/database/database.class.php');
-    startSession('../');
-
-    if (!isset($_SESSION[SESSION])) {
-        die('The session died or something went wrong, refresh to the index please');
-    }
-
-    $Config   = $_SESSION[SESSION]['config'];
-    $Filter   = $_SESSION[SESSION]['filter'];
-    $Database = new Database;
-    $User     = @$_SESSION[SESSION]['user'];
-
-    if (isset($_GET['page'])) {
-        require_once(SOURCE_PATH.'/template/misc/page.template.php');
-        $page = new PageTemplate($_GET['page']);
-        echo $page->output();
-    }
-
-    else if (isset($_GET['menu'])) {
-        require_once(SOURCE_PATH.'/show/misc/menu.show.php');
-        $menu = new Menu();
-        echo $menu->output();
-    }
-
-    else if (isset($_GET['forum'])) {
-        $DATA['level']  = @$_POST['level'];
-        $DATA['title']  = @$_POST['title'];
-        $DATA['parent'] = @$_POST['parent'];
-        $DATA['id']     = @$_POST['id'];
+    if (isset($_GET['forum'])) {
+        $DATA['id'] = $_POST['id'];
 
         // Navigator
         require_once(SOURCE_PATH.'/output/forum/navigator.output.php');
@@ -155,6 +101,7 @@ else {
         }
         else if (isset($_GET['topic'])) {
             if (isset($_GET['send'])) {
+                $DATA['parent'] = $_REQUEST['parent'];
                 $navigator = new Navigator('section', $DATA['parent'], $DATA['id']);
             }
             else {
@@ -166,7 +113,7 @@ else {
         if (isset($_GET['section'])) {
             require_once(SOURCE_PATH.'/output/forum/section.output.php');
             $DATA['section_id'] = $DATA['id'];
-            $DATA['page']       = @$_POST['page'];
+            $DATA['page']       = $_POST['page'];
 
             $section = new Section($DATA['section_id'], $DATA['page']);
             echo $section->output();
@@ -178,12 +125,14 @@ else {
             if (isset($_GET['show'])) {
                 require_once(SOURCE_PATH.'/output/forum/topic.output.php');
                 
-                $DATA['topic_id'] = @$_POST['id'];
-                $DATA['post_id']  = @$_POST['post'];
+                $DATA['topic_id'] = $_POST['id'];
+                $DATA['post_id']  = $_POST['post'];
+                $DATA['page']     = $_POST['page'];
                 
                 $topic = new Topic(
                     $DATA['topic_id'],
-                    $DATA['post_id']
+                    $DATA['post_id'],
+                    $DATA['page']
                 );
                 echo $topic->output();
 
@@ -193,7 +142,7 @@ else {
             else if (isset($_GET['send'])) {
                 require_once(SOURCE_PATH.'/template/forms/send-topic.template.php');
     
-                $DATA['parent']  = @$_POST['parent'];
+                $DATA['parent']  = $_POST['parent'];
                 $DATA['magic']   = $_SESSION[SESSION]['magic'];
 
                 $form = new TopicFormTemplate($DATA['magic'], $DATA['parent']);
@@ -208,6 +157,18 @@ else {
         }
     }
 
+    else if (isset($_GET['menu'])) {
+        require_once(SOURCE_PATH.'/show/misc/menu.show.php');
+        $menu = new Menu();
+        echo $menu->output();
+    }
+
+    else if (isset($_GET['page'])) {
+        require_once(SOURCE_PATH.'/template/misc/page.template.php');
+        $page = new PageTemplate($_GET['page']);
+        echo $page->output();
+    }
+
     else if (isset($_GET['login'])) {
         require_once(SOURCE_PATH.'/show/user/login.show.php');
         $login = new Login();
@@ -220,6 +181,4 @@ else {
         echo $registration->output();
     }
 }
-
-
 ?>

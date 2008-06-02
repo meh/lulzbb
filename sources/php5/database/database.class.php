@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @category Database
 
 * @license http://opensource.org/licenses/gpl-3.0.html
@@ -42,7 +42,7 @@ class Database {
     public function __construct() {
         global $Config;
         
-        $this->mysql = @mysql_connect(
+        $this->mysql = mysql_connect(
             $Config->get('dbHost'),
             $Config->get('dbUsername'),
             $Config->get('dbPassword')
@@ -61,7 +61,7 @@ class Database {
     }
 
     public function __destruct() {
-        @mysql_close($this->mysql);
+        mysql_close($this->mysql);
     }
 
     /**
@@ -75,7 +75,7 @@ class Database {
     * @todo Remove the mysql_error();
     */
     public function sendQuery($query) {
-        $this->query = @mysql_query($query) or die(nl2br($query).mysql_error());
+        $this->query = mysql_query($query) or die(nl2br($query).mysql_error());
         
         if (!$this->query) {
             throw new lulzException('database_query');
@@ -148,8 +148,20 @@ class Database {
         }
     }
 
-    public function initializeCounter() {
-        $this->sendQuery('SET @i = 0');
+    /**
+    * Sets the counter @i to a certain value.
+
+    * @param    int    $number    The value that @i will be set to.
+    */
+    public function setCounter($number) {
+        $number = (int) $number;
+        $this->sendQuery("SET @i = {$number}");
+    }
+
+    public function getCounter() {
+        $number = mysql_fetch_row($this->sendQuery("SELECT @i"));
+
+        return $number[0];
     }
 }
 ?>

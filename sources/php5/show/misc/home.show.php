@@ -1,6 +1,6 @@
 <?php
 /**
-* @package lulzBB-PHP5
+* @package PHP5
 * @category Show
 
 * @license http://opensource.org/licenses/gpl-3.0.html
@@ -47,10 +47,11 @@ class Home extends Show {
         switch ($this->file) {
             case 'section':
             $section_id = $this->data['section_id'];
+            $page       = $this->data['page'];
             
             $navigator = new Navigator('section', $section_id);
-            $content   = new Section($section_id);
-            $template  = new HomeTemplate($navigator->output().$content->output());
+            $content   = new Section($section_id, $page);
+            $template  = new HomeTemplate($navigator->output().$content->output().stats());
             break;
 
             case 'topic':
@@ -59,7 +60,7 @@ class Home extends Show {
 
             $navigator = new Navigator('topic', $topic_id);
             $content   = new Topic($topic_id, $post_id);
-            $template  = new HomeTemplate($navigator->output().$content->output());
+            $template  = new HomeTemplate($navigator->output().$content->output().stats());
             break;
 
             default:
@@ -67,7 +68,7 @@ class Home extends Show {
                 $template = new HomeTemplate();
             }
             else {
-                $content  = @new PageTemplate($this->file);
+                $content  = new PageTemplate($this->file);
                 $template = new HomeTemplate($content->output());
             }
             break;
