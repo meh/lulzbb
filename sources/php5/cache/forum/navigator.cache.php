@@ -30,7 +30,7 @@ class NavigatorCache extends Cache {
     public function __construct($type, $id) {
         $this->type = $type;
 
-        $file = glob(ROOT_PATH."/output/cache/navigator/{$type}.*-{$id}.html");
+        $file = glob(ROOT_PATH."/.cache/navigator/{$type}.*-{$id}.html");
         if (!empty($file)) {
             $file = preg_replace('|.+?/(navigator.+)$|i', '${1}', $file[0]);
             parent::__construct($file);

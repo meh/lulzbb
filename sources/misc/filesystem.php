@@ -24,6 +24,22 @@ function rm($filename) {
 }
 
 /**
+* Recursive mkdir.
+
+* @param    string    $path    The path.
+*/
+function mkdir_recursive($pathname, $mode = 0755)
+{
+      is_dir(dirname($pathname))
+    ||
+      mkdir_recursive(dirname($pathname), $mode);
+
+      return is_dir($pathname)
+    ||
+      mkdir($pathname, $mode);
+}
+
+/**
 * Checks if something is cached or not.
 
 * @param    string    $type    The caching type. (section, topic, navigator)
@@ -32,7 +48,7 @@ function rm($filename) {
 * @return    bool    Guess what?
 */
 function isCached($type, $id) {
-    $path = ROOT_PATH.'/output/cache';
+    $path = ROOT_PATH.'/.cache';
 
     if (is_file("{$path}/{$type}/{$id}.html")) {
         return true;
