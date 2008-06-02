@@ -44,7 +44,7 @@ class TopicCache extends Cache {
         global $Database;
         $Database->topic->increaseViewsCount($this->topic_id);
 
-        $file = ROOT_PATH."/output/cache/sections/{$this->parent}-{$this->page}.html";
+        $file = ROOT_PATH."/.cache/sections/{$this->parent}-{$this->page}.html";
         $text = file_get_contents($file);
 
         preg_match(
@@ -66,7 +66,7 @@ class TopicCache extends Cache {
     * Updates the $page property.
     */
     private function __setPage() {
-        $path = ROOT_PATH."/output/cache/misc/page.topic.{$this->parent}-{$this->topic_id}.txt";
+        $path = ROOT_PATH."/.cache/misc/page.topic.{$this->parent}-{$this->topic_id}.txt";
 
         if (is_file($path)) {
             $page = file($path);

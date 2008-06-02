@@ -6,14 +6,15 @@
 * @author cHoBi
 */
 
+// Start the time for the stats.
+$time  = microtime();
+$time  = explode(' ', $time);
+$time  = $time[1] + $time[0];
+$start = $time;
+
 if (count($_GET) == 0 && count($_POST) == 0) {
     die();
 }
-
-$time = microtime();
-$time = explode(' ', $time);
-$time = $time[1] + $time[0];
-$start = $time;
 
 /**
 * Gives the time and queries used by the page.

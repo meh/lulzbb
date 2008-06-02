@@ -25,7 +25,7 @@ class Cache {
     * @param    string    $file    The relative path in the /output/cache/ dir
     */
     public function __construct($file) {
-        $this->file  = ROOT_PATH."/output/cache/{$file}";
+        $this->file  = ROOT_PATH."/.cache/{$file}";
         $this->cache = file_get_contents($this->file);
 
         if ($this->cache) {

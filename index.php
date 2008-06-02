@@ -2,7 +2,7 @@
 /**
 * @package Misc
 * @license http://opensource.org/licenses/gpl-3.0.html
-*
+
 * @author cHoBi
 */
 
@@ -53,8 +53,8 @@ if (!sessionFileExists()) {
 }
 startSession();
 
-if (count($_GET) == 0) {
-    $home = true;
+if (count($_GET) == 0 || isset($_GET['home'])) {
+    $home = $_GET['home'] = true;
 }
 else {
     $home = false;
@@ -108,27 +108,25 @@ $queries = 0;
 $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
 
 if (!isset($_GET['session'])) {
-    if ($home || isset($_GET['home'])) {
-        $_GET['home'] = TRUE;
+    if ($home) {
         $_GET['page'] = 'home.php';
-
-        require(ROOT_PATH.'/output/index.php');
+        require(ROOT_PATH.'/interfaces/output.php');
     }
 
-    if (isset($_GET['output'])) {
-        require(ROOT_PATH.'/output/index.php');
+    else if (isset($_GET['output'])) {
+        require(ROOT_PATH.'/interfaces/output.php');
     }
 
     else if (isset($_GET['input'])) {
-        require(ROOT_PATH.'/input/index.php');
+        require(ROOT_PATH.'/interfaces/input.php');
     }
 
     else if (isset($_GET['user'])) {
-        require(ROOT_PATH.'/user/index.php');
+        require(ROOT_PATH.'/interfaces/user.php');
     }
 
     else if (isset($_GET['config'])) {
-        require(ROOT_PATH.'/config/index.php');
+        require(ROOT_PATH.'/interfaces/config.php');
     }
 }
 ?>
