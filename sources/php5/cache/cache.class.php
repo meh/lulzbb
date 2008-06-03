@@ -68,7 +68,7 @@ class Cache {
     * @param    string    $file    The relative path.
     */
     public function setCache($file) {
-        $this->file = ROOT_PATH."/.cache/{$file}";
+        $this->file = $this->__checkDir(ROOT_PATH."/.cache/{$file}");
     }
 
     /**

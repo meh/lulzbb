@@ -1,6 +1,6 @@
 <?php
 /**
-* @package Misc
+* @package Interfaces
 * @license http://opensource.org/licenses/gpl-3.0.html
 
 * @author cHoBi
@@ -12,8 +12,8 @@ $time  = explode(' ', $time);
 $time  = $time[1] + $time[0];
 $start = $time;
 
-if (count($_GET) == 0 && count($_POST) == 0) {
-    die();
+if (count($_REQUEST) <= 1) {
+    die('No parameters eh? Are you trying to hax me? :(');
 }
 
 /**
@@ -39,15 +39,15 @@ function stats() {
 HTML;
 }
 
-if (isset($_GET['home'])) {
+if (isset($_REQUEST['home'])) {
     require_once(SOURCE_PATH.'/show/misc/home.show.php');
 
-    if (isset($_GET['forum'])) {
-        $DATA['id']    = $_GET['id'];
+    if (isset($_REQUEST['forum'])) {
+        $DATA['id'] = $_REQUEST['id'];
 
-        if (isset($_GET['section'])) {
+        if (isset($_REQUEST['section'])) {
             $DATA['section_id'] = $DATA['id'];
-            $DATA['page']       = $_GET['page'];
+            $DATA['page']       = $_REQUEST['page'];
 
             $page = new Home('section', array(
                 'section_id' => $DATA['section_id'],
@@ -55,10 +55,10 @@ if (isset($_GET['home'])) {
             ));
             echo $page->output();
         }
-        else if (isset($_GET['topic'])) {
-            if (isset($_GET['show'])) {
+        else if (isset($_REQUEST['topic'])) {
+            if (isset($_REQUEST['show'])) {
                 $DATA['topic_id'] = $DATA['id'];
-                $DATA['post_id']  = $_GET['post_id'];
+                $DATA['post_id']  = $_REQUEST['post_id'];
 
                 $page = new Home('topic', array(
                     'topic_id' => $DATA['topic_id'],
@@ -67,9 +67,9 @@ if (isset($_GET['home'])) {
                 echo $page->output();
             }
 
-            else if (isset($_GET['send'])) {
-                $DATA['parent']  = $_GET['parent'];
-                $DATA['s_title'] = $_GET['s_title'];
+            else if (isset($_REQUEST['send'])) {
+                $DATA['parent']  = $_REQUEST['parent'];
+                $DATA['s_title'] = $_REQUEST['s_title'];
                 $DATA['magic']   = $_SESSION[SESSION]['magic'];
 
                 $form = new TopicFormTemplate(
@@ -85,23 +85,23 @@ if (isset($_GET['home'])) {
         }
     }
     else {
-        $page = new Home($_GET['page']);
+        $page = new Home($_REQUEST['page']);
         echo $page->output();
     }
 }
 
 else {
-    if (isset($_GET['forum'])) {
-        $DATA['id'] = $_POST['id'];
+    if (isset($_REQUEST['forum'])) {
+        $DATA['id'] = $_REQUEST['id'];
 
         // Navigator
         require_once(SOURCE_PATH.'/output/forum/navigator.output.php');
 
-        if (isset($_GET['section'])) {
+        if (isset($_REQUEST['section'])) {
             $navigator = new Navigator('section', $DATA['id']);
         }
-        else if (isset($_GET['topic'])) {
-            if (isset($_GET['send'])) {
+        else if (isset($_REQUEST['topic'])) {
+            if (isset($_REQUEST['send'])) {
                 $DATA['parent'] = $_REQUEST['parent'];
                 $navigator = new Navigator('section', $DATA['parent'], $DATA['id']);
             }
@@ -111,10 +111,10 @@ else {
         }
         echo $navigator->output();
 
-        if (isset($_GET['section'])) {
+        if (isset($_REQUEST['section'])) {
             require_once(SOURCE_PATH.'/output/forum/section.output.php');
             $DATA['section_id'] = $DATA['id'];
-            $DATA['page']       = $_POST['page'];
+            $DATA['page']       = $_REQUEST['page'];
 
             $section = new Section($DATA['section_id'], $DATA['page']);
             echo $section->output();
@@ -122,13 +122,13 @@ else {
             echo stats();
         }
 
-        else if (isset($_GET['topic'])) {
-            if (isset($_GET['show'])) {
+        else if (isset($_REQUEST['topic'])) {
+            if (isset($_REQUEST['show'])) {
                 require_once(SOURCE_PATH.'/output/forum/topic.output.php');
                 
-                $DATA['topic_id'] = $_POST['id'];
-                $DATA['post_id']  = $_POST['post'];
-                $DATA['page']     = $_POST['page'];
+                $DATA['topic_id'] = $_REQUEST['id'];
+                $DATA['post_id']  = $_REQUEST['post'];
+                $DATA['page']     = $_REQUEST['page'];
                 
                 $topic = new Topic(
                     $DATA['topic_id'],
@@ -140,10 +140,10 @@ else {
                 echo stats();
             }
 
-            else if (isset($_GET['send'])) {
+            else if (isset($_REQUEST['send'])) {
                 require_once(SOURCE_PATH.'/template/forms/send-topic.template.php');
     
-                $DATA['parent']  = $_POST['parent'];
+                $DATA['parent']  = $_REQUEST['parent'];
                 $DATA['magic']   = $_SESSION[SESSION]['magic'];
 
                 $form = new TopicFormTemplate($DATA['magic'], $DATA['parent']);
@@ -151,32 +151,32 @@ else {
             }
         }
             
-        else if (isset($_GET['post'])) {
-            if (isset($_GET['send'])) {
+        else if (isset($_REQUEST['post'])) {
+            if (isset($_REQUEST['send'])) {
 
             }
         }
     }
 
-    else if (isset($_GET['menu'])) {
+    else if (isset($_REQUEST['menu'])) {
         require_once(SOURCE_PATH.'/show/misc/menu.show.php');
         $menu = new Menu();
         echo $menu->output();
     }
 
-    else if (isset($_GET['page'])) {
+    else if (isset($_REQUEST['page'])) {
         require_once(SOURCE_PATH.'/template/misc/page.template.php');
-        $page = new PageTemplate($_GET['page']);
+        $page = new PageTemplate($_REQUEST['page']);
         echo $page->output();
     }
 
-    else if (isset($_GET['login'])) {
+    else if (isset($_REQUEST['login'])) {
         require_once(SOURCE_PATH.'/show/user/login.show.php');
         $login = new Login();
         echo $login->output();
     }
 
-    else if (isset($_GET['register'])) {
+    else if (isset($_REQUEST['register'])) {
         require_once(SOURCE_PATH.'/show/user/registration.show.php');
         $registration = new Registration();
         echo $registration->output();

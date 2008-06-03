@@ -29,6 +29,11 @@ if ((int) VERSION == 6) {
 define('ROOT_PATH', dirname(__FILE__));
 
 /**
+* The API source path.
+*/
+define('API_PATH', ROOT_PATH.'/sources/api');
+
+/**
 * The correct source path for the php version installed on the server.
 */
 define('SOURCE_PATH', ROOT_PATH.'/sources/php'.((int) VERSION));
@@ -53,11 +58,11 @@ if (!sessionFileExists()) {
 }
 startSession();
 
-if (count($_GET) == 0 || isset($_GET['home'])) {
-    $home = $_GET['home'] = true;
+if (count($_REQUEST) == 1 || isset($_REQUEST['HOME'])) {
+    $HOME = $_REQUEST['home'] = true;
 }
 else {
-    $home = false;
+    $HOME = false;
 }
 
 /**
@@ -67,7 +72,7 @@ else {
 * @global    object    $Config
 */
 $Config = $_SESSION[SESSION]['config']
-    = ($home) ? new Config()
+    = ($HOME) ? new Config()
               : $_SESSION[SESSION]['config'];
 
 /**
@@ -77,7 +82,7 @@ $Config = $_SESSION[SESSION]['config']
 * @global    object    $Filter
 */
 $Filter = $_SESSION[SESSION]['filter']
-    = ($home) ? new Filter()
+    = ($HOME) ? new Filter()
               : $_SESSION[SESSION]['filter'];
 
 /**
@@ -107,25 +112,29 @@ $queries = 0;
 
 $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
 
-if (!isset($_GET['session'])) {
-    if ($home) {
-        $_GET['page'] = 'home.php';
+if (!isset($_REQUEST['session'])) {
+    if ($HOME) {
+        $_REQUEST['page'] = 'home.php';
         require(ROOT_PATH.'/interfaces/output.php');
     }
 
-    else if (isset($_GET['output'])) {
+    else if (isset($_REQUEST['output'])) {
+        unset($_REQUEST['output']);
         require(ROOT_PATH.'/interfaces/output.php');
     }
 
-    else if (isset($_GET['input'])) {
+    else if (isset($_REQUEST['input'])) {
+        unset($_REQUEST['input']);
         require(ROOT_PATH.'/interfaces/input.php');
     }
 
-    else if (isset($_GET['user'])) {
+    else if (isset($_REQUEST['user'])) {
+        unset($_REQUEST['user']);
         require(ROOT_PATH.'/interfaces/user.php');
     }
 
-    else if (isset($_GET['config'])) {
+    else if (isset($_REQUEST['config'])) {
+        unset($_REQUEST['config']);
         require(ROOT_PATH.'/interfaces/config.php');
     }
 }

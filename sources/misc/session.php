@@ -114,7 +114,7 @@ function destroySession() {
     session_unset();
     session_destroy();
     
-    $_GET['session'] = true;
+    $_REQUEST['session'] = true;
     require_once(ROOT_PATH.'/index.php');
 }
 ?>

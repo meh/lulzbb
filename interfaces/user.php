@@ -1,17 +1,17 @@
 <?php
 /**
-* @package Misc
+* @package Interfaces
 * @license http://opensource.org/licenses/gpl-3.0.html
 
 * @author cHoBi
 */
 
-if (count($_GET) == 0 && count($_POST) == 0) {
-    die();
+if (count($_REQUEST) <= 1) {
+    die('No parameters eh? Are you trying to hax me? :(');
 }
 
-if (isset($_GET['show'])) {
-    if (isset($_GET['profile'])) {
+if (isset($_REQUEST['show'])) {
+    if (isset($_REQUEST['profile'])) {
         require_once(SOURCE_PATH.'/output/user/profile.output.php');
 
         $DATA['user_id'] = $_REQUEST['id'];
@@ -21,7 +21,7 @@ if (isset($_GET['show'])) {
     }
 }
 
-else if (isset($_GET['send'])) {
+else if (isset($_REQUEST['send'])) {
 
 }
 ?>
