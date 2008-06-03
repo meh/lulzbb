@@ -1,6 +1,6 @@
 <?php
 /**
-* @package API
+* @package Interfaces
 * @license http://opensource.org/licenses/gpl-3.0.html
 
 * @author cHoBi

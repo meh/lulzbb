@@ -2,7 +2,7 @@
     <div id="error" style="width: 400px; margin: 0 auto; border: 1px solid #880000;">
         Please fill all fields correctly ;3
     </div><br/>
-    <form onsubmit="register('register');">
+    <form onsubmit="return register('register');">
     <table>
         <tr>
             <td>

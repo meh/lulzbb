@@ -13,7 +13,7 @@ function register(option) {
             
             POST(
                 'username-error',
-                'input/?register&check&username',
+                '?input&register&check&username',
                 'username='+rawurlencode(username)
             );
         break;
@@ -25,7 +25,7 @@ function register(option) {
             if (email_confirmation != '' || (email == '' && email_confirmation == '')) {
                 POST(
                     'email-error',
-                    'input/?register&check&email',
+                    '?input&register&check&email',
                     'email1='+rawurlencode(email)+'&email2='+rawurlencode(email_confirmation)
                 );
             }
@@ -38,7 +38,7 @@ function register(option) {
             if (password_confirmation != '' || (password == '' && password_confirmation == '')) {
                 POST(
                     'password-error',
-                    'input/?register&check&password',
+                    '?input&register&check&password',
                     'password1='+rawurlencode(password)+'&password2='+rawurlencode(password_confirmation)
                 );
             }
@@ -54,7 +54,7 @@ function register(option) {
             password_error = document.getElementById('password-error');
 
             if (username_error.innerHTML == 'Ok.' && email_error.innerHTML == 'Ok.' && (password.length >= 6 && password.length <= 30)) {
-                POST('middle', 'input/?register&send', 'username='+rawurlencode(username)+'&email='+rawurlencode(email)+'&password='+rawurlencode(password));
+                POST('middle', '?input&register&send', 'username='+rawurlencode(username)+'&email='+rawurlencode(email)+'&password='+rawurlencode(password));
             }
 
             else {
@@ -70,6 +70,8 @@ function register(option) {
                 
                 document.getElementById('error').innerHTML
                     = "<b>You're doing it wrong, Sir.</b>";
+
+                return false;
             }
         break;
     }       

@@ -41,6 +41,13 @@
     <div class="topics">
         <div class="group">
             <div class="group-title"><%SECTION-TITLE%></div>
+
+            <Pager>
+            <div class="pager">
+                <Page><span class="page"><a href="#"><%PAGE%></a></span>&nbsp;</Page>
+                <Current-Page><span class="current-page"><%PAGE%></span>&nbsp;</Current-Page>
+            </div>
+            </Pager>
         </div>
 
         <table class="topics">

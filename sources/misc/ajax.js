@@ -100,11 +100,19 @@ function showRegistration(show_id) {
 function sendTopic(magic, show_id, parent, type, title, subtitle, content) {
     POST(show_id, '?input&topic&send',
           'type='+type+'&'
-        + 'parent='+parent+'&'
+        + 'parent='+rawurlencode(parent)+'&'
         + 'title='+rawurlencode(title)+'&'
         + 'subtitle='+rawurlencode(subtitle)+'&'
         + 'content='+rawurlencode(content)+'&'
-        + 'magic='+magic);
+        + 'magic='+rawurlencode(magic));
+}
+
+function sendPost(magic, show_id, topic_id, title, content) {
+    POST(show_id, '?input&forum&post&send',
+        'topic_id='+topic_id+'&'
+      + 'title='+rawurlencode(title)+'&'
+      + 'content='+rawurlencode(content)+'&'
+      + 'magic='+rawurlencode(magic));
 }
 
 // Misc functions

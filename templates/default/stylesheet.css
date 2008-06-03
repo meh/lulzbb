@@ -541,3 +541,7 @@ form.buttons {
     border-bottom: 0;
     text-align: center;
 }
+
+div.pager {
+    display: none;
+}

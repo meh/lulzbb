@@ -1,6 +1,6 @@
 <?php
 /**
-* @package Misc
+* @package lulzBB
 * @license http://opensource.org/licenses/gpl-3.0.html
 
 * @author cHoBi
@@ -60,6 +60,7 @@ startSession();
 
 if (count($_REQUEST) == 1 || isset($_REQUEST['HOME'])) {
     $HOME = $_REQUEST['home'] = true;
+    $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
 }
 else {
     $HOME = false;
@@ -109,8 +110,6 @@ $User = $_SESSION[SESSION]['user']
 * @global    int    $queries
 */
 $queries = 0;
-
-$_SESSION[SESSION]['magic'] = md5(rand().rand().time());
 
 if (!isset($_REQUEST['session'])) {
     if ($HOME) {
