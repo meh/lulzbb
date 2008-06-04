@@ -33,6 +33,23 @@ class TopicQuery extends Query {
 QUERY;
     }
 
+    public function getInfos($topic_id) {
+        $topic_id = (int) $topic_id;
+
+        return <<<QUERY
+
+        SELECT
+            *
+
+        FROM
+            {$this->dbPrefix}_topics
+
+        WHERE
+            {$this->dbPrefix}_topics.id = {$topic_id}
+
+QUERY;
+    }
+
     public function getPosition($section_id, $last_post_time) {
         global $Filter;
         $section_id     = (int) $section_id;

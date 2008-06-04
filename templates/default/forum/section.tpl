@@ -44,7 +44,7 @@
 
             <Pager>
             <div class="pager">
-                <Page><span class="page"><a href="#"><%PAGE%></a></span>&nbsp;</Page>
+                <Page><span class="page"><a href="#" onclick="showSection('middle', <%SECTION-ID%>, <%PAGE%>);"><%PAGE%></a></span>&nbsp;</Page>
                 <Current-Page><span class="current-page"><%PAGE%></span>&nbsp;</Current-Page>
             </div>
             </Pager>

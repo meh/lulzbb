@@ -80,7 +80,7 @@ class SectionDatabase extends DatabaseBase {
         $query = $this->Database->sendQuery($this->Query->getPages($section_id));
         $pages = mysql_fetch_row($query);
 
-        return (int) $pages[0];
+        return $pages[0];
     }
 
     /**
@@ -107,7 +107,7 @@ class SectionDatabase extends DatabaseBase {
         $this->Database->sendQuery($this->Query->getParent($section_id));
         $parent = $this->Database->fetchArray();
 
-        return (int) $parent['parent']['RAW'];
+        return $parent['parent']['RAW'];
     }
 
     /**

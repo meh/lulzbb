@@ -40,17 +40,19 @@ function mkdir_recursive($pathname, $mode = 0755)
 }
 
 /**
-* Checks if something is cached or not.
+* (DEPRECATED) Checks if something is cached or not.
 
 * @param    string    $type    The caching type. (section, topic, navigator)
 * @param    int       $id      The cache's id.
 
 * @return    bool    Guess what?
+
+* @todo This is deprecated, let's find something else.
 */
-function isCached($type, $id) {
+function isCached($type, $id, $page) {
     $path = ROOT_PATH.'/.cache';
 
-    if (is_file("{$path}/{$type}/{$id}.html")) {
+    if (is_file("{$path}/{$type}/{$id}-{$page}.html")) {
         return true;
     }
     else {

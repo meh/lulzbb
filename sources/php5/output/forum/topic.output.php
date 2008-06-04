@@ -25,31 +25,30 @@ class Topic extends Output {
     * @param    int    $topic_id    The topic id.
     * @param    int    $post_id     The post id.
     */
-    public function __construct($topic_id, $post_id) {
+    public function __construct($topic_id, $topic_page, $post_id) {
         if ($topic_id < 1) {
             die('LOLFAIL');
         }
-    
         parent::__construct();
         global $Database;
 
-        try {
-            $parent = $Database->topic->getParent($topic_id);
+        if (!isset($topic_page)) {
+            $topic_page = 1;
+        }
 
-            $cache = new TopicCache($parent['id'], $topic_id);
+        try {
+            $infos = $Database->topic->getInfos($topic_id);
+
+            $cache = new TopicCache($infos['parent']['RAW'], $topic_id, $topic_page);
             if (!$cache->isCached()) {
-                $topic = new TopicShow($parent['id'], $topic_id, $post_id);
+                $topic = new TopicShow($infos['parent']['RAW'], $topic_id, $post_id);
                 $cache->put($topic->output());
             }
-
-            if (isCached('sections', $parent['id'])) {
+            else {
                 $cache->updateViews();
             }
-            else {
-                $Database->topic->increaseViewsCount($topic_id);
-            }
         
-            $this->output = $this->__formPost($cache->get(), $topic_id);
+            $this->output = $this->__formPost($cache->get(), $topic_id, $infos['title']);
         }
         catch (lulzExceptions $e) {
             die($e->getMessage());
@@ -60,15 +59,12 @@ class Topic extends Output {
     * Get the send post form.
     * @access private
     */
-    private function __formPost($output, $topic_id) {
-        global $Database;
-        $title = $Database->topic->getTitle($topic_id);
-
+    private function __formPost($output, $topic_id, $topic_title) {
         if ($this->connected) {
             $form = new PostFormTemplate(
                 $this->magic,
                 $topic_id,
-                $title['RAW']
+                $topic_title['RAW']
             );
             $form = $form->output();
         }

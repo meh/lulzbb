@@ -62,6 +62,7 @@ class SectionShow extends Show {
 
         $template = new SectionTemplate(
             $this->id,
+            $this->page,
             $groups,
             $topics
         );

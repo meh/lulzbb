@@ -47,7 +47,7 @@ class Cache {
     * Checks if the dir exists and creates it if it doesn't.
     * @access private
     */
-    private function __checkDir($path) {
+    protected function __checkDir($path) {
         mkdir_recursive(dirname($path));
         
         return $path;

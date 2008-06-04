@@ -49,6 +49,20 @@ class TopicDatabase extends DatabaseBase {
     }
 
     /**
+    * Gets topic's infos.
+
+    * @param    int    $topic_id    The topic id.
+
+    * @return    array    The topic's infos.
+    */
+    public function getInfos($topic_id) {
+        $this->Database->sendQuery($this->Query->getInfos($topic_id));
+        $infos = $this->Database->fetchArray();
+
+        return $infos;
+    }
+
+    /**
     * Gets the page where the topic is.
 
     * @param    int    $section_id    The section's id.

@@ -26,8 +26,8 @@ class TopicCache extends Cache {
     * @param    int    $parent      The topic's parent.
     * @param    int    $topic_id    The topic id.
     */
-    public function __construct($parent, $topic_id) {
-        $file = "topics/{$topic_id}.html";
+    public function __construct($parent, $topic_id, $topic_page) {
+        $file = "topics/{$topic_id}-{$topic_page}.html";
 
         $this->parent   = $parent;
         $this->topic_id = $topic_id;
@@ -66,7 +66,7 @@ class TopicCache extends Cache {
     * Updates the $page property.
     */
     private function __setPage() {
-        $path = ROOT_PATH."/.cache/misc/page.topic.{$this->parent}-{$this->topic_id}.txt";
+        $path = $this->__checkDir(ROOT_PATH."/.cache/misc/page.topic.{$this->parent}-{$this->topic_id}.txt");
 
         if (is_file($path)) {
             $page = file($path);

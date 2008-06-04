@@ -14,6 +14,11 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 * @author cHoBi
 */
 class SectionTemplate extends Template {
+    private $section_id;
+    private $page;
+    private $groups;
+    private $topics;
+
     /**
     * Create the template of a section.
 
@@ -21,14 +26,14 @@ class SectionTemplate extends Template {
     * @param    array    $sections      The sections data.
     * @param    array    $topics        The topics data.
     */
-    public function __construct($section_id, $groups, $topics) {
+    public function __construct($section_id, $page, $groups, $topics) {
         parent::__construct('forum/section.tpl');
         global $Database;
         
-        $this->data['section_id'] = $section_id;
-        $this->data['groups']     = $groups;
-        $this->data['topics']     = $topics;
-        $this->data['template']   = array();
+        $this->section_id = $section_id;
+        $this->page       = $page;
+        $this->groups     = $groups;
+        $this->topics     = $topics;
 
         $this->data['title'] = $Database->section->getTitle($section_id);
 
@@ -44,8 +49,8 @@ class SectionTemplate extends Template {
         $text = $this->__loops($text);
 
         $sections = '';
-        if (!empty($this->data['groups'])) {
-            $sectionGroups = $this->__sectionsGroup($this->data['groups']);
+        if (!empty($this->groups)) {
+            $sectionGroups = $this->__sectionsGroup($this->groups);
             foreach ($sectionGroups as $group) {
                 $sections .= $this->__sections($group);
             }
@@ -57,8 +62,8 @@ class SectionTemplate extends Template {
             $text
         );
 
-        if ($this->data['section_id'] != 0) {
-            $topics = $this->__topics($this->data['topics']);
+        if ($this->section_id != 0) {
+            $topics = $this->__topics($this->topics);
         }
         else {
             $topics = '';
@@ -70,7 +75,9 @@ class SectionTemplate extends Template {
             $text
         );
 
-        $this->parsed = $text;
+        $text = $this->__pager($text);
+
+        $this->parsed = $this->__common($text);
     }
 
     /**
@@ -91,170 +98,203 @@ class SectionTemplate extends Template {
         */
 
         global $Filter;
+
+        // Pager
+        preg_match(
+            '|<Pager>(.*?)</Pager>|ims',
+            $text,
+            $pager
+        );
+        $this->template['pager'] = $pager[1];
+
+        preg_match(
+            '|<Page>(.*?)</Page>|ims',
+            $this->template['pager'],
+            $page
+        );
+        $this->template['page'] = $page[1];
+
+        preg_match(
+            '|<Current-Page>(.*?)</Current-Page>|ims',
+            $this->template['pager'],
+            $current_page
+        );
+        $this->template['current_page'] = $current_page[1];
+
+        $this->template['pager'] = preg_replace(
+            '|<Page>.*?</Page>|ims',
+            '<%LOOP-PAGE%>',
+            $this->template['pager']
+        );
+        $this->template['pager'] = preg_replace(
+            '|<Current-Page>.*?</Current-Page>|ims',
+            '',
+            $this->template['pager']
+        );
         
         // Sections
         if (preg_match_all(
-                '|<Sections>(.+?)?</Sections>|ims',
+                '|<Sections>(.*?)</Sections>|ims',
                 $text,
                 $sections) != 1) {
             die('The template has an error. (There MUST be 1 Sections loop)');
         }
-        $this->data['template']['sections'] = $sections[1][0];
+        $this->template['sections'] = $sections[1][0];
 
         // Sections group
         if (preg_match_all(
-                '|<Sections-Group>(.+?)?</Sections-Group>|ims',
-                $this->data['template']['sections'],
+                '|<Sections-Group>(.*?)</Sections-Group>|ims',
+                $this->template['sections'],
                 $sections_group) != 1) {
             die('The template has an error. (There MUST be 1 Sections-Group loop)');
         }
-        $this->data['template']['sections_group'] = $sections_group[1][0];
+        $this->template['sections_group'] = $sections_group[1][0];
 
         // Section group header
         if (preg_match_all(
-                '|<Group-Header>(.+?)?</Group-Header>|ims',
-                $this->data['template']['sections_group'],
+                '|<Group-Header>(.*?)</Group-Header>|ims',
+                $this->template['sections_group'],
                 $group_header) != 1) {
             die('The template has an error. (There MUST be 1 Group-Header loop)');
         }
-        $this->data['template']['group_header'] = $group_header[1][0];
+        $this->template['group_header'] = $group_header[1][0];
 
         // Section group content
         if (preg_match_all(
-                '|<Section-Content>(.+?)?</Section-Content>|ims',
-                $this->data['template']['sections_group'],
+                '|<Section-Content>(.*?)</Section-Content>|ims',
+                $this->template['sections_group'],
                 $section_content) != 1) {
             die('The template has an error. (There MUST be 1 Section-Content loop)');
         }
-        $this->data['template']['section_content'] = $section_content[1][0];
+        $this->template['section_content'] = $section_content[1][0];
 
         if (preg_match_all(
-                '|<Last-Info>(.+?)?</Last-Info>|ims',
-                $this->data['template']['section_content'],
+                '|<Last-Info>(.*?)</Last-Info>|ims',
+                $this->template['section_content'],
                 $last_info) != 1) {
             die('The template has an error. (There MUST be 1 Last-Info)');
         }
-        $this->data['template']['last_info'] = $last_info[1][0];
+        $this->template['last_info'] = $last_info[1][0];
 
         if (preg_match_all(
-                '|<No-Info>(.+?)?</No-Info>|ims',
-                $this->data['template']['section_content'],
+                '|<No-Info>(.*?)</No-Info>|ims',
+                $this->template['section_content'],
                 $no_info) != 1) {
             die('The template has an error. (There MUST be 1 No-Info)');
         }
-        $this->data['template']['no_info'] = $no_info[1][0];
+        $this->template['no_info'] = $no_info[1][0];
 
-        $this->data['template']['section_content']
+        $this->template['section_content']
             = preg_replace(
-                '|<Last-Info>(.+?)?</Last-Info>|ims',
+                '|<Last-Info>(.*?)</Last-Info>|ims',
                 '<%LAST-INFO%>',
-                $this->data['template']['section_content']
+                $this->template['section_content']
         );
-        $this->data['template']['section_content']
+        $this->template['section_content']
             = preg_replace(
-                '|<No-Info>(.+?)?</No-Info>|ims',
+                '|<No-Info>(.*?)</No-Info>|ims',
                 '',
-                $this->data['template']['section_content']
+                $this->template['section_content']
         );
 
         // Section group footer
         if (preg_match_all(
-                '|<Group-Footer>(.+?)?</Group-Footer>|ims',
-                $this->data['template']['sections_group'],
+                '|<Group-Footer>(.*?)</Group-Footer>|ims',
+                $this->template['sections_group'],
                 $group_footer) != 1) {
             die('The template has an error. (There MUST be 1 Group-Footer loop)');
         }
-        $this->data['template']['group_footer'] = $group_footer[1][0];
+        $this->template['group_footer'] = $group_footer[1][0];
 
-        $this->data['template']['sections_group']
+        $this->template['sections_group']
             = preg_replace(
                 '|<Group-Header>(.+?)</Group-Header>|ims',
                 '<%LOOP-GROUP-HEADER%>',
-                $this->data['template']['sections_group']
+                $this->template['sections_group']
         );
-        $this->data['template']['sections_group']
+        $this->template['sections_group']
             = preg_replace(
-                '|<Section-Content>(.+?)?</Section-Content>|ims',
+                '|<Section-Content>(.*?)</Section-Content>|ims',
                 '<%LOOP-GROUP-CONTENT%>',
-                $this->data['template']['sections_group']
+                $this->template['sections_group']
         );
-        $this->data['template']['sections_group']
+        $this->template['sections_group']
             = preg_replace(
-                '|<Group-Footer>(.+?)?</Group-Footer>|ims',
+                '|<Group-Footer>(.*?)</Group-Footer>|ims',
                 '<%LOOP-GROUP-FOOTER%>',
-                $this->data['template']['sections_group']
+                $this->template['sections_group']
         );
-        $this->data['template']['sections']
+        $this->template['sections']
             = preg_replace(
-                '|<Sections-Group>(.+?)?</Sections-Group>|ims',
+                '|<Sections-Group>(.*?)</Sections-Group>|ims',
                 '<%LOOP-SECTIONS-GROUP%>',
-                $this->data['template']['sections']
+                $this->template['sections']
         );
 
         // Topics
         if (preg_match_all(
-                '|<Topics>(.+?)?</Topics>|ims',
+                '|<Topics>(.*?)</Topics>|ims',
                 $text,
                 $topics) != 1) {
             die('The template has an error. (There MUST be 1 Topics loop)');
         }
-        $this->data['template']['topics'] = $topics[1][0];
+        $this->template['topics'] = $topics[1][0];
 
         // Topic
         if (preg_match_all(
-                '|<Topic>(.+?)?</Topic>|ims', 
-                $this->data['template']['topics'],
+                '|<Topic>(.*?)</Topic>|ims', 
+                $this->template['topics'],
                 $topic) != 1) {
             die('The template has an error. (There MUST be 1 Topic loop)');
         }
-        $this->data['template']['topic'] = $topic[1][0];
+        $this->template['topic'] = $topic[1][0];
 
         // No topics
         if (preg_match_all(
-                '|<No-Topic>(.+?)?</No-Topic>|ims',
-                $this->data['template']['topics'],
+                '|<No-Topic>(.*?)</No-Topic>|ims',
+                $this->template['topics'],
                 $no_topics) != 1) {
             die('The template has an error. (There MUST be 1 No-Topic loop)');
         }
-        $this->data['template']['no_topics'] = $no_topics[1][0];
+        $this->template['no_topics'] = $no_topics[1][0];
         
-        $this->data['template']['topics']
+        $this->template['topics']
             = preg_replace(
-                '|<Topic>(.+?)?</Topic>|ims',
+                '|<Topic>(.*?)</Topic>|ims',
                 '<%LOOP-TOPIC%>',
-                $this->data['template']['topics']
+                $this->template['topics']
         );
-        $this->data['template']['topics']
+        $this->template['topics']
             = preg_replace(
-                '|<No-Topic>(.+?)?</No-Topic>|ims',
+                '|<No-Topic>(.*?)</No-Topic>|ims',
                 '',
-                $this->data['template']['topics']
+                $this->template['topics']
         );
         
         $text
             = preg_replace(
-                '|<Sections>(.+?)?</Sections>|ims',
+                '|<Sections>(.*?)</Sections>|ims',
                 '<%LOOP-SECTIONS%>',
                 $text
         );
         $text
             = preg_replace(
-                '|<Topics>(.+?)?</Topics>|ims',
+                '|<Topics>(.*?)</Topics>|ims',
                 '<%LOOP-TOPICS%>',
                 $text
         );
 
         if (preg_match_all(
-                '|<New-Topic>(.+?)?</New-Topic>|ims',
+                '|<New-Topic>(.*?)</New-Topic>|ims',
                 $text,
                 $new_topic) != 1) {
             die('The template has an error. (There MUST be 1 New-Topic)');
         }
-        $this->data['template']['new_topic'] = $new_topic[1][0];
+        $this->template['new_topic'] = $new_topic[1][0];
 
         $text
             = preg_replace(
-                '|<New-Topic>(.+?)?</New-Topic>|i',
+                '|<New-Topic>(.*?)</New-Topic>|i',
                 '<%NEW-TOPIC%>',
                 $text
         );
@@ -267,7 +307,7 @@ class SectionTemplate extends Template {
     * @access private
     */
     private function __groupHeader($group) {
-        $text = $this->data['template']['group_header'];
+        $text = $this->template['group_header'];
         
         $text = preg_replace(
             '|<%GROUP-TITLE%>|i',
@@ -283,7 +323,7 @@ class SectionTemplate extends Template {
     * @access private
     */
     private function __sectionContent($section) {
-        $text = $this->data['template']['section_content'];
+        $text = $this->template['section_content'];
 
         $text = preg_replace(
             '|<%SECTION-TITLE%>|i',
@@ -326,7 +366,7 @@ class SectionTemplate extends Template {
     */
     private function __lastInfo($section) {
         if (!empty($section['last_user_name']['HTML'])) {
-            $text = $this->data['template']['last_info'];
+            $text = $this->template['last_info'];
 
             $text = preg_replace(
                 '|<%SECTION-LAST-TOPIC-TITLE%>|i',
@@ -355,7 +395,7 @@ class SectionTemplate extends Template {
             );
         }
         else {
-            $text = $this->data['template']['no_info'];
+            $text = $this->template['no_info'];
         }
 
         return $text;
@@ -366,7 +406,7 @@ class SectionTemplate extends Template {
     * @access private
     */
     private function __groupFooter($section) {
-        $text = $this->data['template']['group_footer'];
+        $text = $this->template['group_footer'];
         return $text;
     }
 
@@ -407,7 +447,7 @@ class SectionTemplate extends Template {
     * @access private
     */
     private function __group($header, $content, $footer) {
-        $text = $this->data['template']['sections_group'];
+        $text = $this->template['sections_group'];
 
         $text = preg_replace(
             '|<%LOOP-GROUP-HEADER%>|i',
@@ -435,7 +475,7 @@ class SectionTemplate extends Template {
     * @access private
     */
     private function __sections($group) {
-        $text = $this->data['template']['sections'];
+        $text = $this->template['sections'];
 
         $text = preg_replace(
             '|<%LOOP-SECTIONS-GROUP%>|i',
@@ -451,7 +491,7 @@ class SectionTemplate extends Template {
     * @access private
     */
     private function __topics($topics) {
-        $text = $this->data['template']['topics'];
+        $text = $this->template['topics'];
 
         $text = preg_replace(
             '|<%SECTION-TITLE%>|i',
@@ -462,7 +502,7 @@ class SectionTemplate extends Template {
         if (count($topics) == 0) {
             $text = preg_replace(
                 '|<%LOOP-TOPIC%>|i',
-                $this->data['template']['no_topics'],
+                $this->template['no_topics'],
                 $text
             );
         }
@@ -488,7 +528,7 @@ class SectionTemplate extends Template {
     * @access private
     */
     private function __topic($topic) {
-        $text = $this->data['template']['topic'];
+        $text = $this->template['topic'];
         
         $text = preg_replace(
             '|<%TOPIC-ID%>|i',
@@ -531,11 +571,7 @@ class SectionTemplate extends Template {
             $text
         );
 
-        $text = preg_replace(
-            '|<%SECTION-ID%>|i',
-            $this->data['section_id'],
-            $text
-        );
+
         $text = preg_replace(
             '|<%POST-TOPIC-ID%>|i',
             $topic['id']['POST'],
@@ -544,6 +580,76 @@ class SectionTemplate extends Template {
         $text = preg_replace(
             '|<%POST-TOPIC-TITLE%>|i',
             $topic['title']['POST'],
+            $text
+        );
+
+        return $text;
+    }
+
+    /**
+    * Creates the pager.
+    * @access private
+    */
+    private function __pager($text) {
+        global $Database;
+        $pagesNumber = $Database->section->getPages($this->section_id);
+
+        $text = preg_replace(
+            '|<Pager>.+?</Pager>|ims',
+            '<%PAGER%>',
+            $text
+        );
+
+        $pages = '';
+        for ($page = 1; $page <= $pagesNumber; $page++) {
+            $pages .= $this->__page($page);
+        }
+        
+        $pager = $this->template['pager'];
+        $pager = preg_replace(
+            '|<%LOOP-PAGE%>|i',
+            $pages,
+            $pager
+        );
+
+        $text = preg_replace(
+            '|<%PAGER%>|i',
+            $pager,
+            $text
+        );
+
+        return $text;
+    }
+
+    /**
+    * Creates the page.
+    * @access private
+    */
+    private function __page($page) {
+        if ($page == $this->page) {
+            $text = $this->template['current_page'];
+        }
+        else {
+            $text = $this->template['page'];
+        }
+
+        $text = preg_replace(
+            '|<%PAGE%>|ims',
+            $page,
+            $text
+        );
+
+        return $text;
+    }
+
+    /**
+    * Common tags.
+    * @access private
+    */
+    private function __common($text) {
+        $text = preg_replace(
+            '|<%SECTION-ID%>|i',
+            $this->section_id,
             $text
         );
 

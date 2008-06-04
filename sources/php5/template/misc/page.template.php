@@ -22,7 +22,7 @@ class PageTemplate extends Template {
     public function __construct($file) {
         parent::__construct('misc/page.tpl');
 
-        $file = preg_replace('|\.\./|', '', $file);
+        $file = preg_replace('|\.+/+|', '', $file);
         $this->data['content'] = new Template("/pages/{$file}");
 
         $this->__parse();

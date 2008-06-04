@@ -42,8 +42,9 @@ class Template {
             $this->connected = false;
         }
         
-        if ($file[0] == '/' || ereg('^\.\./', $file)) {
-            $this->plain_text = file_get_contents(ROOT_PATH.$file);
+        if ($file[0] == '/' || ereg('^\.+/', $file)) {
+            $file = preg_replace('#\.+/+|^/#', '', $file);
+            $this->plain_text = file_get_contents(ROOT_PATH."/{$file}");
         }
         else {
             $this->plain_text = file_get_contents(ROOT_PATH."/templates/{$this->template['name']}/$file");

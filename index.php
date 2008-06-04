@@ -29,6 +29,11 @@ if ((int) VERSION == 6) {
 define('ROOT_PATH', dirname(__FILE__));
 
 /**
+* The interfaces path.
+*/
+define('INTERFACES_PATH', ROOT_PATH.'/interfaces');
+
+/**
 * The API source path.
 */
 define('API_PATH', ROOT_PATH.'/sources/api');
@@ -58,12 +63,12 @@ if (!sessionFileExists()) {
 }
 startSession();
 
-if (count($_REQUEST) == 1 || isset($_REQUEST['HOME'])) {
-    $HOME = $_REQUEST['home'] = true;
+if (count($_REQUEST) == 1) {
+    $_REQUEST['home'] = true;
     $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
-}
-else {
-    $HOME = false;
+    
+    $_SESSION[SESSION]['config'] = new Config;
+    $_SESSION[SESSION]['filter'] = new Filter;
 }
 
 /**
@@ -72,9 +77,7 @@ else {
 
 * @global    object    $Config
 */
-$Config = $_SESSION[SESSION]['config']
-    = ($HOME) ? new Config()
-              : $_SESSION[SESSION]['config'];
+$Config = $_SESSION[SESSION]['config'];
 
 /**
 * This global var contains the Filter object, so you need it to filter
@@ -82,9 +85,7 @@ $Config = $_SESSION[SESSION]['config']
 
 * @global    object    $Filter
 */
-$Filter = $_SESSION[SESSION]['filter']
-    = ($HOME) ? new Filter()
-              : $_SESSION[SESSION]['filter'];
+$Filter = $_SESSION[SESSION]['filter'];
 
 /**
 * This global var cointains the Database object, and i think it's obvious
@@ -99,10 +100,7 @@ $Database = new Database;
 
 * @global    object    $User
 */
-$User = $_SESSION[SESSION]['user']
-    = isset($_SESSION[SESSION]['user'])
-          ? $_SESSION[SESSION]['user']
-          : NULL;
+$User = $_SESSION[SESSION]['user'];
 
 /**
 * This global var containst the count of sent queries for the page.
@@ -112,29 +110,29 @@ $User = $_SESSION[SESSION]['user']
 $queries = 0;
 
 if (!isset($_REQUEST['session'])) {
-    if ($HOME) {
+    if (isset($_REQUEST['home'])) {
         $_REQUEST['page'] = 'home.php';
-        require(ROOT_PATH.'/interfaces/output.php');
+        require(INTERFACES_PATH.'/output.php');
     }
 
     else if (isset($_REQUEST['output'])) {
         unset($_REQUEST['output']);
-        require(ROOT_PATH.'/interfaces/output.php');
+        require(INTERFACES_PATH.'/output.php');
     }
 
     else if (isset($_REQUEST['input'])) {
         unset($_REQUEST['input']);
-        require(ROOT_PATH.'/interfaces/input.php');
+        require(INTERFACES_PATH.'/input.php');
     }
 
     else if (isset($_REQUEST['user'])) {
         unset($_REQUEST['user']);
-        require(ROOT_PATH.'/interfaces/user.php');
+        require(INTERFACES_PATH.'/user.php');
     }
 
     else if (isset($_REQUEST['config'])) {
         unset($_REQUEST['config']);
-        require(ROOT_PATH.'/interfaces/config.php');
+        require(INTERFACES_PATH.'/config.php');
     }
 }
 ?>

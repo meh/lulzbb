@@ -47,12 +47,13 @@ QUERY;
 
     public function getPages($section_id) {
         global $Config;
-        $section_id = (int) $section_id;
+        $section_id      = (int) $section_id;
+        $elementsPerPage = (int) $Config->get('elementsPerPage');
 
         return <<<QUERY
 
         SELECT
-            CEIL(COUNT(id)/{$Config->get('elementsPerPage')})
+            CEIL(COUNT(id)/{$elementsPerPage})
 
         FROM
             {$this->dbPrefix}_topics
