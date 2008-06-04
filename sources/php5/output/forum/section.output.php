@@ -24,9 +24,10 @@ class Section extends Output {
     */
     public function __construct($section_id, $page = 1) {
         parent::__construct();
-
+        
         try {
-            $page = ((int) $page < 1) ? 1 : (int) $page;
+            $section_id = (int) $section_id;
+            $page       = ((int) $page < 1) ? 1 : (int) $page;
 
             $cache = new SectionCache($section_id, $page);
             if (!$cache->isCached()) {

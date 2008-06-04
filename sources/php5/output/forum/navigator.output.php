@@ -25,6 +25,7 @@ class Navigator extends Output {
     */
     public function __construct($type, $id, $option = '') {
         parent::__construct();
+        $id = (int) $id;
 
         $cache = new NavigatorCache($type, $id.$option);
         if (!$cache->isCached()) {

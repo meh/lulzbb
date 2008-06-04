@@ -66,22 +66,6 @@ if (isset($_REQUEST['home'])) {
                 ));
                 echo $page->output();
             }
-
-            else if (isset($_REQUEST['send'])) {
-                $DATA['parent']  = $_REQUEST['parent'];
-                $DATA['s_title'] = $_REQUEST['s_title'];
-                $DATA['magic']   = $_SESSION[SESSION]['magic'];
-
-                $form = new TopicFormTemplate(
-                    array(
-                        'parent'  => $DATA['parent'],
-                        's_title' => $DATA['s_title'],
-                        'level'   => $DATA['level'],
-                        'magic'   => $DATA['magic']
-                    )
-                );
-                echo $form->output();
-            }
         }
     }
     else {
@@ -126,7 +110,7 @@ else {
             if (isset($_REQUEST['show'])) {
                 require_once(SOURCE_PATH.'/output/forum/topic.output.php');
                 
-                $DATA['topic_id']   = $_REQUEST['id'];
+                $DATA['topic_id']   = $DATA['id'];
                 $DATA['topic_page'] = $_REQUEST['page'];
                 $DATA['post_id']    = $_REQUEST['post'];
                 
@@ -144,7 +128,7 @@ else {
                 require_once(SOURCE_PATH.'/template/forms/send-topic.template.php');
     
                 $DATA['parent']  = $_REQUEST['parent'];
-                $DATA['magic']   = $_SESSION[SESSION]['magic'];
+                $DATA['magic']   = $_REQUEST['magic'];
 
                 $form = new TopicFormTemplate($DATA['magic'], $DATA['parent']);
                 echo $form->output();

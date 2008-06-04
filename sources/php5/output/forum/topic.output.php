@@ -17,8 +17,6 @@ require_once(SOURCE_PATH.'/database/database.class.php');
 * @author cHoBi
 */
 class Topic extends Output {
-    private $Database;
-
     /**
     * Get the cache or the data from the db.
 
@@ -37,6 +35,10 @@ class Topic extends Output {
         }
 
         try {
+            $topic_id   = (int) $topic_id;
+            $topic_page = (int) $topic_page;
+            $post_id    = (int) $post_id;
+
             $infos = $Database->topic->getInfos($topic_id);
 
             $cache = new TopicCache($infos['parent']['RAW'], $topic_id, $topic_page);
