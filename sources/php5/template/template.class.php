@@ -42,9 +42,10 @@ class Template {
             $this->connected = false;
         }
         
-        if (ereg('^(\.+/|\\)', $file)) {
-            $file = preg_replace('#\.+/+|^/#', '', $file);
-            $this->plain_text = file_get_contents(ROOT_PATH."/{$file}");
+        if (ereg('^/pages/', $file)) {
+            $file = preg_replace('|\.+/+|', '', $file);
+            $file = str_replace('/pages/', '', $file);
+            $this->plain_text = file_get_contents(ROOT_PATH."/pages/{$file}");
         }
         else {
             $this->plain_text = file_get_contents(ROOT_PATH."/templates/{$this->template['name']}/$file");

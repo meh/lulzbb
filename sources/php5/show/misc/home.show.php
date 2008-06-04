@@ -46,8 +46,8 @@ class Home extends Show {
     protected function __update() {
         switch ($this->file) {
             case 'section':
-            $section_id = $this->data['section_id'];
-            $page       = $this->data['page'];
+            $section_id = (int) $this->data['section_id'];
+            $page       = (int) $this->data['page'];
             
             $navigator = new Navigator('section', $section_id);
             $content   = new Section($section_id, $page);
@@ -55,11 +55,12 @@ class Home extends Show {
             break;
 
             case 'topic':
-            $topic_id = $this->data['topic_id'];
-            $post_id  = $this->data['post_id'];
+            $topic_id = (int) $this->data['topic_id'];
+            $post_id  = (int) $this->data['post_id'];
+            $page     = (int) $this->data['page'];
 
             $navigator = new Navigator('topic', $topic_id);
-            $content   = new Topic($topic_id, $post_id);
+            $content   = new Topic($topic_id, $post_id, $page);
             $template  = new HomeTemplate($navigator->output().$content->output().stats());
             break;
 

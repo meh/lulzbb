@@ -44,8 +44,12 @@
 
             <Pager>
             <div class="pager">
+                <First><<span class="first">&laquo;</span></First>
+                <Previous><span class="previous">&lt;</span></Previous>
                 <Page><span class="page"><a href="#" onclick="showSection('middle', <%SECTION-ID%>, <%PAGE%>);"><%PAGE%></a></span>&nbsp;</Page>
                 <Current-Page><span class="current-page"><%PAGE%></span>&nbsp;</Current-Page>
+                <Next><span class="next">&gt;</span></Next>
+                <Last><span class="last">&raquo;</span>
             </div>
             </Pager>
         </div>
