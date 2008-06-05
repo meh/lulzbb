@@ -107,23 +107,31 @@ class SectionTemplate extends Template {
         );
         $this->template['pager'] = $pager[1];
 
+        // Pages
+        preg_match(
+            '|<Pages>(.*?)</Pages>|ims',
+            $this->template['pager'],
+            $pages
+        );
+        $this->template['pages'] = $pages[1];
+
         preg_match(
             '|<Page>(.*?)</Page>|ims',
-            $this->template['pager'],
+            $this->template['pages'],
             $page
         );
         $this->template['page'] = $page[1];
 
         preg_match(
             '|<Current-Page>(.*?)</Current-Page>|ims',
-            $this->template['pager'],
+            $this->template['pages'],
             $current_page
         );
         $this->template['current_page'] = $current_page[1];
 
-        $this->template['pager'] = preg_replace(
+        $this->template['pages'] = preg_replace(
             '|<Page>.*?</Page>|ims',
-            '<%LOOP-PAGE%>',
+            '<%LOOP-PAGES%>',
             $this->template['pager']
         );
         $this->template['pager'] = preg_replace(
@@ -131,6 +139,41 @@ class SectionTemplate extends Template {
             '',
             $this->template['pager']
         );
+
+        // First
+        preg_match(
+            '|<First>(.*?)</First>|ims',
+            $this->template['pager'],
+            $first
+        );
+        $this->template['pager_first'] = $first[1];
+
+        preg_match(
+            '|<Yes>(.*?)</Yes>|ims',
+            $this->template['pager_first'],
+            $first
+        );
+        $this->template['pager_first_yes'] = $first[1];
+
+        preg_match(
+            '|<No>(.*?)</No>|ims',
+            $this->template['pager_first'],
+            $first
+        );
+        $this->template['pager_first_no'] = $first[1];
+
+        $this->template['pager_first'] = preg_replace(
+            '|<Yes>.*?</Yes>|ims',
+            '<%FIRST%>',
+            $this->template['pager_first']
+        );
+        $this->template['pager_first'] = preg_replace(
+            '|<No>.*?</No>|ims',
+            '',
+            $this->template['pager_first']
+        );
+
+        
         
         // Sections
         if (preg_match_all(

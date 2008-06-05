@@ -22,13 +22,27 @@ class Section extends Output {
     * @param    int    $section_id    The section id to get.
     * @param    int    $page          The page to show.
     */
-    public function __construct($section_id, $page = 1) {
+    public function __construct($section_id, $page = 'first') {
         parent::__construct();
+        global $Database;
+
+        $section_id = (int) $section_id;
+
+        if ($page == 'first') {
+            $page = 1;
+        }
+        else if ($page == 'last') {
+            $page = $Database->section->getPages($section_id);
+        }
+        else {
+            $page = (int) $page;
+
+            if ($page < 1) {
+                $page = 1;
+            }
+        }
         
         try {
-            $section_id = (int) $section_id;
-            $page       = ((int) $page < 1) ? 1 : (int) $page;
-
             $cache = new SectionCache($section_id, $page);
             if (!$cache->isCached()) {
                 $section = new SectionShow($section_id, $page);
