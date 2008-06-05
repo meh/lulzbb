@@ -41,7 +41,6 @@
     <div class="topics">
         <div class="group">
             <div class="group-title"><%SECTION-TITLE%></div>
-
             <Pager>
             <div class="pager">
                 <First>
@@ -58,10 +57,10 @@
                 </Previous>
 
                 <Pages>
-                <div class="pages">
+                <span class="pages">
                     <Page><span class="page"><a href="#" onclick="showSection('middle', <%SECTION-ID%>, <%PAGE%>);"><%PAGE%></a></span></Page>
                     <Current-Page><span class="current-page"><%PAGE%></span></Current-Page>
-                </div>
+                </span>
                 </Pages>
 
                 <Next>
@@ -112,5 +111,5 @@
     </div>
     </Topics>
     
-    <New-Topic><form class="buttons"><input type="button" value="New Topic" onclick="POST('middle', 'output/?forum&topic&send', 'parent=<%POST-SECTION-ID%>&id=-10');"/></form></New-Topic>
+    <New-Topic><form class="buttons"><input type="button" value="New Topic" onclick="POST('middle', '?output&forum&topic&send', 'parent=<%POST-SECTION-ID%>&id=-10');"/></form></New-Topic>
 </div>

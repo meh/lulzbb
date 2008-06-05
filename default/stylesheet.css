@@ -542,5 +542,30 @@ form.buttons {
     text-align: center;
 }
 
-div.pager {
+div.group div.pager {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
+div.pager a {
+    text-decoration: none;
+}
+
+div.group div.pager span.pages {
+    float: center;
+}
+
+span.page {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+span.previous, span.next {
+    font-size: 8px;
+    font-weight: bold;
+}
+
+span.first, span.last {
+    font-weight: bold;
 }
