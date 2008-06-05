@@ -118,6 +118,7 @@ QUERY;
             {$this->dbPrefix}_topic_posts.time,
             {$this->dbPrefix}_topic_posts.title,
             {$this->dbPrefix}_topic_posts.content,
+            {$this->dbPrefix}_topic_posts.lulzcode,
             {$this->dbPrefix}_users.name,
             {$this->dbPrefix}_users.signature
 

@@ -92,7 +92,14 @@ class SectionDatabase extends DatabaseBase {
         $query = $this->Database->sendQuery($this->Query->getPages($section_id));
         $pages = mysql_fetch_row($query);
 
-        return $pages[0];
+        if ($pages[0] < 1) {
+            $pages = 1;
+        }
+        else {
+            $pages = $pages[0];
+        }
+
+        return $pages;
     }
 
     /**

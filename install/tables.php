@@ -109,6 +109,7 @@ $Database->sendQuery('CREATE TABLE '.$dbPrefix.'_topic_posts(
 topic_id INT UNSIGNED NOT NULL,
 post_id INT UNSIGNED NOT NULL,
 user_id INT UNSIGNED NOT NULL,
+lulzcode BOOL NOT NULL,
 time DATETIME,
 title TINYTEXT NOT NULL,
 content longTEXT NOT NULL)');
