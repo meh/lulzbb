@@ -66,6 +66,16 @@ input[type="submit"]:hover {
     color: #DD0000;
 }
 
+pre, code {
+    position: relative;
+    left: -3px;
+    background-color: #111111;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-top: 1px solid #880000;
+    border-bottom: 1px solid #880000;
+}
+
 /* Base layout */
 body {
     width: 100%;
