@@ -4,6 +4,8 @@
 * @license GPLv3 http://opensource.org/licenses/gpl-3.0.html
 */
 
+var section_page = 'first';
+
 function init() {
     argv = init.arguments;
 
@@ -69,8 +71,8 @@ function showPage(show_id, page) {
 
 // Forum functions
 function showSection(show_id, section_id, page) {
-    var page = (page == null) ? 1 : page;
-
+    var page = (page == null) ? section_page : page;
+    section_page = page;
 
     POST(show_id, '?output&forum&section', 'id='+section_id+'&page='+page);
 }

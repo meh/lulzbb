@@ -30,10 +30,11 @@ class SectionTemplate extends Template {
         parent::__construct('forum/section.tpl');
         global $Database;
         
-        $this->section_id = $section_id;
-        $this->page       = $page;
-        $this->groups     = $groups;
-        $this->topics     = $topics;
+        $this->section_id  = $section_id;
+        $this->page        = $page;
+        $this->pagesNumber = $Database->section->getPages($this->section_id);
+        $this->groups      = $groups;
+        $this->topics      = $topics;
 
         $this->data['title'] = $Database->section->getTitle($section_id);
 
@@ -113,30 +114,35 @@ class SectionTemplate extends Template {
             $this->template['pager'],
             $pages
         );
-        $this->template['pages'] = $pages[1];
+        $this->template['pager_pages'] = $pages[1];
 
         preg_match(
             '|<Page>(.*?)</Page>|ims',
-            $this->template['pages'],
+            $this->template['pager_pages'],
             $page
         );
-        $this->template['page'] = $page[1];
+        $this->template['pager_page'] = $page[1];
 
         preg_match(
             '|<Current-Page>(.*?)</Current-Page>|ims',
-            $this->template['pages'],
+            $this->template['pager_pages'],
             $current_page
         );
-        $this->template['current_page'] = $current_page[1];
+        $this->template['pager_current_page'] = $current_page[1];
 
-        $this->template['pages'] = preg_replace(
+        $this->template['pager_pages'] = preg_replace(
             '|<Page>.*?</Page>|ims',
-            '<%LOOP-PAGES%>',
-            $this->template['pager']
+            '<%LOOP-PAGE%>',
+            $this->template['pager_pages']
         );
-        $this->template['pager'] = preg_replace(
+        $this->template['pager_pages'] = preg_replace(
             '|<Current-Page>.*?</Current-Page>|ims',
             '',
+            $this->template['pager_pages']
+        );
+        $this->template['pager'] = preg_replace(
+            '|<Pages>.*?</Pages>|ims',
+            '<%PAGER-PAGES%>',
             $this->template['pager']
         );
 
@@ -173,7 +179,131 @@ class SectionTemplate extends Template {
             $this->template['pager_first']
         );
 
-        
+        // Previous
+        preg_match(
+            '|<Previous>(.*?)</Previous>|ims',
+            $this->template['pager'],
+            $previous
+        );
+        $this->template['pager_previous'] = $previous[1];
+
+        preg_match(
+            '|<Yes>(.*?)</Yes>|ims',
+            $this->template['pager_previous'],
+            $previous
+        );
+        $this->template['pager_previous_yes'] = $previous[1];
+
+        preg_match(
+            '|<No>(.*?)</No>|ims',
+            $this->template['pager_previous'],
+            $previous
+        );
+        $this->template['pager_previous_no'] = $previous[1];
+
+        $this->template['pager_previous'] = preg_replace(
+            '|<Yes>.*?</Yes>|ims',
+            '<%PREVIOUS%>',
+            $this->template['pager_previous']
+        );
+        $this->template['pager_previous'] = preg_replace(
+            '|<No>.*?</No>|ims',
+            '',
+            $this->template['pager_previous']
+        );
+
+        // Next
+        preg_match(
+            '|<Next>(.*?)</Next>|ims',
+            $this->template['pager'],
+            $next
+        );
+        $this->template['pager_next'] = $next[1];
+
+        preg_match(
+            '|<Yes>(.*?)</Yes>|ims',
+            $this->template['pager_next'],
+            $next
+        );
+        $this->template['pager_next_yes'] = $next[1];
+
+        preg_match(
+            '|<No>(.*?)</No>|ims',
+            $this->template['pager_next'],
+            $next
+        );
+        $this->template['pager_next_no'] = $next[1];
+
+        $this->template['pager_next'] = preg_replace(
+            '|<Yes>.*?</Yes>|ims',
+            '<%NEXT%>',
+            $this->template['pager_next']
+        );
+        $this->template['pager_next'] = preg_replace(
+            '|<No>.*?</No>|ims',
+            '',
+            $this->template['pager_next']
+        );
+
+        // Last
+        preg_match(
+            '|<Last>(.*?)</Last>|ims',
+            $this->template['pager'],
+            $last
+        );
+        $this->template['pager_last'] = $last[1];
+
+        preg_match(
+            '|<Yes>(.*?)</Yes>|ims',
+            $this->template['pager_last'],
+            $last
+        );
+        $this->template['pager_last_yes'] = $last[1];
+
+        preg_match(
+            '|<No>(.*?)</No>|ims',
+            $this->template['pager_last'],
+            $last
+        );
+        $this->template['pager_last_no'] = $last[1];
+
+        $this->template['pager_last'] = preg_replace(
+            '|<Yes>.*?</Yes>|ims',
+            '<%LAST%>',
+            $this->template['pager_last']
+        );
+        $this->template['pager_last'] = preg_replace(
+            '|<No>.*?</No>|ims',
+            '',
+            $this->template['pager_last']
+        );
+
+        $this->template['pager'] = preg_replace(
+            '|<First>.*?</First>|ims',
+            '<%PAGER-FIRST%>',
+            $this->template['pager']
+        );
+        $this->template['pager'] = preg_replace(
+            '|<Previous>.*?</Previous>|ims',
+            '<%PAGER-PREVIOUS%>',
+            $this->template['pager']
+        );
+        $this->template['pager'] = preg_replace(
+            '|<Next>.*?</Next>|ims',
+            '<%PAGER-NEXT%>',
+            $this->template['pager']
+        );
+        $this->template['pager'] = preg_replace(
+            '|<Last>.*?</Last>|ims',
+            '<%PAGER-LAST%>',
+            $this->template['pager']
+        );
+
+        $text = preg_replace(
+            '|<Pager>.+?</Pager>|ims',
+            '<%PAGER%>',
+            $text
+        );
         
         // Sections
         if (preg_match_all(
@@ -229,13 +359,13 @@ class SectionTemplate extends Template {
 
         $this->template['section_content']
             = preg_replace(
-                '|<Last-Info>(.*?)</Last-Info>|ims',
+                '|<Last-Info>.*?</Last-Info>|ims',
                 '<%LAST-INFO%>',
                 $this->template['section_content']
         );
         $this->template['section_content']
             = preg_replace(
-                '|<No-Info>(.*?)</No-Info>|ims',
+                '|<No-Info>.*?</No-Info>|ims',
                 '',
                 $this->template['section_content']
         );
@@ -251,25 +381,25 @@ class SectionTemplate extends Template {
 
         $this->template['sections_group']
             = preg_replace(
-                '|<Group-Header>(.+?)</Group-Header>|ims',
+                '|<Group-Header>.+?</Group-Header>|ims',
                 '<%LOOP-GROUP-HEADER%>',
                 $this->template['sections_group']
         );
         $this->template['sections_group']
             = preg_replace(
-                '|<Section-Content>(.*?)</Section-Content>|ims',
+                '|<Section-Content>.*?</Section-Content>|ims',
                 '<%LOOP-GROUP-CONTENT%>',
                 $this->template['sections_group']
         );
         $this->template['sections_group']
             = preg_replace(
-                '|<Group-Footer>(.*?)</Group-Footer>|ims',
+                '|<Group-Footer>.*?</Group-Footer>|ims',
                 '<%LOOP-GROUP-FOOTER%>',
                 $this->template['sections_group']
         );
         $this->template['sections']
             = preg_replace(
-                '|<Sections-Group>(.*?)</Sections-Group>|ims',
+                '|<Sections-Group>.*?</Sections-Group>|ims',
                 '<%LOOP-SECTIONS-GROUP%>',
                 $this->template['sections']
         );
@@ -314,15 +444,13 @@ class SectionTemplate extends Template {
                 $this->template['topics']
         );
         
-        $text
-            = preg_replace(
-                '|<Sections>(.*?)</Sections>|ims',
+        $text = preg_replace(
+                '|<Sections>.*?</Sections>|ims',
                 '<%LOOP-SECTIONS%>',
                 $text
         );
-        $text
-            = preg_replace(
-                '|<Topics>(.*?)</Topics>|ims',
+        $text = preg_replace(
+                '|<Topics>.*?</Topics>|ims',
                 '<%LOOP-TOPICS%>',
                 $text
         );
@@ -335,9 +463,8 @@ class SectionTemplate extends Template {
         }
         $this->template['new_topic'] = $new_topic[1][0];
 
-        $text
-            = preg_replace(
-                '|<New-Topic>(.*?)</New-Topic>|i',
+        $text = preg_replace(
+                '|<New-Topic>.*?</New-Topic>|i',
                 '<%NEW-TOPIC%>',
                 $text
         );
@@ -634,24 +761,31 @@ class SectionTemplate extends Template {
     * @access private
     */
     private function __pager($text) {
-        global $Database;
-        $pagesNumber = $Database->section->getPages($this->section_id);
-
-        $text = preg_replace(
-            '|<Pager>.+?</Pager>|ims',
-            '<%PAGER%>',
-            $text
-        );
-
-        $pages = '';
-        for ($page = 1; $page <= $pagesNumber; $page++) {
-            $pages .= $this->__page($page);
-        }
-        
         $pager = $this->template['pager'];
+
         $pager = preg_replace(
-            '|<%LOOP-PAGE%>|i',
-            $pages,
+            '|<%PAGER-FIRST%>|i',
+            $this->__first(),
+            $pager
+        );
+        $pager = preg_replace(
+            '|<%PAGER-PREVIOUS%>|i',
+            $this->__previous(),
+            $pager
+        );
+        $pager = preg_replace(
+            '|<%PAGER-PAGES%>|i',
+            $this->__pages(),
+            $pager
+        );
+        $pager = preg_replace(
+            '|<%PAGER-NEXT%>|i',
+            $this->__next(),
+            $pager
+        );
+        $pager = preg_replace(
+            '|<%PAGER-LAST%>|i',
+            $this->__last(),
             $pager
         );
 
@@ -664,21 +798,134 @@ class SectionTemplate extends Template {
         return $text;
     }
 
+    private function __first() {
+        $text = $this->template['pager_first'];
+
+        if ($this->page == 1) {
+            $first = $this->template['pager_first_no'];
+        }
+        else {
+            $first = $this->template['pager_first_yes'];
+        }
+        $first = preg_replace(
+            '|<%FIRST-PAGE%>|i',
+            1,
+            $first
+        );
+        
+        $text = preg_replace(
+            '|<%FIRST%>|i',
+            $first,
+            $text
+        );
+
+        return $text;
+    }
+
+    private function __previous() {
+        $text = $this->template['pager_previous'];
+
+        if ($this->page == 1) {
+            $previous = $this->template['pager_previous_no'];
+        }
+        else {
+            $previous = $this->template['pager_previous_yes'];
+        }
+        $previous = preg_replace(
+            '|<%PREVIOUS-PAGE%>|i',
+            $this->page - 1,
+            $previous
+        );
+
+        $text = preg_replace(
+            '|<%PREVIOUS%>|i',
+            $previous,
+            $text
+        );
+
+        return $text;
+    }
+
+    private function __pages() {
+        $text = $this->template['pager_pages'];
+
+        $pages = '';
+        for ($page = 1; $page <= $this->pagesNumber; $page++) {
+            $pages .= $this->__page($page);
+        }
+
+        $text = preg_replace(
+            '|<%LOOP-PAGE%>|i',
+            $pages,
+            $text
+        );
+
+        return $text;
+    }
+
     /**
     * Creates the page.
     * @access private
     */
     private function __page($page) {
         if ($page == $this->page) {
-            $text = $this->template['current_page'];
+            $text = $this->template['pager_current_page'];
         }
         else {
-            $text = $this->template['page'];
+            $text = $this->template['pager_page'];
         }
 
         $text = preg_replace(
             '|<%PAGE%>|ims',
             $page,
+            $text
+        );
+
+        return $text;
+    }
+
+    private function __next() {
+        $text = $this->template['pager_next'];
+
+        if ($this->page == $this->pagesNumber) {
+            $next = $this->template['pager_next_no'];
+        }
+        else {
+            $next = $this->template['pager_next_yes'];
+        }
+        $next = preg_replace(
+            '|<%NEXT-PAGE%>|i',
+            $this->page + 1,
+            $next
+        );
+
+        $text = preg_replace(
+            '|<%NEXT%>|i',
+            $next,
+            $text
+        );
+
+        return $text;
+    }
+
+    private function __last() {
+        $text = $this->template['pager_last'];
+
+        if ($this->page == $this->pagesNumber) {
+            $last = $this->template['pager_last_no'];
+        }
+        else {
+            $last = $this->template['pager_last_yes'];
+        }
+        $last = preg_replace(
+            '|<%LAST-PAGE%>|i',
+            $this->pagesNumber,
+            $last
+        );
+
+        $text = preg_replace(
+            '|<%LAST%>|i',
+            $last,
             $text
         );
 
