@@ -114,8 +114,8 @@ class Template {
     *                      bool: false if the template part doesn't exist.
     */
     public function getTemplatePart($part) {
-        if (isset($this->data['template'][$part])) {
-            return $this->data['template'][$part];
+        if (isset($this->template[$part])) {
+            return $this->template[$part];
         }
         else {
             return false;

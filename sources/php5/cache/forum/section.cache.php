@@ -29,7 +29,7 @@ class SectionCache extends Cache {
         $file = "sections/{$section_id}-{$page}.html";
         parent::__construct($file);
 
-        if ($this->cached) {
+        if ($this->isCached()) {
             $this->__newTopic();
         }
     }
@@ -56,8 +56,9 @@ class SectionCache extends Cache {
     */
     private function __newTopicTemplate() {
         if ($this->connected && $this->section_id != 0) {
-            $template = new SectionTemplate(0,0,0);
+            $template = new SectionTemplate(0,0,0,0);
             $template = $template->getTemplatePart('new_topic');
+
             $template = preg_replace(
                 '|<%POST-SECTION-ID%>|i',
                 $this->section_id,

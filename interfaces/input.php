@@ -90,12 +90,12 @@ if (isset($_REQUEST['topic'])) {
     if (isset($_REQUEST['send'])) {
         require_once(SOURCE_PATH.'/send/forum/topic.send.php');
 
+        $DATA['magic']    = $_REQUEST['magic'];
         $DATA['parent']   = $_REQUEST['parent'];
         $DATA['type']     = $_REQUEST['type'];
         $DATA['title']    = $_REQUEST['title'];
         $DATA['subtitle'] = $_REQUEST['subtitle'];
         $DATA['content']  = $_REQUEST['content'];
-        $DATA['magic']    = $_REQUEST['magic'];
 
         $topic = new Topic(
             $DATA['magic'],

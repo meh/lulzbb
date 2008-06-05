@@ -49,9 +49,7 @@ function createSessionFile($relativePath = './') {
 * @return    string    Session name.
 */
 function getSessionConstant($relativePath = './') {
-    $file = file($relativePath.'.session.lol');
-    $session = $file[0];
-    
+    $session = file_get_contents($relativePath.'.session.lol');
     return $session;
 }
 

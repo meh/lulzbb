@@ -128,9 +128,8 @@ else {
                 require_once(SOURCE_PATH.'/template/forms/send-topic.template.php');
     
                 $DATA['parent']  = $_REQUEST['parent'];
-                $DATA['magic']   = $_REQUEST['magic'];
 
-                $form = new TopicFormTemplate($DATA['magic'], $DATA['parent']);
+                $form = new TopicFormTemplate($DATA['parent']);
                 echo $form->output();
             }
         }

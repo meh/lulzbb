@@ -32,7 +32,7 @@ class Section extends Output {
             $page = 1;
         }
         else if ($page == 'last') {
-            $page = $Database->section->getPages($section_id);
+            $page = $this->__getPages($section_id);
         }
         else {
             $page = (int) $page;
@@ -54,6 +54,28 @@ class Section extends Output {
         catch (lulzException $e) {
             die($e->getMessage());
         }
+    }
+
+    /**
+    * Gets the pages number and caches it.
+
+    * @todo THIS IS FUCKING UGLY, think about something better.
+    * @access private
+    */
+    private function __getPages($section_id) {
+        global $Database;
+        $path = ROOT_PATH."/.cache/misc/pages.section.{$section_id}.txt";
+        mkdir_recursive(dirname($path));
+
+        if (is_file($path)) {
+            $pages = file_get_contents($path);
+        }
+        else {
+            $pages = $Database->section->getPages($section_id);
+            file_put_contents($path, "{$pages}");
+        }
+
+        return $pages;
     }
 }
 ?>

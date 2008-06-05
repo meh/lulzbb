@@ -102,7 +102,7 @@ function showRegistration(show_id) {
 function sendTopic(magic, show_id, parent, type, title, subtitle, content) {
     POST(show_id, '?input&topic&send',
           'type='+type+'&'
-        + 'parent='+rawurlencode(parent)+'&'
+        + 'parent='+parent+'&'
         + 'title='+rawurlencode(title)+'&'
         + 'subtitle='+rawurlencode(subtitle)+'&'
         + 'content='+rawurlencode(content)+'&'

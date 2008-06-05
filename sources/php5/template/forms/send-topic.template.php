@@ -14,18 +14,18 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 * @author cHoBi
 */
 class TopicFormTemplate extends Template {
+    private $parent;
+
     /**
     * Create the topic form template.
 
     * @param    string    $magic     The magic token. (Anti XSRF)
     * @param    int       $parent    The parent where to add the topic.
     */
-    public function __construct($magic, $parent) {
+    public function __construct($parent) {
         parent::__construct('forms/send-topic-form.tpl');
 
-        global $Filter;
-        $this->data['magic']   = $magic;
-        $this->data['parent']  = (int) $parent;
+        $this->parent = (int) $parent;
 
         $this->__parse();
     }
@@ -39,12 +39,12 @@ class TopicFormTemplate extends Template {
 
         $text = preg_replace(
             '|<%POST-PARENT%>|i',
-            $this->data['parent'],
+            $this->parent,
             $text
         );
         $text = preg_replace(
             '|<%MAGIC%>|i',
-            $this->data['magic'],
+            $this->magic,
             $text
         );
 

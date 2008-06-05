@@ -32,7 +32,7 @@ class SectionTemplate extends Template {
         
         $this->section_id  = $section_id;
         $this->page        = $page;
-        $this->pagesNumber = $Database->section->getPages($this->section_id);
+        $this->pagesNumber = !empty($page) ? $Database->section->getPages($this->section_id) : 0;
         $this->groups      = $groups;
         $this->topics      = $topics;
 
