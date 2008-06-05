@@ -51,7 +51,10 @@
                     </span>
                 </First>
                 <Previous>
-                    <span class="previous">&lt;</span>
+                    <span class="previous">
+                    <Yes><a href="#" onclick="showSection('middle', <%SECTION-ID%>, <%PREVIOUS-PAGE%>);">&lt;</a></Yes>
+                    <No>&lt;</No>
+                    </span>
                 </Previous>
 
                 <Pages>
@@ -63,8 +66,8 @@
 
                 <Next>
                     <span class="next">
-                    <Yes></Yes>
-                    <No></No>
+                    <Yes><a href="#" onclick="showSection('middle', <%SECTION-ID%>, <%NEXT-PAGE%>);">&gt;</a></Yes>
+                    <No>&gt;</No>
                     </span>
                 </Next>
                 <Last>
