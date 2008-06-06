@@ -1,4 +1,5 @@
 <div id="topic">
+<%PAGER%>
 <Post>
     <a name="post<%POST-ID%>"></a>
     <div class="post">
@@ -21,6 +22,7 @@
         </table>
     </div>
 </Post>
+<%PAGER%>
 
 <img src="lololol" onerror="location.replace('#post<%POST-ID%>')"/>
 <%SEND-POST-FORM%>
