@@ -143,7 +143,7 @@ QUERY;
         return <<<QUERY
 
         SELECT
-            {$this->dbPrefix}_users.lulzcode
+            {$this->dbPrefix}_users.option_lulzcode
 
         FROM
             {$this->dbPrefix}_users
@@ -164,7 +164,7 @@ QUERY;
             {$this->dbPrefix}_users
 
         SET
-            {$this->dbPrefix}_users.lulzcode = {$state}
+            {$this->dbPrefix}_users.option_lulzcode = {$state}
 
         WHERE
             {$this->dbPrefix}_users.id = {$user_id}
