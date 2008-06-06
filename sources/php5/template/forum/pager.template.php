@@ -45,6 +45,9 @@ class PagerTemplate extends Template {
         $this->__parse();
     }
 
+    /**
+    * @access private
+    */
     private function __parse() {
         $text = $this->output();
         $text = $this->__loops($text);
@@ -78,6 +81,9 @@ class PagerTemplate extends Template {
         $this->parsed = $text;
     }
 
+    /**
+    * @access private
+    */
     private function __loops($text) {
         // Pages
         preg_match(
@@ -274,7 +280,6 @@ class PagerTemplate extends Template {
     }
 
     /**
-    * Creates the pager.
     * @access private
     */
     private function __pager($text) {
@@ -291,6 +296,9 @@ class PagerTemplate extends Template {
         return $text;
     }
 
+    /**
+    * @access private
+    */
     private function __first() {
         $text = $this->template['first'];
 
@@ -314,7 +322,10 @@ class PagerTemplate extends Template {
 
         return $text;
     }
-
+    
+    /**
+    * @access private
+    */
     private function __previous() {
         $text = $this->template['previous'];
 
@@ -339,6 +350,9 @@ class PagerTemplate extends Template {
         return $text;
     }
 
+    /**
+    * @access private
+    */
     private function __pages() {
         $text = $this->template['pages'];
 
@@ -357,7 +371,6 @@ class PagerTemplate extends Template {
     }
 
     /**
-    * Creates the page.
     * @access private
     */
     private function __page($page) {
@@ -377,6 +390,9 @@ class PagerTemplate extends Template {
         return $text;
     }
 
+    /**
+    * @access private
+    */
     private function __next() {
         $text = $this->template['next'];
 
@@ -401,6 +417,9 @@ class PagerTemplate extends Template {
         return $text;
     }
 
+    /**
+    * @access private
+    */
     private function __last() {
         $text = $this->template['last'];
 

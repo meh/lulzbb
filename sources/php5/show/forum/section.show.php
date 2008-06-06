@@ -28,6 +28,7 @@ require_once(SOURCE_PATH.'/database/database.class.php');
 * @author cHoBi
 */
 class SectionShow extends Show {
+    private $section_id;
     private $page;
 
     /**
@@ -38,8 +39,8 @@ class SectionShow extends Show {
     public function __construct($section_id, $page) {
         parent::__construct();
         
-        $this->id   = $section_id;
-        $this->page = $page;
+        $this->section_id = (int) $section_id;
+        $this->page       = (int) $page;
         $this->__update();
     }
 
@@ -51,15 +52,15 @@ class SectionShow extends Show {
         global $Database;
 
         try {
-            if ($Database->section->exists($this->id)) {
-                $groups = $Database->section->getGroups($this->id);
+            if ($Database->section->exists($this->section_id)) {
+                $groups = $Database->section->getGroups($this->section_id);
                 foreach ($groups as $n => $group) {
                     $groups[$n]['data'] = $Database->section->group->getSections($group['id']['RAW']);
                 }
                 
-                $topics = $Database->section->getTopics($this->id, $this->page);
+                $topics = $Database->section->getTopics($this->section_id, $this->page);
 
-                if ($this->id == 0 && empty($groups) && empty($topics)) {
+                if ($this->section_id == 0 && empty($groups) && empty($topics)) {
                     $message = new InformativeMessage('The section is empty.');
                     die($message->output());
                 }
@@ -73,7 +74,7 @@ class SectionShow extends Show {
         }
 
         $template = new SectionTemplate(
-            $this->id,
+            $this->section_id,
             $this->page,
             $groups,
             $topics

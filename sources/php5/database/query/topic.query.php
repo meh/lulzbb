@@ -311,5 +311,24 @@ QUERY;
 
 QUERY;
     }
+
+    public function getPages($topic_id) {
+        global $Config;
+        $topic_id        = (int) $topic_id;
+        $elementsPerPage = (int) $Config->get('elementsPerPage');
+
+        return <<<QUERY
+
+        SELECT
+            CEIL(COUNT(post_id)/{$elementsPerPage})
+
+        FROM
+            {$this->dbPrefix}_topic_posts
+
+        WHERE
+            {$this->dbPrefix}_topic_posts.topic_id = {$topic_id}
+
+QUERY;
+    }
 }
 ?>

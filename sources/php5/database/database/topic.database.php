@@ -309,5 +309,26 @@ class TopicDatabase extends DatabaseBase {
         $query = $this->Query->increaseViewsCount($topic_id);
         $this->Database->sendQuery($query);
     }
+
+    /**
+    * Gets the pages number of a topic.
+
+    * @param    int    $topic_id    The topic's id.
+
+    * @return    int    The pages number.
+    */
+    public function getPages($topic_id) {
+        $query = $this->Database->sendQuery($this->Query->getPages($topic_id));
+        $pages = mysql_fetch_row($query);
+
+        if ($pages[0] < 1) {
+            $pages = 1;
+        }
+        else {
+            $pages = $pages[0];
+        }
+
+        return $pages;
+    }
 }
 ?>

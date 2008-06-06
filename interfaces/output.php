@@ -124,12 +124,12 @@ else {
                 require_once(SOURCE_PATH.'/output/forum/topic.output.php');
                 
                 $DATA['topic_id']   = $DATA['id'];
-                $DATA['topic_page'] = $_REQUEST['page'];
+                $DATA['page'] = $_REQUEST['page'];
                 $DATA['post_id']    = $_REQUEST['post'];
                 
                 $topic = new Topic(
                     $DATA['topic_id'],
-                    $DATA['topic_page'],
+                    $DATA['page'],
                     $DATA['post_id']
                 );
                 echo $topic->output();

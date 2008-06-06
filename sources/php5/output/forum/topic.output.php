@@ -35,27 +35,27 @@ class Topic extends Output {
     * @param    int    $topic_id    The topic id.
     * @param    int    $post_id     The post id.
     */
-    public function __construct($topic_id, $topic_page, $post_id) {
+    public function __construct($topic_id, $page, $post_id) {
         if ($topic_id < 1) {
             die('LOLFAIL');
         }
         parent::__construct();
         global $Database;
 
-        if (!isset($topic_page)) {
-            $topic_page = 1;
+        if (!isset($page)) {
+            $page = 1;
         }
 
         try {
-            $topic_id   = (int) $topic_id;
-            $topic_page = (int) $topic_page;
-            $post_id    = (int) $post_id;
+            $topic_id = (int) $topic_id;
+            $page     = (int) $page;
+            $post_id  = (int) $post_id;
 
             $infos = $Database->topic->getInfos($topic_id);
 
-            $cache = new TopicCache($infos['parent']['RAW'], $topic_id, $topic_page);
+            $cache = new TopicCache($infos['parent']['RAW'], $topic_id, $page);
             if (!$cache->isCached()) {
-                $topic = new TopicShow($infos['parent']['RAW'], $topic_id, $post_id);
+                $topic = new TopicShow($infos['parent']['RAW'], $topic_id, $page, $post_id);
                 $cache->put($topic->output());
             }
             else {

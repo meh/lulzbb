@@ -27,6 +27,13 @@ require_once(SOURCE_PATH.'/template/forms/send-post.template.php');
 * @author cHoBi
 */
 class TopicTemplate extends Template {
+    private $topic_id;
+    private $post_id;
+    private $page;
+    private $pagesNumber;
+    private $posts;
+    private $title;
+
     /**
     * Create the topic template.
 
@@ -35,15 +42,17 @@ class TopicTemplate extends Template {
     * @param    int       $post_id     The post id.
     * @param    array     $posts       The posts data.
     */
-    public function __construct($magic, $topic_id, $post_id, $posts) {
+    public function __construct($topic_id, $page, $post_id, $posts) {
         parent::__construct('forum/topic.tpl');
         global $Database;
-    
-        $this->data['posts']     = $posts;
-        $this->data['magic']     = $magic;
-        $this->data['title']     = $Database->topic->getTitle($topic_id);
-        $this->data['topic_id']  = (int) $topic_id;
-        $this->data['post_id']   = isset($post_id) ? $post_id : '';
+
+        $this->topic_id    = (int) $topic_id;
+        $this->page        = (int) $page;
+        $this->pagesNumber = $Database->topic->getPages($topic_id);
+        $this->post_id     = isset($post_id) ? $post_id : '';
+        $this->posts       = $posts;
+        $this->title       = $Database->topic->getTitle($topic_id);
+
 
         $this->__parse();
     }
@@ -57,8 +66,8 @@ class TopicTemplate extends Template {
         $text = $this->__loops($text);
 
         $posts = '';
-        foreach ($this->data['posts'] as $n => $post) {
-            if ($n == count($this->data['posts'])-1) {
+        foreach ($this->posts as $n => $post) {
+            if ($n == count($this->posts)-1) {
                 $posts .= $this->__post($post, 'last');
             }
             else {
@@ -74,7 +83,14 @@ class TopicTemplate extends Template {
 
         $text = preg_replace(
             '|<%POST-ID%>|i',
-            $this->data['post_id'],
+            $this->post_id,
+            $text
+        );
+
+        $pager = new PagerTemplate('topic', $this->page, $this->pagesNumber);
+        $text = preg_replace(
+            '|<%PAGER%>|i',
+            $pager->output(),
             $text
         );
 

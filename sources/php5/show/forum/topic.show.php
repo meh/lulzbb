@@ -28,7 +28,10 @@ require_once(SOURCE_PATH.'/database/database.class.php');
 * @author cHoBi
 */
 class TopicShow extends Show {
-    private $Database;
+    private $parent;
+    private $topic_id;
+    private $post_id;
+    private $page;
 
     /**
     * Get the post and show them in the template.
@@ -37,12 +40,13 @@ class TopicShow extends Show {
     * @param    int    $topic_id    The topic id.
     * @param    int    $post_id     The post id.
     */
-    public function __construct($parent, $topic_id, $post_id) {
+    public function __construct($parent, $topic_id, $page, $post_id) {
         parent::__construct();
 
-        $this->data['parent']    = (int) $parent;
-        $this->data['topic_id']  = (int) $topic_id;
-        $this->data['post_id']   = (int) $post_id;
+        $this->parent    = (int) $parent;
+        $this->topic_id  = (int) $topic_id;
+        $this->page      = (int) $page;
+        $this->post_id   = (int) $post_id;
 
         $this->__update();
     }
@@ -55,8 +59,8 @@ class TopicShow extends Show {
         global $Database;
 
         try {
-            if ($Database->topic->exists($this->data['topic_id'])) {
-                $posts = $Database->topic->getPosts($this->data['topic_id']);
+            if ($Database->topic->exists($this->topic_id)) {
+                $posts = $Database->topic->getPosts($this->topic_id);
             }
             else {
                 die("The topic doesn't exist.");
@@ -67,9 +71,9 @@ class TopicShow extends Show {
         }
 
         $template = new TopicTemplate(
-            $this->magic,
-            $this->data['topic_id'],
-            $this->data['post_id'],
+            $this->topic_id,
+            $this->page,
+            $this->post_id,
             $posts
         );
 

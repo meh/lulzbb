@@ -29,6 +29,7 @@ require_once(SOURCE_PATH.'/template/forum/pager.template.php');
 class SectionTemplate extends Template {
     private $section_id;
     private $page;
+    private $pagesNumber;
     private $groups;
     private $topics;
 
@@ -45,7 +46,7 @@ class SectionTemplate extends Template {
         
         $this->section_id  = $section_id;
         $this->page        = $page;
-        $this->pagesNumber = !empty($page) ? $Database->section->getPages($this->section_id) : 0;
+        $this->pagesNumber = !empty($page) ? $Database->section->getPages($section_id) : 0;
         $this->groups      = $groups;
         $this->topics      = $topics;
 
