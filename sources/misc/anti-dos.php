@@ -25,6 +25,10 @@
 function antiDoS() {
     global $Config;
 
+    if (!isset($_COOKIE[session_name()])) {
+        die("You need cookies to be activated.");
+    }
+
     loadBlacklist();
 
     if (isBanned($_SERVER['REMOTE_ADDR'])) {

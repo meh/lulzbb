@@ -77,10 +77,6 @@ if (!sessionFileExists()) {
 }
 startSession();
 
-if (!isset($_COOKIE['PHPSESSID'])) {
-    die("You need cookies to be activated.");
-}
-
 if (count($_REQUEST) == 1) {
     $_REQUEST['home'] = true;
     $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
