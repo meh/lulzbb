@@ -7,6 +7,6 @@
             <input id="password" type="password"/><br/>
 
         <input value="Login" type="submit" 
-            onclick="POST('middle', '?input&login', 'username='+urlencode('username')+'&password'+urlencode('password'));"/>
+            onclick="POST('middle', '?input&login', 'username='+urlencode('username')+'&password='+urlencode('password'));"/>
     </form>
 </div>
