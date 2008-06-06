@@ -19,6 +19,10 @@
 * @author cHoBi
 */
 
+if (!isset($Config)) {
+    die("You can't access this directly.");
+}
+
 if (count($_REQUEST) <= 1) {
     die('No parameters eh? Are you trying to hax me? :(');
 }

@@ -1,5 +1,4 @@
 <?php/*
-; License http://opensource.org/licenses/gpl-3.0.html
 ; This is the list of banned email addresses, if you know other
 ; disposable email services post them in the forum and they will
 ; be added to the default black list.

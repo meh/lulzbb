@@ -64,6 +64,7 @@ define('MISC_PATH', ROOT_PATH.'/sources/misc');
 // Misc sources.
 require_once(MISC_PATH.'/session.php');
 require_once(MISC_PATH.'/filesystem.php');
+require_once(MISC_PATH.'/anti-dos.php');
 
 // Session creation.
 require_once(SOURCE_PATH.'/config.class.php');
@@ -75,6 +76,10 @@ if (!sessionFileExists()) {
     createSessionFile();
 }
 startSession();
+
+if (!isset($_COOKIE['PHPSESSID'])) {
+    die("You need cookies to be activated.");
+}
 
 if (count($_REQUEST) == 1) {
     $_REQUEST['home'] = true;
@@ -91,6 +96,8 @@ if (count($_REQUEST) == 1) {
 * @global    object    $Config
 */
 $Config = $_SESSION[SESSION]['config'];
+
+antiDoS();
 
 /**
 * This global var contains the Filter object, so you need it to filter

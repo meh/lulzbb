@@ -21,4 +21,8 @@ titleMinLength=3
 titleMaxLength=30
 contentMinLength=5
 elementsPerPage=15
+
+; Other info
+anti-dos-seconds=2
+anti-dos-times=35
 */?>

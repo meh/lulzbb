@@ -19,6 +19,10 @@
 * @author cHoBi
 */
 
+if (!isset($Config)) {
+    die("You can't access this directly.");
+}
+
 // Start the time for the stats.
 $time  = microtime();
 $time  = explode(' ', $time);
