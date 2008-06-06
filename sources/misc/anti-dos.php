@@ -25,16 +25,20 @@
 function antiDoS() {
     global $Config;
 
-    if (!isset($_COOKIE[session_name()])) {
+    if (!isset($_COOKIE['PHPSESSID'])) {
         die("You need cookies to be activated.");
     }
 
     loadBlacklist();
 
     if (isBanned($_SERVER['REMOTE_ADDR'])) {
-        die("You're trying to DDoS the server, if not contact the administrator.");
+        die('Your ip address is banned.');
     }
-    else {
+/**
+* @todo This isn't that useful, the forum caches everything so no queries.
+*       also i don't like it that much and it's not working anymore.
+*/
+/*  else {
         if ($_SESSION[SESSION]['anti-dos']['last-time'] > time()-$Config->get('anti-dos-seconds')) {
             $_SESSION[SESSION]['anti-dos']['times']++;
         }
@@ -47,7 +51,7 @@ function antiDoS() {
         }
 
         $_SESSION[SESSION]['anti-dos']['last-time'] = time();
-    }
+    }*/
 }
 
 /**
