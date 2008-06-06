@@ -118,9 +118,9 @@ QUERY;
 QUERY;
     }
 
-    public function updateSession($id, $session) {
+    public function updateSession($user_id, $session) {
         global $Filter;
-        $id      = (int) $id;
+        $user_id = (int) $user_id;
         $session = $Filter->SQL($session);
 
         return <<<QUERY
@@ -132,10 +132,44 @@ QUERY;
             {$this->dbPrefix}_users.session = "{$session}"
 
         WHERE
-            {$this->dbPrefix}_users.id = {$id}
+            {$this->dbPrefix}_users.id = {$user_id}
 
 QUERY;
     }
 
+    public function getLulzCode($user_id) {
+        $user_id = (int) $user_id;
+
+        return <<<QUERY
+
+        SELECT
+            {$this->dbPrefix}_users.lulzcode
+
+        FROM
+            {$this->dbPrefix}_users
+
+        WHERE
+            {$this->dbPrefix}_users.id = {$user_id}
+
+QUERY;
+    }
+
+    public function setLulzCode($user_id, $state) {
+        $user_id = (int) $user_id;
+        $state   = ($state) ? 'TRUE' : 'FALSE';
+
+        return <<<QUERY
+
+        UPDATE
+            {$this->dbPrefix}_users
+
+        SET
+            {$this->dbPrefix}_users.lulzcode = {$state}
+
+        WHERE
+            {$this->dbPrefix}_users.id = {$user_id}
+
+QUERY;
+    }
 }
 ?>

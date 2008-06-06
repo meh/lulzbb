@@ -30,11 +30,12 @@ class PostQuery extends Query {
         parent::__construct();
     }
 
-    public function add($user_id, $topic_id, $post_id, $title, $content) {
+    public function add($user_id, $topic_id, $post_id, $lulzcode, $title, $content) {
         global $Filter;
+        $user_id  = (int) $user_id;
         $topic_id = (int) $topic_id;
         $post_id  = (int) $post_id;
-        $user_id  = (int) $user_id;;
+        $lulzcode = ($lulzcode) ? 'TRUE' : 'FALSE';
         $title    = $Filter->SQL($title);
         $content  = $Filter->SQL($content);
 
@@ -48,6 +49,7 @@ class PostQuery extends Query {
                 {$topic_id},
                 {$post_id},
                 {$user_id},
+                {$lulzcode},
                 NOW(),
                 '{$title}',
                 '{$content}'

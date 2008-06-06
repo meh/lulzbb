@@ -29,6 +29,8 @@ class User {
     private $groups;
     private $session;
 
+    private $lulzcode;
+
     /**
     * Initialize important data, like the name and the groups.
 
@@ -42,6 +44,8 @@ class User {
         $this->name    = $Database->user->getName($id);
         $this->groups  = $Database->user->group->get($this->getName('RAW'));
         $this->session = session_id();
+
+        $this->lulzcode = $Database->user->getLulzCode($this->id);
     }
 
     /**
@@ -140,6 +144,27 @@ class User {
                 break;
             }
         }
+    }
+
+    /**
+    * Gets the lulzcode setting.
+
+    * @return    bool
+    */
+    public function getLulzCode() {
+        return $this->lulzcode;
+    }
+
+    /**
+    * Sets the lulzcode setting.
+
+    * @param    bool    $state    The lulzcode status.
+    */
+    public function setLulzCode($state) {
+        global $Database;
+        $Database->user->setLulzCode($this->id, $state);
+
+        $this->lulzcode = $state;
     }
 }
 ?>

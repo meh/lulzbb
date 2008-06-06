@@ -138,7 +138,8 @@ msn TINYTEXT,
 icq TINYTEXT,
 yahoo TINYTEXT,
 
-option_email BOOL NOT NULL,
+option_email BOOL NOT NULL DEFAULT TRUE,
+option_lulzcode BOOL NOT NULL DEFAULT TRUE,
 registration_date DATETIME,
 
 primary KEY(id))');

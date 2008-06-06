@@ -97,12 +97,12 @@ class UserDatabase extends DatabaseBase {
     
     * @param    string    $username    The username.
     */
-    public function updateSession($id, $session = 0) {
+    public function updateSession($user_id, $session = 0) {
         if (empty($session)) {
             $session = session_id();
         }
         
-        $this->Database->sendQuery($this->Query->updateSession($id, $session));
+        $this->Database->sendQuery($this->Query->updateSession($user_id, $session));
     }
 
     /**
@@ -141,6 +141,28 @@ class UserDatabase extends DatabaseBase {
         else {
             return false;
         }
+    }
+
+    /**
+    * Gets the lulzcode state.
+
+    * @param    int    $user_id    The user id.
+    */
+    public function getLulzCode($user_id) {
+        $query = $this->Database->sendQuery($this->Query->getLulzCode($user_id));
+        $state = mysql_fetch_row($query);
+
+        return $state[0];
+    }
+
+    /**
+    * Sets the lulzcode state for a user.
+
+    * @param    int     $user_id    The user id.
+    * @param    bool    $state      The state.
+    */
+    public function setLulzCode($user_id, $state) {
+        $this->Database->sendQuery($this->Query->setLulzCode($user_id, $state));
     }
 }
 ?>
