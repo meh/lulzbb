@@ -107,8 +107,14 @@ QUERY;
 QUERY;
     }
 
-    public function getPosts($topic_id) {
+    public function getPosts($topic_id, $page) {
+        global $Config;
         $topic_id = (int) $topic_id;
+
+        $elementsPerPage = $Config->get('elementsPerPage');
+
+        $offset = ($elementsPerPage * $page) - $elementsPerPage;
+        $limit  = $offset + $elementsPerPage;
         
         return <<<QUERY
         
@@ -135,6 +141,8 @@ QUERY;
             
         ORDER BY
             {$this->dbPrefix}_topic_posts.post_id
+
+        LIMIT {$offset}, {$limit}
 
 QUERY;
     }

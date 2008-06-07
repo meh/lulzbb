@@ -95,9 +95,9 @@ class Topic extends Send {
                 $topic_id = $Database->topic->add($parent, $type, $title, $subtitle, $content);
                 $message = new InformativeMessage('topic_sent', array('topic_id' => $topic_id));
                         
-                rm("/.cache/sections/{$parent}-*.html");
+                rm("/.cache/sections/*");
                 rm("/.cache/misc/pages.section.{$parent}.txt");
-                rm("/.cache/misc/page.topic.*{$parent}*.txt");
+                rm("/.cache/misc/page.topic.{$topic_id}-*.txt");
                 break;
             }
         }

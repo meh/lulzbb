@@ -87,7 +87,7 @@ class Post extends Send {
                     )
                 );
         
-                rm("/.cache/sections/{$parent}-*.html");
+                rm("/.cache/sections/*");
                 rm("/.cache/topics/{$topic_id}-*.html");
                 break;
             }

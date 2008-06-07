@@ -167,8 +167,8 @@ class TopicDatabase extends DatabaseBase {
     
     * @return    array    A post in each element.
     */
-    public function getPosts($topic_id) {
-        $query = $this->Database->sendQuery($this->Query->getPosts($topic_id));
+    public function getPosts($topic_id, $page) {
+        $query = $this->Database->sendQuery($this->Query->getPosts($topic_id, $page));
 
         $posts = array();
         while ($post = $this->Database->fetchArray()) {

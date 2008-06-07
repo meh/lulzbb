@@ -42,8 +42,18 @@ class Topic extends Output {
         parent::__construct();
         global $Database;
 
-        if (!isset($page)) {
+        if ($page == 'first') {
             $page = 1;
+        }
+        else if ($page == 'last') {
+            $page = $this->__getPages($topic_id);
+        }
+        else {
+            $page = (int) $page;
+
+            if ($page < 1) {
+                $page = 1;
+            }
         }
 
         try {
@@ -93,6 +103,28 @@ class Topic extends Output {
         );
         
         return $output;
+    }
+
+    /**
+    * Gets the pages number and caches it.
+
+    * @todo THIS IS FUCKING UGLY, think about something better.
+    * @access private
+    */
+    private function __getPages($topic_id) {
+        global $Database;
+        $path = ROOT_PATH."/.cache/misc/pages.topic.{$topic_id}.txt";
+        mkdir_recursive(dirname($path));
+
+        if (is_file($path)) {
+            $pages = file_get_contents($path);
+        }
+        else {
+            $pages = $Database->topic->getPages($topic_id);
+            file_put_contents($path, "{$pages}");
+        }
+
+        return $pages;
     }
 }
 ?>

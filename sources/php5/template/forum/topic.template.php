@@ -94,7 +94,7 @@ class TopicTemplate extends Template {
             $text
         );
 
-        $this->parsed = $text;
+        $this->parsed = $this->__common($text);
     }
 
     /**
@@ -203,6 +203,20 @@ class TopicTemplate extends Template {
                 $text
             );
         }
+
+        return $text;
+    }
+
+    /**
+    * Common tags.
+    * @access private
+    */
+    private function __common($text) {
+        $text = preg_replace(
+            '|<%TOPIC-ID%>|i',
+            $this->topic_id,
+            $text
+        );
 
         return $text;
     }

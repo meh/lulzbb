@@ -60,7 +60,7 @@ class TopicShow extends Show {
 
         try {
             if ($Database->topic->exists($this->topic_id)) {
-                $posts = $Database->topic->getPosts($this->topic_id);
+                $posts = $Database->topic->getPosts($this->topic_id, $this->page);
             }
             else {
                 die("The topic doesn't exist.");

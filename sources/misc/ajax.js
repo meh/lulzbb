@@ -18,6 +18,7 @@
 * @author  cHoBi
 */
 
+var section_id   = 0;
 var section_page = 'first';
 
 function init() {
@@ -45,6 +46,13 @@ function GET(show_id, url) {
     document.getElementById(show_id).innerHTML = "<center>Loading...</center>";
     http.send(null);
 }
+function rawGET(url) {
+    var http = ((window.ActiveXObject) ? new ActiveXObject("Microsoft.XMLHTTP")
+                                       : new XMLHttpRequest());
+    
+    http.open("GET", url, true);
+    http.send(null);
+}
 
 function POST(show_id, url, params) {
     var http = ((window.ActiveXObject) ? new ActiveXObject("Microsoft.XMLHTTP") 
@@ -65,11 +73,11 @@ function POST(show_id, url, params) {
     document.getElementById(show_id).innerHTML = "<center>Loading...</center>";
     http.send(params);
 }
-function POSTraw(url, params) {
+function rawPOST(url, params) {
     var http = ((window.ActiveXObject) ? new ActiveXObject("Microsoft.XMLHTTP") 
                                        : new XMLHttpRequest());
 
-    http.open( "POST", url, true);
+    http.open("POST", url, true);
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http.setRequestHeader("Content-length", params.length);
     http.setRequestHeader("Connection", "close");
@@ -84,21 +92,27 @@ function showPage(show_id, page) {
 }
 
 // Forum functions
-function showSection(show_id, section_id, page) {
+function showSection(show_id, id, page) {
+    if (id < section_id) {
+        section_page = 1;
+    }
+    section_id = id;
+
     var page = (page == null) ? section_page : page;
     section_page = page;
 
-    POST(show_id, '?output&forum&section', 'id='+section_id+'&page='+page);
+    POST(show_id, '?output&forum&section', 'id='+id+'&page='+page);
 }
-function showTopic(show_id, topic_id, post_id) {
-    var post_id = (post_id == null) ? 1 : post_id;
+function showTopic(show_id, id, page, post) {
+    var page    = (page == null) ? 1 : page;
+    var post_id = (post == null) ? 1 : post;
 
-    POST(show_id, '?output&forum&topic&show', 'id='+topic_id+'&post_id=');
+    POST(show_id, '?output&forum&topic&show', 'id='+id+'&post_id='+post+'&page='+page);
 }
 
 // Login functions
 function login(username, password) {
-    POSTraw('?input&login', 'username='+username+'&password='+password);
+    rawPOST('?input&login', 'username='+username+'&password='+password);
 }
 function showLogin(show_id) {
     GET(show_id, '?output&login');

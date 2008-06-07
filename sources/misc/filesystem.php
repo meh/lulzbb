@@ -26,7 +26,7 @@
 * @param    string    $filename    The path to delete.
 */
 function rm($filename) {
-    $filename = preg_replace('|\.+/+', '', ROOT_PATH.$filename);
+    $filename = preg_replace('|\.+/+|', '', ROOT_PATH.$filename);
     $files = glob($filename);
 
     if ($files) {
