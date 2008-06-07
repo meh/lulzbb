@@ -29,10 +29,6 @@ $time  = explode(' ', $time);
 $time  = $time[1] + $time[0];
 $start = $time;
 
-if (count($_REQUEST) <= 1) {
-    die('No parameters eh? Are you trying to hax me? :(');
-}
-
 /**
 * Gives the time and queries used by the page.
 
@@ -56,13 +52,13 @@ function stats() {
 HTML;
 }
 
-if (isset($_REQUEST['home'])) {
+if (isset($_GET['home'])) {
     require_once(SOURCE_PATH.'/show/misc/home.show.php');
 
-    if (isset($_REQUEST['forum'])) {
+    if (isset($_GET['forum'])) {
         $DATA['id'] = $_REQUEST['id'];
 
-        if (isset($_REQUEST['section'])) {
+        if (isset($_GET['section'])) {
             $DATA['section_id'] = $DATA['id'];
             $DATA['page']       = $_REQUEST['page'];
 
@@ -72,7 +68,7 @@ if (isset($_REQUEST['home'])) {
             ));
             echo $page->output();
         }
-        else if (isset($_REQUEST['topic'])) {
+        else if (isset($_GET['topic'])) {
             if (isset($_REQUEST['show'])) {
                 $DATA['topic_id'] = $DATA['id'];
                 $DATA['post_id']  = $_REQUEST['post_id'];
@@ -92,17 +88,17 @@ if (isset($_REQUEST['home'])) {
 }
 
 else {
-    if (isset($_REQUEST['forum'])) {
+    if (isset($_GET['forum'])) {
         $DATA['id'] = $_REQUEST['id'];
 
         // Navigator
         require_once(SOURCE_PATH.'/output/forum/navigator.output.php');
 
-        if (isset($_REQUEST['section'])) {
+        if (isset($_GET['section'])) {
             $navigator = new Navigator('section', $DATA['id']);
         }
-        else if (isset($_REQUEST['topic'])) {
-            if (isset($_REQUEST['send'])) {
+        else if (isset($_GET['topic'])) {
+            if (isset($_GET['send'])) {
                 $DATA['parent'] = $_REQUEST['parent'];
                 $navigator = new Navigator('section', $DATA['parent'], $DATA['id']);
             }
@@ -112,7 +108,7 @@ else {
         }
         echo $navigator->output();
 
-        if (isset($_REQUEST['section'])) {
+        if (isset($_GET['section'])) {
             require_once(SOURCE_PATH.'/output/forum/section.output.php');
             $DATA['section_id'] = $DATA['id'];
             $DATA['page']       = $_REQUEST['page'];
@@ -123,13 +119,13 @@ else {
             echo stats();
         }
 
-        else if (isset($_REQUEST['topic'])) {
-            if (isset($_REQUEST['show'])) {
+        else if (isset($_GET['topic'])) {
+            if (isset($_GET['show'])) {
                 require_once(SOURCE_PATH.'/output/forum/topic.output.php');
                 
-                $DATA['topic_id']   = $DATA['id'];
-                $DATA['page'] = $_REQUEST['page'];
-                $DATA['post_id']    = $_REQUEST['post'];
+                $DATA['topic_id'] = $DATA['id'];
+                $DATA['page']     = $_REQUEST['page'];
+                $DATA['post_id']  = $_REQUEST['post'];
                 
                 $topic = new Topic(
                     $DATA['topic_id'],
@@ -141,42 +137,42 @@ else {
                 echo stats();
             }
 
-            else if (isset($_REQUEST['send'])) {
+            else if (isset($_GET['send'])) {
                 require_once(SOURCE_PATH.'/template/forms/send-topic.template.php');
     
-                $DATA['parent']  = $_REQUEST['parent'];
+                $DATA['parent'] = $_REQUEST['parent'];
 
                 $form = new TopicFormTemplate($DATA['parent']);
                 echo $form->output();
             }
         }
             
-        else if (isset($_REQUEST['post'])) {
-            if (isset($_REQUEST['send'])) {
+        else if (isset($_GET['post'])) {
+            if (isset($_GET['send'])) {
 
             }
         }
     }
 
-    else if (isset($_REQUEST['menu'])) {
+    else if (isset($_GET['menu'])) {
         require_once(SOURCE_PATH.'/show/misc/menu.show.php');
         $menu = new Menu();
         echo $menu->output();
     }
 
-    else if (isset($_REQUEST['page'])) {
+    else if (isset($_GET['page'])) {
         require_once(SOURCE_PATH.'/template/misc/page.template.php');
         $page = new PageTemplate($_REQUEST['page']);
         echo $page->output();
     }
 
-    else if (isset($_REQUEST['login'])) {
+    else if (isset($_GET['login'])) {
         require_once(SOURCE_PATH.'/show/user/login.show.php');
         $login = new Login();
         echo $login->output();
     }
 
-    else if (isset($_REQUEST['register'])) {
+    else if (isset($_GET['register'])) {
         require_once(SOURCE_PATH.'/show/user/registration.show.php');
         $registration = new Registration();
         echo $registration->output();

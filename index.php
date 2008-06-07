@@ -79,9 +79,8 @@ if (!sessionFileExists()) {
 }
 startSession();
 
-unset($_REQUEST['coppermine_data']);
-if (count($_REQUEST) == 1) {
-    $_REQUEST['home'] = true;
+if (count($_GET) == 0 || isset($_GET['home']) || isset($_REQUEST['session'])) {
+    $_GET['home'] = true;
     $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
     
     $_SESSION[SESSION]['config'] = new Config;
@@ -127,28 +126,28 @@ $User = $_SESSION[SESSION]['user'];
 $queries = 0;
 
 if (!isset($_REQUEST['session'])) {
-    if (isset($_REQUEST['home'])) {
-        $_REQUEST['page'] = 'home.php';
+    if (isset($_GET['home'])) {
+        $_GET['page'] = 'home.php';
         require(INTERFACES_PATH.'/output.php');
     }
 
-    else if (isset($_REQUEST['output'])) {
-        unset($_REQUEST['output']);
+    else if (isset($_GET['output'])) {
+        unset($_GET['output']);
         require(INTERFACES_PATH.'/output.php');
     }
 
-    else if (isset($_REQUEST['input'])) {
-        unset($_REQUEST['input']);
+    else if (isset($_GET['input'])) {
+        unset($_GET['input']);
         require(INTERFACES_PATH.'/input.php');
     }
 
-    else if (isset($_REQUEST['user'])) {
-        unset($_REQUEST['user']);
+    else if (isset($_GET['user'])) {
+        unset($_GET['user']);
         require(INTERFACES_PATH.'/user.php');
     }
 
-    else if (isset($_REQUEST['config'])) {
-        unset($_REQUEST['config']);
+    else if (isset($_GET['config'])) {
+        unset($_GET['config']);
         require(INTERFACES_PATH.'/config.php');
     }
 }

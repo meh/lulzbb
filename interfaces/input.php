@@ -23,12 +23,8 @@ if (!isset($Config)) {
     die("You can't access this directly.");
 }
 
-if (count($_REQUEST) <= 1) {
-    die('No parameters eh? Are you trying to hax me? :(');
-}
-
 // User
-if (isset($_REQUEST['login'])) {
+if (isset($_GET['login'])) {
     require_once(SOURCE_PATH.'/send/user/login.send.php');
 
     $DATA['username'] = $_REQUEST['username'];
@@ -38,18 +34,18 @@ if (isset($_REQUEST['login'])) {
     echo $login->output();
 }
 
-if (isset($_REQUEST['logout'])) {
+if (isset($_GET['logout'])) {
     require_once(SOURCE_PATH.'/send/user/logout.send.php');
 
     $logout = new Logout();
     echo $logout->output();
 }
 
-if (isset($_REQUEST['register'])) {
+if (isset($_GET['register'])) {
     require_once(SOURCE_PATH.'/send/user/registration.send.php');
 
-    if (isset($_REQUEST['check'])) {
-        if (isset($_REQUEST['username'])) {
+    if (isset($_GET['check'])) {
+        if (isset($_GET['username'])) {
             $DATA['username'] = $_REQUEST['username'];
 
             $registration = new Registration(
@@ -58,7 +54,7 @@ if (isset($_REQUEST['register'])) {
             );
         }
 
-        if (isset($_REQUEST['email'])) {
+        if (isset($_GET['email'])) {
             $DATA['email1'] = $_REQUEST['email1'];
             $DATA['email2'] = $_REQUEST['email2'];
 
@@ -71,7 +67,7 @@ if (isset($_REQUEST['register'])) {
             );
         }
 
-        if (isset($_REQUEST['password'])) {
+        if (isset($_GET['password'])) {
             $DATA['password1'] = $_REQUEST['password1'];
             $DATA['password2'] = $_REQUEST['password2'];
 
@@ -85,7 +81,7 @@ if (isset($_REQUEST['register'])) {
         }
     }
 
-    if (isset($_REQUEST['send'])) {
+    if (isset($_GET['send'])) {
         $DATA['username'] = $_REQUEST['username'];
         $DATA['email']    = $_REQUEST['email'];
         $DATA['password'] = $_REQUEST['password'];
@@ -103,8 +99,8 @@ if (isset($_REQUEST['register'])) {
 }
 
 // Forum
-if (isset($_REQUEST['topic'])) {
-    if (isset($_REQUEST['send'])) {
+if (isset($_GET['topic'])) {
+    if (isset($_GET['send'])) {
         require_once(SOURCE_PATH.'/send/forum/topic.send.php');
 
         $DATA['magic']    = $_REQUEST['magic'];
@@ -126,8 +122,8 @@ if (isset($_REQUEST['topic'])) {
     }
 }
 
-if (isset($_REQUEST['post'])) {
-    if (isset($_REQUEST['send'])) {
+if (isset($_GET['post'])) {
+    if (isset($_GET['send'])) {
         require_once(SOURCE_PATH.'/send/forum/post.send.php');
 
         $DATA['magic']    = $_REQUEST['magic'];

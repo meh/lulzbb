@@ -23,12 +23,8 @@ if (!isset($Config)) {
     die("You can't access this directly.");
 }
 
-if (count($_REQUEST) <= 1) {
-    die('No parameters eh? Are you trying to hax me? :(');
-}
-
-if (isset($_REQUEST['show'])) {
-    if (isset($_REQUEST['profile'])) {
+if (isset($_GET['show'])) {
+    if (isset($_GET['profile'])) {
         require_once(SOURCE_PATH.'/output/user/profile.output.php');
 
         $DATA['user_id'] = $_REQUEST['id'];
@@ -38,7 +34,7 @@ if (isset($_REQUEST['show'])) {
     }
 }
 
-else if (isset($_REQUEST['send'])) {
+else if (isset($_GET['send'])) {
 
 }
 ?>

@@ -23,15 +23,11 @@ if (!isset($Config)) {
     die("You can't access this directly.");
 }
 
-if (count($_REQUEST) <= 1) {
-    die('No parameters eh? Are you trying to hax me? :(');
-}
-
 if (!isset($User) or !$User->isIn('administrator')) {
     die("You don't have the permissions to change configurations.");
 }
 
-$command = $_REQUEST['command'];
+$command = $_REQUEST['c'];
 switch ($command) {
     case 'add_group':
     require_once(API_PATH.'/forum/section/group.php');
