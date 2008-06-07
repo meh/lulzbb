@@ -34,6 +34,8 @@ define('ROOT_PATH', realpath('../'));
 define('SOURCE_PATH', ROOT_PATH.'/sources/php'.((int) VERSION));
 define('MISC_PATH', ROOT_PATH.'/sources/misc');
 
+require_once(ROOT_PATH.'/install/functions.php');
+
 // Misc sources.
 require_once(MISC_PATH.'/session.php');
 require_once(MISC_PATH.'/filesystem.php');
@@ -183,6 +185,7 @@ if ($error = mysql_error()) {
     echo $error;
 }
 else {
-    echo 'Done :D';
+    echo 'Done, now delete the install directory :)';
+    installed();
 }
 ?>

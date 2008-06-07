@@ -61,6 +61,9 @@ define('SOURCE_PATH', ROOT_PATH.'/sources/php'.((int) VERSION));
 */
 define('MISC_PATH', ROOT_PATH.'/sources/misc');
 
+require('install/functions.php');
+checkInstall();
+
 // Misc sources.
 require_once(MISC_PATH.'/session.php');
 require_once(MISC_PATH.'/filesystem.php');
@@ -76,6 +79,7 @@ if (!sessionFileExists()) {
 }
 startSession();
 
+unset($_REQUEST['coppermine_data']);
 if (count($_REQUEST) == 1) {
     $_REQUEST['home'] = true;
     $_SESSION[SESSION]['magic'] = md5(rand().rand().time());

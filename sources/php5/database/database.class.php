@@ -61,7 +61,7 @@ class Database {
         );
 
         if (!$this->mysql) {
-            throw new lulzException('database_connection');
+            die("There's an error with the MySQL database, check your configuration and the server.");
         }
         
         mysql_select_db($Config->get('dbName'), $this->mysql);
