@@ -53,6 +53,24 @@ function mkdir_recursive($pathname, $mode = 0755)
 }
 
 /**
+* Checks if the dir exists and creates it if it doesn't.
+
+* @param    string    The file to check the path.
+
+* @return    string    The full path.
+*/
+function checkDir($path) {
+    if (is_dir($path)) {
+        mkdir_recursive($path);
+    }
+    else {
+        mkdir_recursive(dirname($path));
+    }
+
+    return $path;
+}
+
+/**
 * (DEPRECATED) Checks if something is cached or not.
 
 * @param    string    $type    The caching type. (section, topic, navigator)

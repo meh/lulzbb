@@ -76,8 +76,7 @@ class Section extends Output {
     */
     private function __getPages($section_id) {
         global $Database;
-        $path = ROOT_PATH."/.cache/misc/pages.section.{$section_id}.txt";
-        mkdir_recursive(dirname($path));
+        $path = checkDir(ROOT_PATH."/.cache/misc/pages.section.{$section_id}.txt");
 
         if (is_file($path)) {
             $pages = file_get_contents($path);

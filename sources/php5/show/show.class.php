@@ -49,7 +49,7 @@ abstract class Show {
 
     /**
     * Used to update the content being showed.
-    * @access private
+    * You MUST redeclare this.
     */
     protected abstract function __update();
 

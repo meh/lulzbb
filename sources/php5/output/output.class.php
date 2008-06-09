@@ -43,7 +43,7 @@ class Output {
     /**
     * Get the output.
     
-    * @return    string    The output.
+    * @return    string
     */
     public function output() {
         return $this->output;

@@ -37,7 +37,7 @@ class Cache {
     * @param    string    $file    The relative path in the /output/cache/ dir
     */
     public function __construct($file) {
-        $this->file  = $this->__checkDir(ROOT_PATH."/.cache/{$file}");
+        $this->file  = checkDir(ROOT_PATH."/.cache/{$file}");
         $this->cache = file_get_contents($this->file);
 
         if ($this->cache) {
@@ -56,16 +56,6 @@ class Cache {
     }
 
     /**
-    * Checks if the dir exists and creates it if it doesn't.
-    * @access private
-    */
-    protected function __checkDir($path) {
-        mkdir_recursive(dirname($path));
-        
-        return $path;
-    }
-
-    /**
     * Gets the $cached property.
 
     * @return    bool    True if it's cached, false if it's not.
@@ -80,7 +70,7 @@ class Cache {
     * @param    string    $file    The relative path.
     */
     public function setCache($file) {
-        $this->file = $this->__checkDir(ROOT_PATH."/.cache/{$file}");
+        $this->file = checkDir(ROOT_PATH."/.cache/{$file}");
     }
 
     /**

@@ -111,8 +111,7 @@ class Topic extends Output {
     */
     private function __getPages($topic_id) {
         global $Database;
-        $path = ROOT_PATH."/.cache/misc/pages.topic.{$topic_id}.txt";
-        mkdir_recursive(dirname($path));
+        $path = checkDir(ROOT_PATH."/.cache/misc/pages.topic.{$topic_id}.txt");
 
         if (is_file($path)) {
             $pages = file_get_contents($path);

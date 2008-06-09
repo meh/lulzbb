@@ -68,7 +68,7 @@ class Template {
 
     /**
     * Parsing of the basic template variables.
-    * @access private
+    * You should call this in the constructor of the extended class.
     */
     protected function ___parse() {
         global $User;

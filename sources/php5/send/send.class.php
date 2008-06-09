@@ -56,7 +56,7 @@ abstract class Send {
 
     /**
     * Used to send the data.
-    * @access private
+    * You MUST redeclare this.
     */
     protected abstract function __send($data);
 
