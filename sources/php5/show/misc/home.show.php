@@ -53,7 +53,6 @@ class Home extends Show {
 
     /**
     * Initialize the section or the topic when needed.
-    * @access private
     */
     protected function __update() {
         switch ($this->file) {

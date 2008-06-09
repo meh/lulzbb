@@ -45,7 +45,6 @@ class ErrorMessage extends Show {
 
     /**
     * Create the template to be outputted with the message in it.
-    * @access private
     */
     protected function __update() {
         $message = $this->message;

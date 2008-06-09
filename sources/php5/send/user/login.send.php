@@ -55,11 +55,9 @@ class Login extends Send {
     /**
     * Send the data and return the answer.
 
-    * @param    array    $data    Username and password.
+    * @param    array    $data    (username, password)
 
     * @return    string    The information about the login.
-
-    * @access private
     */
     protected function __send($data) {
         $username = $data['username'];

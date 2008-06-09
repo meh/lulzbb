@@ -89,7 +89,6 @@ class InformativeMessage extends Show {
 
     /**
     * Initialize data and type, create the template and put it in the output.
-    * @access private
     */
     protected function __update() {
         $message = $this->message;

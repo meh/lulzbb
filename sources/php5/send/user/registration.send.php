@@ -54,7 +54,7 @@ class Registration extends Send {
 
     * @param    array    $data    The data being used.
 
-    * @access private
+    * @return    string    The result of the check or the registration.
     */
     protected function __send($data) {
         switch ($this->data['type']) {

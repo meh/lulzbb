@@ -53,8 +53,7 @@ class Post extends Send {
     /**
     * Check the magic token and data consistency and then send it.
 
-    * @param    array    $data    The data to send, see the constructor.
-    * @access private
+    * @param    array    $data    (magic, topic_id, title, content)
     */
     protected function __send($data) {
         global $Database;

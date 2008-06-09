@@ -37,8 +37,6 @@ class Menu extends Show {
 
     /**
     * Sets the right output if the user is connected or something else.
-
-    * @access private
     */
     protected function __update() {
         if ($this->connected) {

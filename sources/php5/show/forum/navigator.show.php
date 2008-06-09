@@ -46,7 +46,6 @@ class NavigatorShow extends Show {
 
     /**
     * Create the template and put it as output :D
-    * @access private
     */
     protected function __update() {
         $navigator = new NavigatorTemplate($this->elements);

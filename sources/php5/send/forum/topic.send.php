@@ -57,8 +57,7 @@ class Topic extends Send {
     /**
     * Check the magic token and data consistencty and then send it.
 
-    * @param    array    $data    The data to send, see the constructor.
-    * @access private
+    * @param    array    $data    (magic, parent, type, title, subtitle, content)
     */
     protected function __send($data) {
         global $Database;

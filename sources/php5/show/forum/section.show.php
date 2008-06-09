@@ -46,7 +46,6 @@ class SectionShow extends Show {
 
     /**
     * Get the data from the db and create the template.
-    * @access private
     */
     protected function __update() {
         global $Database;

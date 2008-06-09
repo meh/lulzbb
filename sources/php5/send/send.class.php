@@ -57,6 +57,8 @@ abstract class Send {
     /**
     * Used to send the data.
     * You MUST redeclare this.
+
+    * @param    array    $data    Associative array with the needed data.
     */
     protected abstract function __send($data);
 

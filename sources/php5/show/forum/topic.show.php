@@ -53,7 +53,6 @@ class TopicShow extends Show {
 
     /**
     * Get the posts and show error in case they happen.
-    * @access private
     */
     protected function __update() {
         global $Database;

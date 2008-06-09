@@ -36,7 +36,8 @@ class Logout extends Send {
 
     /**
     * Delete the user data from the session, so it's a logout :D
-    * @access private
+
+    * @return     string    The logout screen.
     */
     protected function __send($data) {
         $template = new InformativeMessage('logout_successful');
