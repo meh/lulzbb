@@ -97,7 +97,7 @@ class Topic extends Send {
                         
                 rm("/.cache/sections/*");
                 rm("/.cache/misc/pages.section.{$parent}.txt");
-                rm("/.cache/misc/page.topic.{$topic_id}-*.txt");
+                rm("/.cache/misc/page.topic.*.txt");
                 break;
             }
         }

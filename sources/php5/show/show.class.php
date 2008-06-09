@@ -56,7 +56,7 @@ abstract class Show {
     /**
     * Returns the output.
 
-    * @return    string    The output.
+    * @return    string
     */
     public function output() {
         return $this->output;

@@ -90,6 +90,9 @@ function showMenu(show_id) {
 function showPage(show_id, page) {
     GET(show_id, '?output&page='+page);
 }
+function showContent(show_id, page) {
+    GET(show_id, 'pages/'+page);
+}
 
 // Forum functions
 function showSection(show_id, id, page) {

@@ -68,9 +68,7 @@ class Topic extends Output {
                 $topic = new TopicShow($infos['parent']['RAW'], $topic_id, $page, $post_id);
                 $cache->put($topic->output());
             }
-            else {
-                $cache->updateViews();
-            }
+            $cache->updateViews();
         
             $this->output = $this->__formPost($cache->get(), $topic_id, $infos['title']);
         }

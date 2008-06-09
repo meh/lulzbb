@@ -137,7 +137,7 @@ class Template {
     /**
     * Return the output.
 
-    * @return    string    The output.
+    * @return    string
     */
     public function output() {
         return $this->parsed;

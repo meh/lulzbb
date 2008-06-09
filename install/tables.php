@@ -140,7 +140,7 @@ yahoo TINYTEXT,
 
 option_email BOOL NOT NULL DEFAULT TRUE,
 option_lulzcode BOOL NOT NULL DEFAULT TRUE,
-registration_date DATETIME,
+registration_date DATETIME DEFAULT NOW(),
 
 primary KEY(id))');
 

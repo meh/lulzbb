@@ -96,6 +96,8 @@ class Cache {
 
     /**
     * Gets the cache.
+
+    * @return    string
     */
     public function get() {
         return $this->cache;
