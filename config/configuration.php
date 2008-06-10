@@ -1,5 +1,4 @@
 <?/*
-; License http://opensource.org/licenses/gpl-3.0.html
 ; This is the configuration file for Misc
 ; Remember to modify the informations about db connection and forum name
 
