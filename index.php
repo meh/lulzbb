@@ -82,14 +82,6 @@ if (!sessionFileExists()) {
 }
 startSession();
 
-if (empty($_GET) || isset($_GET['home']) || isset($_REQUEST['session'])) {
-    $_GET['home'] = true;
-    $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
-    
-    $_SESSION[SESSION]['config'] = new Config;
-    $_SESSION[SESSION]['filter'] = new Filter;
-}
-
 /**
 * This global var contains the Config object, so it's useful to get
 * and set configurations :D
@@ -106,13 +98,16 @@ $Config = $_SESSION[SESSION]['config'];
 */
 $Filter = $_SESSION[SESSION]['filter'];
 
+
 /**
 * This global var cointains the Database object, and i think it's obvious
 * why you need it...
 
 * @global    object    $Database
 */
-$Database = new Database;
+if (isset($Config)) {
+    $Database = new Database;
+}
 
 /**
 * This global var contains the User object, obvious object is obviou.
@@ -128,11 +123,7 @@ $User = $_SESSION[SESSION]['user'];
 */
 $queries = 0;
 
-if (isset($_REQUEST['session'])) {
-    die;
-}
-
-else if (isset($_GET['out'])) {
+if (isset($_GET['out'])) {
     if (isset($_GET['forum'])) {
         require(INTERFACES_PATH.'/output/forum.out.php');
     }
@@ -160,6 +151,14 @@ else if (isset($_GET['api'])) {
 }
 
 else {
+    initSessionData();
+
+    if (isset($_REQUEST['session'])) {
+        die;
+    }
+
+    $Database = new Database;
+
     if (!isset($_REQUEST['page'])) {
         $_REQUEST['page'] = $Config->get('homePage');
     }

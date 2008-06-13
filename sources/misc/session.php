@@ -2,21 +2,21 @@
 /**
 * @package  Misc
 
-* @license AGPLv3
-* lulzBB is a CMS for the lulz but it's also serious business.
-* Copyright (C) 2008 lulzGroup
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Affero General Public License as
-* published by the Free Software Foundation, either version 3 of the
-* License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Affero General Public License for more details.
-*
-* You should have received a copy of the GNU Affero General Public License
+* @license AGPLv
+* lulzBB is a CMS for the lulz but it's also serious business
+* Copyright (C) 2008 lulzGrou
+
+* This program is free software: you can redistribute it and/or modif
+* it under the terms of the GNU Affero General Public License a
+* published by the Free Software Foundation, either version 3 of th
+* License, or (at your option) any later version
+
+* This program is distributed in the hope that it will be useful
+* but WITHOUT ANY WARRANTY; without even the implied warranty o
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See th
+* GNU Affero General Public License for more details
+
+* You should have received a copy of the GNU Affero General Public Licens
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 * @author   cHoBi
@@ -128,5 +128,15 @@ function destroySession() {
     
     $_REQUEST['session'] = true;
     require_once(ROOT_PATH.'/index.php');
+}
+
+/**
+* Initiates session data.
+*/
+function initSessionData() {
+    $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
+
+    $_SESSION[SESSION]['config'] = new Config;
+    $_SESSION[SESSION]['filter'] = new Filter;
 }
 ?>
