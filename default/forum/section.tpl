@@ -76,5 +76,5 @@
     </div>
     </Topics>
     
-    <New-Topic><form class="buttons"><input type="button" value="New Topic" onclick="POST('middle', '?output&forum&topic&send', 'parent=<%POST-SECTION-ID%>&id=-10');"/></form></New-Topic>
+    <New-Topic><form class="buttons"><input type="button" value="New Topic" onclick="showTopicForm('middle', <%POST-SECTION-ID%>);"/></form></New-Topic>
 </div>
