@@ -122,7 +122,7 @@ function doLogin(show_id, username, password) {
 }
 
 function login(username, password) {
-    rawPOST('?in&login', 'username='+username+'&password='+password);
+    rawPOST('?in&user&login', 'username='+username+'&password='+password);
 }
 function showLogin(show_id) {
     GET(show_id, '?out&user&login');
@@ -134,6 +134,11 @@ function logout(show_id) {
 // Registration functions
 function showRegistration(show_id) {
     GET(show_id, '?out&user&register');
+}
+
+// Show functions
+function showTopicForm(show_id, parent) {
+    POST(show_id, '?out&forum&topic&send', 'parent='+parent+'id=-10');
 }
 
 // Send functions.
