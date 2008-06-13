@@ -88,10 +88,10 @@ function rawPOST(url, params) {
 }
 
 function showMenu(show_id) {
-    GET(show_id, '?output&menu');
+    GET(show_id, '?out&menu');
 }
 function showPage(show_id, page) {
-    GET(show_id, '?output&page='+page);
+    GET(show_id, '?out&page='+page);
 }
 function showContent(show_id, page) {
     GET(show_id, 'pages/'+page);
@@ -107,34 +107,38 @@ function showSection(show_id, id, page) {
     var page = (page == null) ? section_page : page;
     section_page = page;
 
-    POST(show_id, '?output&forum&section', 'id='+id+'&page='+page);
+    POST(show_id, '?out&forum&section', 'id='+id+'&page='+page);
 }
 function showTopic(show_id, id, page, post) {
     var page    = (page == null) ? 1 : page;
     var post_id = (post == null) ? 1 : post;
 
-    POST(show_id, '?output&forum&topic&show', 'id='+id+'&post_id='+post+'&page='+page);
+    POST(show_id, '?out&forum&topic&show', 'id='+id+'&post_id='+post+'&page='+page);
 }
 
 // Login functions
+function doLogin(show_id, username, password) {
+    POST(show_id, '?in&user&login', 'username='+rawurlencode(username)+'&password='+rawurlencode(password));
+}
+
 function login(username, password) {
-    rawPOST('?input&login', 'username='+username+'&password='+password);
+    rawPOST('?in&login', 'username='+username+'&password='+password);
 }
 function showLogin(show_id) {
-    GET(show_id, '?output&login');
+    GET(show_id, '?out&user&login');
 }
 function logout(show_id) {
-    GET(show_id, '?input&logout');
+    GET(show_id, '?in&user&logout');
 }
 
 // Registration functions
 function showRegistration(show_id) {
-    GET(show_id, '?output&register');
+    GET(show_id, '?out&user&register');
 }
 
 // Send functions.
 function sendTopic(magic, show_id, parent, type, title, subtitle, content) {
-    POST(show_id, '?input&topic&send',
+    POST(show_id, '?in&forum&topic&send',
           'type='+type+'&'
         + 'parent='+parent+'&'
         + 'title='+rawurlencode(title)+'&'
@@ -144,7 +148,7 @@ function sendTopic(magic, show_id, parent, type, title, subtitle, content) {
 }
 
 function sendPost(magic, show_id, topic_id, title, content) {
-    POST(show_id, '?input&forum&post&send',
+    POST(show_id, '?in&forum&post&send',
         'topic_id='+topic_id+'&'
       + 'title='+rawurlencode(title)+'&'
       + 'content='+rawurlencode(content)+'&'

@@ -69,6 +69,7 @@ checkInstall();
 // Misc sources.
 require_once(MISC_PATH.'/session.php');
 require_once(MISC_PATH.'/filesystem.php');
+require_once(MISC_PATH.'/misc.php');
 
 // Session creation.
 require_once(SOURCE_PATH.'/config.class.php');
@@ -81,7 +82,7 @@ if (!sessionFileExists()) {
 }
 startSession();
 
-if (count($_GET) == 0 || isset($_GET['home']) || isset($_REQUEST['session'])) {
+if (empty($_GET) || isset($_GET['home']) || isset($_REQUEST['session'])) {
     $_GET['home'] = true;
     $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
     
@@ -127,30 +128,41 @@ $User = $_SESSION[SESSION]['user'];
 */
 $queries = 0;
 
-if (!isset($_REQUEST['session'])) {
-    if (isset($_GET['home'])) {
-        $_GET['page'] = 'home.php';
-        require(INTERFACES_PATH.'/output.php');
-    }
+if (isset($_REQUEST['session'])) {
+    die;
+}
 
-    else if (isset($_GET['output'])) {
-        unset($_GET['output']);
-        require(INTERFACES_PATH.'/output.php');
-    }
-
-    else if (isset($_GET['input'])) {
-        unset($_GET['input']);
-        require(INTERFACES_PATH.'/input.php');
+else if (isset($_GET['out'])) {
+    if (isset($_GET['forum'])) {
+        require(INTERFACES_PATH.'/output/forum.out.php');
     }
 
     else if (isset($_GET['user'])) {
-        unset($_GET['user']);
-        require(INTERFACES_PATH.'/user.php');
+        require(INTERFACES_PATH.'/output/user.out.php');
     }
 
-    else if (isset($_GET['config'])) {
-        unset($_GET['config']);
-        require(INTERFACES_PATH.'/config.php');
+    else {
+        require(INTERFACES_PATH.'/output/misc.out.php');
     }
+}
+else if (isset($_GET['in'])) {
+    if (isset($_GET['forum'])) {
+        require(INTERFACES_PATH.'/input/forum.in.php');
+    }
+
+    else if (isset($_GET['user'])) {
+        require(INTERFACES_PATH.'/input/user.in.php');
+    }
+}
+
+else if (isset($_GET['api'])) {
+    require(INTERFACES_PATH.'/api.php');
+}
+
+else {
+    if (!isset($_REQUEST['page'])) {
+        $_REQUEST['page'] = $Config->get('homePage');
+    }
+    require(INTERFACES_PATH.'/output/home.out.php');
 }
 ?>

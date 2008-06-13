@@ -167,5 +167,18 @@ class UserDatabase extends DatabaseBase {
     public function setLulzCode($user_id, $state) {
         $this->Database->sendQuery($this->Query->setLulzCode($user_id, $state));
     }
+
+    /**
+    * Gets all the infos about a user.
+
+    * @param    int    $user_id    The user id.
+
+    * @return    array
+    */
+    public function getInfos($user_id) {
+        $this->Database->sendQuery($this->Query->getInfos($user_id));
+
+        return $this->fetchArray();
+    }
 }
 ?>

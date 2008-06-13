@@ -5,6 +5,7 @@
 ; Forum info
 forumName=The forum name
 forumTitle=The title of the site
+homePage=home.php
 language=en
 template=default
 

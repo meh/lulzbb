@@ -174,5 +174,22 @@ QUERY;
 
 QUERY;
     }
+
+    public function getInfos($user_id) {
+        $user_id = (int) $user_id;
+
+        return <<<QUERY
+
+        SELECT
+            *
+
+        FROM
+            {$this->dbPrefix}_users
+
+        WHERE
+            {$this->dbPrefix}_users.id = {$user_id}
+
+QUERY;
+    }
 }
 ?>

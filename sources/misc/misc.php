@@ -1,7 +1,6 @@
 <?php
 /**
-* @package PHP5
-* @category Template
+* @package Misc
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -19,23 +18,30 @@
 *
 * You should have received a copy of the GNU Affero General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-require_once(SOURCE_PATH.'/template/template.class.php');
-
-/**
-* User's profile's template class.
 
 * @author cHoBi
 */
-class UserProfileTemplate extends Template {
-    /**
-    * Creates the user profile template.
 
-    * @param    array
-    */
-    public function __construct($data) {
+/**
+* Gives the time and queries used by the page.
 
-    }
+* @return    string    Time and queries used for the generation of the page.
+*/
+function stats() {
+    global $queries;
+    global $start;
+
+    $time = microtime();
+    $time = explode(' ', $time);
+    $time = $time[1] + $time[0];
+    $finish = $time;
+    $total_time = round(($finish - $start), 4);
+
+    return <<<HTML
+    <div id="stats">
+        Page generated in <span class="time">{$total_time}</span> seconds with
+        <span class="queries">{$queries}</span> queries.
+    </div>
+HTML;
 }
 ?>

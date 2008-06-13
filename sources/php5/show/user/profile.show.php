@@ -22,18 +22,31 @@
 */
 
 require_once(SOURCE_PATH.'/show/show.class.php');
+require_once(SOURCE_PATH.'/template/user/profile.template.php');
 
 /**
-* @todo Comments
+* User's profile show class.
+
 * @author cHoBi
 */
-class UserProfile extends Show {
-    public function __construct() {
+class UserProfileShow extends Show {
+    private $id;
+
+    /**
+    * Gets the data from the user.
+    */
+    public function __construct($user_id) {
+        $this->id = $user_id;
+
         $this->__update();
     }
     
+    /**
+    * Show the profile.
+    */
     protected function __update() {
-        $template = new Template('user/profile.tpl');
+        global $Database;
+        $template = new UserProfileTemplate($Database->user->getInfos($this->id));
         
         $this->output = $template->output();
     }

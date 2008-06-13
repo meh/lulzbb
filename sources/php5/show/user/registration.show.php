@@ -24,10 +24,14 @@
 require_once(SOURCE_PATH.'/show/show.class.php');
 
 /**
-* @todo Comments
+* Registration's show class.
+
 * @author cHoBi
 */
 class Registration extends Show {
+    /**
+    * Constructor, if the user is connected kill the thing.
+    */
     public function __construct() {
         if ($this->connected) {
             die('LOLNO');
@@ -36,6 +40,9 @@ class Registration extends Show {
         $this->__update();
     }
     
+    /**
+    * Show the registration form.
+    */
     protected function __update() {
         $template = new Template('user/registration.tpl');
         

@@ -1,12 +1,9 @@
 <?php
 /**
-* @package PHP5
-* @category Template
+* @package Interfaces
+* @category Output
 
 * @license AGPLv3
-* lulzBB is a CMS for the lulz but it's also serious business.
-* Copyright (C) 2008 lulzGroup
-*
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Affero General Public License as
 * published by the Free Software Foundation, either version 3 of the
@@ -19,23 +16,23 @@
 *
 * You should have received a copy of the GNU Affero General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-require_once(SOURCE_PATH.'/template/template.class.php');
-
-/**
-* User's profile's template class.
 
 * @author cHoBi
 */
-class UserProfileTemplate extends Template {
-    /**
-    * Creates the user profile template.
 
-    * @param    array
-    */
-    public function __construct($data) {
+if (!isset($Config)) {
+    die("You can't access this directly.");
+}
 
-    }
+if (isset($_GET['menu'])) {
+    require_once(SOURCE_PATH.'/show/misc/menu.show.php');
+    $menu = new Menu();
+    echo $menu->output();
+}
+
+else if (isset($_GET['page'])) {
+    require_once(SOURCE_PATH.'/template/misc/page.template.php');
+    $page = new PageTemplate($_REQUEST['page']);
+    echo $page->output();
 }
 ?>

@@ -1,6 +1,7 @@
 <?php
 /**
 * @package Interfaces
+* @category Output
 
 * @license AGPLv3
 * This program is free software: you can redistribute it and/or modify
@@ -23,8 +24,8 @@ if (!isset($Config)) {
     die("You can't access this directly.");
 }
 
-if (isset($_GET['show'])) {
-    if (isset($_GET['profile'])) {
+if (isset($_GET['profile'])) {
+    if (isset($_GET['show'])) {
         require_once(SOURCE_PATH.'/output/user/profile.output.php');
 
         $DATA['user_id'] = $_REQUEST['id'];
@@ -32,9 +33,21 @@ if (isset($_GET['show'])) {
         $template = new UserProfile($DATA['user_id']);
         echo $template->output();
     }
+
+    else if (isset($_GET['edit'])) {
+
+    }
 }
 
-else if (isset($_GET['send'])) {
+else if (isset($_GET['login'])) {
+    require_once(SOURCE_PATH.'/show/user/login.show.php');
+    $login = new Login();
+    echo $login->output();
+}
 
+else if (isset($_GET['register'])) {
+    require_once(SOURCE_PATH.'/show/user/registration.show.php');
+    $registration = new Registration();
+    echo $registration->output();
 }
 ?>
