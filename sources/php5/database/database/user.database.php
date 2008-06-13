@@ -178,7 +178,7 @@ class UserDatabase extends DatabaseBase {
     public function getInfos($user_id) {
         $this->Database->sendQuery($this->Query->getInfos($user_id));
 
-        return $this->fetchArray();
+        return $this->Database->fetchArray();
     }
 }
 ?>

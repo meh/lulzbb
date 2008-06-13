@@ -66,14 +66,15 @@ class Template {
             $this->plain_text = file_get_contents(ROOT_PATH."/templates/{$this->template['name']}/$file");
         }
         
-        $this->___parse();
+        $this->__parse();
     }
 
     /**
     * Parsing of the basic template variables.
     * You should call this in the constructor of the extended class.
+    * @access private
     */
-    protected function ___parse() {
+    private function __parse() {
         global $User;
 
         $text = $this->plain_text;

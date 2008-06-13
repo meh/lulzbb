@@ -56,6 +56,14 @@ if (isset($_GET['forum'])) {
         echo $page->output();
     }
 }
+
+else if (isset($_GET['user'])) {
+    $DATA['id'] = $_REQUEST['id'];
+    
+    $page = new Home('user', array('user_id' => $DATA['id']));
+    echo $page->output();
+}
+
 else {
     $page = new Home($_REQUEST['page']);
     echo $page->output();

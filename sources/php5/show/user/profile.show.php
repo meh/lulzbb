@@ -30,8 +30,6 @@ require_once(SOURCE_PATH.'/template/user/profile.template.php');
 * @author cHoBi
 */
 class UserProfileShow extends Show {
-    private $id;
-
     /**
     * Gets the data from the user.
     */

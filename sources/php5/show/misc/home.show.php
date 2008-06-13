@@ -27,6 +27,7 @@ require_once(SOURCE_PATH.'/template/misc/home.template.php');
 require_once(SOURCE_PATH.'/template/misc/page.template.php');
 require_once(SOURCE_PATH.'/output/forum/section.output.php');
 require_once(SOURCE_PATH.'/output/forum/topic.output.php');
+require_once(SOURCE_PATH.'/output/user/profile.output.php');
 require_once(SOURCE_PATH.'/template/forms/send-topic.template.php');
 
 /**
@@ -76,6 +77,13 @@ class Home extends Show {
             $navigator = new Navigator('topic', $topic_id);
             $content   = new Topic($topic_id, $post_id, $page);
             $template  = new HomeTemplate($navigator->output().$content->output().stats());
+            break;
+
+            case 'user':
+            $user_id = (int) $this->data['user_id'];
+
+            $content = new UserProfile($user_id);
+            $template = new HomeTemplate($content->output());
             break;
 
             default:

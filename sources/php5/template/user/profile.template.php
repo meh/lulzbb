@@ -29,13 +29,191 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 * @author cHoBi
 */
 class UserProfileTemplate extends Template {
+    private $id;
+    private $name;
+    private $email;
+    private $avatar;
+    private $real_name;
+    private $real_surname;
+    private $sex;
+    private $birth;
+    private $location;
+    private $biography;
+    private $hobby;
+    private $job;
+    private $signature;
+    private $homepage;
+    private $msn;
+    private $icq;
+    private $yahoo;
+    private $options;
+    private $registration_date;
+
     /**
     * Creates the user profile template.
 
-    * @param    array
+    * @param    array    The user data.
     */
     public function __construct($data) {
+        parent::__construct('user/profile.tpl');
 
+        $this->id                  = $data['id'];
+        $this->name                = $data['name'];
+        $this->email               = $data['email'];
+        $this->avatar              = $data['avatar'];
+        $this->real_name           = $data['real_name'];
+        $this->real_surname        = $data['real_surname'];
+        $this->sex                 = $data['sex'];
+        $this->birth               = $data['birth'];
+        $this->location            = $data['location'];
+        $this->biography           = $data['biography'];
+        $this->hobby               = $data['hobby'];
+        $this->job                 = $data['job'];
+        $this->signature           = $data['signature'];
+        $this->homepage            = $data['homepage'];
+        $this->msn                 = $data['msn'];
+        $this->icq                 = $data['icq'];
+        $this->yahoo               = $data['yahoo'];
+        $this->options['email']    = $data['option_email'];
+        $this->options['lulzcode'] = $data['option_lulzcode'];
+        $this->registration_date   = $data['registration_date'];
+
+        $this->__parse();
+    }
+
+    /**
+    * @access private
+    */
+    private function __parse() {
+        $text = $this->output();
+
+        // User name
+        $text = preg_replace(
+            '|<%USER-NAME%>|i',
+            $this->name['HTML'],
+            $text
+        );
+
+        // Email
+        if ($this->options['email']) {
+            $email = $this->email['HTML'];
+        }
+        else {
+            $email = '';
+        }
+
+        $text = preg_replace(
+            '|<%USER-EMAIL%>|i',
+            $email,
+            $text
+        );
+
+        // Avatar
+        $text = preg_replace(
+            '|<%USER-AVATAR%>|i',
+            $this->avatar['HTML'],
+            $text
+        );
+
+        // Real name
+        $text = preg_replace(
+            '|<%USER-REAL-NAME%>|i',
+            $this->real_name['HTML'],
+            $text
+        );
+        
+        // Real surname
+        $text = preg_replace(
+            '|<%USER-REAL-SURNAME%>|i',
+            $this->real_surname['HTML'],
+            $text
+        );
+
+        // Sex
+        $text = preg_replace(
+            '|<%USER-SEX%>|i',
+            $this->sex['HTML'],
+            $text
+        );
+
+        // Birth date
+        $text = preg_replace(
+            '|<%USER-BIRTH%>|i',
+            $this->birth['HTML'],
+            $text
+        );
+
+        // Location
+        $text = preg_replace(
+            '|<%USER-LOCATION%>|i',
+            $this->location['HTML'],
+            $text
+        );
+
+        // Biography
+        $text = preg_replace(
+            '|<%USER-BIOGRAPHY%>|i',
+            $this->biography['HTML'],
+            $text
+        );
+
+        // Hobby
+        $text = preg_replace(
+            '|<%USER-HOBBY%>|i',
+            $this->hobby['HTML'],
+            $text
+        );
+
+        // Job
+        $text = preg_replace(
+            '|<%USER-JOB%>|i',
+            $this->job['HTML'],
+            $text
+        );
+
+        // Signature
+        $text = preg_replace(
+            '|<%USER-SIGNATURE%>|i',
+            $this->signature['HTML'],
+            $text
+        );
+
+        // Homepage
+        $text = preg_replace(
+            '|<%USER-HOMEPAGE%>|i',
+            $this->homepage['HTML'],
+            $text
+        );
+
+        // MSN
+        $text = preg_replace(
+            '|<%USER-MSN%>|i',
+            $this->msn['HTML'],
+            $text
+        );
+
+        // ICQ
+        $text = preg_replace(
+            '|<%USER-ICQ%>|i',
+            $this->icq['HTML'],
+            $text
+        );
+
+        // Yahoo
+        $text = preg_replace(
+            '|<%USER-YAHOO%>|i',
+            $this->yahoo['HTML'],
+            $text
+        );
+
+        // Registration date
+        $text = preg_replace(
+            '|<%USER-REGISTRATION-DATE%>|i',
+            $this->registration_date['HTML'],
+            $text
+        );
+
+        $this->parsed = $text;
     }
 }
 ?>

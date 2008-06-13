@@ -56,7 +56,6 @@ class TopicTemplate extends Template {
         $this->posts       = $posts;
         $this->title       = $Database->topic->getTitle($topic_id);
 
-
         $this->__parse();
     }
 
