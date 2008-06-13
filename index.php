@@ -105,9 +105,7 @@ $Filter = $_SESSION[SESSION]['filter'];
 
 * @global    object    $Database
 */
-if (isset($Config)) {
-    $Database = new Database;
-}
+$Database;
 
 /**
 * This global var contains the User object, obvious object is obviou.
@@ -124,6 +122,8 @@ $User = $_SESSION[SESSION]['user'];
 $queries = 0;
 
 if (isset($_GET['out'])) {
+    $Database = new Database;
+
     if (isset($_GET['forum'])) {
         require(INTERFACES_PATH.'/output/forum.out.php');
     }
@@ -137,6 +137,8 @@ if (isset($_GET['out'])) {
     }
 }
 else if (isset($_GET['in'])) {
+    $Database = new Database;
+
     if (isset($_GET['forum'])) {
         require(INTERFACES_PATH.'/input/forum.in.php');
     }
@@ -147,6 +149,8 @@ else if (isset($_GET['in'])) {
 }
 
 else if (isset($_GET['api'])) {
+    $Database = new Database;
+
     require(INTERFACES_PATH.'/api.php');
 }
 
@@ -156,7 +160,7 @@ else {
     if (isset($_REQUEST['session'])) {
         die;
     }
-
+    
     $Database = new Database;
 
     if (!isset($_REQUEST['page'])) {

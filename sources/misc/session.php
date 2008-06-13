@@ -134,9 +134,12 @@ function destroySession() {
 * Initiates session data.
 */
 function initSessionData() {
+    global $Config;
+    global $Filter;
+
     $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
 
-    $_SESSION[SESSION]['config'] = new Config;
-    $_SESSION[SESSION]['filter'] = new Filter;
+    $Config = $_SESSION[SESSION]['config'] = new Config;
+    $Filter = $_SESSION[SESSION]['filter'] = new Filter;
 }
 ?>
