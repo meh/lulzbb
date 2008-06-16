@@ -13,6 +13,7 @@ template=default
 dbUsername=The database username
 dbPassword=The username password
 dbHost=The host of the db
+dbPort=3306
 dbName=The db name to be used
 dbPrefix=The database prefix
 

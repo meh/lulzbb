@@ -58,7 +58,7 @@ class Database {
         global $Config;
         
         $this->mysql = mysql_connect(
-            $Config->get('dbHost'),
+            $Config->get('dbHost').':'.$Config->get('dbPort'),
             $Config->get('dbUsername'),
             $Config->get('dbPassword')
         );

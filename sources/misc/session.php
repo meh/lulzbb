@@ -4,7 +4,7 @@
 
 * @license AGPLv
 * lulzBB is a CMS for the lulz but it's also serious business
-* Copyright (C) 2008 lulzGrou
+* Copyright (C) 2008 lulzGroup
 
 * This program is free software: you can redistribute it and/or modif
 * it under the terms of the GNU Affero General Public License a
