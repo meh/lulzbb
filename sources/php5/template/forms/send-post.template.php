@@ -28,7 +28,8 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 
 * @author cHoBi
 */
-class PostFormTemplate extends Template {
+class PostFormTemplate extends Template
+{
     /**
     * Initialize the data.
 
@@ -36,7 +37,8 @@ class PostFormTemplate extends Template {
     * @param    int       $topic_id    The topic id.
     * @param    string    $title       The post title.
     */
-    public function __construct($magic, $topic_id, $title) {
+    public function __construct ($magic, $topic_id, $title)
+    {
         parent::__construct('forms/send-post-form.tpl');
         
         global $Filter;
@@ -51,7 +53,8 @@ class PostFormTemplate extends Template {
     * Usual things, regex and parsing.
     * @access private
     */
-    private function __parse() {
+    private function __parse ()
+    {
         $text = $this->output();
 
         $text = preg_replace(

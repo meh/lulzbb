@@ -29,13 +29,15 @@ require_once(SOURCE_PATH.'/database/query/user/group.query.php');
 *
 * @author cHoBi
 */
-class UserGroupDatabase extends DatabaseBase {
+class UserGroupDatabase extends DatabaseBase
+{
     /**
     * Guess what?
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($Database) {
+    public function __construct ($Database)
+    {
         $query = new GroupQuery();
         parent::__construct($Database, $query);
     }
@@ -47,7 +49,8 @@ class UserGroupDatabase extends DatabaseBase {
 
     * @return    bool    True if it exists, false if it doesn't.
     */
-    public function exists($group) {
+    public function exists ($group)
+    {
         $query = $this->Database->sendQuery($this->Query->exists($group));
 
         if (mysql_fetch_row($query)) {
@@ -65,7 +68,8 @@ class UserGroupDatabase extends DatabaseBase {
     
     * @return    array    Normal array with a group for each element.
     */
-    public function get($username) {
+    public function get ($username)
+    {
         $this->Database->sendQuery($this->Query->get($username));
 
         $groups = array();
@@ -82,7 +86,8 @@ class UserGroupDatabase extends DatabaseBase {
     * @param    string    $group          The group name.
     * @param    string    $description    The description of the group.
     */
-    public function add($group, $description) {
+    public function add ($group, $description)
+    {
         $this->Database->sendQuery($this->Query->add($group, $description));
     }
 
@@ -94,7 +99,8 @@ class UserGroupDatabase extends DatabaseBase {
 
     * @return    bool    True if it added the user, false if it didn't.
     */
-    public function addUser($username, $group) {
+    public function addUser ($username, $group)
+    {
         if (!$this->Database->user->group->exists($groupName)) {
             return false;
         }
@@ -113,7 +119,8 @@ class UserGroupDatabase extends DatabaseBase {
     
     * @param    string    $group    The group name to remove.
     */
-    public function remove($group) {
+    public function remove ($group)
+    {
         $this->Database->sendQuery($this->Query->remove($group));
     }
 
@@ -123,7 +130,8 @@ class UserGroupDatabase extends DatabaseBase {
     * @param    string    $username    The username to remove from a group.
     * @param    string    $group       The group name.
     */
-    public function removeUser($username, $group) {
+    public function removeUser ($username, $group)
+    {
         $this->Database->sendQuery($this->Query->removeUser($username, $group));
     }
 }

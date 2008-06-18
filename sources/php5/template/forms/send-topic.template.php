@@ -28,7 +28,8 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 
 * @author cHoBi
 */
-class TopicFormTemplate extends Template {
+class TopicFormTemplate extends Template
+{
     private $parent;
 
     /**
@@ -37,7 +38,8 @@ class TopicFormTemplate extends Template {
     * @param    string    $magic     The magic token. (Anti XSRF)
     * @param    int       $parent    The parent where to add the topic.
     */
-    public function __construct($parent) {
+    public function __construct ($parent)
+    {
         parent::__construct('forms/send-topic-form.tpl');
 
         $this->parent = (int) $parent;
@@ -49,7 +51,8 @@ class TopicFormTemplate extends Template {
     * Parse the template.
     * @access private
     */
-    private function __parse() {
+    private function __parse ()
+    {
         $text = $this->output();
 
         $text = preg_replace(

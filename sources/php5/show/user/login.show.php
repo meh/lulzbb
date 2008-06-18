@@ -25,17 +25,28 @@ require_once(SOURCE_PATH.'/show/show.class.php');
 require_once(SOURCE_PATH.'/show/misc/informative-message.show.php');
 
 /**
-* @todo Comments
+* Login show class.
+
 * @author cHoBi
 */
-class Login extends Show {
-    public function __construct() {
+class Login extends Show
+{
+    /**
+    * Create and show the template.
+    */
+    public function __construct ()
+    {
         parent::__construct();
         
         $this->__update();
     }
     
-    protected function __update() {
+    /**
+    * Gets the template.
+    * @access private
+    */
+    protected function __update ()
+    {
         $template = new Template('user/login.tpl');
         
         $this->output = $template->output();

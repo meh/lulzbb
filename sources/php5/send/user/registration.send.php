@@ -28,14 +28,16 @@ require_once(SOURCE_PATH.'/send/send.class.php');
 
 * @author cHoBi
 */
-class Registration extends Send {
+class Registration extends Send
+{
     /**
     * Initialize and send the registration or check the data.
 
     * @param    string    $type    The operation to do.
     * @param    array     $data    The data if needed from the check or send.
     */
-    public function __construct($type, $data = array()) {
+    public function __construct ($type, $data = array())
+    {
         parent::__construct();
     
         if ($this->connected) {
@@ -59,7 +61,8 @@ class Registration extends Send {
 
     * @return    string    The result of the check or the registration.
     */
-    protected function __send($data) {
+    protected function __send ($data)
+    {
         switch ($this->data['type']) {
             case 'check_username':
             $output = $this->__checkUsername($data['username']);
@@ -93,7 +96,8 @@ class Registration extends Send {
     * @return    string    The output.
     * @access private
     */
-    private function __checkUsername($username) {
+    private function __checkUsername ($username)
+    {
         global $Database;
         $username = trim($username);
         
@@ -128,7 +132,8 @@ class Registration extends Send {
     * @return    string    The output.
     * @access private
     */
-    private function __checkEmail($data) {
+    private function __checkEmail ($data)
+    {
         global $Database;
 
         if (isset($data['email'])) {
@@ -170,7 +175,8 @@ class Registration extends Send {
     * @return    string    The output.
     * @access private
     */
-    private function __isBanned($email) {
+    private function __isBanned ($email)
+    {
         $output = 'Ok.';
         $re_email  = '|^[^\d]\w+(\.\w+)*@\w+(\.\w+)*\.[A-z]{2,4}$|i';
         $re_domain = '|^@\w+(\.\w+)*\.[[:alpha:]]{2,4}$|i';
@@ -204,7 +210,8 @@ class Registration extends Send {
     * @return    string    The output.
     * @access private
     */
-    private function __checkPassword($data) {
+    private function __checkPassword ($data)
+    {
         if (isset($data['password'])) {
             $password1 = $password2 = $data['password'];
         }
@@ -244,7 +251,8 @@ class Registration extends Send {
     * @return    string    The output.
     * @access private
     */
-    private function __register($data) {
+    private function __register ($data)
+    {
         global $Database;
         $username = trim($data['username']);
         $email    = trim($data['email']);

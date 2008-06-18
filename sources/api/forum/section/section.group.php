@@ -30,7 +30,8 @@
 * @param    int       $weight    The group's weight.
 * @param    string    $name      The group's name.
 */
-function add_group($parent, $weight, $name) {
+function add_group ($parent, $weight, $name)
+{
     if (!isset($parent) or !isset($weight) or empty($name)) {
         die('Not enough parmeters.');
     }

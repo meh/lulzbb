@@ -28,7 +28,8 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 
 * @author cHoBi
 */
-class UserProfileTemplate extends Template {
+class UserProfileTemplate extends Template
+{
     private $id;
     private $name;
     private $email;
@@ -54,7 +55,8 @@ class UserProfileTemplate extends Template {
 
     * @param    array    The user data.
     */
-    public function __construct($data) {
+    public function __construct ($data)
+    {
         parent::__construct('user/profile.tpl');
 
         $this->id                  = $data['id'];
@@ -84,7 +86,8 @@ class UserProfileTemplate extends Template {
     /**
     * @access private
     */
-    private function __parse() {
+    private function __parse ()
+    {
         $text = $this->output();
 
         // User name

@@ -37,7 +37,8 @@ require_once(SOURCE_PATH.'/database/database/misc.database.php');
 
 * @author cHoBi
 */
-class Database {
+class Database
+{
     protected $mysql;
     protected $Query;
     protected $query;
@@ -54,7 +55,8 @@ class Database {
     
     * @exception    database_connection    On database connection failure.
     */
-    public function __construct() {
+    public function __construct ()
+    {
         global $Config;
         
         $this->mysql = mysql_connect(
@@ -75,7 +77,8 @@ class Database {
         $this->misc    = new MiscDatabase($this);
     }
 
-    public function __destruct() {
+    public function __destruct ()
+    {
         mysql_close($this->mysql);
     }
 
@@ -89,7 +92,8 @@ class Database {
     * @return    resource    The response from the mysql database.
     * @todo Remove the mysql_error();
     */
-    public function sendQuery($query) {
+    public function sendQuery ($query)
+    {
         $this->query = mysql_query($query) or die(nl2br($query).mysql_error());
         
         if (!$this->query) {
@@ -109,7 +113,8 @@ class Database {
     
     * @return    array    (RAW => stripslash, OUT => htmlentities, POST => rawurlencode)
     */
-    public function fetchArray() {
+    public function fetchArray ()
+    {
         global $Filter;
     
         if (!($array = mysql_fetch_array($this->query, MYSQL_ASSOC))) {
@@ -131,7 +136,8 @@ class Database {
 
     * @return    bool    True if it exists, false if it doesn't.
     */
-    public function exists() {
+    public function exists ()
+    {
         global $Config;
         $dbPrefix = $Config->get('dbPrefix');
 
@@ -168,12 +174,14 @@ class Database {
 
     * @param    int    $number    The value that @i will be set to.
     */
-    public function setCounter($number) {
+    public function setCounter ($number)
+    {
         $number = (int) $number;
         $this->sendQuery("SET @i = {$number}");
     }
 
-    public function getCounter() {
+    public function getCounter ()
+    {
         $number = mysql_fetch_row($this->sendQuery("SELECT @i"));
 
         return $number[0];

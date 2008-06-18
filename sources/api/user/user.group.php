@@ -29,7 +29,8 @@
 * @param    string    $user     The username.
 * @param    string    $group    The group's name.
 */
-function add_user_to_group($user, $group) {
+function add_user_to_group ($user, $group)
+{
     if (!isset($user) or !isset($group)) {
         die('Not enough parameters.');
     }

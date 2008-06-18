@@ -29,13 +29,15 @@ require_once(SOURCE_PATH.'/database/database.base.class.php');
 
 * @author cHoBi
 */
-class PostDatabase extends DatabaseBase {
+class PostDatabase extends DatabaseBase
+{
     /**
     * BAWWWFEST IS HERE ;_;
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($Database) {
+    public function __construct ($Database)
+    {
         $query = new PostQuery();
         parent::__construct($Database, $query);
     }
@@ -47,7 +49,8 @@ class PostDatabase extends DatabaseBase {
     * @param    string    $title       The post title.
     * @param    string    $content     The content of the post.
     */
-    public function add($topic_id, $title, $content) {
+    public function add ($topic_id, $title, $content)
+    {
         global $User;
 
         if (!$this->Database->topic->exists($topic_id)) {
@@ -79,7 +82,8 @@ class PostDatabase extends DatabaseBase {
     
     * @return    array    (name, time)
     */
-    public function getLastInfos($topic_id) {
+    public function getLastInfos ($topic_id)
+    {
         $this->Database->sendQuery($this->Query->getLastInfos($topic_id));
         $infos = $this->Database->fetchArray();
 

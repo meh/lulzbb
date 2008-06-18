@@ -36,7 +36,8 @@ require_once(SOURCE_PATH.'/database/query/user.query.php');
 
 * @author cHoBi
 */
-class UserDatabase extends DatabaseBase {
+class UserDatabase extends DatabaseBase
+{
     // Login and Registration database classes
     public $login;
     public $registration;
@@ -47,7 +48,8 @@ class UserDatabase extends DatabaseBase {
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($Database) {
+    public function __construct ($Database)
+    {
         $Query = new UserQuery();
         parent::__construct($Database, $Query);
        
@@ -64,7 +66,8 @@ class UserDatabase extends DatabaseBase {
 
     * @return    array    The name filtered.
     */
-    public function getName($id) {
+    public function getName ($id)
+    {
         $this->Database->sendQuery($this->Query->getName($id));
         $user = $this->Database->fetchArray();
 
@@ -83,7 +86,8 @@ class UserDatabase extends DatabaseBase {
 
     * @return    string    The user's session id.
     */
-    public function getSession($user) {
+    public function getSession ($user)
+    {
         if (is_numeric($user)) {
             $this->datatabase->sendQuery($this->Query->getSessionFromId($user));
         }
@@ -100,7 +104,8 @@ class UserDatabase extends DatabaseBase {
     
     * @param    string    $username    The username.
     */
-    public function updateSession($user_id, $session = 0) {
+    public function updateSession ($user_id, $session = 0)
+    {
         if (empty($session)) {
             $session = session_id();
         }
@@ -116,7 +121,8 @@ class UserDatabase extends DatabaseBase {
     * @return    bool    TRUE : User already exists.
     *                    FALSE: What about no?
     */
-    public function exists($username) {
+    public function exists ($username)
+    {
         $query = $this->Database->sendQuery($this->Query->exists($username));
 
         if (mysql_fetch_row($query)) {
@@ -135,7 +141,8 @@ class UserDatabase extends DatabaseBase {
     * @return    bool    TRUE : The email address already exists.
     *                    FALSE: I'MA 'FIRING MAH LAZOR
     */
-    public function emailExists($email) {
+    public function emailExists ($email)
+    {
         $query = $this->Database->sendQuery($this->Query->emailExists($email));
 
         if (mysql_fetch_row($query)) {
@@ -151,7 +158,8 @@ class UserDatabase extends DatabaseBase {
 
     * @param    int    $user_id    The user id.
     */
-    public function getLulzCode($user_id) {
+    public function getLulzCode ($user_id)
+    {
         $query = $this->Database->sendQuery($this->Query->getLulzCode($user_id));
         $state = mysql_fetch_row($query);
 
@@ -164,7 +172,8 @@ class UserDatabase extends DatabaseBase {
     * @param    int     $user_id    The user id.
     * @param    bool    $state      The state.
     */
-    public function setLulzCode($user_id, $state) {
+    public function setLulzCode ($user_id, $state)
+    {
         $this->Database->sendQuery($this->Query->setLulzCode($user_id, $state));
     }
 
@@ -175,7 +184,8 @@ class UserDatabase extends DatabaseBase {
 
     * @return    array
     */
-    public function getInfos($user_id) {
+    public function getInfos ($user_id)
+    {
         $this->Database->sendQuery($this->Query->getInfos($user_id));
 
         return $this->Database->fetchArray();

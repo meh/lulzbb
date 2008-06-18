@@ -28,7 +28,8 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 
 * @author cHoBi
 */
-class ErrorMessageTemplate extends Template {
+class ErrorMessageTemplate extends Template
+{
     private $type;
     private $message;
 
@@ -37,7 +38,8 @@ class ErrorMessageTemplate extends Template {
 
     * @param    string    $message    The message to insert in the template.
     */
-    public function __construct($message) {
+    public function __construct ($message)
+    {
         parent::__construct('misc/error-message.tpl');
 
         $this->message = $message;
@@ -49,7 +51,8 @@ class ErrorMessageTemplate extends Template {
     * Add the message to the template.
     * @access private
     */
-    private function __parse() {
+    private function __parse ()
+    {
         $text = $this->output();
 
         $text = preg_replace(

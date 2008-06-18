@@ -28,7 +28,8 @@ require_once(SOURCE_PATH.'/send/send.class.php');
 
 * @author cHoBi
 */
-class Login extends Send {
+class Login extends Send
+{
     /**
     * Do the login.
 
@@ -37,7 +38,8 @@ class Login extends Send {
 
     * @exception    Error on the database.
     */
-    public function __construct($username, $password) {
+    public function __construct ($username, $password)
+    {
         parent::__construct();
 
         if ($this->connected) {
@@ -62,7 +64,8 @@ class Login extends Send {
 
     * @return    string    The information about the login.
     */
-    protected function __send($data) {
+    protected function __send ($data)
+    {
         $username = $data['username'];
         $password = $data['password'];
     
@@ -86,7 +89,8 @@ class Login extends Send {
 
     * @access private
     */
-    private function __login($username, $password) {
+    private function __login ($username, $password)
+    {
         global $Database;
         global $User;
     

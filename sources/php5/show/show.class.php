@@ -29,7 +29,8 @@ require_once(SOURCE_PATH.'/show/misc/informative-message.show.php');
 
 * @author cHoBi
 */
-abstract class Show {
+abstract class Show
+{
     protected $id;
     protected $data;
     protected $output;
@@ -39,7 +40,8 @@ abstract class Show {
     /**
     * Initialize the connection and get the magic token.
     */
-    public function __construct() {
+    public function __construct ()
+    {
         if (isset($_SESSION[SESSION]['user'])) {
             $this->connected = true;
         }
@@ -54,14 +56,15 @@ abstract class Show {
     * Used to update the content being showed.
     * You MUST redeclare this.
     */
-    protected abstract function __update();
+    protected abstract function __update ();
 
     /**
     * Returns the output.
 
     * @return    string
     */
-    public function output() {
+    public function output ()
+    {
         return $this->output;
     }
 }

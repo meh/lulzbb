@@ -29,7 +29,8 @@
 
 * @return    bool    True it exists, false it doesn't.
 */
-function sessionFileExists($relativePath = './') {
+function sessionFileExists($relativePath = './')
+{
     if (is_file($relativePath.'.session.lol')) {
         return true;
     }
@@ -45,7 +46,8 @@ function sessionFileExists($relativePath = './') {
 
 * @return    string    Session name.
 */
-function createSessionFile($relativePath = './') {
+function createSessionFile($relativePath = './')
+{
     $session = 'Misc-'.md5(rand().rand().time());
 
     $file = fopen('.session.lol', 'w');
@@ -62,7 +64,8 @@ function createSessionFile($relativePath = './') {
 
 * @return    string    Session name.
 */
-function getSessionConstant($relativePath = './') {
+function getSessionConstant($relativePath = './')
+{
     $session = file_get_contents($relativePath.'.session.lol');
     return $session;
 }
@@ -70,7 +73,8 @@ function getSessionConstant($relativePath = './') {
 /**
 * Sets cookie parameters.
 */
-function setSessionCookieParams() {
+function setSessionCookieParams()
+{
     $year = 60*60*24*365;
 
     if (VERSION == 4) {
@@ -84,7 +88,8 @@ function setSessionCookieParams() {
 /**
 *
 */
-function deleteSessionCookie() {
+function deleteSessionCookie()
+{
     $year = 60*60*24*365;
     session_set_cookie_params(-$year);
 }
@@ -94,7 +99,8 @@ function deleteSessionCookie() {
 
 * @param    string    $relativePath    The relative path where to read the session constant.
 */
-function startSession($relativePath = './') {
+function startSession($relativePath = './')
+{
     define('SESSION', getSessionConstant($relativePath));
 
     if ($relativePath == './') {
@@ -109,7 +115,8 @@ function startSession($relativePath = './') {
 
 * @param    string    $id    The session id.
 */
-function changeSession($id) {
+function changeSession($id)
+{
     session_write_close();
     session_id($id);
     setSessionCookieParams();
@@ -119,7 +126,8 @@ function changeSession($id) {
 /**
 * Destroys the session.
 */
-function destroySession() {
+function destroySession()
+{
     $year = 60*60*24*365;
 
     deleteSessionCookie();
@@ -133,7 +141,8 @@ function destroySession() {
 /**
 * Initiates session data.
 */
-function initSessionData() {
+function initSessionData()
+{
     global $Config;
     global $Filter;
 

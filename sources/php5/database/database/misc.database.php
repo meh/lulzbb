@@ -29,13 +29,15 @@ require_once(SOURCE_PATH.'/database/query/misc.query.php');
 
 * @author cHoBi
 */
-class MiscDatabase extends DatabaseBase {
+class MiscDatabase extends DatabaseBase
+{
     /**
     * Oh noes, still the same >:3 GET IN THE CAR!
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($Database) {
+    public function __construct ($Database)
+    {
         $query = new MiscQuery();
         parent::__construct($Database, $query); 
     }
@@ -45,7 +47,8 @@ class MiscDatabase extends DatabaseBase {
     
     * @return    int    Last topic id.
     */
-    public function getLastTopic() {
+    public function getLastTopic ()
+    {
         $query = $this->Database->sendQuery($this->Query->getLastTopic());
 
         $last_topic_id = mysql_fetch_row($query);

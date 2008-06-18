@@ -25,7 +25,8 @@
 /**
 * Anti DDoS main function.
 */
-function antiDoS() {
+function antiDoS ()
+{
     global $Config;
 
     if (!isset($_COOKIE['PHPSESSID'])) {
@@ -62,7 +63,8 @@ function antiDoS() {
 
 * @param    string    $ip    The ip address to check.
 */
-function isBanned($ip) {
+function isBanned ($ip)
+{
     if (isset($_SESSION[SESSION]['anti-dos'][$ip])) {
         return true;
     }
@@ -74,7 +76,8 @@ function isBanned($ip) {
 /**
 * Loads the blacklist if the file is changed.
 */
-function loadBlacklist() {
+function loadBlacklist ()
+{
     $path  = ROOT_PATH.'/config/ip_blacklist.php';
     $ctime = filectime($path);
 
@@ -95,7 +98,8 @@ function loadBlacklist() {
 
 * @param    string    $ip    The ip address to add.
 */
-function banIp($ip) {
+function banIp ($ip)
+{
     $path = ROOT_PATH.'/config/ip_blacklist.php';
     $data = file($path);
 
@@ -115,7 +119,8 @@ function banIp($ip) {
 /**
 * Cleans the blacklisted ips.
 */
-function cleanBlacklist() {
+function cleanBlacklist ()
+{
     $path = ROOT_PATH.'/config/ip_blacklist.php';
     $data = file($path);
 

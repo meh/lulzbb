@@ -28,13 +28,15 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 
 * @author cHoBi
 */
-class NavigatorTemplate extends Template {
+class NavigatorTemplate extends Template
+{
     /**
     * Initialize the data.
     
     * @param    array    $data    The elements.
     */
-    public function __construct($data) {
+    public function __construct ($data)
+    {
         parent::__construct('forum/navigator.tpl');
         
         $this->data['elements'] = $data;
@@ -48,7 +50,8 @@ class NavigatorTemplate extends Template {
 
     * @access private
     */
-    private function __parse() {
+    private function __parse ()
+    {
         $text = $this->output();
         $text = $this->__loops($text);
 
@@ -80,7 +83,8 @@ class NavigatorTemplate extends Template {
     * @return    string    The parsed text.
     * @access private
     */
-    private function __loops($text) {
+    private function __loops ($text)
+    {
         if (preg_match_all(
                 '|<URL>(.+?)?</URL>|ims',
                 $text,
@@ -120,7 +124,8 @@ class NavigatorTemplate extends Template {
     * @return    string    The element parsed.
     * @access private
     */
-    private function __element($mode, $element) {
+    private function __element ($mode, $element)
+    {
         if ($mode == 'url') {
             $text = $this->data['template']['url'];
 

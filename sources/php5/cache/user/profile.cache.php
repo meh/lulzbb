@@ -28,7 +28,8 @@ require_once(SOURCE_PATH.'/cache/cache.class.php');
 
 * @author cHoBi
 */
-class UserProfileCache extends Cache {
+class UserProfileCache extends Cache
+{
     private $user_id;
 
     /**
@@ -36,7 +37,8 @@ class UserProfileCache extends Cache {
 
     * @param    int    $section_id    The section id.
     */
-    public function __construct($user_id) {
+    public function __construct ($user_id)
+    {
         $this->user_id = $user_id;
 
         $file = "users/profile-{$user_id}.html";

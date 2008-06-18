@@ -30,7 +30,8 @@ require_once(SOURCE_PATH.'/database/database.class.php');
 
 * @author cHoBi
 */
-class SectionShow extends Show {
+class SectionShow extends Show
+{
     private $section_id;
     private $page;
 
@@ -39,7 +40,8 @@ class SectionShow extends Show {
 
     * @param    int    $section_id    The section id.
     */
-    public function __construct($section_id, $page) {
+    public function __construct ($section_id, $page)
+    {
         parent::__construct();
         
         $this->section_id = (int) $section_id;
@@ -50,7 +52,8 @@ class SectionShow extends Show {
     /**
     * Get the data from the db and create the template.
     */
-    protected function __update() {
+    protected function __update ()
+    {
         global $Database;
 
         try {

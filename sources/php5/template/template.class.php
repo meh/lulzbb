@@ -26,7 +26,8 @@
 
 * @author cHoBi
 */
-class Template {
+class Template
+{
     protected $data;
     protected $template;
     protected $plain_text;
@@ -40,7 +41,8 @@ class Template {
 
     * @param    string    $file    The relative path of the template.
     */
-    public function __construct($file) {
+    public function __construct ($file)
+    {
         global $Config;
         
         $this->template['language']   = $Config->get('language');
@@ -74,7 +76,8 @@ class Template {
     * You should call this in the constructor of the extended class.
     * @access private
     */
-    private function __parse() {
+    private function __parse ()
+    {
         global $User;
 
         $text = $this->plain_text;
@@ -129,7 +132,8 @@ class Template {
     * @return     mixed    string: The template part if it exists.
     *                      bool: false if the template part doesn't exist.
     */
-    public function getTemplatePart($part) {
+    public function getTemplatePart ($part)
+    {
         if (isset($this->template[$part])) {
             return $this->template[$part];
         }
@@ -143,7 +147,8 @@ class Template {
 
     * @return    string
     */
-    public function output() {
+    public function output ()
+    {
         return $this->parsed;
     }
 }

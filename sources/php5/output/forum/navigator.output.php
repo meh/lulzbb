@@ -30,7 +30,8 @@ require_once(SOURCE_PATH.'/show/forum/navigator.show.php');
 
 * @author cHoBi
 */
-class Navigator extends Output {
+class Navigator extends Output
+{
     /**
     * Creates the navigator and gets the cache if it exists.
 
@@ -38,7 +39,8 @@ class Navigator extends Output {
     * @param    int       $id        The section or topic id.
     * @param    int       $option    The possible option for the navigator.
     */
-    public function __construct($type, $id, $option = '') {
+    public function __construct ($type, $id, $option = '')
+    {
         parent::__construct();
         $id = (int) $id;
 

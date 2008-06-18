@@ -31,7 +31,8 @@
 * @param    string    $title       The section's title.
 * @param    string    $subtitle    The section's subtitle.
 */
-function add_section($group_id, $weight, $title, $subtitle = '') {
+function add_section ($group_id, $weight, $title, $subtitle = '')
+{
     if (!isset($group_id) or !isset($weight) or empty($title)) {
         die('Not enough parameters.');
     }

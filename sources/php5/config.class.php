@@ -26,13 +26,15 @@
 
 * @author cHoBi
 */
-class Config {
+class Config
+{
     private $config;
     
     /**
     * Reads the configuration file and initializes the array with the values.
     */
-    public function __construct() {
+    public function __construct ()
+    {
         $data = file(ROOT_PATH.'/config/configuration.php');
 
         foreach ($data as $line) {
@@ -58,7 +60,8 @@ class Config {
 
     * @return    mixed    The value.
     */
-    public function get($Config) {
+    public function get ($Config)
+    {
         if (isset($this->config)) {
             return $this->config[$Config];
         }
@@ -72,7 +75,8 @@ class Config {
 
     * @todo Rewrite this because it's from the 0.1.0 Misc.
     */
-    public function setTemplate($templateName) {
+    public function setTemplate ($templateName)
+    {
         $template = ROOT_PATH.'/templates/'.$templateName; // New template name
         $oldTemplate = $this->getTemplate(); // Old template name
 

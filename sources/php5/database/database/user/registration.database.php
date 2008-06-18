@@ -29,13 +29,15 @@ require_once(SOURCE_PATH.'/database/query/user/registration.query.php');
 
 * @author cHoBi
 */
-class RegistrationDatabase extends DatabaseBase {
+class RegistrationDatabase extends DatabaseBase
+{
     /**
-    * Girls are evil, remember 
+    * Girls are evil, remember it.
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($Database) {
+    public function __construct ($Database)
+    {
         $query = new RegistrationQuery();
         parent::__construct($Database, $query);
     }
@@ -47,7 +49,8 @@ class RegistrationDatabase extends DatabaseBase {
     * @param    string    $password    The password.
     * @param    string    $email       The email address.
     */
-    public function exec($username, $password, $email) {
+    public function exec ($username, $password, $email)
+    {
         $this->Database->sendQuery($this->Query->exec($username, $password, $email));
         $this->Database->user->group->addUser($username, 'Unconfirmed');
     } 

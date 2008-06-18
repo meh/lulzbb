@@ -29,7 +29,8 @@ require_once(SOURCE_PATH.'/template/forms/send-post.template.php');
 
 * @author cHoBi
 */
-class TopicTemplate extends Template {
+class TopicTemplate extends Template
+{
     private $topic_id;
     private $post_id;
     private $page;
@@ -45,7 +46,8 @@ class TopicTemplate extends Template {
     * @param    int       $post_id     The post id.
     * @param    array     $posts       The posts data.
     */
-    public function __construct($topic_id, $page, $post_id, $posts) {
+    public function __construct ($topic_id, $page, $post_id, $posts)
+    {
         parent::__construct('forum/topic.tpl');
         global $Database;
 
@@ -63,7 +65,8 @@ class TopicTemplate extends Template {
     * Parse the template and get loops.
     * @access private
     */
-    private function __parse() {
+    private function __parse ()
+    {
         $text = $this->output();
         $text = $this->__loops($text);
 
@@ -103,7 +106,8 @@ class TopicTemplate extends Template {
     * Create the loops.
     * @access private
     */
-    private function __loops($text) {
+    private function __loops ($text)
+    {
         if (preg_match_all(
                 '|<Post>(.+?)?</Post>|ims',
                 $text,
@@ -140,7 +144,8 @@ class TopicTemplate extends Template {
     * Parse the post
     * @access private
     */
-    private function __post($post, $type = '') {
+    private function __post ($post, $type = '')
+    {
         $text = $this->data['template']['post'];
         
         if ($type == 'last') {
@@ -192,7 +197,8 @@ class TopicTemplate extends Template {
     * Parse the signature.
     * @access private
     */
-    private function __signature($signature) {
+    private function __signature ($signature)
+    {
         $text = $this->data['template']['signature'];
         
         if (empty($signature)) {
@@ -213,7 +219,8 @@ class TopicTemplate extends Template {
     * Common tags.
     * @access private
     */
-    private function __common($text) {
+    private function __common ($text)
+    {
         $text = preg_replace(
             '|<%TOPIC-ID%>|i',
             $this->topic_id,

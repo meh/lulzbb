@@ -28,7 +28,8 @@ require_once(SOURCE_PATH.'/send/send.class.php');
 
 * @author cHoBi
 */
-class Topic extends Send {
+class Topic extends Send
+{
     /**
     * Initialize the data and send it.
 
@@ -39,7 +40,8 @@ class Topic extends Send {
     * @param    string    $subtitle    The topic subtitle.
     * @param    string    $content     The topic content.
     */
-    public function __construct($magic, $parent, $type, $title, $subtitle, $content) {
+    public function __construct ($magic, $parent, $type, $title, $subtitle, $content)
+    {
         parent::__construct();
         
         if ($this->connected) {
@@ -62,7 +64,8 @@ class Topic extends Send {
 
     * @param    array    $data    (magic, parent, type, title, subtitle, content)
     */
-    protected function __send($data) {
+    protected function __send ($data)
+    {
         global $Database;
         $magic    = $data['magic'];
         $parent   = $data['parent'];
@@ -122,7 +125,8 @@ class Topic extends Send {
     * @return    string    parent | title | content | ok
     * @access private
     */
-    private function __checkData($parent, $title, $subtitle, $content) {
+    private function __checkData ($parent, $title, $subtitle, $content)
+    {
         global $Config;
         $titleMinLength   = $Config->get('titleMinLength');
         $contentMinLength = $Config->get('contentMinLength');

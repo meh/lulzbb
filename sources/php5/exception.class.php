@@ -27,13 +27,15 @@ require_once(SOURCE_PATH.'/show/misc/error-message.show.php');
 
 * @author cHoBi
 */
-class lulzException extends Exception {
+class lulzException extends Exception
+{
     /**
     * Creates an exception and initialize the message with the type.
 
     * @param    string    $type    The exception type.
     */
-    public function __construct($type) {
+    public function __construct ($type)
+    {
         switch ($type) {
             case 'database_connection':
             $message  = 'The database connection failed :(<br/><br/>';
@@ -57,7 +59,7 @@ class lulzException extends Exception {
             break;
         }
                     
-        $message = new ErrorMessage($message);
+        $message = new ErrorMessage ($message);
         parent::__construct($message->output(), $code);
     }
 }

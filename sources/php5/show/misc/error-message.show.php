@@ -29,7 +29,8 @@ require_once(SOURCE_PATH.'/template/misc/error-message.template.php');
 
 * @author cHoBi
 */
-class ErrorMessage extends Show {
+class ErrorMessage extends Show
+{
     private $message;
     private $type;
 
@@ -38,7 +39,8 @@ class ErrorMessage extends Show {
 
     * @param    string    $message    The message that will be shown.
     */
-    public function __construct($message) {
+    public function __construct ($message)
+    {
         parent::__construct();
 
         $this->message = $message;
@@ -49,7 +51,8 @@ class ErrorMessage extends Show {
     /**
     * Create the template to be outputted with the message in it.
     */
-    protected function __update() {
+    protected function __update ()
+    {
         $message = $this->message;
 
         $template = new ErrorMessageTemplate($message);

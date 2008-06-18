@@ -29,11 +29,13 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 * @todo Admin, moderation etc menus.
 * @author cHoBi
 */
-class Menu extends Show {
+class Menu extends Show
+{
     /**
     * Create the menu.
     */
-    public function __construct() {
+    public function __construct ()
+    {
         parent::__construct();
         $this->__update();
     }
@@ -41,7 +43,8 @@ class Menu extends Show {
     /**
     * Sets the right output if the user is connected or something else.
     */
-    protected function __update() {
+    protected function __update ()
+    {
         if ($this->connected) {
             $output = $this->__user();
         }
@@ -56,7 +59,8 @@ class Menu extends Show {
     * The guest menu.
     * @access private
     */
-    private function __guest() {
+    private function __guest ()
+    {
         $template = new Template('menu/menu.guest.tpl');
         return $template->output();
     }
@@ -65,7 +69,8 @@ class Menu extends Show {
     * The normal user menu.
     * @access private
     */
-    private function __user() {
+    private function __user ()
+    {
         $template = new Template('menu/menu.user.tpl');
         return $template->output();
     }

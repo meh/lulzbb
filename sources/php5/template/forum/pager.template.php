@@ -28,7 +28,8 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 
 * @author cHoBi
 */
-class PagerTemplate extends Template {
+class PagerTemplate extends Template
+{
     private $currentPage;
     private $pagesNumber;
 
@@ -39,7 +40,8 @@ class PagerTemplate extends Template {
     * @param    int       $currentPage    The current page.
     * @param    int       $pagesNumber    The pages number.
     */
-    public function __construct($type, $currentPage, $pagesNumber) {
+    public function __construct ($type, $currentPage, $pagesNumber)
+    {
         parent::__construct("forum/pager/{$type}-pager.tpl");
 
         $this->currentPage = $currentPage;
@@ -51,7 +53,8 @@ class PagerTemplate extends Template {
     /**
     * @access private
     */
-    private function __parse() {
+    private function __parse ()
+    {
         $text = $this->output();
         $text = $this->__loops($text);
 
@@ -87,7 +90,8 @@ class PagerTemplate extends Template {
     /**
     * @access private
     */
-    private function __loops($text) {
+    private function __loops ($text)
+    {
         // Pages
         preg_match(
             '|<Pages>(.*?)</Pages>|ims',
@@ -285,10 +289,9 @@ class PagerTemplate extends Template {
     /**
     * @access private
     */
-    private function __pager($text) {
+    private function __pager ($text)
+    {
         $pager = $text;
-
-
 
         $text = preg_replace(
             '|<%PAGER%>|i',
@@ -302,7 +305,8 @@ class PagerTemplate extends Template {
     /**
     * @access private
     */
-    private function __first() {
+    private function __first ()
+    {
         $text = $this->template['first'];
 
         if ($this->currentPage == 1) {
@@ -329,7 +333,8 @@ class PagerTemplate extends Template {
     /**
     * @access private
     */
-    private function __previous() {
+    private function __previous ()
+    {
         $text = $this->template['previous'];
 
         if ($this->currentPage == 1) {
@@ -356,7 +361,8 @@ class PagerTemplate extends Template {
     /**
     * @access private
     */
-    private function __pages() {
+    private function __pages ()
+    {
         $text = $this->template['pages'];
 
         $pages = '';
@@ -376,7 +382,8 @@ class PagerTemplate extends Template {
     /**
     * @access private
     */
-    private function __page($page) {
+    private function __page ($page)
+    {
         if ($page == $this->currentPage) {
             $text = $this->template['current_page'];
         }
@@ -396,7 +403,8 @@ class PagerTemplate extends Template {
     /**
     * @access private
     */
-    private function __next() {
+    private function __next ()
+    {
         $text = $this->template['next'];
 
         if ($this->currentPage == $this->pagesNumber) {
@@ -423,7 +431,8 @@ class PagerTemplate extends Template {
     /**
     * @access private
     */
-    private function __last() {
+    private function __last ()
+    {
         $text = $this->template['last'];
 
         if ($this->currentPage == $this->pagesNumber) {
@@ -446,5 +455,5 @@ class PagerTemplate extends Template {
 
         return $text;
     }
-
 }
+?>

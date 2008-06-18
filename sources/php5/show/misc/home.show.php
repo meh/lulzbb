@@ -37,7 +37,8 @@ require_once(SOURCE_PATH.'/template/forms/send-topic.template.php');
 
 * @author cHoBi
 */
-class Home extends Show {
+class Home extends Show
+{
     private $file;
 
     /**
@@ -46,7 +47,8 @@ class Home extends Show {
     * @param    string    $file    The file to load inside the home.
     * @param    array     $data    The data that the page needs.
     */
-    public function __construct($file, $data = array()) {
+    public function __construct ($file, $data = array())
+    {
         parent::__construct();
 
         $this->data = $data;
@@ -58,7 +60,8 @@ class Home extends Show {
     /**
     * Initialize the section or the topic when needed.
     */
-    protected function __update() {
+    protected function __update ()
+    {
         switch ($this->file) {
             case 'section':
             $section_id = (int) $this->data['section_id'];

@@ -1,7 +1,7 @@
 <?php
 /**
 * @package PHP5
-* @category Output
+* @category Show
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -21,33 +21,22 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/output/output.class.php');
-require_once(SOURCE_PATH.'/cache/user/profile.cache.php');
-require_once(SOURCE_PATH.'/show/user/profile.show.php');
+require_once(SOURCE_PATH.'/show/show.class.php');
+require_once(SOURCE_PATH.'/template/user/panel/general.panel.template.php');
 
 /**
-* User's profile output class.
+* User's general panel show class.
 
 * @author cHoBi
 */
-class UserProfile extends Output
+class UserGeneralPanelShow extends Show
 {
     /**
-    * Initialize the user profile and output the Show or the Cache.
-
-    * @param    int    $user_id    The user's id.
+    * Gets the user's data and shows it.
     */
-    public function __construct ($user_id)
+    public function __construct ()
     {
-        parent::__construct();
 
-        $cache = new UserProfileCache($user_id);
-        if (!$cache->isCached()) {
-            $template = new UserProfileShow($user_id);
-            $cache->put($template->output());
-        }
-
-        $this->output = $cache->get();
     }
 }
 ?>

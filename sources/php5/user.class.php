@@ -26,7 +26,8 @@
 
 * @author cHoBi
 */
-class User {
+class User
+{
     private $id;
     private $name;
     private $groups;
@@ -39,7 +40,8 @@ class User {
 
     * @param    int    $id    The user id.
     */
-    public function __construct($id) {
+    public function __construct ($id)
+    {
         global $Database;
         $Database->user->updateSession($id);
 
@@ -56,7 +58,8 @@ class User {
 
     * @return    int    The user id.
     */
-    public function getId() {
+    public function getId ()
+    {
         return $this->id;
     }
 
@@ -67,7 +70,8 @@ class User {
 
     * @return    mixed    The user name.
     */
-    public function getName($type) {
+    public function getName ($type)
+    {
         switch ($type) {
             case 'RAW':
             return $this->name['RAW'];
@@ -94,7 +98,8 @@ class User {
 
     * @return    bool    True if it's in the group, false if it's not.
     */
-    public function isIn($groupName) {
+    public function isIn ($groupName)
+    {
         $groupName = strtolower($groupName);
 
         foreach ($this->groups as $group) {
@@ -111,7 +116,8 @@ class User {
 
     * @param    string    $groupName    The group's name.
     */
-    public function addTo($groupName) {
+    public function addTo ($groupName)
+    {
         global $Database;
 
         try {
@@ -129,7 +135,8 @@ class User {
 
     * @param    string    $groupName    The group's name.
     */
-    public function removeFrom($groupName) {
+    public function removeFrom ($groupName)
+    {
         global $Database;
 
         foreach ($this->groups as $n => $group) {
@@ -154,7 +161,8 @@ class User {
 
     * @return    bool
     */
-    public function getLulzCode() {
+    public function getLulzCode ()
+    {
         return $this->lulzcode;
     }
 
@@ -163,7 +171,8 @@ class User {
 
     * @param    bool    $state    The lulzcode status.
     */
-    public function setLulzCode($state) {
+    public function setLulzCode ($state)
+    {
         global $Database;
         $Database->user->setLulzCode($this->id, $state);
 

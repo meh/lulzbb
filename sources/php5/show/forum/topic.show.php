@@ -30,7 +30,8 @@ require_once(SOURCE_PATH.'/database/database.class.php');
 
 * @author cHoBi
 */
-class TopicShow extends Show {
+class TopicShow extends Show
+{
     private $parent;
     private $topic_id;
     private $post_id;
@@ -43,7 +44,8 @@ class TopicShow extends Show {
     * @param    int    $topic_id    The topic id.
     * @param    int    $post_id     The post id.
     */
-    public function __construct($parent, $topic_id, $page, $post_id) {
+    public function __construct ($parent, $topic_id, $page, $post_id)
+    {
         parent::__construct();
 
         $this->parent    = (int) $parent;
@@ -57,7 +59,8 @@ class TopicShow extends Show {
     /**
     * Get the posts and show error in case they happen.
     */
-    protected function __update() {
+    protected function __update ()
+    {
         global $Database;
 
         try {

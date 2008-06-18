@@ -26,15 +26,17 @@
 
 * @author cHoBi
 */
-class Filter {
+class Filter
+{
     private $magic_gpc;
 
     /**
     * Initialize the magic_gpc, we have to know if it's on or not.
     */
-    public function __construct() {
+    public function __construct ()
+    {
         $this->magic_gpc = get_magic_quotes_gpc();
-   }
+    }
 
     /**
     * HTML filtering, htmlentities.
@@ -43,7 +45,8 @@ class Filter {
 
     * @return    string    The filtered string.
     */
-    public function HTML($string) {
+    public function HTML ($string)
+    {
         if ($this->magic_gpc) {
             $string = Filter::SQLclean($string);
         }
@@ -60,7 +63,8 @@ class Filter {
 
     * @return    string    The filtered string.
     */
-    public function SQL($string) {
+    public function SQL ($string)
+    {
         if ($this->magic_gpc) {
            $string = Filter::SQLclean($string);
         }
@@ -76,7 +80,8 @@ class Filter {
 
     * @return    string    The filtered string.
     */
-    public function POST($string) {
+    public function POST ($string)
+    {
         if ($this->magic_gpc) {
             $string = Filter::SQLclean($string);
         }
@@ -92,7 +97,8 @@ class Filter {
 
     * @return    string    The cleaned string.
     */
-    public function HTMLclean($string) {
+    public function HTMLclean ($string)
+    {
         $string = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
         return $string;
     }
@@ -104,7 +110,8 @@ class Filter {
 
     * @return    string    The cleaned string.
     */
-    public function SQLclean($string) {
+    public function SQLclean ($string)
+    {
         $string = stripslashes($string);
         return $string;
     }
@@ -116,7 +123,8 @@ class Filter {
 
     * @return    string    The cleaned string.
     */
-    public function POSTclean($string) {
+    public function POSTclean ($string)
+    {
         $string = rawurldecode($string);
         return $string;
     }
@@ -128,7 +136,8 @@ class Filter {
 
     * @return    string    The filtered string.
     */
-    public function HTML_SQLclean($string) {
+    public function HTML_SQLclean ($string)
+    {
         $string = Filter::HTML(Filter::SQLclean($string));
         return $string;
     }
@@ -140,7 +149,8 @@ class Filter {
 
     * @return    string    The filtered string.
     */
-    public function HTML_POSTclean($string) {
+    public function HTML_POSTclean ($string)
+    {
         $string = Filter::HTML(Filter::POSTclean($string));
         return $string;
     }
@@ -152,7 +162,8 @@ class Filter {
 
     * @return    string    The filtered string.
     */
-    public function POST_SQLclean($string) {
+    public function POST_SQLclean ($string)
+    {
         $string = Filter::POST(Filter::SQLclean($string));
         return $string;
     }
@@ -164,7 +175,8 @@ class Filter {
 
     * @return    string    The filtered string.
     */
-    public function SQL_HTMLclean($string) {
+    public function SQL_HTMLclean ($string)
+    {
         $string = Filter::SQL(Filter::HTMLclean($string));
         return $string;
     }
@@ -176,7 +188,8 @@ class Filter {
 
     * @return    string    The crypted string.
     */
-    public function crypt($string) {
+    public function crypt ($string)
+    {
         $string = hash('sha512', hash('sha512', $string));
         return $string;
     }

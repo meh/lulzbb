@@ -30,7 +30,8 @@ require_once(SOURCE_PATH.'/database/query/section.query.php');
 
 * @author cHoBi
 */
-class SectionDatabase extends DatabaseBase {
+class SectionDatabase extends DatabaseBase
+{
     public $group;
 
     /**
@@ -38,7 +39,8 @@ class SectionDatabase extends DatabaseBase {
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($Database) {
+    public function __construct ($Database)
+    {
         $query = new SectionQuery();
         parent::__construct($Database, $query);
 
@@ -53,7 +55,8 @@ class SectionDatabase extends DatabaseBase {
     * @param    string    $title       The section's title.
     * @param    string    $subtitle    The section's subtitle.
     */
-    public function add($group_id, $weight, $title, $subtitle) {
+    public function add ($group_id, $weight, $title, $subtitle)
+    {
         if (empty($weight)) {
             $weight = $this->group->heaviest($group_id)+1;
         }
@@ -68,7 +71,8 @@ class SectionDatabase extends DatabaseBase {
 
     * @return    bool    True if it exists, false if not.
     */
-    public function exists($section_id) {
+    public function exists ($section_id)
+    {
         if ($section_id == 0) {
             return true;
         }
@@ -91,7 +95,8 @@ class SectionDatabase extends DatabaseBase {
 
     * @return    int    The number of pages.
     */
-    public function getPages($section_id) {
+    public function getPages ($section_id)
+    {
         $query = $this->Database->sendQuery($this->Query->getPages($section_id));
         $pages = mysql_fetch_row($query);
 
@@ -112,7 +117,8 @@ class SectionDatabase extends DatabaseBase {
 
     * @return    array    (id, name)
     */
-    public function getInfo($section_id) {
+    public function getInfo ($section_id)
+    {
         $name = $this->getTitle($section_id);
 
         return array('id' => (int) $section_id, 'name' => $name);
@@ -125,7 +131,8 @@ class SectionDatabase extends DatabaseBase {
 
     * @return    int    The parent id.
     */
-    public function getParent($section_id) {
+    public function getParent ($section_id)
+    {
         $this->Database->sendQuery($this->Query->getParent($section_id));
         $parent = $this->Database->fetchArray();
 
@@ -139,7 +146,8 @@ class SectionDatabase extends DatabaseBase {
     
     * @return    int    The section's parent.
     */
-    public function getParentInfo($section_id) {
+    public function getParentInfo ($section_id)
+    {
         $parent = $this->getParent($section_id);
 
         return array(
@@ -155,7 +163,8 @@ class SectionDatabase extends DatabaseBase {
 
     * @return    array    The parents' id.
     */
-    public function getParents($section_id) {
+    public function getParents ($section_id)
+    {
         $parents = array();
 
         $parent = $this->getParent($section_id);
@@ -181,7 +190,8 @@ class SectionDatabase extends DatabaseBase {
 
     * @return    array    A parent in each element.
     */
-    public function getNavigator($section_id, $option) {
+    public function getNavigator ($section_id, $option)
+    {
         global $Config;
         global $Filter;
 
@@ -222,7 +232,8 @@ class SectionDatabase extends DatabaseBase {
     
     * @return    string    The section title. (RAW, HTML, POST)
     */
-    public function getTitle($section_id) {
+    public function getTitle ($section_id)
+    {
         global $Config;
         global $Filter;
 
@@ -252,7 +263,8 @@ class SectionDatabase extends DatabaseBase {
     
     * @return    array    A section in each element :D
     */
-    public function getGroups($section_id) {
+    public function getGroups ($section_id)
+    {
         $this->Database->sendQuery($this->Query->getGroups($section_id));
 
         $groups = array();
@@ -270,7 +282,8 @@ class SectionDatabase extends DatabaseBase {
     
     * @return    array    A topic in each element >:3
     */
-    public function getTopics($section_id, $page) {
+    public function getTopics ($section_id, $page)
+    {
         $this->Database->sendQuery($this->Query->getTopics($section_id, $page));
 
         $topics = array();
@@ -286,7 +299,8 @@ class SectionDatabase extends DatabaseBase {
     
     * @param    int    $section_id    The section id.
     */
-    public function increaseTopicsCount($section_id) {
+    public function increaseTopicsCount ($section_id)
+    {
         $this->Database->sendQuery($this->Query->increaseTopicsCount($section_id));
 
         foreach ($this->getParents($section_id) as $section) {
@@ -303,7 +317,8 @@ class SectionDatabase extends DatabaseBase {
     
     * @param    int    $section_id    The section id.
     */
-    public function increasePostsCount($section_id) {
+    public function increasePostsCount ($section_id)
+    {
         $this->Database->sendQuery($this->Query->increasePostsCount($section_id));
 
         foreach ($this->getParents($section_id) as $section) {
@@ -322,7 +337,8 @@ class SectionDatabase extends DatabaseBase {
     
     * @return    array    (topic_id, topic_title, user_id, user_name)
     */
-    public function getLastTopic($section_id) {
+    public function getLastTopic ($section_id)
+    {
         $this->Database->sendQuery($this->Query->getLastTopic($section_id));
         $last = $this->Database->fetchArray();
 
@@ -341,7 +357,8 @@ class SectionDatabase extends DatabaseBase {
     
     * @return    array    (post_id, post_time, user_id, user_name)
     */
-    public function getLastPost($section_id) {
+    public function getLastPost ($section_id)
+    {
         $topic = $this->getLastTopic($section_id);
         $post  = $this->Database->topic->getLastPost($topic['topic_id']);
 
@@ -355,7 +372,8 @@ class SectionDatabase extends DatabaseBase {
     
     * @param    array    (topic_id, topic_title, post_id, post_time, user_id, user_name)
     */
-    public function getLast($section_id) {
+    public function getLast ($section_id)
+    {
         $lastTopic = $this->getLastTopic($section_id);
         $lastPost  = $this->getLastPost($section_id);
 
@@ -374,7 +392,8 @@ class SectionDatabase extends DatabaseBase {
     
     * @param    int    $section_id    The section id.
     */
-    public function updateLastInfo($section_id) {
+    public function updateLastInfo ($section_id)
+    {
         $last = $this->getLast($section_id);
 
         $this->Database->sendQuery($this->Query->updateLastInfo(

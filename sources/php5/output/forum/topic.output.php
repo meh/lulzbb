@@ -31,14 +31,16 @@ require_once(SOURCE_PATH.'/database/database.class.php');
 
 * @author cHoBi
 */
-class Topic extends Output {
+class Topic extends Output
+{
     /**
     * Get the cache or the data from the db.
 
     * @param    int    $topic_id    The topic id.
     * @param    int    $post_id     The post id.
     */
-    public function __construct($topic_id, $page, $post_id) {
+    public function __construct ($topic_id, $page, $post_id)
+    {
         if ($topic_id < 1) {
             die('LOLFAIL');
         }
@@ -84,7 +86,8 @@ class Topic extends Output {
     * Get the send post form.
     * @access private
     */
-    private function __formPost($output, $topic_id, $topic_title) {
+    private function __formPost ($output, $topic_id, $topic_title)
+    {
         if ($this->connected) {
             $form = new PostFormTemplate(
                 $this->magic,
@@ -112,7 +115,8 @@ class Topic extends Output {
     * @todo THIS IS FUCKING UGLY, think about something better.
     * @access private
     */
-    private function __getPages($topic_id) {
+    private function __getPages ($topic_id)
+    {
         global $Database;
         $path = checkDir(ROOT_PATH."/.cache/misc/pages.topic.{$topic_id}.txt");
 

@@ -28,13 +28,15 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 
 * @author cHoBi
 */
-class PageTemplate extends Template {
+class PageTemplate extends Template
+{
     /**
     * Sets the file to get and parse it.
 
     * @param    string    $file    The file to get.
     */
-    public function __construct($file) {
+    public function __construct ($file)
+    {
         parent::__construct('misc/page.tpl');
 
         $file = preg_replace('|\.+/+|', '', $file);
@@ -47,7 +49,8 @@ class PageTemplate extends Template {
     * Puts the gotten page into the template variable.
     * @access private
     */
-    private function __parse() {
+    private function __parse ()
+    {
         $text = $this->output();
     
         $text = preg_replace(

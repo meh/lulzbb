@@ -29,11 +29,13 @@ require_once(SOURCE_PATH.'/template/user/profile.template.php');
 
 * @author cHoBi
 */
-class UserProfileShow extends Show {
+class UserProfileShow extends Show
+{
     /**
     * Gets the data from the user.
     */
-    public function __construct($user_id) {
+    public function __construct ($user_id)
+    {
         $this->id = $user_id;
 
         $this->__update();
@@ -42,7 +44,8 @@ class UserProfileShow extends Show {
     /**
     * Show the profile.
     */
-    protected function __update() {
+    protected function __update ()
+    {
         global $Database;
         $template = new UserProfileTemplate($Database->user->getInfos($this->id));
         

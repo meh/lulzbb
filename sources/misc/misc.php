@@ -27,7 +27,8 @@
 
 * @return    string    Time and queries used for the generation of the page.
 */
-function stats() {
+function stats ()
+{
     global $queries;
     global $start;
 

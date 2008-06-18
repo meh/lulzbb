@@ -28,7 +28,8 @@ require_once(SOURCE_PATH.'/cache/cache.class.php');
 
 * @author cHoBi
 */
-class NavigatorCache extends Cache {
+class NavigatorCache extends Cache
+{
     private $type;
 
     /**
@@ -42,7 +43,8 @@ class NavigatorCache extends Cache {
     * @param    string    $type    The navigator type, section or topic.
     * @param    int       $id      The id of the section or topic.
     */
-    public function __construct($type, $id) {
+    public function __construct ($type, $id)
+    {
         $this->type = $type;
 
         $file = glob(ROOT_PATH."/.cache/navigator/{$type}.*-{$id}.html");
@@ -61,7 +63,8 @@ class NavigatorCache extends Cache {
 
     * @param    array    $elements    The $navigator->getElementsId() result.
     */
-    public function setNavigator($elements) {
+    public function setNavigator ($elements)
+    {
         $id = "{$this->type}.";
         foreach ($elements as $n => $element) {
             $id .= "{$element}-";

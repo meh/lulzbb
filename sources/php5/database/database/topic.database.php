@@ -30,7 +30,8 @@ require_once(SOURCE_PATH.'/database/query/topic.query.php');
 
 * @author cHoBi
 */
-class TopicDatabase extends DatabaseBase {
+class TopicDatabase extends DatabaseBase
+{
     public $post;
 
     /**
@@ -38,7 +39,8 @@ class TopicDatabase extends DatabaseBase {
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($Database) {
+    public function __construct ($Database)
+    {
         $query = new TopicQuery();
         parent::__construct($Database, $query);
 
@@ -52,7 +54,8 @@ class TopicDatabase extends DatabaseBase {
 
     * @return    bool    True if it exists, false if not.
     */
-    public function exists($topic_id) {
+    public function exists ($topic_id)
+    {
         $this->Database->sendQuery($this->Query->exists($topic_id));
 
         if ($this->Database->fetchArray()) {
@@ -70,7 +73,8 @@ class TopicDatabase extends DatabaseBase {
 
     * @return    array    The topic's infos.
     */
-    public function getInfos($topic_id) {
+    public function getInfos ($topic_id)
+    {
         $this->Database->sendQuery($this->Query->getInfos($topic_id));
         $infos = $this->Database->fetchArray();
 
@@ -85,7 +89,8 @@ class TopicDatabase extends DatabaseBase {
 
     * @return    int    The page's number.
     */
-    public function getPage($topic_id, $section_id = 0) {
+    public function getPage ($topic_id, $section_id = 0)
+    {
         global $Config;
 
         $section_id = (int) (!empty($section_id)
@@ -108,7 +113,8 @@ class TopicDatabase extends DatabaseBase {
 
     * @return    string    The last post timestamp.
     */
-    public function getLastPostTime($topic_id) {
+    public function getLastPostTime ($topic_id)
+    {
         $query = $this->Database->sendQuery($this->Query->getLastPostTime($topic_id));
         $time = mysql_fetch_row($query);
 
@@ -126,7 +132,8 @@ class TopicDatabase extends DatabaseBase {
     
     * @return    int    The id of the added topic.
     */
-    public function add($parent, $topic_type, $title, $subtitle, $content) {
+    public function add ($parent, $topic_type, $title, $subtitle, $content)
+    {
         global $User;
 
         if (!$this->Database->section->exists($parent)) {
@@ -157,7 +164,8 @@ class TopicDatabase extends DatabaseBase {
 
     * @return    array    (id, name)
     */
-    public function getInfo($topic_id) {
+    public function getInfo ($topic_id)
+    {
         $name = $this->getTitle($topic_id);
 
         return array('id' => $topic_id, 'name' => $name);
@@ -170,7 +178,8 @@ class TopicDatabase extends DatabaseBase {
     
     * @return    array    A post in each element.
     */
-    public function getPosts($topic_id, $page) {
+    public function getPosts ($topic_id, $page)
+    {
         $query = $this->Database->sendQuery($this->Query->getPosts($topic_id, $page));
 
         $posts = array();
@@ -188,7 +197,8 @@ class TopicDatabase extends DatabaseBase {
     
     * @return    int    The parent id.
     */
-    public function getParent($topic_id) {
+    public function getParent ($topic_id)
+    {
         $this->Database->sendQuery($this->Query->getParent($topic_id));
         $parent = $this->Database->fetchArray();
 
@@ -205,7 +215,8 @@ class TopicDatabase extends DatabaseBase {
 
     * @return    array    A parent in each element.
     */
-    public function getNavigator($topic_id, $option) {
+    public function getNavigator ($topic_id, $option)
+    {
         global $Config;
         global $Filter;
 
@@ -233,7 +244,8 @@ class TopicDatabase extends DatabaseBase {
     
     * @return    string    The title of the topic. (RAW, HTML, POST)
     */
-    public function getTitle($topic_id) {
+    public function getTitle ($topic_id)
+    {
         $this->Database->sendQuery($this->Query->getTopicTitle($topic_id));
         $result = $this->Database->fetchArray();
 
@@ -251,7 +263,8 @@ class TopicDatabase extends DatabaseBase {
      
     * @return    array    (post_id, post_time, user_id, user_name)
     */
-    public function getLastPost($topic_id) {
+    public function getLastPost ($topic_id)
+    {
         $this->Database->sendQuery($this->Query->getLastPost($topic_id));
         $last = $this->Database->fetchArray();
 
@@ -270,7 +283,8 @@ class TopicDatabase extends DatabaseBase {
     
     * @return    int    The last post id.
     */
-    public function getLastPostId($topic_id) {
+    public function getLastPostId ($topic_id)
+    {
         $last = $this->getLastPost($topic_id);
 
         return $last['post_id'];
@@ -281,7 +295,8 @@ class TopicDatabase extends DatabaseBase {
     
     * @param    int    $topic_id    The id of the topic.
     */
-    public function updateLastInfo($topic_id) {
+    public function updateLastInfo ($topic_id)
+    {
         $last = $this->getLastPost($topic_id);
 
         $this->Database->sendQuery($this->Query->updateLastInfo(
@@ -298,7 +313,8 @@ class TopicDatabase extends DatabaseBase {
 
     * @param    int    $topic_id    The topic id.
     */
-    public function increasePostsCount($topic_id) {
+    public function increasePostsCount ($topic_id)
+    {
         $query = $this->Query->increasePostsCount($topic_id);
         $this->Database->sendQuery($query);
     }
@@ -308,7 +324,8 @@ class TopicDatabase extends DatabaseBase {
 
     * @param    int    $topic_id    The topic id.
     */
-    public function increaseViewsCount($topic_id) {
+    public function increaseViewsCount ($topic_id)
+    {
         $query = $this->Query->increaseViewsCount($topic_id);
         $this->Database->sendQuery($query);
     }
@@ -320,7 +337,8 @@ class TopicDatabase extends DatabaseBase {
 
     * @return    int    The pages number.
     */
-    public function getPages($topic_id) {
+    public function getPages ($topic_id)
+    {
         $query = $this->Database->sendQuery($this->Query->getPages($topic_id));
         $pages = mysql_fetch_row($query);
 

@@ -26,7 +26,8 @@
 
 * @author cHoBi
 */
-class Cache {
+class Cache
+{
     protected $connected;
     protected $cached;
     protected $cache;
@@ -39,7 +40,8 @@ class Cache {
 
     * @param    string    $file    The relative path in the /output/cache/ dir
     */
-    public function __construct($file) {
+    public function __construct ($file)
+    {
         $this->file  = checkDir(ROOT_PATH."/.cache/{$file}");
         $this->cache = file_get_contents($this->file);
 
@@ -63,7 +65,8 @@ class Cache {
 
     * @return    bool    True if it's cached, false if it's not.
     */
-    public function isCached() {
+    public function isCached ()
+    {
         return $this->cached;
     }
 
@@ -72,7 +75,8 @@ class Cache {
     
     * @param    string    $file    The relative path.
     */
-    public function setCache($file) {
+    public function setCache ($file)
+    {
         $this->file = checkDir(ROOT_PATH."/.cache/{$file}");
     }
 
@@ -81,7 +85,8 @@ class Cache {
 
     * @param    string    $content    The content to put in the cache.    
     */
-    public function put($content) {
+    public function put ($content)
+    {
         file_put_contents($this->file, $content);
         $this->cache  = $content;
         $this->cached = true;
@@ -92,7 +97,8 @@ class Cache {
 
     * @return    string
     */
-    public function get() {
+    public function get ()
+    {
         return $this->cache;
     }
 }

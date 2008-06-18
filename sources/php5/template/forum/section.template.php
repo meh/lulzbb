@@ -29,7 +29,8 @@ require_once(SOURCE_PATH.'/template/forum/pager.template.php');
 
 * @author cHoBi
 */
-class SectionTemplate extends Template {
+class SectionTemplate extends Template
+{
     private $section_id;
     private $page;
     private $pagesNumber;
@@ -43,7 +44,8 @@ class SectionTemplate extends Template {
     * @param    array    $sections      The sections data.
     * @param    array    $topics        The topics data.
     */
-    public function __construct($section_id, $page, $groups, $topics) {
+    public function __construct ($section_id, $page, $groups, $topics)
+    {
         parent::__construct('forum/section.tpl');
         global $Database;
         
@@ -62,7 +64,8 @@ class SectionTemplate extends Template {
     * Parse the template and fill the template variables.
     * @access private
     */
-    private function __parse() {
+    private function __parse ()
+    {
         $text = $this->output();
         $text = $this->__loops($text);
 
@@ -107,7 +110,8 @@ class SectionTemplate extends Template {
     * Get the various loops withing the template.
     * @access private
     */
-    private function __loops($text) {
+    private function __loops ($text)
+    {
         /**
         * The idea is to use tags like Splinder does, so you have
         * that faggot tag that opens then i get the content with some regex magic
@@ -293,7 +297,8 @@ class SectionTemplate extends Template {
     * Parse the group header.
     * @access private
     */
-    private function __groupHeader($group) {
+    private function __groupHeader ($group)
+    {
         $text = $this->template['group_header'];
         
         $text = preg_replace(
@@ -309,7 +314,8 @@ class SectionTemplate extends Template {
     * Parse the section content.
     * @access private
     */
-    private function __sectionContent($section) {
+    private function __sectionContent ($section)
+    {
         $text = $this->template['section_content'];
 
         $text = preg_replace(
@@ -351,7 +357,8 @@ class SectionTemplate extends Template {
     * Parse the last info.
     * @access private
     */
-    private function __lastInfo($section) {
+    private function __lastInfo ($section)
+    {
         if (!empty($section['last_user_name']['HTML'])) {
             $text = $this->template['last_info'];
 
@@ -392,7 +399,8 @@ class SectionTemplate extends Template {
     * Parse the group footer.
     * @access private
     */
-    private function __groupFooter($section) {
+    private function __groupFooter ($section)
+    {
         $text = $this->template['group_footer'];
         return $text;
     }
@@ -401,7 +409,8 @@ class SectionTemplate extends Template {
     * Parse the sections group.
     * @access private
     */
-    private function __sectionsGroup($groups) {
+    private function __sectionsGroup ($groups)
+    {
         $rGroups = array();
 
         if (empty($groups)) {
@@ -433,7 +442,8 @@ class SectionTemplate extends Template {
     * Parse the group.
     * @access private
     */
-    private function __group($header, $content, $footer) {
+    private function __group ($header, $content, $footer)
+    {
         $text = $this->template['sections_group'];
 
         $text = preg_replace(
@@ -461,7 +471,8 @@ class SectionTemplate extends Template {
     * Parse the sections.
     * @access private
     */
-    private function __sections($group) {
+    private function __sections ($group)
+    {
         $text = $this->template['sections'];
 
         $text = preg_replace(
@@ -477,7 +488,8 @@ class SectionTemplate extends Template {
     * Parse the topics.
     * @access private
     */
-    private function __topics($topics) {
+    private function __topics ($topics)
+    {
         $text = $this->template['topics'];
 
         $text = preg_replace(
@@ -514,7 +526,8 @@ class SectionTemplate extends Template {
     * Parse the topic.
     * @access private
     */
-    private function __topic($topic) {
+    private function __topic ($topic)
+    {
         $text = $this->template['topic'];
         
         $text = preg_replace(
@@ -577,7 +590,8 @@ class SectionTemplate extends Template {
     * Common tags.
     * @access private
     */
-    private function __common($text) {
+    private function __common ($text)
+    {
         $text = preg_replace(
             '|<%SECTION-ID%>|i',
             $this->section_id,

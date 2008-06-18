@@ -25,7 +25,8 @@
 
 * @author cHoBi
 */
-class lulzCode {
+class lulzCode
+{
 
 }
 ?>

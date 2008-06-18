@@ -28,12 +28,13 @@ require_once(SOURCE_PATH.'/send/send.class.php');
 
 * @author cHoBi
 */
-class Logout extends Send {
+class Logout extends Send
+{
     /**
     * Logout.
     */
-    public function __construct() {
-        
+    public function __construct ()
+    {    
         $this->output = $this->__send(0);
     }
 
@@ -42,7 +43,8 @@ class Logout extends Send {
 
     * @return     string    The logout screen.
     */
-    protected function __send($data) {
+    protected function __send ($data)
+    {
         $template = new InformativeMessage('logout_successful');
        
         destroySession();

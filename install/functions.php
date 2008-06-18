@@ -22,11 +22,13 @@
 * @author   cHoBi
 **/
 
-function checkInstall() {
+function checkInstall ()
+{
     header('Location: install/index.php');
 }
 
-function installed() {
+function installed ()
+{
     $index = file(ROOT_PATH.'/index.php');
 
     $file = fopen(ROOT_PATH.'/index.php', 'w');

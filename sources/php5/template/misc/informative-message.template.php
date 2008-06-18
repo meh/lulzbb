@@ -28,7 +28,8 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 
 * @author cHoBi
 */
-class InformativeMessageTemplate extends Template {
+class InformativeMessageTemplate extends Template
+{
     private $type;
     private $message;
 
@@ -39,7 +40,8 @@ class InformativeMessageTemplate extends Template {
     * @param    array     $data       The data if it's needed by the message.
     * @param    string    $message    The message that's being showed.
     */
-    public function __construct($type, $data, $message) {
+    public function __construct ($type, $data, $message)
+    {
         parent::__construct('misc/informative-message.tpl');
 
         $this->type    = $type;
@@ -53,7 +55,8 @@ class InformativeMessageTemplate extends Template {
     * Usual initalizations, but switching through message types to fill the data.
     * @access private
     */
-    private function __parse() {
+    private function __parse ()
+    {
         global $Filter;
 
         $text = $this->output();

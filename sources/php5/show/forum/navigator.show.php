@@ -30,7 +30,8 @@ require_once(SOURCE_PATH.'/template/forum/navigator.template.php');
 
 * @author cHoBi
 */
-class NavigatorShow extends Show {
+class NavigatorShow extends Show
+{
     private $elements;
 
     /**
@@ -40,7 +41,8 @@ class NavigatorShow extends Show {
     * @param    int       $id        The id of the section or topic.
     * @param    int       $option    The possible option for the navigator.
     */
-    public function __construct($type, $id, $option = 0) {
+    public function __construct ($type, $id, $option = 0)
+    {
         parent::__construct();
         
         $this->elements = $this->__createNavigator($type, $id, $option);
@@ -50,7 +52,8 @@ class NavigatorShow extends Show {
     /**
     * Create the template and put it as output :D
     */
-    protected function __update() {
+    protected function __update ()
+    {
         $navigator = new NavigatorTemplate($this->elements);
         $this->output = $navigator->output();
     }
@@ -65,7 +68,8 @@ class NavigatorShow extends Show {
     * @return    array    All the parents and the actual object :D
     * @access private
     */
-    private function __createNavigator($type, $id, $option) {
+    private function __createNavigator ($type, $id, $option)
+    {
         global $Database;
 
         try {
@@ -91,7 +95,8 @@ class NavigatorShow extends Show {
 
     * @return    array    An id in each element of the array.
     */
-    public function getElementsId() {
+    public function getElementsId ()
+    {
         $elements = array();
 
         foreach ($this->elements as $element) {

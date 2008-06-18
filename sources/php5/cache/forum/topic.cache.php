@@ -30,7 +30,8 @@ require_once(SOURCE_PATH.'/template/forum/section.template.php');
 
 * @author cHoBi
 */
-class TopicCache extends Cache {
+class TopicCache extends Cache
+{
     private $parent;
     private $topic_id;
     private $page;
@@ -41,7 +42,8 @@ class TopicCache extends Cache {
     * @param    int    $parent      The topic's parent.
     * @param    int    $topic_id    The topic id.
     */
-    public function __construct($parent, $topic_id) {
+    public function __construct ($parent, $topic_id)
+    {
         $file = "topics/{$topic_id}-{$topic_page}.html";
 
         $this->parent   = $parent;
@@ -55,7 +57,8 @@ class TopicCache extends Cache {
     /**
     * Update the views count of the parent section of the topic.
     */
-    public function updateViews() {
+    public function updateViews ()
+    {
         global $Database;
         $Database->topic->increaseViewsCount($this->topic_id);
 
@@ -80,7 +83,8 @@ class TopicCache extends Cache {
     /**
     * Updates the $page property.
     */
-    private function __setPage() {
+    private function __setPage ()
+    {
         $path = checkDir(ROOT_PATH."/.cache/misc/page.topic.{$this->topic_id}.txt");
 
         if (is_file($path)) {

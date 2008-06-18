@@ -29,7 +29,8 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 
 * @author cHoBi
 */
-class SectionCache extends Cache {
+class SectionCache extends Cache
+{
     private $section_id;
 
     /**
@@ -38,7 +39,8 @@ class SectionCache extends Cache {
     * @param    int    $section_id    The section id.
     * @param    int    $page          The page to show.
     */
-    public function __construct($section_id, $page) {
+    public function __construct ($section_id, $page)
+    {
         $this->section_id = $section_id;
 
         $file = "sections/{$section_id}-{$page}.html";
@@ -53,7 +55,8 @@ class SectionCache extends Cache {
     * Parse the new topic button.
     * @access private
     */
-    private function __newTopic() {
+    private function __newTopic ()
+    {
         $text = $this->cache;
         $text = preg_replace(
             '|<%NEW-TOPIC%>|i',
@@ -69,7 +72,8 @@ class SectionCache extends Cache {
 
     * @return    string    The parsed template.
     */
-    private function __newTopicTemplate() {
+    private function __newTopicTemplate ()
+    {
         if ($this->connected && $this->section_id != 0) {
             $template = new SectionTemplate(0,0,0,0);
             $template = $template->getTemplatePart('new_topic');
@@ -92,7 +96,7 @@ class SectionCache extends Cache {
 
     * @param    string    $content    The content to put in the cache.
     */
-    public function put($content) {
+    public function put ($content) {
         parent::put($content);
         $this->__newTopic();
     }

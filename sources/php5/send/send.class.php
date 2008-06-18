@@ -30,7 +30,8 @@ require_once(SOURCE_PATH.'/show/misc/informative-message.show.php');
 
 * @author cHoBi
 */
-abstract class Send {
+abstract class Send
+{
     protected $data;
     protected $output;
     protected $connected;
@@ -39,7 +40,8 @@ abstract class Send {
     /**
     * Check connection and get the magic token.
     */
-    public function __construct() {
+    public function __construct ()
+    {
         if (isset($_SESSION[SESSION]['user'])) {
             $this->connected = true;
         }
@@ -53,7 +55,8 @@ abstract class Send {
     /**
     * Update the magic token.
     */
-    public function __destruct() {
+    public function __destruct ()
+    {
         $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
     }
 
@@ -63,14 +66,15 @@ abstract class Send {
 
     * @param    array    $data    Associative array with the needed data.
     */
-    protected abstract function __send($data);
+    protected abstract function __send ($data);
 
     /**
     * Returns the output.
 
     * @return    string
     */
-    public function output() {
+    public function output ()
+    {
         return $this->output;
     }
 }

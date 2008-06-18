@@ -30,14 +30,16 @@ require_once(SOURCE_PATH.'/show/forum/section.show.php');
 
 * @author cHoBi
 */
-class Section extends Output {
+class Section extends Output
+{
     /**
     * Initialize the section and output the Show or the Cache.
 
     * @param    int    $section_id    The section id to get.
     * @param    int    $page          The page to show.
     */
-    public function __construct($section_id, $page = 'first') {
+    public function __construct ($section_id, $page = 'first')
+    {
         parent::__construct();
         global $Database;
 
@@ -77,7 +79,8 @@ class Section extends Output {
     * @todo THIS IS FUCKING UGLY, think about something better.
     * @access private
     */
-    private function __getPages($section_id) {
+    private function __getPages ($section_id)
+    {
         global $Database;
         $path = checkDir(ROOT_PATH."/.cache/misc/pages.section.{$section_id}.txt");
 

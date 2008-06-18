@@ -25,14 +25,16 @@
 * Output base class.
 * @author cHoBi
 */
-class Output {
+class Output
+{
     protected $output;
     protected $magic;
     
     /**
     * Initialize connection and the magic token.
     */
-    public function __construct() {
+    public function __construct ()
+    {
         if (isset($_SESSION[SESSION]['user'])) {
             $this->connected = true;
         }
@@ -48,7 +50,8 @@ class Output {
     
     * @return    string
     */
-    public function output() {
+    public function output ()
+    {
         return $this->output;
     }
 }

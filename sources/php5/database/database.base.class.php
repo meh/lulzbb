@@ -28,7 +28,8 @@ require_once(SOURCE_PATH.'/exception.class.php');
 *
 * @author cHoBi
 */
-class DatabaseBase {
+class DatabaseBase
+{
     protected $Database;
     protected $Query;
 
@@ -38,7 +39,8 @@ class DatabaseBase {
     * @param    object    $Database    The Database object.
     * @param    object    $query       The Query object.
     */
-    public function __construct($Database, $query) {
+    public function __construct ($Database, $query)
+    {
         $this->Database = $Database;
         $this->Query    = $query;
     }

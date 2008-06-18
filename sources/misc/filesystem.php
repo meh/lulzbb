@@ -27,7 +27,8 @@
 *
 * @param    string    $filename    The path to delete.
 */
-function rm($filename) {
+function rm ($filename)
+{
     $filename = preg_replace('|\.+/+|', '', ROOT_PATH.$filename);
     $files = glob($filename);
 
@@ -43,15 +44,15 @@ function rm($filename) {
 
 * @param    string    $path    The path.
 */
-function mkdir_recursive($pathname, $mode = 0755)
+function mkdir_recursive ($pathname, $mode = 0755)
 {
-      is_dir(dirname($pathname))
+    is_dir(dirname($pathname))
     ||
-      mkdir_recursive(dirname($pathname), $mode);
+    mkdir_recursive(dirname($pathname), $mode);
 
-      return is_dir($pathname)
-    ||
-      mkdir($pathname, $mode);
+    return is_dir($pathname)
+           ||
+           mkdir($pathname, $mode);
 }
 
 /**
@@ -61,7 +62,8 @@ function mkdir_recursive($pathname, $mode = 0755)
 
 * @return    string    The full path.
 */
-function checkDir($path) {
+function checkDir ($path)
+{
     if (is_dir($path)) {
         mkdir_recursive($path);
     }
@@ -82,7 +84,8 @@ function checkDir($path) {
 
 * @todo This is deprecated, let's find something else.
 */
-function isCached($type, $id, $page) {
+function isCached ($type, $id, $page)
+{
     $path = ROOT_PATH.'/.cache';
 
     if (is_file("{$path}/{$type}/{$id}-{$page}.html")) {

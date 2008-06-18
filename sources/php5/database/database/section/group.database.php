@@ -29,13 +29,15 @@ require_once(SOURCE_PATH.'/database/query/section/group.query.php');
 
 * @author cHoBi
 */
-class SectionGroupDatabase extends DatabaseBase {
+class SectionGroupDatabase extends DatabaseBase
+{
     /**
     * Jess <3
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($Database) {
+    public function __construct ($Database)
+    {
         $query = new SectionGroupQuery();
         parent::__construct($Database, $query);
     }
@@ -47,7 +49,8 @@ class SectionGroupDatabase extends DatabaseBase {
 
     * @return    bool    True if it exists, false if not.
     */
-    public function exists($group_id) {
+    public function exists ($group_id)
+    {
         $this->Database->sendQuery($this->Query->exists($group_id));
         $section = $this->Database->fetchArray();
 
@@ -66,7 +69,8 @@ class SectionGroupDatabase extends DatabaseBase {
     * @param    int       $weight     The group's weight.
     * @parma    string    $name       The group's name.
     */
-    public function add($parent, $weight, $name) {
+    public function add ($parent, $weight, $name)
+    {
         $this->Database->sendQuery($this->Query->add($parent, $weight, $name));
     }
 
@@ -77,7 +81,8 @@ class SectionGroupDatabase extends DatabaseBase {
 
     * @return    int    The heaviest section in the group.
     */
-    public function heaviest($group_id) {
+    public function heaviest ($group_id)
+    {
         $this->database->sendQuery($this->Query->heaviest($group_id));
         $section = $this->database->fetchArray();
 
@@ -91,7 +96,8 @@ class SectionGroupDatabase extends DatabaseBase {
 
     * @return    int    The lightest section in the group.
     */
-    public function lightest($group_id) {
+    public function lightest ($group_id)
+    {
         $this->database->sendQuery($this->Query->lightest($group_id));
         $section = $this->database->fetchArray();
 
@@ -105,7 +111,8 @@ class SectionGroupDatabase extends DatabaseBase {
 
     * @return    int    The parent id.
     */
-    public function getParent($group_id) {
+    public function getParent ($group_id)
+    {
         $this->Database->sendQuery($this->Query->getParent($group_id));
         $parent = $this->Database->fetchArray();
 
@@ -119,7 +126,8 @@ class SectionGroupDatabase extends DatabaseBase {
     
     * @return    string    The section title. (RAW, HTML, POST)
     */
-    public function getName($group_id) {
+    public function getName ($group_id)
+    {
         $this->Database->sendQuery($this->Query->getName($group_id));
         $result = $this->Database->fetchArray();
 
@@ -137,7 +145,8 @@ class SectionGroupDatabase extends DatabaseBase {
     
     * @return    array    A section in each element :D
     */
-    public function getSections($group_id) {
+    public function getSections ($group_id)
+    {
         $this->Database->sendQuery($this->Query->getSections($group_id));
 
         $sections = array();

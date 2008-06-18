@@ -26,10 +26,12 @@
 *
 * @author cHoBi
 */
-class Query {
+class Query
+{
     protected $dbPrefix;
 
-    public function __construct() {
+    public function __construct ()
+    {
         global $Config;    
         $this->dbPrefix = $Config->get('dbPrefix');
     }

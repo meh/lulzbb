@@ -28,13 +28,15 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 
 * @author cHoBi
 */
-class HomeTemplate extends Template {
+class HomeTemplate extends Template
+{
     /**
     * Initialize the home template.
 
     * @param    string    $content    The content to put inside the home.
     */
-    public function __construct($content = '') {
+    public function __construct ($content = '')
+    {
         parent::__construct('misc/home.tpl');
 
         if (empty($content)) {
@@ -52,7 +54,8 @@ class HomeTemplate extends Template {
     * Replace the template variables with the right content.
     * @access private
     */
-    private function __parse() {
+    private function __parse ()
+    {
         $text = $this->output();
     
         $top = new Template('misc/top.tpl');

@@ -29,7 +29,8 @@ require_once(SOURCE_PATH.'/template/misc/informative-message.template.php');
 
 * @author cHoBi
 */
-class InformativeMessage extends Show {
+class InformativeMessage extends Show
+{
     private $message;
     private $type;
 
@@ -39,7 +40,8 @@ class InformativeMessage extends Show {
     * @param    string    $message    The message to show.
     * @param    array     $data       The data used by the message.
     */
-    public function __construct($message, $data = array()) {
+    public function __construct ($message, $data = array())
+    {
         parent::__construct();
     
         $this->type = $message;
@@ -93,7 +95,8 @@ class InformativeMessage extends Show {
     /**
     * Initialize data and type, create the template and put it in the output.
     */
-    protected function __update() {
+    protected function __update ()
+    {
         $message = $this->message;
 
         $type    = isset($this->type) ? $this->type : '';

@@ -29,13 +29,15 @@ require_once(SOURCE_PATH.'/database/query/user/login.query.php');
 
 * @author cHoBi
 */
-class LoginDatabase extends DatabaseBase {
+class LoginDatabase extends DatabaseBase
+{
     /**
     * Always the same, this is the way :D
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct($Database) {
+    public function __construct ($Database)
+    {
         $query = new LoginQuery();
         parent::__construct($Database, $query);
     }
@@ -48,7 +50,8 @@ class LoginDatabase extends DatabaseBase {
     
     * @return    array    (id, name)
     */
-    public function check($username, $password) {
+    public function check ($username, $password)
+    {
         $this->Database->sendQuery($this->Query->check($username, $password));
         $user = $this->Database->fetchArray();
 
