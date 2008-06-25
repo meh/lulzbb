@@ -31,6 +31,8 @@
 */
 function add_user_to_group ($user, $group)
 {
+    global $Database;
+
     if (!isset($user) or !isset($group)) {
         die('Not enough parameters.');
     }

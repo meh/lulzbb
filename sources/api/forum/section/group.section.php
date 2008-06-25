@@ -32,6 +32,8 @@
 */
 function add_group ($parent, $weight, $name)
 {
+    global $Database;
+
     if (!isset($parent) or !isset($weight) or empty($name)) {
         die('Not enough parmeters.');
     }

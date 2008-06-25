@@ -33,6 +33,8 @@
 */
 function add_section ($group_id, $weight, $title, $subtitle = '')
 {
+    global $Database;
+
     if (!isset($group_id) or !isset($weight) or empty($title)) {
         die('Not enough parameters.');
     }
