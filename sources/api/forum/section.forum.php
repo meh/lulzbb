@@ -40,7 +40,7 @@ function add_section ($group_id, $weight, $title, $subtitle = '')
     }
 
     $Database->section->add($group_id, $weight, $title, $subtitle);
-    rm('/output/cache/sections/*');
+    rm('.cache/sections/*');
 }
 
 ?>
