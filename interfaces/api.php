@@ -43,7 +43,7 @@ switch ($command) {
     case 'add_section':
     require_once(API_PATH.'/forum/section.forum.php');
 
-    $DATA['group_id'] = $_REQUEST['group'];
+    $DATA['group_id'] = $_REQUEST['group_id'];
     $DATA['weight']   = $_REQUEST['weight'];
     $DATA['title']    = $_REQUEST['title'];
     $DATA['subtitle'] = $_REQUEST['subtitle'];

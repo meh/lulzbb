@@ -39,6 +39,6 @@ function add_group ($parent, $weight, $name)
     }
 
     $Database->section->group->add($parent, $weight, $name);
-    rm('.cache/sections/*');   
+    rm('/.cache/sections/*');
 }
 ?>
