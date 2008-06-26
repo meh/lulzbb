@@ -41,9 +41,23 @@ class SyntaxHighlight
     */
     public function __construct ($source, $mode = 'file', $language = 'auto')
     {
-        $this->source      = $source;
-        $this->language    = $language;
-        $this->highlighted = $source;
+        if ($mode == 'file') {
+            $this->language = preg_replace('|^.*\.|', '', $language);
+            $this->source = file_get_contents(ROOT_PATH.$source);
+        }
+
+        $this->highlighted = $this->highlight($this->source);
+    }
+
+    public function highlight ($source)
+    {
+        $highlighted = $source;
+
+        $highlighted = str_replace('&', '&amp;', $highlighted);
+        $highlighted = str_replace('<', '&lt;', $highlighted);
+        $highlighted = str_replace('>', '&gt;', $highlighted);
+
+        return $highlighted;
     }
 
     public function output ()

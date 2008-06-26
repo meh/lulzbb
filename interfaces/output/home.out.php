@@ -65,7 +65,16 @@ else if (isset($_GET['user'])) {
 }
 
 else {
-    $page = new Home($_REQUEST['page']);
+    if (isset($_GET['raw'])) {
+        $page = new Home($_REQUEST['page'], 'raw');
+    }
+    else if (isset($_GET['highlight'])) {
+        $page = new Home($_REQUEST['page'], 'highlight');
+    }
+    else {
+        $page = new Home($_REQUEST['page']);
+    }
+
     echo $page->output();
 }
 ?>

@@ -94,7 +94,7 @@ class Home extends Show
                 $template = new HomeTemplate();
             }
             else {
-                $content  = new PageTemplate($this->file);
+                $content  = new PageTemplate($this->file, $this->data);
                 $template = new HomeTemplate($content->output());
             }
             break;

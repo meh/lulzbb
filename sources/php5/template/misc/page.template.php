@@ -22,6 +22,7 @@
 */
 
 require_once(SOURCE_PATH.'/template/template.class.php');
+require_once(SOURCE_PATH.'/misc/highlight.class.php');
 
 /**
 * Page template.
@@ -30,6 +31,7 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 */
 class PageTemplate extends Template
 {
+    private $file;
     private $mode;
 
     /**
@@ -40,8 +42,14 @@ class PageTemplate extends Template
     */
     public function __construct ($file, $mode = 'default')
     {
-        parent::__construct('misc/page.tpl');
+        if ($mode == 'highlight') {
+            parent::__construct('misc/highlight.tpl');
+        }
+        else {
+            parent::__construct('misc/page.tpl');
+        }
 
+        $this->file = $file;
         $this->mode = $mode;
 
         $file = preg_replace('|\.+/+|', '', $file);
@@ -59,16 +67,26 @@ class PageTemplate extends Template
         $text = $this->output();
 
         switch ($this->mode) {
-            case 'default':
+            case 'raw':
+            $text = $this->data['content']->output();
+            break;
+
+            case 'highlight':
+            $highlight = new SyntaxHighlight("/pages/{$this->file}");
+
+            $text = preg_replace(
+                '|<%CONTENT%>|i',
+                $highlight->output(),
+                $text
+            );
+            break;
+
+            default:
             $text = preg_replace(
                 '|<%CONTENT%>|i',
                 $this->data['content']->output(),
                 $text
             );
-            break;
-
-            case 'raw':
-            $text = $this->data['content']->output();
             break;
         }
 

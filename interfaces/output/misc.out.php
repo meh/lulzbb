@@ -36,6 +36,9 @@ else if (isset($_GET['page'])) {
     if (isset($_GET['raw'])) {
         $page = new PageTemplate($_REQUEST['page'], 'raw');
     }
+    else if (isset($_GET['highlight'])) {
+        $page = new PageTemplate($_REQUEST['page'], 'highlight');
+    }
     else {
         $page = new PageTemplate($_REQUEST['page']);
     }
