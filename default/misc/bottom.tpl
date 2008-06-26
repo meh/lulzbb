@@ -1,3 +1,3 @@
 <div class="footer">
-    HAI THAR &gt;:3
+    Powered by <a href="#">lulzBB</a> &copy; lulzGroup
 </div>
