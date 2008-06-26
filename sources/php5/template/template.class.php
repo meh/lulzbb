@@ -61,7 +61,7 @@ class Template
         
         if (ereg('^/pages/', $file)) {
             $file = preg_replace('|\.+/+|', '', $file);
-            $file = str_replace('/pages/', '', $file);
+            $file = preg_replace('|^/pages/|', '', $file);
             $this->plain_text = file_get_contents(ROOT_PATH."/pages/{$file}");
         }
         else {

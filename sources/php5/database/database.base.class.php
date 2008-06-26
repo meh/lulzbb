@@ -21,11 +21,11 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/exception.class.php');
+require_once(SOURCE_PATH.'/misc/exception.class.php');
 
 /**
 * This is just the base class for the database classes.
-*
+
 * @author cHoBi
 */
 class DatabaseBase
@@ -35,7 +35,7 @@ class DatabaseBase
 
     /**
     * Just to write less code and use OO programming :>
-    *
+    
     * @param    object    $Database    The Database object.
     * @param    object    $query       The Query object.
     */

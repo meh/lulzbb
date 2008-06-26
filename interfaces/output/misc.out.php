@@ -32,7 +32,15 @@ if (isset($_GET['menu'])) {
 
 else if (isset($_GET['page'])) {
     require_once(SOURCE_PATH.'/template/misc/page.template.php');
-    $page = new PageTemplate($_REQUEST['page']);
+
+    if (isset($_GET['raw'])) {
+        $page = new PageTemplate($_REQUEST['page'], 'raw');
+    }
+    else {
+        $page = new PageTemplate($_REQUEST['page']);
+    }
+
     echo $page->output();
 }
+
 ?>

@@ -72,9 +72,9 @@ require_once(MISC_PATH.'/filesystem.php');
 require_once(MISC_PATH.'/misc.php');
 
 // Session creation.
-require_once(SOURCE_PATH.'/config.class.php');
-require_once(SOURCE_PATH.'/filter.class.php');
-require_once(SOURCE_PATH.'/user.class.php');
+require_once(SOURCE_PATH.'/misc/config.class.php');
+require_once(SOURCE_PATH.'/misc/filter.class.php');
+require_once(SOURCE_PATH.'/misc/user.class.php');
 require_once(SOURCE_PATH.'/database/database.class.php');
 
 if (!sessionFileExists()) {

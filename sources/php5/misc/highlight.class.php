@@ -1,6 +1,7 @@
 <?php
 /**
-* @package  Install
+* @package PHP5
+* @category Misc
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -18,26 +19,36 @@
 *
 * You should have received a copy of the GNU Affero General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
-* @author   cHoBi
-**/
+/**
+* Class that highlights various sources.
 
-function checkInstall ()
+* @author cHoBi
+*/
+class SyntaxHighlight
 {
-    header('Location: install/index.php');
-}
+    private $language;
+    private $source;
+    private $highlighted;
 
-function installed ()
-{
-    $index = file(ROOT_PATH.'/index.php');
+    /**
+    * Create the object and highlight the source.
 
-    $file = fopen(ROOT_PATH.'/index.php', 'w');
-    foreach ($index as $line) {
-        if (!(      preg_match("|require\('install/functions.php'\);|", $line)
-                 or preg_match("|checkInstall\(\);|", $line))) {
-            fwrite($file, $line);
-        }
+    * @param    string    $source      The source text or the file name.
+    * @param    string    $mode        The class mode (string | file)
+    * @param    string    $language    The programming language of the source.
+    */
+    public function __construct ($source, $mode = 'file', $language = 'auto')
+    {
+        $this->source      = $source;
+        $this->language    = $language;
+        $this->highlighted = $source;
     }
-    fclose($file);
+
+    public function output ()
+    {
+        return $this->highlighted;
+    }
 }
 ?>

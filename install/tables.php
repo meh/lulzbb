@@ -44,8 +44,8 @@ require_once(MISC_PATH.'/session.php');
 require_once(MISC_PATH.'/filesystem.php');
 
 // Session creation.
-require_once(SOURCE_PATH.'/config.class.php');
-require_once(SOURCE_PATH.'/filter.class.php');
+require_once(SOURCE_PATH.'/misc/config.class.php');
+require_once(SOURCE_PATH.'/misc/filter.class.php');
 require_once(SOURCE_PATH.'/database/database.class.php');
 startSession('../');
 
@@ -143,7 +143,7 @@ yahoo TINYTEXT,
 
 option_email BOOL NOT NULL DEFAULT TRUE,
 option_lulzcode BOOL NOT NULL DEFAULT TRUE,
-registration_date DATETIME DEFAULT NOW(),
+registration_date DATETIME,
 
 primary KEY(id))');
 

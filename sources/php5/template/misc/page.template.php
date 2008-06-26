@@ -30,14 +30,19 @@ require_once(SOURCE_PATH.'/template/template.class.php');
 */
 class PageTemplate extends Template
 {
+    private $mode;
+
     /**
     * Sets the file to get and parse it.
 
     * @param    string    $file    The file to get.
+    * @param    string    $mode    The page view mode.
     */
-    public function __construct ($file)
+    public function __construct ($file, $mode = 'default')
     {
         parent::__construct('misc/page.tpl');
+
+        $this->mode = $mode;
 
         $file = preg_replace('|\.+/+|', '', $file);
         $this->data['content'] = new Template("/pages/{$file}");
@@ -52,12 +57,20 @@ class PageTemplate extends Template
     private function __parse ()
     {
         $text = $this->output();
-    
-        $text = preg_replace(
-            '|<%CONTENT%>|i',
-            $this->data['content']->output(),
-            $text
-        );
+
+        switch ($this->mode) {
+            case 'default':
+            $text = preg_replace(
+                '|<%CONTENT%>|i',
+                $this->data['content']->output(),
+                $text
+            );
+            break;
+
+            case 'raw':
+            $text = $this->data['content']->output();
+            break;
+        }
 
         $this->parsed = $text;
     }
