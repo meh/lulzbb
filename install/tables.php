@@ -149,8 +149,11 @@ primary KEY(id))');
 
 $Database->sendQuery('CREATE TABLE '.$dbPrefix.'_user_groups(
 name VARCHAR(150) NOT NULL,
+
 username VARCHAR(150) DEFAULT NULL,
+
 description TEXT DEFAULT NULL,
+level SMALLINT UNSIGNED DEFAULT 0,
 
 UNIQUE KEY(name, username))');
 

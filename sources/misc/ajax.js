@@ -72,7 +72,7 @@ function POST (show_id, url, params)
         }
     }
 
-    http.open( "POST", url, true);
+    http.open("POST", url, true);
 
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http.setRequestHeader("Content-length", params.length);

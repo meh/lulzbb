@@ -26,4 +26,8 @@ elementsPerPage=15
 ; Other info
 anti-dos-seconds=2
 anti-dos-times=35
+
+; Forum modes
+anonymousPosting=disabled
+forumViewable=users
 */?>
