@@ -47,9 +47,9 @@ class NavigatorCache extends Cache
     {
         $this->type = $type;
 
-        $file = glob(ROOT_PATH."/.cache/navigator/{$type}.*-{$id}.html");
+        $file = glob(ROOT_PATH."/.cache/navigator/{$type}.*-{$id}.php");
         if (!empty($file)) {
-            $file = preg_replace('|.+?/(navigator.+)$|i', '${1}', $file[0]);
+            $file = preg_replace('|.+?/(navigator.+?)\.php$|i', '${1}', $file[0]);
             parent::__construct($file);
         }
         else {
@@ -71,7 +71,7 @@ class NavigatorCache extends Cache
         }
         $id = rtrim($id, '-');
 
-        $this->setCache("navigator/{$id}.html");
+        $this->setCache("navigator/{$id}.php");
     }
 }
 ?>

@@ -91,6 +91,7 @@ id INT UNSIGNED NOT NULL auto_increment,
 type smallINT UNSIGNED NOT NULL,
 parent INT UNSIGNED NOT NULL,
 user_id INT UNSIGNED NOT NULL,
+user_name TINYTEXT,
 title TINYTEXT NOT NULL,
 subtitle TINYTEXT,
 
@@ -112,10 +113,11 @@ $Database->sendQuery('CREATE TABLE '.$dbPrefix.'_topic_posts(
 topic_id INT UNSIGNED NOT NULL,
 post_id INT UNSIGNED NOT NULL,
 user_id INT UNSIGNED NOT NULL,
+user_name TINYTEXT,
 lulzcode BOOL NOT NULL,
 time DATETIME,
 title TINYTEXT NOT NULL,
-content longTEXT NOT NULL)');
+content LONGTEXT NOT NULL)');
 
 $Database->sendQuery('CREATE TABLE '.$dbPrefix.'_users(
 id INT UNSIGNED NOT NULL auto_increment,
@@ -150,12 +152,12 @@ primary KEY(id))');
 $Database->sendQuery('CREATE TABLE '.$dbPrefix.'_user_groups(
 name VARCHAR(150) NOT NULL,
 
-username VARCHAR(150) DEFAULT NULL,
+user INT UNSIGNED DEFAULT NULL,
 
 description TEXT DEFAULT NULL,
-level SMALLINT UNSIGNED DEFAULT 0,
+level SMALLINT DEFAULT 0,
 
-UNIQUE KEY(name, username))');
+UNIQUE KEY(name, user))');
 
 // Index creation
 $Database->sendQuery('CREATE INDEX topic_id ON '.$dbPrefix.'_topics(id)');
@@ -164,16 +166,24 @@ $Database->sendQuery('CREATE INDEX group_id ON '.$dbPrefix.'_section_groups(id)'
 
 // User groups creations.
 $Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups
-       (name, description)
-VALUES ("Unconfirmed", "LOLOL, THEY HAVE TO CONFIRM, FOR SRS")');
+       (name, description, level)
+VALUES ("Unconfirmed", "LOLOL, THEY HAVE TO CONFIRM, FOR SRS", -1)');
 
 $Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups
-       (name, description)
-VALUES ("Administrator", "OH SHI-")');
+       (name, description, level)
+VALUES ("Anonymous", "Because non of us is as cruel as all of us.", 0)');
 
 $Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups
-       (name, description)
-VALUES ("Moderator", "MODS = FAGS")');
+       (name, description, level)
+VALUES ("Users", "Namefag here.", 1)');
+
+$Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups
+       (name, description, level)
+VALUES ("Moderator", "MODS = FAGS", 8999)');
+
+$Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups
+       (name, description, level)
+VALUES ("Administrator", "OH SHI-", 9001)');
 
 // Sections creation.
 $Database->sendQuery('INSERT INTO '.$dbPrefix.'_section_groups

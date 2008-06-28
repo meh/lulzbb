@@ -43,10 +43,10 @@ class RegistrationQuery extends Query {
         
         INSERT
             INTO {$this->dbPrefix}_users(
-                {$this->dbPrefix}_users.name,
-                {$this->dbPrefix}_users.password,
-                {$this->dbPrefix}_users.email,
-                {$this->dbPrefix}_users.registration_date
+                name,
+                password,
+                email,
+                registration_date
             )
             
             VALUES(

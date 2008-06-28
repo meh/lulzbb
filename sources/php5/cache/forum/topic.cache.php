@@ -62,7 +62,7 @@ class TopicCache extends Cache
         global $Database;
         $Database->topic->increaseViewsCount($this->topic_id);
 
-        $file = ROOT_PATH."/.cache/sections/{$this->parent}-{$this->page}.html";
+        $file = ROOT_PATH."/.cache/sections/{$this->parent}-{$this->page}";
         $text = file_get_contents($file);
 
         preg_match(

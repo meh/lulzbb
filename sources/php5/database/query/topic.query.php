@@ -150,7 +150,7 @@ QUERY;
 QUERY;
     }
 
-    public function add($user_id, $user_name, $topic_type, $parent, $title, $subtitle) {
+    public function addLogged($user_id, $user_name, $topic_type, $parent, $title, $subtitle) {
         global $Filter;
         $user_id    = (int) $user_id;
         $topic_type = (int) $topic_type;
@@ -176,6 +176,49 @@ QUERY;
                 {$topic_type},
                 {$parent},
                 {$user_id},
+                NULL,
+                "{$title}",
+                {$subtitle},
+
+                0,
+                0,
+
+                {$last_post_id},
+                NOW(),
+                {$last_user_id},
+                "{$last_user_name}"
+            )
+
+QUERY;
+    }
+
+    public function addAnonymous($user_id, $user_name, $topic_type, $parent, $title, $subtitle) {
+        global $Filter;
+        $user_id    = (int) $user_id;
+        $topic_type = (int) $topic_type;
+        $parent     = (int) $parent;
+        $title      = $Filter->SQL($title);
+        $subtitle   = '"'.$Filter->SQL_HTMLclean($subtitle).'"';
+
+        $last_post_id   = (int) 1;
+        $last_user_id   = (int) $user_id;
+        $last_user_name = $Filter->SQL($user_name);
+
+        if (preg_match('/^""$/', $subtitle)) {
+            $subtitle = 'NULL';
+        }
+        
+        return <<<QUERY
+        
+        INSERT
+            INTO {$this->dbPrefix}_topics
+            
+            VALUES(
+                NULL,
+                {$topic_type},
+                {$parent},
+                {$user_id},
+                "{$last_user_name}",
                 "{$title}",
                 {$subtitle},
 

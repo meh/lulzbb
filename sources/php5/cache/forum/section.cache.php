@@ -43,7 +43,7 @@ class SectionCache extends Cache
     {
         $this->section_id = $section_id;
 
-        $file = "sections/{$section_id}-{$page}.html";
+        $file = "sections/{$section_id}-{$page}";
         parent::__construct($file);
 
         if ($this->isCached()) {
@@ -74,7 +74,9 @@ class SectionCache extends Cache
     */
     private function __newTopicTemplate ()
     {
-        if ($this->connected && $this->section_id != 0) {
+        global $Config;
+
+        if (($this->connected || $Config->get('anonymousPosting')) && $this->section_id != 0) {
             $template = new SectionTemplate(0,0,0,0);
             $template = $template->getTemplatePart('new_topic');
 

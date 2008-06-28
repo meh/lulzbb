@@ -40,9 +40,10 @@ class Post extends Send
     */
     public function __construct ($magic, $topic_id, $title, $content)
     {
+        global $Config;
         parent::__construct();
 
-        if ($this->connected) {
+        if ($this->connected || $Config->get('anonymousPosting')) {
             $this->output = $this->__send(array(
                 'magic'    => $magic,
                 'topic_id' => $topic_id,

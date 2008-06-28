@@ -130,7 +130,7 @@ class Template
     * @param    string    $part    The name of the part.
 
     * @return     mixed    string: The template part if it exists.
-    *                      bool: false if the template part doesn't exist.
+    *                      bool:   False if the template part doesn't exist.
     */
     public function getTemplatePart ($part)
     {

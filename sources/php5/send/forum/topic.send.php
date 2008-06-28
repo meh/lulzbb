@@ -40,18 +40,20 @@ class Topic extends Send
     * @param    string    $subtitle    The topic subtitle.
     * @param    string    $content     The topic content.
     */
-    public function __construct ($magic, $parent, $type, $title, $subtitle, $content)
+    public function __construct ($magic, $parent, $type, $title, $subtitle, $content, $nick = '')
     {
+        global $Config;
         parent::__construct();
         
-        if ($this->connected) {
+        if ($this->connected || $Config->get('anonymousPosting')) {
             $this->output = $this->__send(array(
                 'magic'    => $magic,
                 'parent'   => $parent,
                 'type'     => $type,
                 'title'    => $title,
                 'subtitle' => $subtitle,
-                'content'  => $content
+                'content'  => $content,
+                'nick'     => $nick
             ));
         }
         else {
@@ -67,12 +69,14 @@ class Topic extends Send
     protected function __send ($data)
     {
         global $Database;
+
         $magic    = $data['magic'];
         $parent   = $data['parent'];
         $type     = $data['type'];
         $title    = $data['title'];
         $subtitle = $data['subtitle'];
         $content  = $data['content'];
+        $nick     = $data['nick'];
 
         if ($magic != $this->magic) {
             die('LOLNO');
@@ -97,19 +101,18 @@ class Topic extends Send
                 break;
 
                 default:
-                $topic_id = $Database->topic->add($parent, $type, $title, $subtitle, $content);
+                $topic_id = $Database->topic->add($parent, $type, $title, $subtitle, $content, $nick);
                 $message = new InformativeMessage('topic_sent', array('topic_id' => $topic_id));
                         
-                rm("/.cache/sections/*");
+                rm('/.cache/sections/*');
                 rm("/.cache/misc/pages.section.{$parent}.txt");
-                rm("/.cache/misc/page.topic.*.txt");
+                rm('/.cache/misc/page.topic.*.txt');
                 break;
             }
         }
         catch (lulzException $e) {
             return $e->getMessage();
         }
-
 
         return $message->output();
     }

@@ -47,10 +47,10 @@ class User
 
         $this->id      = $id;
         $this->name    = $Database->user->getName($id);
-        $this->groups  = $Database->user->group->get($this->getName('RAW'));
+        $this->groups  = $Database->user->group->get($id);
         $this->session = session_id();
 
-        $this->lulzcode = $Database->user->getLulzCode($this->id);
+        $this->lulzcode = $Database->user->getLulzCode($id);
     }
 
     /**

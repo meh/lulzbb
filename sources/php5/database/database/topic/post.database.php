@@ -49,10 +49,8 @@ class PostDatabase extends DatabaseBase
     * @param    string    $title       The post title.
     * @param    string    $content     The content of the post.
     */
-    public function add ($topic_id, $title, $content)
+    public function add ($topic_id, $title, $content, $nick = '')
     {
-        global $User;
-
         if (!$this->Database->topic->exists($topic_id)) {
             throw new lulzException('topic_not_existent');
         }
@@ -60,14 +58,29 @@ class PostDatabase extends DatabaseBase
         $parent  = $this->Database->topic->getParent($topic_id);
         $post_id = $this->Database->topic->getLastPostId($topic_id) + 1;
 
-        $this->Database->sendQuery($this->Query->add(
-            $User->getId(),
-            $topic_id,
-            $post_id,
-            $User->getLulzCode(),
-            $title,
-            $content
-        ));
+        if (isset($_SESSION[SESSION]['user'])) {
+            $User = $_SESSION[SESSION]['user'];
+
+            $this->Database->sendQuery($this->Query->addLogged(
+                $User->getId(),
+                $topic_id,
+                $post_id,
+                $User->getLulzCode(),
+                $title,
+                $content
+            ));
+        }
+        else {
+            $this->Database->sendQuery($this->Query->addAnonymous(
+                $User->getId(),
+                (empty($nick) ? $Config->get('anonymousNick') : $nick),
+                $topic_id,
+                $post_id,
+                'true',
+                $title,
+                $content
+            ));
+        }
 
         $this->Database->topic->updateLastInfo($topic_id);
         $this->Database->topic->increasePostsCount($topic_id);

@@ -42,8 +42,12 @@ class Cache
     */
     public function __construct ($file)
     {
-        $this->file  = checkDir(ROOT_PATH."/.cache/{$file}");
-        $this->cache = file_get_contents($this->file);
+        $this->file  = checkDir(ROOT_PATH."/.cache/{$file}.php");
+
+        $this->cache = file($this->file);
+        array_pop($this->cache);
+        array_shift($this->cache);
+        $this->cache = join("\n", $this->cache);
 
         if ($this->cache) {
             $this->cached = true;
@@ -87,7 +91,7 @@ class Cache
     */
     public function put ($content)
     {
-        file_put_contents($this->file, $content);
+        file_put_contents($this->file, "<?php die();/*\n{$content}\n*/?>");
         $this->cache  = $content;
         $this->cached = true;
     }

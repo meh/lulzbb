@@ -30,6 +30,7 @@ if (isset($_GET['topic'])) {
 
         $DATA['magic']    = $_REQUEST['magic'];
         $DATA['parent']   = $_REQUEST['parent'];
+        $DATA['nick']     = $_REQUEST['nick'];
         $DATA['type']     = $_REQUEST['type'];
         $DATA['title']    = $_REQUEST['title'];
         $DATA['subtitle'] = $_REQUEST['subtitle'];
@@ -41,7 +42,8 @@ if (isset($_GET['topic'])) {
             $DATA['type'],
             $DATA['title'],
             $DATA['subtitle'],
-            $DATA['content']
+            $DATA['content'],
+            $DATA['nick']
         );
         echo $topic->output();
     }
@@ -53,6 +55,7 @@ if (isset($_GET['post'])) {
 
         $DATA['magic']    = $_REQUEST['magic'];
         $DATA['topic_id'] = $_REQUEST['topic_id'];
+        $DATA['nick']     = $_REQUEST['nick'];
         $DATA['title']    = $_REQUEST['title'];
         $DATA['content']  = $_REQUEST['content'];
 
@@ -60,7 +63,8 @@ if (isset($_GET['post'])) {
             $DATA['magic'],
             $DATA['topic_id'],
             $DATA['title'],
-            $DATA['content']
+            $DATA['content'],
+            $DATA['nick']
         );
         echo $post->output();
     }

@@ -88,7 +88,9 @@ class Topic extends Output
     */
     private function __formPost ($output, $topic_id, $topic_title)
     {
-        if ($this->connected) {
+        global $Config;
+
+        if ($this->connected || $Config->get('anonymousPosting')) {
             $form = new PostFormTemplate(
                 $this->magic,
                 $topic_id,

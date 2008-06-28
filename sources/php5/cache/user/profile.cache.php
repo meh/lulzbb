@@ -41,7 +41,7 @@ class UserProfileCache extends Cache
     {
         $this->user_id = $user_id;
 
-        $file = "users/profile-{$user_id}.html";
+        $file = "users/profile-{$user_id}";
         parent::__construct($file);
     }
 }

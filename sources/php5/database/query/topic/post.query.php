@@ -33,7 +33,7 @@ class PostQuery extends Query {
         parent::__construct();
     }
 
-    public function add($user_id, $topic_id, $post_id, $lulzcode, $title, $content) {
+    public function addLogged($user_id, $topic_id, $post_id, $lulzcode, $title, $content) {
         global $Filter;
         $user_id  = (int) $user_id;
         $topic_id = (int) $topic_id;
@@ -52,6 +52,37 @@ class PostQuery extends Query {
                 {$topic_id},
                 {$post_id},
                 {$user_id},
+                NULL,
+                {$lulzcode},
+                NOW(),
+                '{$title}',
+                '{$content}'
+            )
+
+QUERY;
+    }
+
+    public function addAnonymous($user_id, $user_name, $topic_id, $post_id, $lulzcode, $title, $content) {
+        global $Filter;
+        $user_id   = (int) $user_id;
+        $user_name = $Filter->SQL($user_name);
+        $topic_id  = (int) $topic_id;
+        $post_id   = (int) $post_id;
+        $lulzcode  = ($lulzcode) ? 'TRUE' : 'FALSE';
+        $title     = $Filter->SQL($title);
+        $content   = $Filter->SQL($content);
+
+        return <<<QUERY
+        
+        INSERT
+            INTO
+                {$this->dbPrefix}_topic_posts
+                           
+            VALUES(
+                {$topic_id},
+                {$post_id},
+                {$user_id},
+                "{$user_name}",
                 {$lulzcode},
                 NOW(),
                 '{$title}',

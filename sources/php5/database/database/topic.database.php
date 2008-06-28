@@ -132,25 +132,42 @@ class TopicDatabase extends DatabaseBase
     
     * @return    int    The id of the added topic.
     */
-    public function add ($parent, $topic_type, $title, $subtitle, $content)
+    public function add ($parent, $topic_type, $title, $subtitle, $content, $nick = '')
     {
-        global $User;
+        global $Config;
 
         if (!$this->Database->section->exists($parent)) {
             throw new lulzException('section_not_existent');
         }
 
-        $this->Database->sendQuery($this->Query->add(
-            $User->getId(),
-            $User->getName('RAW'),
-            $topic_type,
-            $parent,
-            $title,
-            $subtitle
-        ));
+        if (isset($_SESSION[SESSION]['user'])) {
+            $User = $_SESSION[SESSION]['user'];
+            $this->Database->sendQuery($this->Query->addLogged(
+                $User->getId(),
+                $User->getName('RAW'),
+                $topic_type,
+                $parent,
+                $title,
+                $subtitle
+            ));
         
-        $topic_id = $this->Database->misc->getLastTopic();
-        $this->Database->topic->post->add($topic_id, $title, $content);
+            $topic_id = $this->Database->misc->getLastTopic();
+            $this->Database->topic->post->add($topic_id, $title, $content);
+        }
+        else {
+            $this->Database->sendQuery($this->Query->addAnonymous(
+                0,
+                (empty($nick) ? $Config->get('anonymousNick') : $nick),
+                $topic_type,
+                $parent,
+                $title,
+                $subtitle
+            ));
+
+            $topic_id = $this->Database->misc->getLastTopic();
+            $this->Database->topic->post->add($topic_id, $title, $content, $nick);
+        }
+
         
         $this->Database->section->increaseTopicsCount($parent);
 

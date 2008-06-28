@@ -51,9 +51,9 @@ class GroupQuery extends Query {
 QUERY;
     }
    
-    public function get($username) {
+    public function get($user_id) {
         global $Filter;
-        $username = $Filter->SQL($username);
+        $user_id = (int) $user_id;
 
         return <<<QUERY
 
@@ -64,7 +64,7 @@ QUERY;
             {$this->dbPrefix}_user_groups
 
         WHERE
-            {$this->dbPrefix}_user_groups.username = "{$username}"
+            {$this->dbPrefix}_user_groups.user = "{$user_id}"
 
 QUERY;
     }

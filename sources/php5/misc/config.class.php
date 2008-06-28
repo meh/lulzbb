@@ -60,10 +60,21 @@ class Config
 
     * @return    mixed    The value.
     */
-    public function get ($Config)
+    public function get ($config)
     {
         if (isset($this->config)) {
-            return $this->config[$Config];
+            switch ($this->config[$config]) {
+                case 'true':
+                return true;
+                break;
+
+                case 'false':
+                return false;
+                break;
+
+                default:
+                return $this->config[$config];
+                break;
         }
         else {
             return 'None';

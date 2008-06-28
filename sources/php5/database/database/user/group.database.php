@@ -68,9 +68,9 @@ class UserGroupDatabase extends DatabaseBase
     
     * @return    array    Normal array with a group for each element.
     */
-    public function get ($username)
+    public function get ($user_id)
     {
-        $this->Database->sendQuery($this->Query->get($username));
+        $this->Database->sendQuery($this->Query->get($user_id));
 
         $groups = array();
         while ($group = $this->Database->fetchArray()) {

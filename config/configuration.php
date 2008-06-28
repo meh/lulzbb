@@ -28,6 +28,7 @@ anti-dos-seconds=2
 anti-dos-times=35
 
 ; Forum modes
-anonymousPosting=disabled
+anonymousPosting=false
+anonymousNick=Anonymous
 forumViewable=users
 */?>
