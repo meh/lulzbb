@@ -67,7 +67,7 @@ else if (isset($_GET['topic'])) {
         $DATA['topic_id'] = $DATA['id'];
         $DATA['page']     = $_REQUEST['page'];
         $DATA['post_id']  = $_REQUEST['post'];
-        
+
         $topic = new Topic(
             $DATA['topic_id'],
             $DATA['page'],

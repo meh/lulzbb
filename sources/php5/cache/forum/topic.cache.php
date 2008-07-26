@@ -41,13 +41,15 @@ class TopicCache extends Cache
 
     * @param    int    $parent      The topic's parent.
     * @param    int    $topic_id    The topic id.
+    * @param    int    $page        The topic's page.
     */
-    public function __construct ($parent, $topic_id)
+    public function __construct ($parent, $topic_id, $page)
     {
-        $file = "topics/{$topic_id}-{$topic_page}.php";
+        $file = "topics/{$topic_id}-{$page}.php";
 
         $this->parent   = $parent;
         $this->topic_id = $topic_id;
+        $this->page     = $page;
 
         $this->__setPage();
 

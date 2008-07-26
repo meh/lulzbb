@@ -60,7 +60,7 @@ class Topic extends Output
                 $page = 1;
             }
         }
-
+        
         try {
             $topic_id = (int) $topic_id;
             $page     = (int) $page;
