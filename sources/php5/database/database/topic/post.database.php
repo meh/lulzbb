@@ -51,6 +51,8 @@ class PostDatabase extends DatabaseBase
     */
     public function add ($topic_id, $title, $content, $nick = '')
     {
+        global $Config;
+
         if (!$this->Database->topic->exists($topic_id)) {
             throw new lulzException('topic_not_existent');
         }
@@ -72,7 +74,7 @@ class PostDatabase extends DatabaseBase
         }
         else {
             $this->Database->sendQuery($this->Query->addAnonymous(
-                $User->getId(),
+                0,
                 (empty($nick) ? $Config->get('anonymousNick') : $nick),
                 $topic_id,
                 $post_id,

@@ -94,7 +94,7 @@ class Post extends Send
                 );
         
                 rm("/.cache/sections/*");
-                rm("/.cache/topics/{$topic_id}-*.html");
+                rm("/.cache/topics/{$topic_id}-*.php");
                 break;
             }
         }

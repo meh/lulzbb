@@ -30,5 +30,5 @@ anti-dos-times=35
 ; Forum modes
 anonymousPosting=false
 anonymousNick=Anonymous
-forumViewable=users
+forumViewable=guest
 */?>

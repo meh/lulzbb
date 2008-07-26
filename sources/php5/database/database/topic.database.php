@@ -167,7 +167,6 @@ class TopicDatabase extends DatabaseBase
             $topic_id = $this->Database->misc->getLastTopic();
             $this->Database->topic->post->add($topic_id, $title, $content, $nick);
         }
-
         
         $this->Database->section->increaseTopicsCount($parent);
 

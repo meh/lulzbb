@@ -75,6 +75,7 @@ class Config
                 default:
                 return $this->config[$config];
                 break;
+            }
         }
         else {
             return 'None';
