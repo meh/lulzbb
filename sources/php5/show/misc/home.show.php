@@ -74,11 +74,11 @@ class Home extends Show
 
             case 'topic':
             $topic_id = (int) $this->data['topic_id'];
-            $post_id  = (int) $this->data['post_id'];
             $page     = (int) $this->data['page'];
+            $post_id  = (int) $this->data['post_id'];
 
             $navigator = new Navigator('topic', $topic_id);
-            $content   = new Topic($topic_id, $post_id, $page);
+            $content   = new Topic($topic_id, $page, $post_id);
             $template  = new HomeTemplate($navigator->output().$content->output().stats());
             break;
 

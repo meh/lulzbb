@@ -33,11 +33,11 @@ $start = $time;
 require_once(SOURCE_PATH.'/show/misc/home.show.php');
 
 if (isset($_GET['forum'])) {
-    $DATA['id'] = $_REQUEST['id'];
+    $DATA['id']   = $_REQUEST['id'];
+    $DATA['page'] = $_REQUEST['page'];
 
     if (isset($_GET['section'])) {
         $DATA['section_id'] = $DATA['id'];
-        $DATA['page']       = $_REQUEST['page'];
 
         $page = new Home('section', array(
             'section_id' => $DATA['section_id'],
@@ -51,6 +51,7 @@ if (isset($_GET['forum'])) {
 
         $page = new Home('topic', array(
             'topic_id' => $DATA['topic_id'],
+            'page'     => $DATA['page'],
             'post_id'  => $DATA['post_id']
         ));
         echo $page->output();
