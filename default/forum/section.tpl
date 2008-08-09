@@ -23,7 +23,7 @@
                     <td class="count-posts"><%SECTION-POSTS-COUNT%></td>
                     <td class="last-post">
                         <Last-Info>
-                        <div><a style="white-space: pre;" href="#" onclick="showTopic('middle', <%POST-SECTION-LAST-TOPIC-ID%>, <%POST-SECTION-LAST-POST-ID%>);"><%SECTION-LAST-TOPIC-TITLE%></a> by <b><%SECTION-LAST-USER-NICK%></b></div><span><%SECTION-LAST-POST-TIME%></span></Last-Info>
+                        <div><a style="white-space: pre;" href="#" onclick="showTopic('middle', <%POST-SECTION-LAST-TOPIC-ID%>, 'last', <%POST-SECTION-LAST-POST-ID%>);"><%SECTION-LAST-TOPIC-TITLE%></a> by <b><%SECTION-LAST-USER-NICK%></b></div><span><%SECTION-LAST-POST-TIME%></span></Last-Info>
                         <No-Info>
                         <div>No topics</div>
                         </No-Info>
