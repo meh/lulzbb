@@ -46,12 +46,14 @@ require_once(MISC_PATH.'/filesystem.php');
 // Session creation.
 require_once(SOURCE_PATH.'/misc/config.class.php');
 require_once(SOURCE_PATH.'/misc/filter.class.php');
-require_once(SOURCE_PATH.'/database/database.class.php');
+
 startSession('../');
 
 $Config   = new Config;
 $Filter   = new Filter;
 $Database = new Database();
+
+require_once(SOURCE_PATH.'/database/database.php');
 
 if ($Database->exists()) {
     die('The installation has already been done.');

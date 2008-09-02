@@ -24,7 +24,6 @@
 require_once(SOURCE_PATH.'/output/output.class.php');
 require_once(SOURCE_PATH.'/cache/forum/topic.cache.php');
 require_once(SOURCE_PATH.'/show/forum/topic.show.php');
-require_once(SOURCE_PATH.'/database/database.class.php');
 
 /**
 * Topic output class.

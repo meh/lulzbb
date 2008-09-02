@@ -22,7 +22,6 @@
 */
 
 require_once(SOURCE_PATH.'/cache/cache.class.php');
-require_once(SOURCE_PATH.'/database/database.class.php');
 require_once(SOURCE_PATH.'/template/forum/section.template.php');
 
 /**

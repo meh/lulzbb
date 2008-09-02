@@ -22,7 +22,6 @@
 */
 
 require_once(SOURCE_PATH.'/misc/exception.class.php');
-require_once(SOURCE_PATH.'/database/database.class.php');
 require_once(SOURCE_PATH.'/show/misc/informative-message.show.php');
 
 /**

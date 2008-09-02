@@ -23,7 +23,6 @@
 
 require_once(SOURCE_PATH.'/show/show.class.php');
 require_once(SOURCE_PATH.'/template/forum/section.template.php');
-require_once(SOURCE_PATH.'/database/database.class.php');
 
 /**
 * Section show class.
