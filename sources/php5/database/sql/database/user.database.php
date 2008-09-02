@@ -25,7 +25,7 @@ require_once(SOURCE_PATH.'/database/sql/database.base.class.php');
 require_once(SOURCE_PATH.'/database/sql/database/user/login.database.php');
 require_once(SOURCE_PATH.'/database/sql/database/user/registration.database.php');
 require_once(SOURCE_PATH.'/database/sql/database/user/group.database.php');
-require_once(SOURCE_PATH.'/database/query/user.query.php');
+require_once(SOURCE_PATH.'/database/sql/query/user.query.php');
 
 /**
 * This class is dedicated to user stuff.

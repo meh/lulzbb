@@ -22,7 +22,7 @@
 */
 
 require_once(SOURCE_PATH.'/database/sql/database.base.class.php');
-require_once(SOURCE_PATH.'/database/query/misc.query.php');
+require_once(SOURCE_PATH.'/database/sql/query/misc.query.php');
 
 /**
 * This class is dedicated to misc stuff.

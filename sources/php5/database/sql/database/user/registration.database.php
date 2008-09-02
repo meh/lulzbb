@@ -22,7 +22,7 @@
 */
 
 require_once(SOURCE_PATH.'/database/sql/database.base.class.php');
-require_once(SOURCE_PATH.'/database/query/user/registration.query.php');
+require_once(SOURCE_PATH.'/database/sql/query/user/registration.query.php');
 
 /**
 * Registration database class.
