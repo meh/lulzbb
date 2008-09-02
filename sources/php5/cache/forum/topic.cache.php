@@ -87,7 +87,7 @@ class TopicCache extends Cache
     */
     private function __setPage ()
     {
-        $path = checkDir(ROOT_PATH."/.cache/misc/page.topic.{$this->topic_id}.txt");
+        $path = checkDir(ROOT_PATH."/.cache/misc/pages.topic.{$this->topic_id}.txt");
 
         if (is_file($path)) {
             $page       = file($path);

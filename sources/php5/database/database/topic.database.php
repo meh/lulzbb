@@ -188,9 +188,10 @@ class TopicDatabase extends DatabaseBase
     }
 
     /**
-    * Gets the posts in a topic.
+    * Gets the posts in a topic on a page.
     
     * @param    int    $topic_id    The topic id.
+    * @param    int    $page        The page to get.
     
     * @return    array    A post in each element.
     */
