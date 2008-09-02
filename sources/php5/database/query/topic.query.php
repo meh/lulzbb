@@ -115,9 +115,7 @@ QUERY;
         $topic_id = (int) $topic_id;
 
         $elementsPerPage = $Config->get('elementsPerPage');
-
         $offset = ($elementsPerPage * $page) - $elementsPerPage;
-        $limit  = $offset + $elementsPerPage;
         
         return <<<QUERY
         
@@ -145,7 +143,7 @@ QUERY;
         ORDER BY
             {$this->dbPrefix}_topic_posts.post_id
 
-        LIMIT {$offset}, {$limit}
+        LIMIT {$offset}, {$elementsPerPage}
 
 QUERY;
     }
