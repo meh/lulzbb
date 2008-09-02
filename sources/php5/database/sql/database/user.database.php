@@ -21,10 +21,10 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/database/database.base.class.php');
-require_once(SOURCE_PATH.'/database/database/user/login.database.php');
-require_once(SOURCE_PATH.'/database/database/user/registration.database.php');
-require_once(SOURCE_PATH.'/database/database/user/group.database.php');
+require_once(SOURCE_PATH.'/database/sql/database.base.class.php');
+require_once(SOURCE_PATH.'/database/sql/database/user/login.database.php');
+require_once(SOURCE_PATH.'/database/sql/database/user/registration.database.php');
+require_once(SOURCE_PATH.'/database/sql/database/user/group.database.php');
 require_once(SOURCE_PATH.'/database/query/user.query.php');
 
 /**

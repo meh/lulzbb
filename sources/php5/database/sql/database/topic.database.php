@@ -21,8 +21,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/database/database.base.class.php');
-require_once(SOURCE_PATH.'/database/database/topic/post.database.php');
+require_once(SOURCE_PATH.'/database/sql/database.base.class.php');
+require_once(SOURCE_PATH.'/database/sql/database/topic/post.database.php');
 require_once(SOURCE_PATH.'/database/query/topic.query.php');
 
 /**

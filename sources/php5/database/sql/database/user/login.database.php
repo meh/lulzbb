@@ -21,38 +21,41 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/database/database.base.class.php');
-require_once(SOURCE_PATH.'/database/query/misc.query.php');
+require_once(SOURCE_PATH.'/database/sql/database.base.class.php');
+require_once(SOURCE_PATH.'/database/query/user/login.query.php');
 
 /**
-* This class is dedicated to misc stuff.
+* This class is dedicated to login stuff.
 
 * @author cHoBi
 */
-class MiscDatabase extends DatabaseBase
+class LoginDatabase extends DatabaseBase
 {
     /**
-    * Oh noes, still the same >:3 GET IN THE CAR!
+    * Always the same, this is the way :D
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
     public function __construct ($Database)
     {
-        $query = new MiscQuery();
-        parent::__construct($Database, $query); 
+        $query = new LoginQuery();
+        parent::__construct($Database, $query);
     }
     
     /**
-    * Returns the last topic id.
+    * Checks if the username and password are right.
     
-    * @return    int    Last topic id.
+    * @param    string    $username    The username.
+    * @param    string    $password    The password... fail
+    
+    * @return    array    (id, name)
     */
-    public function getLastTopic ()
+    public function check ($username, $password)
     {
-        $query = $this->Database->sendQuery($this->Query->getLastTopic());
+        $this->Database->sendQuery($this->Query->check($username, $password));
+        $user = $this->Database->fetchArray();
 
-        $last_topic_id = mysql_fetch_row($query);
-        return $last_topic_id[0];
+        return $user['id']['RAW'];
     }
 }
 ?>

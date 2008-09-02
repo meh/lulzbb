@@ -75,7 +75,6 @@ require_once(MISC_PATH.'/misc.php');
 require_once(SOURCE_PATH.'/misc/config.class.php');
 require_once(SOURCE_PATH.'/misc/filter.class.php');
 require_once(SOURCE_PATH.'/misc/user.class.php');
-require_once(SOURCE_PATH.'/database/database.class.php');
 
 if (!sessionFileExists()) {
     createSessionFile();
@@ -122,6 +121,8 @@ $User = $_SESSION[SESSION]['user'];
 $queries = 0;
 
 if (isset($_GET['out'])) {
+    require_once(SOURCE_PATH.'/database/database.php');
+
     $Database = new Database;
 
     if (isset($_GET['forum'])) {
@@ -137,6 +138,8 @@ if (isset($_GET['out'])) {
     }
 }
 else if (isset($_GET['in'])) {
+    require_once(SOURCE_PATH.'/database/database.php');
+
     $Database = new Database;
 
     if (isset($_GET['forum'])) {
@@ -149,6 +152,8 @@ else if (isset($_GET['in'])) {
 }
 
 else if (isset($_GET['api'])) {
+    require_once(SOURCE_PATH.'/database/database.php');
+
     $Database = new Database;
 
     require(INTERFACES_PATH.'/api.php');
@@ -156,6 +161,8 @@ else if (isset($_GET['api'])) {
 
 else {
     initSessionData();
+
+    require_once(SOURCE_PATH.'/database/database.php');
 
     if (isset($_REQUEST['session'])) {
         die;

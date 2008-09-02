@@ -21,41 +21,38 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/database/database.base.class.php');
-require_once(SOURCE_PATH.'/database/query/user/login.query.php');
+require_once(SOURCE_PATH.'/database/sql/database.base.class.php');
+require_once(SOURCE_PATH.'/database/query/user/registration.query.php');
 
 /**
-* This class is dedicated to login stuff.
+* Registration database class.
 
 * @author cHoBi
 */
-class LoginDatabase extends DatabaseBase
+class RegistrationDatabase extends DatabaseBase
 {
     /**
-    * Always the same, this is the way :D
+    * Girls are evil, remember it.
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
     public function __construct ($Database)
     {
-        $query = new LoginQuery();
+        $query = new RegistrationQuery();
         parent::__construct($Database, $query);
     }
     
     /**
-    * Checks if the username and password are right.
-    
-    * @param    string    $username    The username.
-    * @param    string    $password    The password... fail
-    
-    * @return    array    (id, name)
-    */
-    public function check ($username, $password)
-    {
-        $this->Database->sendQuery($this->Query->check($username, $password));
-        $user = $this->Database->fetchArray();
+    * Register an account.
 
-        return $user['id']['RAW'];
-    }
+    * @param    string    $username    The username.
+    * @param    string    $password    The password.
+    * @param    string    $email       The email address.
+    */
+    public function exec ($username, $password, $email)
+    {
+        $this->Database->sendQuery($this->Query->exec($username, $password, $email));
+        $this->Database->user->group->addUser($username, 'Unconfirmed');
+    } 
 }
 ?>

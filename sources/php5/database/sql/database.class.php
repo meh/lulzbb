@@ -22,10 +22,10 @@
 */
 
 require_once(SOURCE_PATH.'/misc/exception.class.php');
-require_once(SOURCE_PATH.'/database/database/user.database.php');
-require_once(SOURCE_PATH.'/database/database/section.database.php');
-require_once(SOURCE_PATH.'/database/database/topic.database.php');
-require_once(SOURCE_PATH.'/database/database/misc.database.php');
+require_once(SOURCE_PATH.'/database/sql/database/user.database.php');
+require_once(SOURCE_PATH.'/database/sql/database/section.database.php');
+require_once(SOURCE_PATH.'/database/sql/database/topic.database.php');
+require_once(SOURCE_PATH.'/database/sql/database/misc.database.php');
 
 /**
 * XBAWKZ HUEG class for database communication.

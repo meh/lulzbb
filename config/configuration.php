@@ -10,6 +10,7 @@ language=en
 template=default
 
 ; Database info
+dbType=mysql
 dbUsername=The database username
 dbPassword=The username password
 dbHost=The host of the db

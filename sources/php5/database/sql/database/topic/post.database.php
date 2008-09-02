@@ -22,7 +22,7 @@
 */
 
 require_once(SOURCE_PATH.'/database/query/topic/post.query.php');
-require_once(SOURCE_PATH.'/database/database.base.class.php');
+require_once(SOURCE_PATH.'/database/sql/database.base.class.php');
 
 /**
 * This class is dedicated to post stuff.
