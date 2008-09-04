@@ -62,7 +62,13 @@ class Template
         if (ereg('^/pages/', $file)) {
             $file = preg_replace('|\.+/+|', '', $file);
             $file = preg_replace('|^/pages/|', '', $file);
-            $this->plain_text = file_get_contents(ROOT_PATH."/pages/{$file}");
+
+            if (ini_get('allow_url_fopen')) {
+                $this->plain_text = file_get_contents("http://{$_SERVER['HTTP_HOST']}".WEB_PATH."/pages/{$file}");
+            }
+            else {
+                $this->plain_text = file_get_contents(ROOT_PATH."/page/{$file}");
+            }
         }
         else {
             $this->plain_text = file_get_contents(ROOT_PATH."/templates/{$this->template['name']}/$file");

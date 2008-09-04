@@ -45,6 +45,11 @@ if ((int) VERSION == 6) {
 define('ROOT_PATH', dirname(__FILE__));
 
 /**
+* The web root path of the forum.
+*/
+define('WEB_PATH', dirname($_SERVER['PHP_SELF']));
+
+/**
 * The interfaces path.
 */
 define('INTERFACES_PATH', ROOT_PATH.'/interfaces');
