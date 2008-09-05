@@ -143,7 +143,7 @@ class Registration extends Send
             $email1 = trim($data['email1']);
             $email2 = trim($data['email2']);
         }
-        $re_email  = '|^[A-z]\w+(\.\w+)*@\w+(\.\w+)*\.[A-z]{2,4}$|i';
+        $re_email  = '|^[A-z]\w*(\.\w+)*@\w+(\.\w+)*\.[A-z]{2,4}$|i';
 
         if ($email1 != $email2) {
             $output = "The email addresses don't match.";
