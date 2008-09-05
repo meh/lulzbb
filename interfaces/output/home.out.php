@@ -57,7 +57,7 @@ if (isset($_GET['forum'])) {
         echo $page->output();
     }
     else {
-        $page = new Home('forum');
+        $page = new Home('section', array('section_id' => 0, 'page' => 1));
         echo $page->output();
     }
 }
