@@ -579,3 +579,10 @@ span.previous, span.next {
 span.first, span.last {
     font-weight: bold;
 }
+
+span.url {
+    font-size: 10px;
+}
+span.url a {
+    text-decoration: none;
+}

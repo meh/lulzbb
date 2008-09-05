@@ -4,9 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <title><%FORUM-TITLE%></title>
 
-    <link href="templates/<%TEMPLATE_NAME%>/stylesheet.css" rel="stylesheet" type="text/css">
-    <script src="sources/misc/ajax.js" type="text/javascript"></script>
-    <script src="templates/<%TEMPLATE_NAME%>/scripts/effects.js" type="text/javascript"></script>
+    <link href="<%TEMPLATE-ROOT%>/stylesheet.css" rel="stylesheet" type="text/css">
+    <script src="sources/misc/lulzBB.js" type="text/javascript"></script>
+    <script src="<%TEMPLATE-ROOT%>/scripts/effects.js" type="text/javascript"></script>
 </head>
 
 <body onload="init(<%INIT-OR-NOT%>);">
