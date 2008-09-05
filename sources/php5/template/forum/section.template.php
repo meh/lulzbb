@@ -349,6 +349,11 @@ class SectionTemplate extends Template
             $section['id']['POST'],
             $text
         );
+        $text = preg_replace(
+            '|<$SECTION-URL%>|i',
+            "/?forum&section&id={$section['id']['POST']}",
+            $text
+        );
         
         return $text;
     }
@@ -385,6 +390,11 @@ class SectionTemplate extends Template
             $text = preg_replace(
                 '|<%POST-SECTION-LAST-POST-ID%>|i',
                 $section['last_post_id']['POST'],
+                $text
+            );
+            $text = preg_replace(
+                '|<%TOPIC-URL%>|i',
+                "/?forum&topic&id={$section['last_topic_id']['POST']}",
                 $text
             );
         }
@@ -580,6 +590,12 @@ class SectionTemplate extends Template
         $text = preg_replace(
             '|<%POST-TOPIC-TITLE%>|i',
             $topic['title']['POST'],
+            $text
+        );
+
+        $text = preg_replace(
+            '|<%TOPIC-URL%>|i',
+            "/?forum&topic&id={$topic['id']['POST']}",
             $text
         );
 

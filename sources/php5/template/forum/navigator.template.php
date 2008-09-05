@@ -146,6 +146,12 @@ class NavigatorTemplate extends Template
             $text
         );
 
+        $text = preg_replace(
+            '|<%LINK-URL%>|i',
+            "/?forum&{$element['type']}&id={$element['id']}",
+            $text
+        );
+
         return $text;
     }
 }

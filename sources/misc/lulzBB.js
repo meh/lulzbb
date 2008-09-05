@@ -21,8 +21,19 @@
 * @author  cHoBi
 */
 
+function include(filename)
+{
+    var body = document.getElementsByTagName('body').item(0);
+    script = document.createElement('script');
+    script.src = filename;
+    script.type = 'text/javascript';
+    body.appendChild(script)
+}
+
 var section_id   = 0;
 var section_page = 'first';
+
+include("sources/misc/unFocus-History-p.js");
 
 function init ()
 {
@@ -208,4 +219,7 @@ function rawurlencode (value)
 
     return encoded;
 }
+
+
+
 
