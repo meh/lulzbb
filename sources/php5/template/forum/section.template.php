@@ -350,7 +350,7 @@ class SectionTemplate extends Template
             $text
         );
         $text = preg_replace(
-            '|<$SECTION-URL%>|i',
+            '|<%SECTION-URL%>|i',
             "/?forum&section&id={$section['id']['POST']}",
             $text
         );

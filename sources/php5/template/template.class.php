@@ -107,7 +107,7 @@ class Template
         );
 
         $text = preg_replace(
-            '|<%TEMPLATE-ROOT%>|i',
+            '|<%TEMPLATE-PATH%>|i',
             "templates/{$this->template['name']}",
             $text
         );
