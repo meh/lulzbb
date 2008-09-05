@@ -89,6 +89,12 @@ class Template
         $text = $this->plain_text;
 
         $text = preg_replace(
+            '|<%HOST%>|i',
+            $_SERVER['HTTP_HOST'],
+            $text
+        );
+
+        $text = preg_replace(
             '|<%FORUM-TITLE%>|i',
             $this->template['forumTitle'],
             $text

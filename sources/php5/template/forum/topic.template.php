@@ -99,6 +99,12 @@ class TopicTemplate extends Template
             $text
         );
 
+        $text = preg_replace(
+            '|<%TOPIC-URL%>|i',
+            "/?forum&topic&id={$this->topic_id}",
+            $text
+        );
+
         $this->parsed = $this->__common($text);
     }
 

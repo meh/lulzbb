@@ -126,18 +126,13 @@ class NavigatorTemplate extends Template
     */
     private function __element ($mode, $element)
     {
-        if ($mode == 'url') {
-            $text = $this->data['template']['url'];
+        $text = $this->data['template'][$mode];
 
-            $text = preg_replace(
-                '|<%LINK-ID%>|i',
-                $element['id'],
-                $text
-            );
-        }
-        else {
-            $text = $this->data['template']['last'];
-        }
+        $text = preg_replace(
+            '|<%LINK-ID%>|i',
+            $element['id'],
+            $text
+        );
 
         $text = preg_replace(
             '|<%LINK-TEXT%>|i',
