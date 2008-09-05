@@ -1,1 +1,1 @@
-<div class="navigator"><URL><a class="nav" href="#" onclick="showSection('middle', <%LINK-ID%>);"><%LINK-TEXT%></a>&nbsp;<span class="arrow">&gt;</span>&nbsp;</URL><Last><%LINK-TEXT%> [<a href="/?forum&amp;topic&amp;id=<%LINK-ID%>">URL</a>]</Last></div>
+<div class="navigator"><URL><a class="nav" href="#" onclick="showSection('middle', <%LINK-ID%>);"><%LINK-TEXT%></a>&nbsp;<span class="arrow">&gt;</span>&nbsp;</URL><Last><%LINK-TEXT%> [<a href="/?forum&amp;<%LINK-TYPE%>&amp;id=<%LINK-ID%>">URL</a>]</Last></div>
