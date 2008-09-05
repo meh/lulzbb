@@ -162,9 +162,7 @@ QUERY;
         $section_id = (int) $section_id;
 
         $elementsPerPage = $Config->get('elementsPerPage');
-
-        $offset = ($elementsPerPage * $page) - $elementsPerPage;
-        $limit  = $offset + $elementsPerPage;
+        $offset          = ($elementsPerPage * $page) - $elementsPerPage;
 
         return <<<QUERY
         
@@ -199,7 +197,7 @@ QUERY;
 
         DESC
 
-        LIMIT {$offset}, {$limit}
+        LIMIT {$offset}, {$elementsPerPage}
         
 QUERY;
     }
