@@ -33,13 +33,13 @@ class NavigatorTemplate extends Template
     /**
     * Initialize the data.
     
-    * @param    array    $data    The elements.
+    * @param    array    $elements    The elements.
     */
-    public function __construct ($data)
+    public function __construct ($elements)
     {
         parent::__construct('forum/navigator.tpl');
         
-        $this->data['elements'] = $data;
+        $this->data['elements'] = $elements;
         
         $this->__parse();
     }
@@ -137,6 +137,12 @@ class NavigatorTemplate extends Template
         $text = preg_replace(
             '|<%LINK-TEXT%>|i',
             $element['name']['HTML'],
+            $text
+        );
+
+        $text = preg_replace(
+            '|<%LINK-TYPE%>|i',
+            $element['type'],
             $text
         );
 

@@ -82,6 +82,14 @@ class NavigatorShow extends Show
                 $parents = $Database->topic->getNavigator($id, $option);
                 break;
             }
+
+            foreach ($parents as $key => $element) {
+                $parents[$key]['type'] = 'section';
+            }
+
+            if ($type == 'topic') {
+                $parents[count($parents)-1]['type'] = 'topic';
+            }
         }
         catch (lulzException $e) {
             die($e->getMessage());
