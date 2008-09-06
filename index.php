@@ -69,6 +69,8 @@ define('SOURCE_PATH', ROOT_PATH.'/sources/php'.((int) VERSION));
 */
 define('MISC_PATH', ROOT_PATH.'/sources/misc');
 
+require('install/functions.php');
+checkInstall();
 // Misc sources.
 require_once(MISC_PATH.'/session.php');
 require_once(MISC_PATH.'/filesystem.php');
