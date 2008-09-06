@@ -69,8 +69,6 @@ define('SOURCE_PATH', ROOT_PATH.'/sources/php'.((int) VERSION));
 */
 define('MISC_PATH', ROOT_PATH.'/sources/misc');
 
-require('install/functions.php');
-checkInstall();
 // Misc sources.
 require_once(MISC_PATH.'/session.php');
 require_once(MISC_PATH.'/filesystem.php');
@@ -175,9 +173,17 @@ else {
     
     $Database = new Database;
 
+    $modules = glob('modules/*');
+    foreach ($modules as $module) {
+        if (is_dir($module)) {
+            include("{$module}/index.php");
+        }
+    }
+
     if (!isset($_REQUEST['page'])) {
         $_REQUEST['page'] = $Config->get('homePage');
     }
     require(INTERFACES_PATH.'/output/home.out.php');
 }
+
 ?>
