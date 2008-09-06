@@ -1,0 +1,7 @@
+<?php die();/*
+<configuration>
+    
+    
+
+</configuration>
+*/?>
