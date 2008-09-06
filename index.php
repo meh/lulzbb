@@ -183,6 +183,7 @@ else {
     $modules = glob('modules/*');
     foreach ($modules as $module) {
         if (is_dir($module)) {
+            define('MODULE_NAME', str_replace('modules/', '', $module));
             include("{$module}/index.php");
         }
     }
