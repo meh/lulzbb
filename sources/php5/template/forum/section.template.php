@@ -103,6 +103,12 @@ class SectionTemplate extends Template
             $text
         );
 
+        $text = preg_replace(
+            '|<%SECTION-URL%>|i',
+            "?forum&section&id={$this->section_id}",
+            $text
+        );
+
         $this->parsed = $this->__common($text);
     }
 
@@ -351,7 +357,7 @@ class SectionTemplate extends Template
         );
         $text = preg_replace(
             '|<%SECTION-URL%>|i',
-            "/?forum&section&id={$section['id']['POST']}",
+            "?forum&section&id={$section['id']['POST']}",
             $text
         );
         
@@ -394,7 +400,7 @@ class SectionTemplate extends Template
             );
             $text = preg_replace(
                 '|<%TOPIC-URL%>|i',
-                "/?forum&topic&id={$section['last_topic_id']['POST']}",
+                "?forum&topic&id={$section['last_topic_id']['POST']}",
                 $text
             );
         }
@@ -595,7 +601,7 @@ class SectionTemplate extends Template
 
         $text = preg_replace(
             '|<%TOPIC-URL%>|i',
-            "/?forum&topic&id={$topic['id']['POST']}",
+            "?forum&topic&id={$topic['id']['POST']}",
             $text
         );
 

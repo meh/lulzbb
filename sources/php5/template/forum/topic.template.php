@@ -101,7 +101,7 @@ class TopicTemplate extends Template
 
         $text = preg_replace(
             '|<%TOPIC-URL%>|i',
-            "/?forum&topic&id={$this->topic_id}",
+            "?forum&topic&id={$this->topic_id}",
             $text
         );
 

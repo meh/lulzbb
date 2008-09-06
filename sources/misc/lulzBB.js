@@ -23,11 +23,11 @@
 
 function include(filename)
 {
-    var body = document.getElementsByTagName('body').item(0);
+    var head = document.getElementsByTagName('head').item(0);
     script = document.createElement('script');
     script.src = filename;
     script.type = 'text/javascript';
-    body.appendChild(script)
+    head.appendChild(script)
 }
 
 var section_id   = 0;
@@ -112,6 +112,7 @@ function showPage (show_id, page)
 {
     GET(show_id, '?out&page='+page);
 }
+
 function showContent (show_id, page)
 {
     GET(show_id, 'pages/'+page);
