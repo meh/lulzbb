@@ -29,12 +29,15 @@
 class Config
 {
     private $config;
+    private $parsedFiles;
     
     /**
     * Reads the configuration file and initializes the array with the values.
     */
     public function __construct ()
     {
+        $this->parsedFiles = array();
+
         $this->parseFile(ROOT_PATH.'/config/configuration.php');
     }
 
@@ -45,6 +48,12 @@ class Config
     */
     public function parseFile ($fileName)
     {
+        if ($this->isParsed($fileName)) {
+            return;
+        }
+
+        array_push($this->parsedFiles, realpath($fileName));
+
         $file = file($fileName);
         array_pop($file);
         array_shift($file);
@@ -66,6 +75,17 @@ class Config
                 $this->config[$element->nodeName] = $element->nodeValue;
             }
         }
+    }
+
+    public function isParsed ($fileName)
+    {
+        foreach ($this->parsedFiles as $parsed) {
+            if (realpath($fileName) == $parsed) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

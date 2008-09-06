@@ -50,6 +50,11 @@ define('ROOT_PATH', dirname(__FILE__));
 define('WEB_PATH', dirname($_SERVER['PHP_SELF']));
 
 /**
+* The modules path.
+*/
+define('MODULES_PATH', ROOT_PATH.'/modules');
+
+/**
 * The interfaces path.
 */
 define('INTERFACES_PATH', ROOT_PATH.'/interfaces');
