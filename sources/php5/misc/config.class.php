@@ -35,20 +35,35 @@ class Config
     */
     public function __construct ()
     {
-        $data = file(ROOT_PATH.'/config/configuration.php');
+        $this->parseFile(ROOT_PATH.'/config/configuration.php');
+    }
 
-        foreach ($data as $line) {
-            if (preg_match('/^(^[\s]?[;])|^(^([\s]+))$|^([\w]+=[\w]+)/', $line)) {
-                $line = split('=', $line);
+    /**
+    * Parse an XML configuration file.
 
-                if (count($line) > 1) {
-                    $this->config[$line[0]]
-                        = ereg_replace(
-                              '(;.*$)',
-                              '',
-                              trim($line[1])
-                          );
-                }
+    * @param    string    $fileName    The file to read.
+    */
+    public function parseFile ($fileName)
+    {
+        $file = file($fileName);
+        array_pop($file);
+        array_shift($file);
+        $file = join("\n", $file);
+        
+        return $this->parseString($file);
+    }
+
+    public function parseString ($string)
+    {
+        $dom = dom_import_simplexml(simplexml_load_string($string))->ownerDocument;
+
+        $configuration = $dom->firstChild;
+
+        for ($i = 0; $i < $configuration->childNodes->length; $i++) {
+            $element = $configuration->childNodes->item($i);
+
+            if ($element->nodeType == XML_ELEMENT_NODE) {
+                $this->config[$element->nodeName] = $element->nodeValue;
             }
         }
     }
@@ -78,39 +93,7 @@ class Config
             }
         }
         else {
-            return 'None';
-        }
-    }
-
-    /**
-    * Sets the template to be used.
-
-    * @todo Rewrite this because it's from the 0.1.0 Misc.
-    */
-    public function setTemplate ($templateName)
-    {
-        $template = ROOT_PATH.'/templates/'.$templateName; // New template name
-        $oldTemplate = $this->getTemplate(); // Old template name
-
-        if (is_dir($template)) {
-            if (is_file($template.'/template.cfg')) {
-                $this->config['template'] = $templateName;
-                $data = file(ROOT_PATH.'/config/configuration.php');
-
-                // Insert lines in an array except the template
-                foreach ($data as $n => $line) {
-                    if (ereg($oldTemplate, $line)) {
-                        $data[$n] = "template=".$templateName."\n";
-                    }
-                }
-
-                $fp = fopen('config/lulz.config', 'w');
-                foreach($data as $n => $line) {
-                    fwrite($fp, $line);
-                }
-
-                $_SESSION['config']['template'] = $templateName;
-            }
+            return null;
         }
     }
 }
