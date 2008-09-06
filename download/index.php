@@ -22,7 +22,7 @@
 * @author cHoBi
 */
 
-$Config->parseFile(MODULES_PATH.'/download/config/configuration.php');
+$Config->parseFile(MODULES_PATH.'/'.MODULE_NAME.'/config/configuration.php');
 
 if (isset($_GET['download'])) {
     die('YAY');
