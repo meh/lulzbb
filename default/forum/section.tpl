@@ -16,14 +16,14 @@
             <Section-Content>
                 <tr>
                     <td class="section">
-                        <div class="section-title"><a href="#" class="section-title"  onclick="showSection('middle', <%POST-SECTION-ID%>);"><%SECTION-TITLE%></a> <span class="url">[<a href="<%SECTION-URL%>">URL</a>]</span></div>
+                        <div class="section-title"><a href="<%SECTION-URL%>" class="section-title"  onclick="showSection('middle', <%POST-SECTION-ID%>); return false;"><%SECTION-TITLE%></a> <span class="url">[<a href="<%SECTION-URL%>">URL</a>]</span></div>
                         <span class="section-subtitle"><%SECTION-SUBTITLE%></span>
                     </td>
                     <td class="count-topics"><%SECTION-TOPICS-COUNT%></td>
                     <td class="count-posts"><%SECTION-POSTS-COUNT%></td>
                     <td class="last-post">
                         <Last-Info>
-                        <div><a style="white-space: pre;" href="#" onclick="showTopic('middle', <%POST-SECTION-LAST-TOPIC-ID%>, 'last', <%POST-SECTION-LAST-POST-ID%>);"><%SECTION-LAST-TOPIC-TITLE%></a> <span class="url">[<a href="<%TOPIC-URL%>">URL</a>]</span> by <b><%SECTION-LAST-USER-NICK%></b></div><span><%SECTION-LAST-POST-TIME%></span></Last-Info>
+                        <div><a style="white-space: pre;" href="<%TOPIC-URL%>" onclick="showTopic('middle', <%POST-SECTION-LAST-TOPIC-ID%>, 'last', 'last'); return false;"><%SECTION-LAST-TOPIC-TITLE%></a> <span class="url">[<a href="<%TOPIC-URL%>">URL</a>]</span> by <b><%SECTION-LAST-USER-NICK%></b></div><span><%SECTION-LAST-POST-TIME%></span></Last-Info>
                         <No-Info>
                         <div>No topics</div>
                         </No-Info>
@@ -56,7 +56,7 @@
             <tr class="normal" id="topic<%TOPIC-ID%>">
                 <td class="topic">
                     <div class="topic-title">
-                        <a href="#" onclick="showTopic('middle', <%POST-TOPIC-ID%>);"><span class="topic-title"><%TOPIC-TITLE%></span></a> <span class="url">[<a href="<%TOPIC-URL%>">URL</a>]</span></div>
+                        <a href="<%TOPIC-URL%>" onclick="showTopic('middle', <%POST-TOPIC-ID%>); return false;"><span class="topic-title"><%TOPIC-TITLE%></span></a> <span class="url">[<a href="<%TOPIC-URL%>">URL</a>]</span></div>
                     <span class="topic-subtitle"><%TOPIC-SUBTITLE%></span>
                 </td>
                 <td class="author"><%TOPIC-AUTHOR%></td>
