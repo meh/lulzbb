@@ -147,6 +147,7 @@ if (isset($_GET['out'])) {
         require(INTERFACES_PATH.'/output/misc.out.php');
     }
 }
+
 else if (isset($_GET['in'])) {
     require_once(SOURCE_PATH.'/database/database.php');
 

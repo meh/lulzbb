@@ -62,13 +62,13 @@ QUERY;
 
     public function getPages($section_id) {
         global $Config;
-        $section_id      = (int) $section_id;
-        $elementsPerPage = (int) $Config->get('elementsPerPage');
+        $section_id    = (int) $section_id;
+        $topicsPerPage = (int) $Config->get('topicsPerPage');
 
         return <<<QUERY
 
         SELECT
-            CEIL(COUNT(id)/{$elementsPerPage})
+            CEIL(COUNT(id)/{$topicsPerPage})
 
         FROM
             {$this->dbPrefix}_topics
@@ -161,8 +161,8 @@ QUERY;
         global $Config;
         $section_id = (int) $section_id;
 
-        $elementsPerPage = $Config->get('elementsPerPage');
-        $offset          = ($elementsPerPage * $page) - $elementsPerPage;
+        $topicsPerPage = $Config->get('topicsPerPage');
+        $offset        = ($topicsPerPage * $page) - $topicsPerPage;
 
         return <<<QUERY
         
@@ -197,7 +197,7 @@ QUERY;
 
         DESC
 
-        LIMIT {$offset}, {$elementsPerPage}
+        LIMIT {$offset}, {$topicsPerPage}
         
 QUERY;
     }

@@ -25,7 +25,8 @@ Remember to modify the informations about db connection and forum name
     <titleMinLength>3</titleMinLength>
     <titleMaxLength>30</titleMaxLength>
     <contentMinLength>5</contentMinLength>
-    <elementsPerPage>15</elementsPerPage>
+    <topicsPerPage>25</topicsPerPage>
+    <postsPerPage>15</postsPerPage>
 
     <!-- Other info -->
     <anti-dos-seconds>2</anti-dos-seconds>

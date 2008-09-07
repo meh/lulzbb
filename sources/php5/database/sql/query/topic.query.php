@@ -114,8 +114,8 @@ QUERY;
         global $Config;
         $topic_id = (int) $topic_id;
 
-        $elementsPerPage = $Config->get('elementsPerPage');
-        $offset = ($elementsPerPage * $page) - $elementsPerPage;
+        $postsPerPage = $Config->get('postsPerPage');
+        $offset       = ($postsPerPage * $page) - $postsPerPage;
         
         return <<<QUERY
         
@@ -143,7 +143,7 @@ QUERY;
         ORDER BY
             {$this->dbPrefix}_topic_posts.post_id
 
-        LIMIT {$offset}, {$elementsPerPage}
+        LIMIT {$offset}, {$postsPerPage}
 
 QUERY;
     }
@@ -366,13 +366,13 @@ QUERY;
 
     public function getPages($topic_id) {
         global $Config;
-        $topic_id        = (int) $topic_id;
-        $elementsPerPage = (int) $Config->get('elementsPerPage');
+        $topic_id     = (int) $topic_id;
+        $postsPerPage = (int) $Config->get('postsPerPage');
 
         return <<<QUERY
 
         SELECT
-            CEIL(COUNT(post_id)/{$elementsPerPage})
+            CEIL(COUNT(post_id)/{$postsPerPage})
 
         FROM
             {$this->dbPrefix}_topic_posts
