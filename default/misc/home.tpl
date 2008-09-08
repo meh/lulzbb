@@ -7,10 +7,6 @@
     <link href="<%TEMPLATE-PATH%>/stylesheet.css" rel="stylesheet" type="text/css">
     <script src="sources/misc/lulzBB.js" type="text/javascript"></script>
     <script src="<%TEMPLATE-PATH%>/scripts/effects.js" type="text/javascript"></script>
-
-    <script>
-    document.write("<style>span.url { display: none; }</style>");
-    </script>
 </head>
 
 <body onload="init(<%INIT-OR-NOT%>);">
