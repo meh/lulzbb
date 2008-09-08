@@ -1,11 +1,3 @@
-/* lulzBB *****************
- * Author : cHoBi
- * |- MSN  : chobi@unlogical.net
- * `- eMail: chobi.noob@gmail.com
- *
- * License: GPLv3
- *************************/
-
 function register(option) {
     switch(option) {
         case 'username':
