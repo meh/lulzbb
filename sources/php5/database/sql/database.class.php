@@ -123,8 +123,8 @@ class Database
         
         foreach($array as $key => $element) {
             $result[$key]['RAW']  = $Filter->SQLclean($element);
-            $result[$key]['HTML'] = $Filter->HTML_SQLclean($element);
-            $result[$key]['POST'] = $Filter->POST_SQLclean($element);
+            $result[$key]['HTML'] = $Filter->HTML($element);
+            $result[$key]['POST'] = $Filter->POST($element);
         }
 
         return $result;

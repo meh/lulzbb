@@ -45,11 +45,12 @@ class Filter
 
     * @return    string    The filtered string.
     */
-    public function HTML ($string)
+    public function HTML ($string, $mode = 'out')
     {
-        if ($this->magic_gpc) {
+        if ($this->magic_gpc && $mode == 'in') {
             $string = Filter::SQLclean($string);
         }
+
         $string = htmlentities($string, ENT_QUOTES, 'UTF-8');
         $string = str_replace("\t", str_repeat('&nbsp;', 4), $string);
         
@@ -126,19 +127,6 @@ class Filter
     public function POSTclean ($string)
     {
         $string = rawurldecode($string);
-        return $string;
-    }
-
-    /**
-    * SQL cleaned and HTML filtered.
-
-    * @param    string    $string    The string to filter.
-
-    * @return    string    The filtered string.
-    */
-    public function HTML_SQLclean ($string)
-    {
-        $string = Filter::HTML(Filter::SQLclean($string));
         return $string;
     }
 

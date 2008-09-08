@@ -23,9 +23,9 @@
 
 function include(filename)
 {
-    var head = document.getElementsByTagName('head').item(0);
-    script = document.createElement('script');
-    script.src = filename;
+    var head    = document.getElementsByTagName('head').item(0);
+    script      = document.createElement('script');
+    script.src  = filename;
     script.type = 'text/javascript';
     head.appendChild(script)
 }
@@ -197,18 +197,6 @@ function getContent (id)
     return document.getElementById(id).value;
 }
 
-function urlencode (value)
-{
-    var encoded = document.getElementById(value).value;
-    encoded = encoded.replace(/\?/g, '%3F');
-    encoded = encoded.replace(/=/g,  '%3D');
-    encoded = encoded.replace(/&/g,  '%26');
-    encoded = encoded.replace(/\n/g, '%0A');
-    encoded = encoded.replace(/ /g,  '%20');
-
-    return encoded;
-}
-
 function rawurlencode (value)
 {
     var encoded = value;
@@ -217,10 +205,15 @@ function rawurlencode (value)
     encoded = encoded.replace(/&/g,  '%26');
     encoded = encoded.replace(/\n/g, '%0A');
     encoded = encoded.replace(/ /g,  '%20');
+    encoded = encoded.replace(/\+/g, '%2B');
 
     return encoded;
 }
 
+function urlencode (value)
+{
+    var encoded = document.getElementById(value).value;
 
-
+    return rawurlencode(encoded);
+}
 
