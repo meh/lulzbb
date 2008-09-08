@@ -51,12 +51,10 @@ class Section extends Output
         else if ($page == 'last') {
             $page = $this->__getPages($section_id);
         }
-        else {
-            $page = (int) $page;
-
-            if ($page < 1) {
-                $page = 1;
-            }
+            
+        $page = (int) $page;
+        if ($page < 1) {
+            $page = 1;
         }
         
         try {
