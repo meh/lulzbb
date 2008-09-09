@@ -45,13 +45,13 @@ class SectionGroupDatabase extends DatabaseBase
     /**
     * Says if the group exists or not.
 
-    * @param    int    $group_id    The section id.
+    * @param    int    $parent    The section id.
 
     * @return    bool    True if it exists, false if not.
     */
-    public function exists ($group_id)
+    public function exists ($parent)
     {
-        $this->Database->sendQuery($this->Query->exists($group_id));
+        $this->Database->sendQuery($this->Query->exists($parent));
         $section = $this->Database->fetchArray();
 
         if (empty($section)) {
@@ -77,13 +77,13 @@ class SectionGroupDatabase extends DatabaseBase
     /**
     * Gets the heaviest section in the group.
 
-    * @param    int    $group_id    The group id.
+    * @param    int    $parent    The group id.
 
     * @return    int    The heaviest section in the group.
     */
-    public function heaviest ($group_id)
+    public function heaviest ($parent)
     {
-        $this->database->sendQuery($this->Query->heaviest($group_id));
+        $this->database->sendQuery($this->Query->heaviest($parent));
         $section = $this->database->fetchArray();
 
         return $section['id']['RAW'];
@@ -92,13 +92,13 @@ class SectionGroupDatabase extends DatabaseBase
     /**
     * Gets the lightest section in the group.
 
-    * @param    int    $group_id    The group id.
+    * @param    int    $parent    The group id.
 
     * @return    int    The lightest section in the group.
     */
-    public function lightest ($group_id)
+    public function lightest ($parent)
     {
-        $this->database->sendQuery($this->Query->lightest($group_id));
+        $this->database->sendQuery($this->Query->lightest($parent));
         $section = $this->database->fetchArray();
 
         return $section['id']['RAW'];
@@ -107,13 +107,13 @@ class SectionGroupDatabase extends DatabaseBase
     /**
     * Gets the group's parent id.
 
-    * @param    int    $group_id    The group id.
+    * @param    int    $parent    The group id.
 
     * @return    int    The parent id.
     */
-    public function getParent ($group_id)
+    public function getParent ($parent)
     {
-        $this->Database->sendQuery($this->Query->getParent($group_id));
+        $this->Database->sendQuery($this->Query->getParent($parent));
         $parent = $this->Database->fetchArray();
 
         return $parent['parent']['RAW'];
@@ -122,13 +122,13 @@ class SectionGroupDatabase extends DatabaseBase
     /**
     * Gets the section's title.
     
-    * @param    int    $group_id    The section id.
+    * @param    int    $parent    The section id.
     
     * @return    string    The section title. (RAW, HTML, POST)
     */
-    public function getName ($group_id)
+    public function getName ($parent)
     {
-        $this->Database->sendQuery($this->Query->getName($group_id));
+        $this->Database->sendQuery($this->Query->getName($parent));
         $result = $this->Database->fetchArray();
 
         if (!$result) {
@@ -141,13 +141,13 @@ class SectionGroupDatabase extends DatabaseBase
     /**
     * Gets the sections in a group.
     
-    * @param    int    $group_id    The group id, also, cocks.
+    * @param    int    $parent    The group id, also, cocks.
     
     * @return    array    A section in each element :D
     */
-    public function getSections ($group_id)
+    public function getSections ($parent)
     {
-        $this->Database->sendQuery($this->Query->getSections($group_id));
+        $this->Database->sendQuery($this->Query->getSections($parent));
 
         $sections = array();
         while ($section = $this->Database->fetchArray()) {

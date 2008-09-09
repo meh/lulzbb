@@ -26,20 +26,20 @@
 /**
 * Adds a section.
 
-* @param    int       $group_id    The group where to add the section.
+* @param    int       $parent    The group where to add the section.
 * @param    int       $weight      The section's weight.
 * @param    string    $title       The section's title.
 * @param    string    $subtitle    The section's subtitle.
 */
-function add_section ($group_id, $weight, $title, $subtitle = '')
+function add_section ($parent, $weight, $title, $subtitle = '')
 {
     global $Database;
 
-    if (!isset($group_id) or !isset($weight) or empty($title)) {
+    if (!isset($parent) or !isset($weight) or empty($title)) {
         die('Not enough parameters.');
     }
 
-    $Database->section->add($group_id, $weight, $title, $subtitle);
+    $Database->section->add($parent, $weight, $title, $subtitle);
     rm('/.cache/sections/*');
 }
 

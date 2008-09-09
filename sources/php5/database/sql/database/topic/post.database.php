@@ -74,7 +74,6 @@ class PostDatabase extends DatabaseBase
         }
         else {
             $this->Database->sendQuery($this->Query->addAnonymous(
-                0,
                 (empty($nick) ? $Config->get('anonymousNick') : $nick),
                 $topic_id,
                 $post_id,

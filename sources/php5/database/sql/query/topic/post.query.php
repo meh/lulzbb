@@ -62,9 +62,8 @@ class PostQuery extends Query {
 QUERY;
     }
 
-    public function addAnonymous($user_id, $user_name, $topic_id, $post_id, $bbcode, $title, $content) {
+    public function addAnonymous($user_name, $topic_id, $post_id, $bbcode, $title, $content) {
         global $Filter;
-        $user_id   = (int) $user_id;
         $user_name = $Filter->SQL($user_name);
         $topic_id  = (int) $topic_id;
         $post_id   = (int) $post_id;
@@ -81,7 +80,7 @@ QUERY;
             VALUES(
                 {$topic_id},
                 {$post_id},
-                {$user_id},
+                0,
                 "{$user_name}",
                 {$bbcode},
                 NOW(),

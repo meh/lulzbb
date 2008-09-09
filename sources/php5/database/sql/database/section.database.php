@@ -55,13 +55,13 @@ class SectionDatabase extends DatabaseBase
     * @param    string    $title       The section's title.
     * @param    string    $subtitle    The section's subtitle.
     */
-    public function add ($group_id, $weight, $title, $subtitle)
+    public function add ($parent, $weight, $title, $subtitle)
     {
         if (empty($weight)) {
-            $weight = $this->group->heaviest($group_id)+1;
+            $weight = $this->group->heaviest($parent)+1;
         }
 
-        $this->Database->sendQuery($this->Query->add($group_id, $weight, $title, $subtitle));
+        $this->Database->sendQuery($this->Query->add($parent, $weight, $title, $subtitle));
     }
 
     /**

@@ -64,6 +64,7 @@ $dbPrefix = $Config->get('dbPrefix');
 $Database->sendQuery('CREATE TABLE '.$dbPrefix.'_section_groups(
 id INT UNSIGNED NOT NULL auto_increment,
 parent INT UNSIGNED,
+old_parent INT UNSIGNED,
 weight INT,
 name TINYTEXT,
 
@@ -71,7 +72,8 @@ PRIMARY KEY(id))');
 
 $Database->sendQuery('CREATE TABLE '.$dbPrefix.'_sections(
 id INT UNSIGNED NOT NULL auto_increment,
-group_id INT UNSIGNED NOT NULL,
+parent INT UNSIGNED NOT NULL,
+old_parent INT UNSIGNED,
 weight INT,
 title TINYTEXT,
 subtitle TINYTEXT,
@@ -90,8 +92,9 @@ PRIMARY KEY(id))');
 
 $Database->sendQuery('CREATE TABLE '.$dbPrefix.'_topics(
 id INT UNSIGNED NOT NULL auto_increment,
-type smallINT UNSIGNED NOT NULL,
+type SMALLINT UNSIGNED NOT NULL,
 parent INT UNSIGNED NOT NULL,
+old_parent INT UNSIGNED,
 user_id INT UNSIGNED NOT NULL,
 user_name TINYTEXT,
 title TINYTEXT NOT NULL,
@@ -194,7 +197,7 @@ VALUES (0,      1,      "Sections")
 ');
 
 $Database->sendQuery('INSERT INTO '.$dbPrefix.'_sections
-       (group_id, weight, title,          subtitle)
+       (parent,   weight, title,          subtitle)
 VALUES (1,        1,      "Main section", "Main section subtitle.")');
 
 if ($error = mysql_error()) {

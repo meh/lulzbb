@@ -168,13 +168,28 @@ QUERY;
         
         INSERT
             INTO {$this->dbPrefix}_topics
+
+            (
+                {$this->dbPrefix}_topics.type,
+                {$this->dbPrefix}_topics.parent,
+                {$this->dbPrefix}_topics.user_id,
+                {$this->dbPrefix}_topics.title,
+                {$this->dbPrefix}_topics.subtitle,
+
+                {$this->dbPrefix}_topics.count_posts,
+                {$this->dbPrefix}_topics.count_views,
+
+                {$this->dbPrefix}_topics.last_post_id,
+                {$this->dbPrefix}_topics.last_post_time,
+                {$this->dbPrefix}_topics.last_user_id,
+                {$this->dbPrefix}_topics.last_user_name
+            )
+
             
             VALUES(
-                NULL,
                 {$topic_type},
                 {$parent},
                 {$user_id},
-                NULL,
                 "{$title}",
                 {$subtitle},
 
@@ -190,17 +205,15 @@ QUERY;
 QUERY;
     }
 
-    public function addAnonymous($user_id, $user_name, $topic_type, $parent, $title, $subtitle) {
+    public function addAnonymous($user_name, $topic_type, $parent, $title, $subtitle) {
         global $Filter;
-        $user_id    = (int) $user_id;
+        $user_name  = $Filter->SQL($user_name);
         $topic_type = (int) $topic_type;
         $parent     = (int) $parent;
         $title      = $Filter->SQL($title);
         $subtitle   = '"'.$Filter->SQL_HTMLclean($subtitle).'"';
 
         $last_post_id   = (int) 1;
-        $last_user_id   = (int) $user_id;
-        $last_user_name = $Filter->SQL($user_name);
 
         if (preg_match('/^""$/', $subtitle)) {
             $subtitle = 'NULL';
@@ -210,13 +223,28 @@ QUERY;
         
         INSERT
             INTO {$this->dbPrefix}_topics
+
+            (
+                {$this->dbPrefix}_topics.type,
+                {$this->dbPrefix}_topics.parent,
+                {$this->dbPrefix}_topics.user_id,
+                {$this->dbPrefix}_topics.user_name,
+                {$this->dbPrefix}_topics.title,
+                {$this->dbPrefix}_topics.subtitle,
+
+                {$this->dbPrefix}_topics.count_posts,
+                {$this->dbPrefix}_topics.count_views,
+
+                {$this->dbPrefix}_topics.last_post_id,
+                {$this->dbPrefix}_topics.last_post_time,
+                {$this->dbPrefix}_topics.last_user_name
+            )
             
             VALUES(
-                NULL,
                 {$topic_type},
                 {$parent},
-                {$user_id},
-                "{$last_user_name}",
+                0,
+                "{$user_name}",
                 "{$title}",
                 {$subtitle},
 
@@ -225,8 +253,8 @@ QUERY;
 
                 {$last_post_id},
                 NOW(),
-                {$last_user_id},
-                "{$last_user_name}"
+                0,
+                "{$user_name}"
             )
 
 QUERY;

@@ -33,8 +33,8 @@ class SectionGroupQuery extends Query {
         parent::__construct();
     }
 
-    public function exists($group_id) {
-        $group_id = (int) $group_id;
+    public function exists($parent) {
+        $parent = (int) $parent;
 
         return <<<QUERY
 
@@ -45,7 +45,7 @@ class SectionGroupQuery extends Query {
             {$this->dbPrefix}_section_groups
 
         WHERE
-            {$this->dbPrefix}_section_groups.id = {$group_id}
+            {$this->dbPrefix}_section_groups.id = {$parent}
 
 QUERY;
     }
@@ -74,8 +74,8 @@ QUERY;
 QUERY;
     }
 
-    public function heaviest($group_id) {
-        $group_id = (int) $group_id;
+    public function heaviest($parent) {
+        $parent = (int) $parent;
 
         return <<<QUERY
 
@@ -86,7 +86,7 @@ QUERY;
             {$this->dbPrefix}_sections
 
         WHERE
-            {$this->dbPrefix}_sections.group_id = {$group_id}
+            {$this->dbPrefix}_sections.parent = {$parent}
 
         ORDER BY
             {$this->dbPrefix}_sections.weight
@@ -98,8 +98,8 @@ QUERY;
 QUERY;
     }
 
-    public function lightest($group_id) {
-        $group_id = (int) $group_id;
+    public function lightest($parent) {
+        $parent = (int) $parent;
 
         return <<<QUERY
 
@@ -110,7 +110,7 @@ QUERY;
             {$this->dbPrefix}_sections
 
         WHERE
-            {$this->dbPrefix}_sections.group_id = {$group_id}
+            {$this->dbPrefix}_sections.parent = {$parent}
 
         ORDER BY
             {$this->dbPrefix}_sections.weight
@@ -122,8 +122,8 @@ QUERY;
 QUERY;
     }
 
-    public function getParent($group_id) {
-        $group_id = (int) $group_id;
+    public function getParent($parent) {
+        $parent = (int) $parent;
 
         return <<<QUERY
 
@@ -134,17 +134,17 @@ QUERY;
             {$this->dbPrefix}_sections
 
         INNER JOIN {$this->dbPrefix}_section_groups
-            ON {$this->dbPrefix}_sections.group_id =
+            ON {$this->dbPrefix}_sections.parent =
                {$this->dbPrefix}_section_groups.id
 
         WHERE
-            {$this->dbPrefix}_sections.id = {$group_id}
+            {$this->dbPrefix}_sections.id = {$parent}
 
 QUERY;
     }
 
-    public function getName($group_id) {
-        $group_id = (int) $group_id;
+    public function getName($parent) {
+        $parent = (int) $parent;
 
         return <<<QUERY
 
@@ -155,19 +155,19 @@ QUERY;
             {$this->dbPrefix}_section_groups
 
         WHERE
-            {$this->dbPrefix}_section_groups.id = {$group_id}
+            {$this->dbPrefix}_section_groups.id = {$parent}
 
 QUERY;
     }
 
-    public function getSections($group_id) {
-        $group_id = (int) $group_id;
+    public function getSections($parent) {
+        $parent = (int) $parent;
 
         return <<<QUERY
         
         SELECT
             {$this->dbPrefix}_sections.id,
-            {$this->dbPrefix}_sections.group_id,
+            {$this->dbPrefix}_sections.parent,
             {$this->dbPrefix}_sections.title,
             {$this->dbPrefix}_sections.subtitle,
 
@@ -185,7 +185,7 @@ QUERY;
             {$this->dbPrefix}_sections
 
         WHERE
-            {$this->dbPrefix}_sections.group_id = {$group_id}
+            {$this->dbPrefix}_sections.parent = {$parent}
             
         ORDER BY
             {$this->dbPrefix}_sections.weight

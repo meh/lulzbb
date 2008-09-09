@@ -33,9 +33,9 @@ class SectionQuery extends Query {
         parent::__construct();
     }
 
-    public function add($group_id, $weight, $title, $subtitle) {
+    public function add($parent, $weight, $title, $subtitle) {
         global $Filter;
-        $group_id = (int) $group_id;
+        $parent = (int) $parent;
         $weight   = (int) $weight;
         $title    = $Filter->SQL($title);
         $subtitle = $Filter->SQL($subtitle);
@@ -44,14 +44,14 @@ class SectionQuery extends Query {
 
         INSERT
             INTO {$this->dbPrefix}_sections(
-                {$this->dbPrefix}_sections.group_id,
+                {$this->dbPrefix}_sections.parent,
                 {$this->dbPrefix}_sections.weight,
                 {$this->dbPrefix}_sections.title,
                 {$this->dbPrefix}_sections.subtitle
             )
 
             VALUES(
-                {$group_id},
+                {$parent},
                 {$weight},
                 "{$title}",
                 "{$subtitle}"
@@ -108,7 +108,7 @@ QUERY;
             {$this->dbPrefix}_sections
 
         INNER JOIN {$this->dbPrefix}_section_groups
-            ON {$this->dbPrefix}_sections.group_id =
+            ON {$this->dbPrefix}_sections.parent =
                {$this->dbPrefix}_section_groups.id
 
         WHERE
