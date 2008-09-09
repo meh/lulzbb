@@ -201,6 +201,7 @@ class TopicDatabase extends DatabaseBase
 
         $posts = array();
         while ($post = $this->Database->fetchArray()) {
+            $post['bbcode'] = (int) $post['bbcode'];
             array_push($posts, $post);
         }
 

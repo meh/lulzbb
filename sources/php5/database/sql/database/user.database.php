@@ -154,7 +154,7 @@ class UserDatabase extends DatabaseBase
     }
 
     /**
-    * Gets the lulzcode state.
+    * Gets the bbcode state.
 
     * @param    int    $user_id    The user id.
     */
@@ -167,7 +167,7 @@ class UserDatabase extends DatabaseBase
     }
 
     /**
-    * Sets the lulzcode state for a user.
+    * Sets the bbcode state for a user.
 
     * @param    int     $user_id    The user id.
     * @param    bool    $state      The state.

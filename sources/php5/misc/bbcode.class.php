@@ -25,8 +25,16 @@
 
 * @author cHoBi
 */
-class lulzCode
+class BBCode
 {
+    public function arrayParse ($data)
+    {
+        global $Filter;
 
+        $string = $data['RAW'];
+
+        $parsed['RAW'] = self::parse($string);
+        $parsed['HTML']
+    }
 }
 ?>

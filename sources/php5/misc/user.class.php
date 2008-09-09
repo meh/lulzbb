@@ -33,7 +33,7 @@ class User
     private $groups;
     private $session;
 
-    private $lulzcode;
+    private $bbcode;
 
     /**
     * Initialize important data, like the name and the groups.
@@ -50,7 +50,7 @@ class User
         $this->groups  = $Database->user->group->get($id);
         $this->session = session_id();
 
-        $this->lulzcode = $Database->user->getLulzCode($id);
+        $this->bbcode = $Database->user->getLulzCode($id);
     }
 
     /**
@@ -157,26 +157,26 @@ class User
     }
 
     /**
-    * Gets the lulzcode setting.
+    * Gets the bbcode setting.
 
     * @return    bool
     */
     public function getLulzCode ()
     {
-        return $this->lulzcode;
+        return $this->bbcode;
     }
 
     /**
-    * Sets the lulzcode setting.
+    * Sets the bbcode setting.
 
-    * @param    bool    $state    The lulzcode status.
+    * @param    bool    $state    The bbcode status.
     */
     public function setLulzCode ($state)
     {
         global $Database;
         $Database->user->setLulzCode($this->id, $state);
 
-        $this->lulzcode = $state;
+        $this->bbcode = $state;
     }
 }
 ?>

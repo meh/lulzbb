@@ -21,6 +21,8 @@
 * @author  cHoBi
 */
 
+var loadingMessage = "<center>Loading...</center>";
+
 function include(filename)
 {
     var head    = document.getElementsByTagName('head').item(0);
@@ -59,7 +61,7 @@ function GET (show_id, url)
     }
     
     http.open("GET", url, true);
-    document.getElementById(show_id).innerHTML = "<center>Loading...</center>";
+    document.getElementById(show_id).innerHTML = loadingMessage;
     http.send(null);
 }
 function rawGET (url)
@@ -89,7 +91,7 @@ function POST (show_id, url, params)
     http.setRequestHeader("Content-length", params.length);
     http.setRequestHeader("Connection", "close");
 
-    document.getElementById(show_id).innerHTML = "<center>Loading...</center>";
+    document.getElementById(show_id).innerHTML = loadingMessage;
     http.send(params);
 }
 function rawPOST (url, params)

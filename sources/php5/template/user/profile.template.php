@@ -77,7 +77,7 @@ class UserProfileTemplate extends Template
         $this->icq                 = $data['icq'];
         $this->yahoo               = $data['yahoo'];
         $this->options['email']    = $data['option_email'];
-        $this->options['lulzcode'] = $data['option_lulzcode'];
+        $this->options['bbcode'] = $data['option_bbcode'];
         $this->registration_date   = $data['registration_date'];
 
         $this->__parse();

@@ -116,7 +116,7 @@ topic_id INT UNSIGNED NOT NULL,
 post_id INT UNSIGNED NOT NULL,
 user_id INT UNSIGNED NOT NULL,
 user_name TINYTEXT,
-lulzcode BOOL NOT NULL,
+bbcode BOOL NOT NULL,
 time DATETIME,
 title TINYTEXT NOT NULL,
 content LONGTEXT NOT NULL)');
@@ -146,7 +146,7 @@ icq TINYTEXT,
 yahoo TINYTEXT,
 
 option_email BOOL NOT NULL DEFAULT TRUE,
-option_lulzcode BOOL NOT NULL DEFAULT TRUE,
+option_bbcode BOOL NOT NULL DEFAULT TRUE,
 registration_date DATETIME,
 
 primary KEY(id))');

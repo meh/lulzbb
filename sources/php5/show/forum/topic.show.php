@@ -23,6 +23,7 @@
 
 require_once(SOURCE_PATH.'/show/show.class.php');
 require_once(SOURCE_PATH.'/template/forum/topic.template.php');
+require_once(SOURCE_PATH.'/misc/bbcode.class.php');
 
 /**
 * Topic show class.
@@ -72,6 +73,12 @@ class TopicShow extends Show
         }
         catch (lulzException $e) {
             die($e->getMessage());
+        }
+
+        foreach ($posts as $n => $post) {
+            if ($post['bbcode']) {
+                $post['content'] = lulzCode::arrayParse($post['content']);
+            }
         }
 
         $template = new TopicTemplate(
