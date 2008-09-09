@@ -51,9 +51,9 @@ startSession('../');
 
 $Config   = new Config;
 $Filter   = new Filter;
-$Database = new Database();
 
 require_once(SOURCE_PATH.'/database/database.php');
+$Database = new Database();
 
 if ($Database->exists()) {
     die('The installation has already been done.');

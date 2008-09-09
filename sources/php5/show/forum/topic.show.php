@@ -77,7 +77,7 @@ class TopicShow extends Show
 
         foreach ($posts as $n => $post) {
             if ($post['bbcode']) {
-                $post['content'] = lulzCode::arrayParse($post['content']);
+                $post['content'] = BBCode::arrayParse($post['content']);
             }
         }
 

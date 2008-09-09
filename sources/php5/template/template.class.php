@@ -49,6 +49,10 @@ class Template
         $this->template['forumName']  = $Config->get('forumName');
         $this->template['forumTitle'] = $Config->get('forumTitle');
         $this->template['name']       = $Config->get('template');
+
+        if (!is_dir(ROOT_PATH."/templates/{$this->template['name']}")) {
+            die("The template doesn't exist.");
+        }
         
         $this->magic = $_SESSION[SESSION]['magic'];
         

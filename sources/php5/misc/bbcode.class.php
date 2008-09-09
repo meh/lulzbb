@@ -33,8 +33,18 @@ class BBCode
 
         $string = $data['RAW'];
 
-        $parsed['RAW'] = self::parse($string);
-        $parsed['HTML']
+        $parsed['RAW']  = self::parse($string);
+        $parsed['HTML'] = $Filter->HTML($parsed['RAW']);
+        $parsed['POST'] = $Filter->POST($parsed['RAW']);
+
+        return $parsed;
+    }
+
+    public function parse ($string)
+    {
+        $parsed = $string;
+
+        return $parsed;
     }
 }
 ?>

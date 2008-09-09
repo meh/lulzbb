@@ -40,22 +40,22 @@ class lulzException extends Exception
             case 'database_connection':
             $message  = 'The database connection failed :(<br/><br/>';
             $message .= 'Did you configure the board correctly?';
-            $code = 31;
+            $code     = 31;
             break;
             
             case 'database_query':
             $message  = 'Something went wrong with a query, check the database integrity.';
-            $code = 32;
+            $code     = 32;
             break;
 
             case 'section_not_existent':
             $message = "The section doesn't exist.";
-            $code = 41;
+            $code    = 41;
             break;
 
             case 'topic_not_existent':
             $message = "The topic doesn't exist.";
-            $code = 51;
+            $code    = 51;
             break;
         }
                     
