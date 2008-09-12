@@ -148,7 +148,8 @@ class Database
             'topics_read',
             'topic_posts',
             'users',
-            'user_groups'
+            'user_groups',
+            'user_groups_users'
         );
 
         $query = $this->sendQuery('SHOW TABLES');

@@ -82,6 +82,10 @@ class Topic extends Send
             die('LOLNO');
         }
 
+        if (!$Database->section->isWriteable($parent)) {
+            throw new lulzException('section_not_writeable');
+        }
+
         try {
             // Check for data integrity, switch to give back errors messages.
             switch ($this->__checkData($parent, $title, $subtitle, $content)) {

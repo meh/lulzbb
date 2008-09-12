@@ -28,17 +28,57 @@ require_once(SOURCE_PATH.'/database/sql/query.class.php');
 *
 * @author cHoBi
 */
-class SectionQuery extends Query {
-    public function __construct() {
+class SectionQuery extends Query
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function add($parent, $weight, $title, $subtitle) {
+    public function isWriteable ($section_id)
+    {
+        $section_id = (int) $section_id;
+
+        return <<<QUERY
+
+        SELECT
+            {$this->dbPrefix}_sections.writeable
+
+        FROM
+            {$this->dbPrefix}_sections
+
+        WHERE
+            {$this->dbPrefix}_sections.id = {$section_id}
+
+QUERY;
+    }
+
+    public function isViewable ($section_id)
+    {
+        $section_id = (int) $section_id;
+
+        return <<<QUERY
+
+        SELECT
+            {$this->dbPrefix}_sections.viewable
+
+        FROM
+            {$this->dbPrefix}_sections
+
+        WHERE
+            {$this->dbPrefix}_sections.id = {$section_id}
+
+QUERY;
+    }
+
+    public function add($parent, $weight, $title, $subtitle, $writeable)
+    {
         global $Filter;
-        $parent = (int) $parent;
-        $weight   = (int) $weight;
-        $title    = $Filter->SQL($title);
-        $subtitle = $Filter->SQL($subtitle);
+        $parent    = (int) $parent;
+        $weight    = (int) $weight;
+        $title     = $Filter->SQL($title);
+        $subtitle  = $Filter->SQL($subtitle);
+        $writeable = ($writeable) ? 'TRUE' : 'FALSE';
 
         return <<<QUERY
 
@@ -47,14 +87,18 @@ class SectionQuery extends Query {
                 {$this->dbPrefix}_sections.parent,
                 {$this->dbPrefix}_sections.weight,
                 {$this->dbPrefix}_sections.title,
-                {$this->dbPrefix}_sections.subtitle
+                {$this->dbPrefix}_sections.subtitle,
+
+                {$this->dbPrefix}_sections.writeable
             )
 
             VALUES(
                 {$parent},
                 {$weight},
                 "{$title}",
-                "{$subtitle}"
+                "{$subtitle}",
+
+                {$writeable}
             )
 
 QUERY;

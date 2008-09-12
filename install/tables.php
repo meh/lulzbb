@@ -78,6 +78,9 @@ weight INT,
 title TINYTEXT,
 subtitle TINYTEXT,
 
+writeable BOOL NOT NULL DEFAULT TRUE,
+viewable BOOL NOT NULL DEFAULT TRUE,
+
 count_topics INT UNSIGNED NOT NULL DEFAULT 0,
 count_posts INT UNSIGNED NOT NULL DEFAULT 0,
 
@@ -152,17 +155,23 @@ option_email BOOL NOT NULL DEFAULT TRUE,
 option_bbcode BOOL NOT NULL DEFAULT TRUE,
 registration_date DATETIME,
 
-primary KEY(id))');
+PRIMARY KEY (id))');
 
 $Database->sendQuery('CREATE TABLE '.$dbPrefix.'_user_groups(
+id INT UNSIGNED NOT NULL auto_increment,
 name VARCHAR(150) NOT NULL,
-
-user INT UNSIGNED DEFAULT NULL,
-
 description TEXT DEFAULT NULL,
+
 level SMALLINT DEFAULT 0,
 
-UNIQUE KEY(name, user))');
+PRIMARY KEY (id))');
+
+$Database->sendQuery('CREATE TABLE '.$dbPrefix.'_user_groups_users(
+group_id INT UNSIGNED NOT NULL,
+user_id INT UNSIGNED NOT NULL,
+
+level SMALLINT DEFAULT 0)');
+
 
 // Index creation
 $Database->sendQuery('CREATE INDEX topic_id ON '.$dbPrefix.'_topics(id)');

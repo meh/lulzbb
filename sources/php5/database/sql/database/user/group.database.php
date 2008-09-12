@@ -74,7 +74,11 @@ class UserGroupDatabase extends DatabaseBase
 
         $groups = array();
         while ($group = $this->Database->fetchArray()) {
-            array_push($groups, $group['name']);
+            array_push($groups, array(
+                'id'    => $group['id'],
+                'name'  => $group['name'],
+                'level' => $group['level']
+            ));
         }
 
         return $groups;
@@ -108,8 +112,10 @@ class UserGroupDatabase extends DatabaseBase
             return false;
         }
 
-        $Database->user->group->addUser($this->getName('RAW'), $groupName);
-        $this->Database->sendQuery($this->Query->addUser($username, $group));
+        $user_id  = $this->user->getId($username);
+        $group_id = $this->getId($group);
+
+        $this->Database->sendQuery($this->Query->addUser($user_id, $group_id));
 
         return true;
     }

@@ -76,7 +76,7 @@ class SectionCache extends Cache
     {
         global $Config;
 
-        if (($this->connected || $Config->get('anonymousPosting')) && $this->section_id != 0) {
+        if (($this->connected || $Config->get('anonymousPosting')) && $this->__isWriteable($this->section_id)) {
             $template = new SectionTemplate(0,0,0,0);
             $template = $template->getTemplatePart('new_topic');
 
@@ -91,6 +91,39 @@ class SectionCache extends Cache
         }
 
         return $template;
+    }
+
+    /**
+    * Get if the section is writeable or not.
+
+    * @param    int    $section_id    The section's id.
+
+    * @return    bool    True if the section is writeable false if it's not.
+    */
+    private function __isWriteable ($section_id)
+    {
+        $fileName = checkDir(ROOT_PATH."/.cache/misc/section.writeable.{$section_id}.txt");
+        if (is_file($fileName)) {
+            $writeable = file_get_contents($fileName);
+
+            switch ($writeable) {
+                case 'true':
+                $writeable = true;
+                break;
+
+                case 'false':
+                $writeable = false;
+                break;
+            }
+        }
+        else {
+            global $Database;
+            $writeable = $Database->section->isWriteable($section_id);
+
+            file_put_contents($fileName, ($writeable) ? 'true' : 'false');
+        }
+
+        return $writeable;
     }
 
     /**

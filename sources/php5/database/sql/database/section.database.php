@@ -48,6 +48,40 @@ class SectionDatabase extends DatabaseBase
     }
 
     /**
+    * Gets if the section is writeable.
+
+    * @param    int     $section_id    The section's id.
+
+    * @return    bool    True if it's writeable false if it's not.
+    */
+    public function isWriteable ($section_id)
+    {
+        if ($section_id == 0) {
+            return false;
+        }
+
+        $this->Database->sendQuery($this->Query->isWriteable($section_id));
+        $writeable = $this->Database->fetchArray();
+
+        return (int) $writeable['writeable']['RAW'];
+    }
+
+    /**
+    * Gets if the section is viewable.
+
+    * @param    int    $section_id    The section's id.
+
+    * @return    bool    True if it's viewable false if it's not.
+    */
+    public function isViewable ($section_id)
+    {
+        $this->Database->sendQuery($this->Query->isViewable($section_id));
+        $viewable = $this->Database->fetchArray();
+
+        return (int) $viewable['viewable']['RAW'];
+    }
+
+    /**
     * Adds a section to a group.
 
     * @param    int       $group       The group id where to put the section.
@@ -55,13 +89,13 @@ class SectionDatabase extends DatabaseBase
     * @param    string    $title       The section's title.
     * @param    string    $subtitle    The section's subtitle.
     */
-    public function add ($parent, $weight, $title, $subtitle)
+    public function add ($parent, $weight, $title, $subtitle, $writeable = true)
     {
         if (empty($weight)) {
             $weight = $this->group->heaviest($parent)+1;
         }
 
-        $this->Database->sendQuery($this->Query->add($parent, $weight, $title, $subtitle));
+        $this->Database->sendQuery($this->Query->add($parent, $weight, $title, $subtitle, $writeable));
     }
 
     /**

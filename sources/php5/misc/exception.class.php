@@ -53,6 +53,11 @@ class lulzException extends Exception
             $code    = 41;
             break;
 
+            case 'section_not_writeable':
+            $message = "You can't write in this section.";
+            $code    = 42;
+            break;
+
             case 'topic_not_existent':
             $message = "The topic doesn't exist.";
             $code    = 51;

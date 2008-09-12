@@ -33,7 +33,7 @@ class GroupQuery extends Query {
         parent::__construct();
     }
 
-    public function exists($group) {
+    public function exists ($group) {
         global $Filter;
         $group = $Filter->SQL($group);
 
@@ -51,63 +51,74 @@ class GroupQuery extends Query {
 QUERY;
     }
    
-    public function get($user_id) {
-        global $Filter;
+    public function get ($user_id) {
         $user_id = (int) $user_id;
 
         return <<<QUERY
 
         SELECT
-            {$this->dbPrefix}_user_groups.name
+            {$this->dbPrefix}_user_groups.id,
+            {$this->dbPrefix}_user_groups.name,
+            {$this->dbPrefix}_user_groups.level
+
             
         FROM
-            {$this->dbPrefix}_user_groups
+            {$this->dbPrefix}_user_groups_users
+
+        INNER JOIN {$this->dbPrefix}_user_groups
+            ON {$this->dbPrefix}_user_groups.id =
+               {$this->dbPrefix}_user_groups_users.group_id
 
         WHERE
-            {$this->dbPrefix}_user_groups.user = "{$user_id}"
+            {$this->dbPrefix}_user_groups_users.user_id = {$user_id}
 
 QUERY;
     }
 
-    public function add($group, $description) {
+    public function add ($name, $description, $level) {
         global $Filter;
-        $group       = $Filter->SQL($group);
+        $name        = $Filter->SQL($name);
         $description = $Filter->SQL($description);
+        $level       = (int) $level;
 
         return <<<QUERY
 
         INSERT IGNORE
             INTO {$this->dbPrefix}_user_groups(
                 {$this->dbPrefix}_user_groups.name,
-                {$this->dbPrefix}_user_groups.description
+                {$this->dbPrefix}_user_groups.description,
+                {$this->dbPrefix}_user_groups.level
             )
 
             VALUES(
-                "{$group}",
+                "{$name}",
                 "{$description}"
+                $level
             )
 
 QUERY;
     }
 
-    public function addUser($username, $group) {
-        global $Filter;
-        $username = $Filter->SQL($username);
-        $group    = $Filter->SQL($group);
+    public function addUser($user_id, $group_id, $level) {
+        $user_id  = (int) $user_id;
+        $group_id = (int) $group_id;
+        $level    = (int) $level;
 
         return <<<QUERY
 
         INSERT IGNORE
-            INTO {$this->dbPrefix}_user_groups
+            INTO {$this->dbPrefix}_user_groups_users
             (
-                {$this->dbPrefix}_user_groups.username,
-                {$this->dbPrefix}_user_groups.name
+                {$this->dbPrefix}_user_groups_users.group_id,
+                {$this->dbPrefix}_user_groups_users.user_id,
+                {$this->dbPrefix}_user_groups_users.level
             )
 
             VALUES
             (
-                "{$username}",
-                "{$group}"
+                $group_id,
+                $user_id,
+                $level
             )
 
 QUERY;

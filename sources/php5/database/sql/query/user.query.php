@@ -28,9 +28,30 @@ require_once(SOURCE_PATH.'/database/sql/query.class.php');
 *
 * @author cHoBi
 */
-class UserQuery extends Query {
-    public function __construct() {
+class UserQuery extends Query
+{
+    public function __construct()
+    {
         parent::__construct();
+    }
+
+    public function getId ($username)
+    {
+        global $Filter;
+        $username = $Filter->SQL($username);
+
+        return <<<QUERY
+
+        SELECT
+            {$this->dbPrefix}_users.id
+
+        FROM
+            {$this->dbPrefix}_users
+
+        WHERE
+            {$this->dbPrefix}_users.name = "{$username}"
+
+QUERY;
     }
 
     public function getName($id) {

@@ -66,6 +66,8 @@ class SectionTemplate extends Template
     */
     private function __parse ()
     {
+        global $Database;
+
         $text = $this->output();
         $text = $this->__loops($text);
 
@@ -83,7 +85,7 @@ class SectionTemplate extends Template
             $text
         );
 
-        if ($this->section_id != 0) {
+        if ($Database->section->isWriteable($this->section_id)) {
             $topics = $this->__topics($this->topics);
         }
         else {

@@ -58,6 +58,26 @@ class UserDatabase extends DatabaseBase
         $this->registration = new RegistrationDatabase($Database);
         $this->group        = new UserGroupDatabase($Database);
     }
+
+    /**
+    * Gets the id from a user name.
+
+    * @param    int    $user_name    The user name.
+
+    * @return    string    The user's id.
+    */
+    public function getId ($username)
+    {
+        $this->Database->sendQuery($this->Query->getId($username));
+        $user = $this->Database->fetchArray();
+
+        if (isset($user)) {
+            return (int) $user['id']['RAW'];
+        }
+        else {
+            return false;
+        }
+    }
     
     /**
     * Gets the username of an user.
