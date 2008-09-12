@@ -1,9 +1,9 @@
 <?php
 /**
-* @package Download
+* @package PHP5
 
 * @license AGPLv3
-* Just a simple module for lulzBB.
+* lulzBB is a CMS for the lulz but it's also serious business.
 * Copyright (C) 2008 lulzGroup
 *
 * This program is free software: you can redistribute it and/or modify
@@ -18,16 +18,33 @@
 *
 * You should have received a copy of the GNU Affero General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/**
+* LulzCode implementation.
 
 * @author cHoBi
 */
+class BBCode
+{
+    public function arrayParse ($data)
+    {
+        global $Filter;
 
-define('MODULE_PATH', MODULES_PATH.'/'.MODULE_NAME);
-$Config->parseFile(MODULE_PATH.'/config/configuration.php');
+        $string = $data['RAW'];
 
-if (isset($_GET['download'])) {
-    require(MODULE_PATH.'/interfaces/output/download.out.php');
-    exit();
+        $parsed['RAW']  = self::parse($string);
+        $parsed['HTML'] = $Filter->HTML($parsed['RAW']);
+        $parsed['POST'] = $Filter->POST($parsed['RAW']);
+
+        return $parsed;
+    }
+
+    public function parse ($string)
+    {
+        $parsed = $string;
+
+        return $parsed;
+    }
 }
-
 ?>

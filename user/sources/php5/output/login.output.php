@@ -1,9 +1,10 @@
 <?php
 /**
-* @package Download
+* @package PHP5
+* @category Show
 
 * @license AGPLv3
-* Just a simple module for lulzBB.
+* lulzBB is a CMS for the lulz but it's also serious business.
 * Copyright (C) 2008 lulzGroup
 *
 * This program is free software: you can redistribute it and/or modify
@@ -18,16 +19,37 @@
 *
 * You should have received a copy of the GNU Affero General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+require_once(SOURCE_PATH.'/show/show.class.php');
+require_once(SOURCE_PATH.'/show/misc/informative-message.show.php');
+
+/**
+* Login show class.
 
 * @author cHoBi
 */
-
-define('MODULE_PATH', MODULES_PATH.'/'.MODULE_NAME);
-$Config->parseFile(MODULE_PATH.'/config/configuration.php');
-
-if (isset($_GET['download'])) {
-    require(MODULE_PATH.'/interfaces/output/download.out.php');
-    exit();
+class Login extends Show
+{
+    /**
+    * Create and show the template.
+    */
+    public function __construct ()
+    {
+        parent::__construct();
+        
+        $this->__update();
+    }
+    
+    /**
+    * Gets the template.
+    * @access private
+    */
+    protected function __update ()
+    {
+        $template = new Template('user/login.tpl');
+        
+        $this->output = $template->output();
+    }
 }
-
 ?>

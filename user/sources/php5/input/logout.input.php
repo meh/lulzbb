@@ -1,9 +1,10 @@
 <?php
 /**
-* @package Download
+* @package PHP5
+* @category Send
 
 * @license AGPLv3
-* Just a simple module for lulzBB.
+* lulzBB is a CMS for the lulz but it's also serious business.
 * Copyright (C) 2008 lulzGroup
 *
 * This program is free software: you can redistribute it and/or modify
@@ -18,16 +19,36 @@
 *
 * You should have received a copy of the GNU Affero General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+require_once(SOURCE_PATH.'/send/send.class.php');
+
+/**
+* Logout yay.
 
 * @author cHoBi
 */
+class Logout extends Send
+{
+    /**
+    * Logout.
+    */
+    public function __construct ()
+    {    
+        $this->output = $this->__send(0);
+    }
 
-define('MODULE_PATH', MODULES_PATH.'/'.MODULE_NAME);
-$Config->parseFile(MODULE_PATH.'/config/configuration.php');
+    /**
+    * Delete the user data from the session, so it's a logout :D
 
-if (isset($_GET['download'])) {
-    require(MODULE_PATH.'/interfaces/output/download.out.php');
-    exit();
+    * @return     string    The logout screen.
+    */
+    protected function __send ($data)
+    {
+        $template = new InformativeMessage('logout_successful');
+       
+        destroySession();
+        return $template->output();
+    }
 }
-
 ?>
