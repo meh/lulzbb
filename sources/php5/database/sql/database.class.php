@@ -108,10 +108,10 @@ class Database
 
     /**
     * Fetch the data from the query, filter it and put it in separated arrays,
-    * RAW is the slash stripped output, OUT is HTML filtered and POST is filtered
+    * RAW is the slash stripped output, HTML is HTML filtered and POST is filtered
     * with rawurlencode.
     
-    * @return    array    (RAW => stripslash, OUT => htmlentities, POST => rawurlencode)
+    * @return    array    (RAW => stripslash, HTML => htmlentities, POST => rawurlencode)
     */
     public function fetchArray ()
     {

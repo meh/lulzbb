@@ -24,6 +24,7 @@
 require_once(SOURCE_PATH.'/database/sql/database.base.class.php');
 require_once(SOURCE_PATH.'/database/sql/database/section/group.database.php');
 require_once(SOURCE_PATH.'/database/sql/query/section.query.php');
+require_once(SOURCE_PATH.'/cache/section.php');
 
 /**
 * This class is dedicated to section stuff.
@@ -64,8 +65,17 @@ class SectionDatabase extends DatabaseBase
             return true;
         }
         else {
-            $this->Database->sendQuery($this->Query->isLocked($section_id));
-            $locked = $this->Database->fetchArray();
+            $cache = new LockCache($section_id);
+
+            if (!$cache->isCached()) {
+                $this->Database->sendQuery($this->Query->isLocked($section_id));
+                $locked = $this->Database->fetchArray();
+
+                $cache->put($locked);
+            }
+            else {
+                $cache->get();
+            }
 
             return (int) $locked['locked']['RAW'];
         }

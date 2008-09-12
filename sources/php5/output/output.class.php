@@ -1,7 +1,7 @@
 <?php
 /**
 * @package PHP5
-* @category Output
+* @category Show
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -21,17 +21,24 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+require_once(SOURCE_PATH.'/misc/exception.class.php');
+require_once(SOURCE_PATH.'/show/misc/informative-message.show.php');
+
 /**
-* Output base class.
+* Show base class
+
 * @author cHoBi
 */
-class Output
+abstract class Show
 {
+    protected $id;
+    protected $data;
     protected $output;
+    protected $connected;
     protected $magic;
-    
+
     /**
-    * Initialize connection and the magic token.
+    * Initialize the connection and get the magic token.
     */
     public function __construct ()
     {
@@ -41,13 +48,19 @@ class Output
         else {
             $this->connected = false;
         }
-    
+
         $this->magic = $_SESSION[SESSION]['magic'];
     }
-    
+
     /**
-    * Get the output.
-    
+    * Used to update the content being showed.
+    * You MUST redeclare this.
+    */
+    protected abstract function __update ();
+
+    /**
+    * Returns the output.
+
     * @return    string
     */
     public function output ()
