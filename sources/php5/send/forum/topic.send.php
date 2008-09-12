@@ -82,7 +82,7 @@ class Topic extends Send
             die('LOLNO');
         }
 
-        if (!$Database->section->isWriteable($parent)) {
+        if ($Database->section->isLocked($parent)) {
             throw new lulzException('section_not_writeable');
         }
 

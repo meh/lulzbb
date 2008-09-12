@@ -85,7 +85,7 @@ class SectionTemplate extends Template
             $text
         );
 
-        if ($Database->section->isWriteable($this->section_id)) {
+        if (!$Database->section->isContainer($this->section_id)) {
             $topics = $this->__topics($this->topics);
         }
         else {

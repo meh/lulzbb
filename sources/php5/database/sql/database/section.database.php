@@ -48,37 +48,46 @@ class SectionDatabase extends DatabaseBase
     }
 
     /**
-    * Gets if the section is writeable.
+    * Gets if the section is locked.
 
     * @param    int     $section_id    The section's id.
 
-    * @return    bool    True if it's writeable false if it's not.
+    * @return    bool    True if it's locked false if it's not.
     */
-    public function isWriteable ($section_id)
+    public function isLocked ($section_id)
     {
         if ($section_id == 0) {
-            return false;
+            return true;
         }
 
-        $this->Database->sendQuery($this->Query->isWriteable($section_id));
-        $writeable = $this->Database->fetchArray();
+        if ($this->isContainer($section_id)) {
+            return true;
+        }
+        else {
+            $this->Database->sendQuery($this->Query->isLocked($section_id));
+            $locked = $this->Database->fetchArray();
 
-        return (int) $writeable['writeable']['RAW'];
+            return (int) $locked['locked']['RAW'];
+        }
     }
 
     /**
-    * Gets if the section is viewable.
+    * Gets if the section is a sections container.
 
     * @param    int    $section_id    The section's id.
 
-    * @return    bool    True if it's viewable false if it's not.
+    * @return    bool    True if it's a container false if it's not.
     */
-    public function isViewable ($section_id)
+    public function isContainer ($section_id)
     {
-        $this->Database->sendQuery($this->Query->isViewable($section_id));
-        $viewable = $this->Database->fetchArray();
+        if ($section_id == 0) {
+            return true;
+        }
 
-        return (int) $viewable['viewable']['RAW'];
+        $this->Database->sendQuery($this->Query->isContainer($section_id));
+        $container = $this->Database->fetchArray();
+
+        return (int) $container['container']['RAW'];
     }
 
     /**
@@ -89,13 +98,13 @@ class SectionDatabase extends DatabaseBase
     * @param    string    $title       The section's title.
     * @param    string    $subtitle    The section's subtitle.
     */
-    public function add ($parent, $weight, $title, $subtitle, $writeable = true)
+    public function add ($parent, $weight, $title, $subtitle, $locked = false, $cointainer = false)
     {
         if (empty($weight)) {
             $weight = $this->group->heaviest($parent)+1;
         }
 
-        $this->Database->sendQuery($this->Query->add($parent, $weight, $title, $subtitle, $writeable));
+        $this->Database->sendQuery($this->Query->add($parent, $weight, $title, $subtitle, $writeable, $container));
     }
 
     /**

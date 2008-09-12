@@ -76,7 +76,7 @@ class SectionCache extends Cache
     {
         global $Config;
 
-        if (($this->connected || $Config->get('anonymousPosting')) && $this->__isWriteable($this->section_id)) {
+        if (($this->connected || $Config->get('anonymousPosting')) && !$this->__isLocked($this->section_id)) {
             $template = new SectionTemplate(0,0,0,0);
             $template = $template->getTemplatePart('new_topic');
 
@@ -94,36 +94,36 @@ class SectionCache extends Cache
     }
 
     /**
-    * Get if the section is writeable or not.
+    * Get if the section is locked or a container.
 
     * @param    int    $section_id    The section's id.
 
     * @return    bool    True if the section is writeable false if it's not.
     */
-    private function __isWriteable ($section_id)
+    private function __isLocked ($section_id)
     {
-        $fileName = checkDir(ROOT_PATH."/.cache/misc/section.writeable.{$section_id}.txt");
+        $fileName = checkDir(ROOT_PATH."/.cache/misc/section.lock.{$section_id}.txt");
         if (is_file($fileName)) {
-            $writeable = file_get_contents($fileName);
+            $locked = file_get_contents($fileName);
 
-            switch ($writeable) {
+            switch ($locked) {
                 case 'true':
-                $writeable = true;
+                $locked = true;
                 break;
 
                 case 'false':
-                $writeable = false;
+                $locked = false;
                 break;
             }
         }
         else {
             global $Database;
-            $writeable = $Database->section->isWriteable($section_id);
+            $locked = $Database->section->isLocked($section_id);
 
-            file_put_contents($fileName, ($writeable) ? 'true' : 'false');
+            file_put_contents($fileName, ($locked) ? 'true' : 'false');
         }
 
-        return $writeable;
+        return $locked;
     }
 
     /**

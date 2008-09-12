@@ -35,14 +35,14 @@ class SectionQuery extends Query
         parent::__construct();
     }
 
-    public function isWriteable ($section_id)
+    public function isLocked ($section_id)
     {
         $section_id = (int) $section_id;
 
         return <<<QUERY
 
         SELECT
-            {$this->dbPrefix}_sections.writeable
+            {$this->dbPrefix}_sections.locked
 
         FROM
             {$this->dbPrefix}_sections
@@ -53,14 +53,14 @@ class SectionQuery extends Query
 QUERY;
     }
 
-    public function isViewable ($section_id)
+    public function isContainer ($section_id)
     {
         $section_id = (int) $section_id;
 
         return <<<QUERY
 
         SELECT
-            {$this->dbPrefix}_sections.viewable
+            {$this->dbPrefix}_sections.container
 
         FROM
             {$this->dbPrefix}_sections
@@ -71,14 +71,15 @@ QUERY;
 QUERY;
     }
 
-    public function add($parent, $weight, $title, $subtitle, $writeable)
+    public function add($parent, $weight, $title, $subtitle, $locked, $container)
     {
         global $Filter;
         $parent    = (int) $parent;
         $weight    = (int) $weight;
         $title     = $Filter->SQL($title);
         $subtitle  = $Filter->SQL($subtitle);
-        $writeable = ($writeable) ? 'TRUE' : 'FALSE';
+        $locked    = ($locked)    ? 'TRUE' : 'FALSE';
+        $container = ($container) ? 'TRUE' : 'FALSE';
 
         return <<<QUERY
 
@@ -89,7 +90,8 @@ QUERY;
                 {$this->dbPrefix}_sections.title,
                 {$this->dbPrefix}_sections.subtitle,
 
-                {$this->dbPrefix}_sections.writeable
+                {$this->dbPrefix}_sections.locked,
+                {$this->dbPrefix}_sections.container
             )
 
             VALUES(
@@ -98,7 +100,8 @@ QUERY;
                 "{$title}",
                 "{$subtitle}",
 
-                {$writeable}
+                {$locked},
+                {$container}
             )
 
 QUERY;
