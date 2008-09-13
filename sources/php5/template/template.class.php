@@ -46,8 +46,8 @@ class Template
         global $Config;
         
         $this->template['language']   = $Config->get('language');
-        $this->template['forumName']  = $Config->get('forumName');
-        $this->template['forumTitle'] = $Config->get('forumTitle');
+        $this->template['siteName']  = $Config->get('siteName');
+        $this->template['siteTitle'] = $Config->get('siteTitle');
         $this->template['name']       = $Config->get('template');
 
         if (!is_dir(ROOT_PATH."/templates/{$this->template['name']}")) {
@@ -100,13 +100,13 @@ class Template
 
         $text = preg_replace(
             '|<%FORUM-TITLE%>|i',
-            $this->template['forumTitle'],
+            $this->template['siteTitle'],
             $text
         );
 
         $text = preg_replace(
             '|<%FORUM-NAME%>|i',
-            $this->template['forumName'],
+            $this->template['siteName'],
             $text
         );
 

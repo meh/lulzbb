@@ -291,11 +291,11 @@ class SectionDatabase extends DatabaseBase
         global $Filter;
 
         if ($section_id == 0) {
-            $forumName = $Config->get('forumName');
+            $siteName = $Config->get('siteName');
 
-            $result['title']['RAW']  = $forumName;
-            $result['title']['HTML'] = $Filter->HTML($forumName);
-            $result['title']['POST'] = $Filter->POST($forumName);
+            $result['title']['RAW']  = $siteName;
+            $result['title']['HTML'] = $Filter->HTML($siteName);
+            $result['title']['POST'] = $Filter->POST($siteName);
         }
         else {
             $this->Database->sendQuery($this->Query->getTitle($section_id));

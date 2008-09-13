@@ -132,35 +132,31 @@ $User = $_SESSION[SESSION]['user'];
 */
 $queries = 0;
 
-if (isset($_GET['api'])) {
-    require_once(SOURCES_PATH.'/database/database.php');
-    $Database = new Database;
+initSessionData();
 
-    require(INTERFACES_PATH.'/api.php');
+if (isset($_REQUEST['session'])) {
+    die;
 }
 
-else {
-    initSessionData();
+$modules = glob('modules/*');
+foreach ($modules as $module) {
+    if (is_dir($module)) {
+        define('MODULE_NAME', str_replace('modules/', '', $module));
+        define('M_ROOT_PATH', ROOT_PATH."/{$module}");
+        define('M_SOURCES_PATH', ROOT_PATH."/{$module}/sources/".SOURCES_VERSION);
+        define('M_INTERFACES_PATH', ROOT_PATH."/{$module}/interfaces");
 
-    if (isset($_REQUEST['session'])) {
-        die;
-    }
-
-    $modules = glob('modules/*');
-    foreach ($modules as $module) {
-        if (is_dir($module)) {
-            define('MODULE_NAME', str_replace('modules/', '', $module));
-            define('M_ROOT_PATH', ROOT_PATH."/{$module}");
-            define('M_SOURCES_PATH', ROOT_PATH."/{$module}/sources/".SOURCES_VERSION);
-
-            require(M_ROOT_PATH.'/index.php');
+        if (is_file(M_ROOT_PATH.'/config/configuration.php')) {
+            $Config->parseFile(M_ROOT_PATH.'/config/configuration.php', MODULE_NAME);
         }
-    }
 
-    if (!isset($_REQUEST['page'])) {
-        $_REQUEST['page'] = $Config->get('homePage');
+        require(M_ROOT_PATH.'/index.php');
     }
-    require(INTERFACES_PATH.'/output/home.out.php');
 }
+
+if (!isset($_REQUEST['page'])) {
+    $_REQUEST['page'] = $Config->get('homePage');
+}
+require(INTERFACES_PATH.'/output/home.out.php');
 
 ?>
