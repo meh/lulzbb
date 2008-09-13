@@ -24,16 +24,10 @@ if (!isset($Config)) {
     die("You can't access this directly.");
 }
 
-// Start the time for the stats.
-$time  = microtime();
-$time  = explode(' ', $time);
-$time  = $time[1] + $time[0];
-$start = $time;
-
 $DATA['id'] = $_REQUEST['id'];
 
 // Navigator
-require_once($M_SOURCES_PATH.'/output/forum/navigator.output.php');
+require_once($M_SOURCES_PATH.'/output/navigator.output.php');
 
 if (isset($_GET['section'])) {
     $navigator = new Navigator('section', $DATA['id']);

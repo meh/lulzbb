@@ -1,11 +1,12 @@
 <?php
 /**
 * @package Forum
+* @category Database
 
 * @license AGPLv3
-* Just a simple module for lulzBB.
+* lulzBB is a CMS for the lulz but it's also serious business.
 * Copyright (C) 2008 lulzGroup
-
+*
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Affero General Public License as
 * published by the Free Software Foundation, either version 3 of the
@@ -22,22 +23,18 @@
 * @author cHoBi
 */
 
-if (isset($_GET[$MODULE_NAME])) {
-    if (isset($_GET['out'])) {
-        require($M_INTERFACES_PATH.'/out.php');
-    }
+switch ($Config->get('dbType')) {
+    case 'mysql':
+    require_once($M_SOURCES_PATH.'/database/sql/database.class.php');
+    break;
 
-    else if (isset($_GET['in'])) {
-        require ($M_INTERFACES_PATH.'/in.php');
-    }
+    case 'text':
+    require_once($M_SOURCES_PATH.'/database/text/database.class.php');
+    break;
 
-    else if (isset($_GET['api'])) {
-        require ($M_INTERFACES_PATH.'/api.php');
-    }
-
-    else {
-        die('WAT');
-    }
+    default:
+    die("Something went wrong with the database type.");
+    break;
 }
 
 ?>

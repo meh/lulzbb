@@ -21,8 +21,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once($M_SOURCES_PATH.'/show/show.class.php');
-require_once($M_SOURCES_PATH.'/template/forum/topic.template.php');
+require_once(SOURCES_PATH.'/output/output.class.php');
+require_once($M_SOURCES_PATH.'/template/topic.template.php');
 require_once($M_SOURCES_PATH.'/misc/bbcode.class.php');
 
 /**
@@ -30,7 +30,7 @@ require_once($M_SOURCES_PATH.'/misc/bbcode.class.php');
 
 * @author cHoBi
 */
-class TopicShow extends Show
+class Topic extends Output
 {
     private $parent;
     private $topic_id;
