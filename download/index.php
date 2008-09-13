@@ -22,9 +22,6 @@
 * @author cHoBi
 */
 
-define('MODULE_PATH', MODULES_PATH.'/'.MODULE_NAME);
-$Config->parseFile(MODULE_PATH.'/config/configuration.php');
-
 if (isset($_GET['download'])) {
     require(MODULE_PATH.'/interfaces/output/download.out.php');
     exit();
