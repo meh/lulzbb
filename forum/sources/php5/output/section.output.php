@@ -69,13 +69,13 @@ class Section extends Output
         global $Database;
 
         try {
-            if ($Database->section->exists($this->section_id)) {
-                $groups = $Database->section->getGroups($this->section_id);
+            if ($Database['forum']->section->exists($this->section_id)) {
+                $groups = $Database['forum']->section->getGroups($this->section_id);
                 foreach ($groups as $n => $group) {
-                    $groups[$n]['data'] = $Database->section->group->getSections($group['id']['RAW']);
+                    $groups[$n]['data'] = $Database['forum']->section->group->getSections($group['id']['RAW']);
                 }
                 
-                $topics = $Database->section->getTopics($this->section_id, $this->page);
+                $topics = $Database['forum']->section->getTopics($this->section_id, $this->page);
 
                 if ($this->section_id == 0 && empty($groups) && empty($topics)) {
                     $message = new InformativeMessage('The section is empty.');
