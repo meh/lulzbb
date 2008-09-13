@@ -21,8 +21,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/show/show.class.php'); 
-require_once(SOURCE_PATH.'/template/forum/navigator.template.php');
+require_once(M_SOURCES_PATH.'/show/show.class.php'); 
+require_once(M_SOURCES_PATH.'/template/forum/navigator.template.php');
 
 /**
 * Navigator show class, to get the navigator through the db.

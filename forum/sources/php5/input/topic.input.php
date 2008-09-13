@@ -21,7 +21,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/send/send.class.php');
+require_once(M_SOURCES_PATH.'/send/send.class.php');
 
 /**
 * Topic send class.

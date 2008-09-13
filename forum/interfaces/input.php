@@ -26,7 +26,7 @@ if (!isset($Config)) {
 
 if (isset($_GET['topic'])) {
     if (isset($_GET['send'])) {
-        require_once(SOURCE_PATH.'/send/forum/topic.send.php');
+        require_once(M_SOURCES_PATH.'/send/forum/topic.send.php');
 
         $DATA['magic']    = $_REQUEST['magic'];
         $DATA['parent']   = $_REQUEST['parent'];
@@ -51,7 +51,7 @@ if (isset($_GET['topic'])) {
 
 if (isset($_GET['post'])) {
     if (isset($_GET['send'])) {
-        require_once(SOURCE_PATH.'/send/forum/post.send.php');
+        require_once(M_SOURCES_PATH.'/send/forum/post.send.php');
 
         $DATA['magic']    = $_REQUEST['magic'];
         $DATA['topic_id'] = $_REQUEST['topic_id'];

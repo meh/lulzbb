@@ -5,7 +5,7 @@
 * @license AGPLv3
 * Just a simple module for lulzBB.
 * Copyright (C) 2008 lulzGroup
-*
+
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Affero General Public License as
 * published by the Free Software Foundation, either version 3 of the
@@ -22,15 +22,22 @@
 * @author cHoBi
 */
 
-define('MODULE_PATH', MODULES_PATH.'/'.MODULE_NAME);
-$Config->parseFile(MODULE_PATH.'/config/configuration.php');
+if (isset($_GET[MODULE_NAME]) {
+    if (isset($_GET['out'])) {
+        require(M_INTERFACES_PATH.'/output.php');
+    }
 
-if (isset($_GET['out'])) {
-    require(MODULE_PATH.'/interfaces/output.php');
-}
+    else if (isset($_GET['in'])) {
+        require (M_INTERFACES_PATH.'/input.php');
+    }
 
-else if (isset($_GET['in'])) {
-    require (MODULE_PATH.'/interfaces/input.php');
+    else if (isset($_GET['api'])) {
+        require (M_INTERFACES_PATH.'/api.php');
+    }
+
+    else {
+        die('WAT');
+    }
 }
 
 ?>

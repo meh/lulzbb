@@ -21,8 +21,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/output/show.class.php');
-require_once(SOURCE_PATH.'/template/forum/section.template.php');
+require_once(M_SOURCES_PATH.'/output/show.class.php');
+require_once(M_SOURCES_PATH.'/template/forum/section.template.php');
 
 /**
 * Section output class.
