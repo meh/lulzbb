@@ -21,9 +21,9 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(M_SOURCES_PATH.'/show/show.class.php');
-require_once(M_SOURCES_PATH.'/template/forum/topic.template.php');
-require_once(M_SOURCES_PATH.'/misc/bbcode.class.php');
+require_once($M_SOURCES_PATH.'/show/show.class.php');
+require_once($M_SOURCES_PATH.'/template/forum/topic.template.php');
+require_once($M_SOURCES_PATH.'/misc/bbcode.class.php');
 
 /**
 * Topic show class.

@@ -22,16 +22,16 @@
 * @author cHoBi
 */
 
-if (isset($_GET[MODULE_NAME]) {
+if (isset($_GET[$MODULE_NAME]) {
     if (isset($_GET['out'])) {
-        require(M_INTERFACES_PATH.'/output.php');
+        require($M_INTERFACES_PATH.'/output.php');
     }
 
     else if (isset($_GET['in'])) {
-        require (M_INTERFACES_PATH.'/input.php');
+        require ($M_INTERFACES_PATH.'/input.php');
     }
 
     else if (isset($_GET['api'])) {
-        require (M_INTERFACES_PATH.'/api.php');
+        require ($M_INTERFACES_PATH.'/api.php');
     }
 }
