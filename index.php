@@ -69,7 +69,7 @@ define('API_PATH', ROOT_PATH.'/sources/api');
 /**
 * The correct source path for the php version installed on the server.
 */
-define('SOURCES_PATH', ROOT_PATH.'/sources/'.SOURCES_VERSION));
+define('SOURCES_PATH', ROOT_PATH.'/sources/'.SOURCES_VERSION);
 
 /**
 * The path to the portable sources, like filesystem functions and such.
@@ -86,7 +86,7 @@ require_once(MISC_PATH.'/misc.php');
 // Session creation.
 require_once(SOURCES_PATH.'/misc/config.class.php');
 require_once(SOURCES_PATH.'/misc/filter.class.php');
-require_once(SOURCES_PATH.'/misc/user.class.php');
+require_once(SOURCES_PATH.'/misc/module.class.php');
 
 if (!sessionFileExists()) {
     createSessionFile();
@@ -123,7 +123,7 @@ $Database;
 
 * @global    object    $User
 */
-$User = $_SESSION[SESSION]['user'];
+#$User = $_SESSION[SESSION]['user'];
 
 /**
 * This global var containst the count of sent queries for the page.
@@ -138,16 +138,23 @@ if (isset($_REQUEST['session'])) {
     die;
 }
 
-$modules = glob('modules/*');
-foreach ($modules as $module) {
-    if (is_dir($module)) {
-        define('MODULE_NAME', str_replace('modules/', '', $module));
-        define('M_ROOT_PATH', ROOT_PATH."/{$module}");
-        define('M_SOURCES_PATH', ROOT_PATH."/{$module}/sources/".SOURCES_VERSION);
-        define('M_INTERFACES_PATH', ROOT_PATH."/{$module}/interfaces");
+$modulePaths = glob('modules/*');
+foreach ($modulePaths as $modulePath) {
+    if (is_dir($modulePath)) {
+        $module = new Module($modulePath);
+    }
+}
+
+foreach ($modulePaths as $modulePath) {
+    if (is_dir($modulePath)) {
+        $module = new Module(ROOT_PATH."/{$modulePath}/info.php");
+
+        define('M_ROOT_PATH', ROOT_PATH."/{$modulePath}");
+        define('M_SOURCES_PATH', ROOT_PATH."/{$modulePath}/sources/".SOURCES_VERSION);
+        define('M_INTERFACES_PATH', ROOT_PATH."/{$modulePath}/interfaces");
 
         if (is_file(M_ROOT_PATH.'/config/configuration.php')) {
-            $Config->parseFile(M_ROOT_PATH.'/config/configuration.php', MODULE_NAME);
+            $Config->parseFile(M_ROOT_PATH.'/config/configuration.php', $module->get('name'));
         }
 
         require(M_ROOT_PATH.'/index.php');

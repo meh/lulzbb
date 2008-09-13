@@ -26,6 +26,7 @@
 
 * @author cHoBi
 */
+
 class Config
 {
     private $config;
@@ -54,12 +55,8 @@ class Config
 
         array_push($this->parsedFiles, realpath($fileName));
 
-        $file = file($fileName);
-        array_pop($file);
-        array_shift($file);
-        $file = join("\n", $file);
-        
-        $this->parseString($porcoddio, $file);
+        $file = read_file($fileName);
+        $this->parseString($file, $porcoddio);
     }
 
     public function parseString ($string, $porcoddio = 'general')
@@ -97,7 +94,7 @@ class Config
     */
     public function get ($config, $porcoddio = 'general')
     {
-        if (isset($this->config)) {
+        if (isset($this->config[$porcoddio][$config])) {
             switch ($this->config[$porcoddio][$config]) {
                 case 'true':
                 return true;

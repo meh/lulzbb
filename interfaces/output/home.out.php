@@ -30,7 +30,7 @@ $time  = explode(' ', $time);
 $time  = $time[1] + $time[0];
 $start = $time;
 
-require_once(SOURCE_PATH.'/show/misc/home.show.php');
+require_once(SOURCES_PATH.'/show/misc/home.show.php');
 
 if (isset($_GET['forum'])) {
     $DATA['id']   = $_REQUEST['id'];

@@ -25,13 +25,13 @@ if (!isset($Config)) {
 }
 
 if (isset($_GET['menu'])) {
-    require_once(SOURCE_PATH.'/show/misc/menu.show.php');
+    require_once(SOURCES_PATH.'/show/misc/menu.show.php');
     $menu = new Menu();
     echo $menu->output();
 }
 
 else if (isset($_GET['page'])) {
-    require_once(SOURCE_PATH.'/template/misc/page.template.php');
+    require_once(SOURCES_PATH.'/template/misc/page.template.php');
 
     if (isset($_GET['raw'])) {
         $page = new PageTemplate($_REQUEST['page'], 'raw');

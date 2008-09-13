@@ -21,14 +21,9 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/show/show.class.php');
-require_once(SOURCES_PATH.'/output/forum/navigator.output.php');
+require_once(SOURCES_PATH.'/output/output.class.php');
 require_once(SOURCES_PATH.'/template/misc/home.template.php');
 require_once(SOURCES_PATH.'/template/misc/page.template.php');
-require_once(SOURCES_PATH.'/output/forum/section.output.php');
-require_once(SOURCES_PATH.'/output/forum/topic.output.php');
-require_once(SOURCES_PATH.'/output/user/profile.output.php');
-require_once(SOURCES_PATH.'/template/forms/send-topic.template.php');
 
 /**
 * Shows the home with data inside.
@@ -37,7 +32,7 @@ require_once(SOURCES_PATH.'/template/forms/send-topic.template.php');
 
 * @author cHoBi
 */
-class Home extends Show
+class Home extends Output
 {
     private $file;
 
@@ -62,42 +57,12 @@ class Home extends Show
     */
     protected function __update ()
     {
-        switch ($this->file) {
-            case 'section':
-            $section_id = (int) $this->data['section_id'];
-            $page       = (int) $this->data['page'];
-            
-            $navigator = new Navigator('section', $section_id);
-            $content   = new Section($section_id, $page);
-            $template  = new HomeTemplate($navigator->output().$content->output().stats());
-            break;
-
-            case 'topic':
-            $topic_id = (int) $this->data['topic_id'];
-            $page     = (int) $this->data['page'];
-            $post_id  = (int) $this->data['post_id'];
-
-            $navigator = new Navigator('topic', $topic_id);
-            $content   = new Topic($topic_id, $page, $post_id);
-            $template  = new HomeTemplate($navigator->output().$content->output().stats());
-            break;
-
-            case 'user':
-            $user_id = (int) $this->data['user_id'];
-
-            $content = new UserProfile($user_id);
+        if (empty($this->file)) {
+            $template = new HomeTemplate();
+        }
+        else {
+            $content  = new PageTemplate($this->file, $this->data);
             $template = new HomeTemplate($content->output());
-            break;
-
-            default:
-            if (empty($this->file)) {
-                $template = new HomeTemplate();
-            }
-            else {
-                $content  = new PageTemplate($this->file, $this->data);
-                $template = new HomeTemplate($content->output());
-            }
-            break;
         }
 
         $this->output = $template->output();

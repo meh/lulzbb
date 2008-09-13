@@ -22,6 +22,25 @@
 * @author cHoBi
 */
 
+function read_file ($fileName)
+{
+    $file = file($fileName);
+    array_pop($file);
+    array_shift($file);
+    $file = join("\n", $file);
+
+    return $file;
+}
+
+function write_file ($fileName, $text)
+{
+    $fp = fopen($fileName);
+    fwrite($fp, "<?php die();/*\n");
+    fwrite($fp, $text);
+    fwrite($fp, "*/?>");
+    fclose($fp);
+}
+
 /**
 * rm posix function.
 *
