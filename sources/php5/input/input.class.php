@@ -21,8 +21,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/misc/exception.class.php');
-require_once(SOURCES_PATH.'/show/misc/informative-message.show.php');
+require_once(SOURCES_PATH.'/output/misc/informative-message.output.php');
 
 /**
 * Send base class.

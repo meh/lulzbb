@@ -21,15 +21,14 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/misc/exception.class.php');
-require_once(SOURCES_PATH.'/show/misc/informative-message.show.php');
+require_once(SOURCES_PATH.'/output/misc/informative-message.output.php');
 
 /**
 * Show base class
 
 * @author cHoBi
 */
-abstract class Show
+abstract class Output
 {
     protected $id;
     protected $data;
@@ -53,7 +52,7 @@ abstract class Show
     }
 
     /**
-    * Used to update the content being showed.
+    * Used to update the content being outputed.
     * You MUST redeclare this.
     */
     protected abstract function __update ();

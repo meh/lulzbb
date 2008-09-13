@@ -23,6 +23,7 @@
 */
 
 ini_set('error_reporting', 'E_CORE_ERROR');
+ob_start();
 
 if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
     die("You can't set a php session id, sorry.");
@@ -87,6 +88,7 @@ require_once(MISC_PATH.'/misc.php');
 require_once(SOURCES_PATH.'/misc/config.class.php');
 require_once(SOURCES_PATH.'/misc/filter.class.php');
 require_once(SOURCES_PATH.'/misc/module.class.php');
+require_once(SOURCES_PATH.'/misc/exception.class.php');
 
 if (!sessionFileExists()) {
     createSessionFile();
@@ -109,7 +111,6 @@ $Config = $_SESSION[SESSION]['config'];
 */
 $Filter = $_SESSION[SESSION]['filter'];
 
-
 /**
 * This global var cointains the Database object, and i think it's obvious
 * why you need it...
@@ -117,8 +118,6 @@ $Filter = $_SESSION[SESSION]['filter'];
 * @global    object    $Database
 */
 $Database;
-
-
 
 /**
 * This global var containst the count of sent queries for the page.
@@ -169,11 +168,21 @@ foreach ($modules as $module) {
     }
 
     require(M_ROOT_PATH.'/index.php');
+
+    if (ob_get_length() > 0) {
+        ob_end_flush();
+        die("PENIS");
+    }
 }
 
-if (!isset($_REQUEST['page'])) {
-    $_REQUEST['page'] = $Config->get('homePage');
+if (isset($_GET['out'])) {
+    require(INTERFACES_PATH.'/output/misc.out.php');
 }
-require(INTERFACES_PATH.'/output/home.out.php');
+else {
+    if (!isset($_REQUEST['page'])) {
+        $_REQUEST['page'] = $Config->get('homePage');
+    }
+    require(INTERFACES_PATH.'/output/home.out.php');
+}
 
 ?>

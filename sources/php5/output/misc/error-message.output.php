@@ -21,7 +21,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/show/show.class.php');
+require_once(SOURCES_PATH.'/output/output.class.php');
 require_once(SOURCES_PATH.'/template/misc/error-message.template.php');
 
 /**
@@ -29,7 +29,7 @@ require_once(SOURCES_PATH.'/template/misc/error-message.template.php');
 
 * @author cHoBi
 */
-class ErrorMessage extends Show
+class ErrorMessage extends Output
 {
     private $message;
     private $type;

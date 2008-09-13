@@ -21,8 +21,6 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/misc/exception.class.php');
-
 /**
 * This is just the base class for the database classes.
 

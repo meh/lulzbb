@@ -25,7 +25,7 @@ if (!isset($Config)) {
 }
 
 if (isset($_GET['menu'])) {
-    require_once(SOURCES_PATH.'/show/misc/menu.show.php');
+    require_once(SOURCES_PATH.'/output/misc/menu.output.php');
     $menu = new Menu();
     echo $menu->output();
 }

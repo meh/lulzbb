@@ -20,7 +20,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/show/misc/error-message.show.php');
+require_once(SOURCES_PATH.'/output/misc/error-message.output.php');
 
 /**
 * Exception handling for Misc.
@@ -61,6 +61,11 @@ class lulzException extends Exception
             case 'topic_not_existent':
             $message = "The topic doesn't exist.";
             $code    = 51;
+            break;
+
+            case 'module_info_not_existent':
+            $message = "The info.php file of a module doesn't exist.";
+            $code    = 61;
             break;
         }
                     

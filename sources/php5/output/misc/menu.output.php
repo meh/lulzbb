@@ -21,6 +21,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+require_once(SOURCES_PATH.'/output/output.class.php');
 require_once(SOURCES_PATH.'/template/template.class.php');
 
 /**
@@ -29,7 +30,7 @@ require_once(SOURCES_PATH.'/template/template.class.php');
 * @todo Admin, moderation etc menus.
 * @author cHoBi
 */
-class Menu extends Show
+class Menu extends Output
 {
     /**
     * Create the menu.
