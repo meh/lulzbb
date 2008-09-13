@@ -1,9 +1,9 @@
 <?php
 /**
-* @package Forum
+* @package User
 
 * @license AGPLv3
-* Just a simple module for lulzBB.
+* The user module for lulzBB.
 * Copyright (C) 2008 lulzGroup
 
 * This program is free software: you can redistribute it and/or modify
@@ -34,10 +34,4 @@ if (isset($_GET[MODULE_NAME]) {
     else if (isset($_GET['api'])) {
         require (M_INTERFACES_PATH.'/api.php');
     }
-
-    else {
-        die('WAT');
-    }
 }
-
-?>
