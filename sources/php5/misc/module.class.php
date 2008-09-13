@@ -84,5 +84,10 @@ class Module
             return null;
         }
     }
+
+    public function getPath ()
+    {
+        return $this->path;
+    }
 }
 ?>

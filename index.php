@@ -118,12 +118,7 @@ $Filter = $_SESSION[SESSION]['filter'];
 */
 $Database;
 
-/**
-* This global var contains the User object, obvious object is obviou.
 
-* @global    object    $User
-*/
-#$User = $_SESSION[SESSION]['user'];
 
 /**
 * This global var containst the count of sent queries for the page.
@@ -138,27 +133,42 @@ if (isset($_REQUEST['session'])) {
     die;
 }
 
+$modules = array();
+
 $modulePaths = glob('modules/*');
 foreach ($modulePaths as $modulePath) {
     if (is_dir($modulePath)) {
         $module = new Module($modulePath);
+
+        if ($module->get('name') == 'user') {
+            require($module->getPath().'/sources/'.SOURCES_VERSION.'/user.class.php');
+
+            /**
+            * This global var contains the User object, obvious object is obviou.
+
+            * @global    object    $User
+            */
+            $User = $_SESSION[SESSION]['user'];
+        }
+
+        array_push($modules, $module);
     }
 }
 
-foreach ($modulePaths as $modulePath) {
-    if (is_dir($modulePath)) {
-        $module = new Module(ROOT_PATH."/{$modulePath}/info.php");
+foreach ($modules as $module) {
+    $modulePath = $module->getPath();
 
-        define('M_ROOT_PATH', ROOT_PATH."/{$modulePath}");
-        define('M_SOURCES_PATH', ROOT_PATH."/{$modulePath}/sources/".SOURCES_VERSION);
-        define('M_INTERFACES_PATH', ROOT_PATH."/{$modulePath}/interfaces");
+    define('MODULE_NAME', $module->get('name'));
 
-        if (is_file(M_ROOT_PATH.'/config/configuration.php')) {
-            $Config->parseFile(M_ROOT_PATH.'/config/configuration.php', $module->get('name'));
-        }
+    define('M_ROOT_PATH', $module->getPath());
+    define('M_SOURCES_PATH', M_ROOT_PATH."/sources/".SOURCES_VERSION);
+    define('M_INTERFACES_PATH', M_ROOT_PATH."/interfaces");
 
-        require(M_ROOT_PATH.'/index.php');
+    if (is_file(M_ROOT_PATH.'/config/configuration.php')) {
+        $Config->parseFile(M_ROOT_PATH.'/config/configuration.php', MODULE_NAME);
     }
+
+    require(M_ROOT_PATH.'/index.php');
 }
 
 if (!isset($_REQUEST['page'])) {
