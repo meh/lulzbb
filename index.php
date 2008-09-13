@@ -157,21 +157,21 @@ foreach ($modulePaths as $modulePath) {
 foreach ($modules as $module) {
     $modulePath = $module->getPath();
 
-    define('MODULE_NAME', $module->get('name'));
+    $MODULE_NAME = $module->get('name');
 
-    define('M_ROOT_PATH', $module->getPath());
-    define('M_SOURCES_PATH', M_ROOT_PATH."/sources/".SOURCES_VERSION);
-    define('M_INTERFACES_PATH', M_ROOT_PATH."/interfaces");
+    $M_ROOT_PATH       = $module->getPath();
+    $M_SOURCES_PATH    = $M_ROOT_PATH.'/sources/'.SOURCES_VERSION;
+    $M_INTERFACES_PATH = $M_ROOT_PATH.'/interfaces';
 
-    if (is_file(M_ROOT_PATH.'/config/configuration.php')) {
-        $Config->parseFile(M_ROOT_PATH.'/config/configuration.php', MODULE_NAME);
+    if (is_file($M_ROOT_PATH.'/config/configuration.php')) {
+        $Config->parseFile($M_ROOT_PATH.'/config/configuration.php', $MODULE_NAME);
     }
 
-    require(M_ROOT_PATH.'/index.php');
+    require($M_ROOT_PATH.'/index.php');
 
     if (ob_get_length() > 0) {
         ob_end_flush();
-        die("PENIS");
+        die();
     }
 }
 

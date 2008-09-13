@@ -24,62 +24,18 @@ if (!isset($Config)) {
     die("You can't access this directly.");
 }
 
-// Start the time for the stats.
-$time  = microtime();
-$time  = explode(' ', $time);
-$time  = $time[1] + $time[0];
-$start = $time;
-
 require_once(SOURCES_PATH.'/output/misc/home.output.php');
 
-if (isset($_GET['forum'])) {
-    $DATA['id']   = $_REQUEST['id'];
-    $DATA['page'] = $_REQUEST['page'];
-
-    if (isset($_GET['section'])) {
-        $DATA['section_id'] = $DATA['id'];
-
-        $page = new Home('section', array(
-            'section_id' => $DATA['section_id'],
-            'page'       => $DATA['page']
-        ));
-        echo $page->output();
-    }
-    else if (isset($_GET['topic'])) {
-        $DATA['topic_id'] = $DATA['id'];
-        $DATA['post_id']  = $_REQUEST['post_id'];
-
-        $page = new Home('topic', array(
-            'topic_id' => $DATA['topic_id'],
-            'page'     => $DATA['page'],
-            'post_id'  => $DATA['post_id']
-        ));
-        echo $page->output();
-    }
-    else {
-        $page = new Home('section', array('section_id' => 0, 'page' => 1));
-        echo $page->output();
-    }
+if (isset($_GET['raw'])) {
+    $page = new Home($_REQUEST['page'], 'raw');
 }
-
-else if (isset($_GET['user'])) {
-    $DATA['id'] = $_REQUEST['id'];
-    
-    $page = new Home('user', array('user_id' => $DATA['id']));
-    echo $page->output();
+else if (isset($_GET['highlight'])) {
+    $page = new Home($_REQUEST['page'], 'highlight');
 }
-
 else {
-    if (isset($_GET['raw'])) {
-        $page = new Home($_REQUEST['page'], 'raw');
-    }
-    else if (isset($_GET['highlight'])) {
-        $page = new Home($_REQUEST['page'], 'highlight');
-    }
-    else {
-        $page = new Home($_REQUEST['page']);
-    }
-
-    echo $page->output();
+    $page = new Home($_REQUEST['page']);
 }
+
+echo $page->output();
+
 ?>

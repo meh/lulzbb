@@ -109,46 +109,6 @@ class Database
     }
 
     /**
-    * Checks if the database already exists.
-    * It just checks if the normal sections exist or not.
-
-    * @return    bool    True if it exists, false if it doesn't.
-    */
-    public function exists ()
-    {
-        global $Config;
-        $dbPrefix = $Config->get('dbPrefix');
-
-        $tables = array(
-            'section_groups',
-            'sections',
-            'topics',
-            'topics_read',
-            'topic_posts',
-            'users',
-            'user_groups',
-            'user_groups_users'
-        );
-
-        $query = $this->sendQuery('SHOW TABLES');
-
-        while ($table = mysql_fetch_row($query)) {
-            foreach ($tables as $n => $name) {
-                if ($table[0] == "{$dbPrefix}_{$name}") {
-                    unset($tables[$n]);
-                }
-            }
-        }
-
-        if (empty($tables)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    /**
     * Sets the counter @i to a certain value.
 
     * @param    int    $number    The value that @i will be set to.
