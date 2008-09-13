@@ -69,7 +69,7 @@ define('API_PATH', ROOT_PATH.'/sources/api');
 /**
 * The correct source path for the php version installed on the server.
 */
-define('SOURCES_PATH', ROOT_PATH.'/sources/.'SOURCES_VERSION));
+define('SOURCES_PATH', ROOT_PATH.'/sources/'.SOURCES_VERSION));
 
 /**
 * The path to the portable sources, like filesystem functions and such.
