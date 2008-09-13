@@ -22,7 +22,7 @@
 * @author cHoBi
 */
 
-if (isset($_GET[MODULE_NAME]) {
+if (isset($_GET[MODULE_NAME])) {
     if (isset($_GET['out'])) {
         require(M_INTERFACES_PATH.'/output.php');
     }
