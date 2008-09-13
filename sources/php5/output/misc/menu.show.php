@@ -21,51 +21,58 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/misc/exception.class.php');
-require_once(SOURCES_PATH.'/show/misc/informative-message.show.php');
+require_once(SOURCES_PATH.'/template/template.class.php');
 
 /**
-* Show base class
+* Menu class.
 
+* @todo Admin, moderation etc menus.
 * @author cHoBi
 */
-abstract class Show
+class Menu extends Show
 {
-    protected $id;
-    protected $data;
-    protected $output;
-    protected $connected;
-    protected $magic;
-
     /**
-    * Initialize the connection and get the magic token.
+    * Create the menu.
     */
     public function __construct ()
     {
-        if (isset($_SESSION[SESSION]['user'])) {
-            $this->connected = true;
-        }
-        else {
-            $this->connected = false;
-        }
-
-        $this->magic = $_SESSION[SESSION]['magic'];
+        parent::__construct();
+        $this->__update();
     }
 
     /**
-    * Used to update the content being showed.
-    * You MUST redeclare this.
+    * Sets the right output if the user is connected or something else.
     */
-    protected abstract function __update ();
+    protected function __update ()
+    {
+        if ($this->connected) {
+            $output = $this->__user();
+        }
+        else {
+            $output = $this->__guest();
+        }
+        
+        $this->output = $output;
+    }
+    
+    /**
+    * The guest menu.
+    * @access private
+    */
+    private function __guest ()
+    {
+        $template = new Template('menu/menu.guest.tpl');
+        return $template->output();
+    }
 
     /**
-    * Returns the output.
-
-    * @return    string
+    * The normal user menu.
+    * @access private
     */
-    public function output ()
+    private function __user ()
     {
-        return $this->output;
+        $template = new Template('menu/menu.user.tpl');
+        return $template->output();
     }
 }
 ?>

@@ -21,7 +21,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/template/template.class.php');
+require_once(SOURCES_PATH.'/template/template.class.php');
 
 /**
 * Informative message template.

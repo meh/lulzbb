@@ -20,7 +20,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/show/misc/error-message.show.php');
+require_once(SOURCES_PATH.'/show/misc/error-message.show.php');
 
 /**
 * Exception handling for Misc.

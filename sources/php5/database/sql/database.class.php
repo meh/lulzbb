@@ -21,19 +21,10 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/misc/exception.class.php');
-require_once(SOURCE_PATH.'/database/sql/database/user.database.php');
-require_once(SOURCE_PATH.'/database/sql/database/section.database.php');
-require_once(SOURCE_PATH.'/database/sql/database/topic.database.php');
-require_once(SOURCE_PATH.'/database/sql/database/misc.database.php');
+require_once(SOURCES_PATH.'/misc/exception.class.php');
 
 /**
 * XBAWKZ HUEG class for database communication.
-
-* @property    object    $user       The user database.
-* @property    object    $section    The section database.
-* @property    object    $topic      The topic database.
-* @property    object    $misc       The misc database.
 
 * @author cHoBi
 */
@@ -42,12 +33,6 @@ class Database
     protected $mysql;
     protected $Query;
     protected $query;
-
-    // Various database methods
-    public $user;
-    public $section;
-    public $topic;
-    public $misc;
 
     /**
     * Create the mysql connection and selects the database from the
@@ -70,11 +55,6 @@ class Database
         }
         
         mysql_select_db($Config->get('dbName'), $this->mysql);
-
-        $this->user    = new UserDatabase($this);
-        $this->section = new SectionDatabase($this);
-        $this->topic   = new TopicDatabase($this);
-        $this->misc    = new MiscDatabase($this);
     }
 
     public function __destruct ()

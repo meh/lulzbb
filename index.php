@@ -32,6 +32,8 @@ if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
 * The php version.
 */
 define('VERSION', (float) phpversion());
+define('SOURCES_VERSION', 'php'.(int) VERSION);
+
 if ((int) VERSION == 4) {
     die("PHP 4 isn't supported yet");
 }
@@ -67,7 +69,7 @@ define('API_PATH', ROOT_PATH.'/sources/api');
 /**
 * The correct source path for the php version installed on the server.
 */
-define('SOURCE_PATH', ROOT_PATH.'/sources/php'.((int) VERSION));
+define('SOURCES_PATH', ROOT_PATH.'/sources/.'SOURCES_VERSION));
 
 /**
 * The path to the portable sources, like filesystem functions and such.
@@ -82,9 +84,9 @@ require_once(MISC_PATH.'/filesystem.php');
 require_once(MISC_PATH.'/misc.php');
 
 // Session creation.
-require_once(SOURCE_PATH.'/misc/config.class.php');
-require_once(SOURCE_PATH.'/misc/filter.class.php');
-require_once(SOURCE_PATH.'/misc/user.class.php');
+require_once(SOURCES_PATH.'/misc/config.class.php');
+require_once(SOURCES_PATH.'/misc/filter.class.php');
+require_once(SOURCES_PATH.'/misc/user.class.php');
 
 if (!sessionFileExists()) {
     createSessionFile();
@@ -130,41 +132,8 @@ $User = $_SESSION[SESSION]['user'];
 */
 $queries = 0;
 
-if (isset($_GET['out'])) {
-    require_once(SOURCE_PATH.'/database/database.php');
-
-    $Database = new Database;
-
-    if (isset($_GET['forum'])) {
-        require(INTERFACES_PATH.'/output/forum.out.php');
-    }
-
-    else if (isset($_GET['user'])) {
-        require(INTERFACES_PATH.'/output/user.out.php');
-    }
-
-    else {
-        require(INTERFACES_PATH.'/output/misc.out.php');
-    }
-}
-
-else if (isset($_GET['in'])) {
-    require_once(SOURCE_PATH.'/database/database.php');
-
-    $Database = new Database;
-
-    if (isset($_GET['forum'])) {
-        require(INTERFACES_PATH.'/input/forum.in.php');
-    }
-
-    else if (isset($_GET['user'])) {
-        require(INTERFACES_PATH.'/input/user.in.php');
-    }
-}
-
-else if (isset($_GET['api'])) {
-    require_once(SOURCE_PATH.'/database/database.php');
-
+if (isset($_GET['api'])) {
+    require_once(SOURCES_PATH.'/database/database.php');
     $Database = new Database;
 
     require(INTERFACES_PATH.'/api.php');
@@ -173,19 +142,18 @@ else if (isset($_GET['api'])) {
 else {
     initSessionData();
 
-    require_once(SOURCE_PATH.'/database/database.php');
-
     if (isset($_REQUEST['session'])) {
         die;
     }
-    
-    $Database = new Database;
 
     $modules = glob('modules/*');
     foreach ($modules as $module) {
         if (is_dir($module)) {
             define('MODULE_NAME', str_replace('modules/', '', $module));
-            include("{$module}/index.php");
+            define('M_ROOT_PATH', ROOT_PATH."/{$module}");
+            define('M_SOURCES_PATH', ROOT_PATH."/{$module}/sources/".SOURCES_VERSION);
+
+            require(M_ROOT_PATH.'/index.php');
         }
     }
 

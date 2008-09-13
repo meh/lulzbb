@@ -1,7 +1,7 @@
 <?php
 /**
 * @package PHP5
-* @category Show
+* @category Send
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -25,20 +25,19 @@ require_once(SOURCES_PATH.'/misc/exception.class.php');
 require_once(SOURCES_PATH.'/show/misc/informative-message.show.php');
 
 /**
-* Show base class
+* Send base class.
 
 * @author cHoBi
 */
-abstract class Show
+abstract class Send
 {
-    protected $id;
     protected $data;
     protected $output;
     protected $connected;
     protected $magic;
 
     /**
-    * Initialize the connection and get the magic token.
+    * Check connection and get the magic token.
     */
     public function __construct ()
     {
@@ -48,15 +47,25 @@ abstract class Show
         else {
             $this->connected = false;
         }
-
+        
         $this->magic = $_SESSION[SESSION]['magic'];
+    }
+    
+    /**
+    * Update the magic token.
+    */
+    public function __destruct ()
+    {
+        $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
     }
 
     /**
-    * Used to update the content being showed.
+    * Used to send the data.
     * You MUST redeclare this.
+
+    * @param    array    $data    Associative array with the needed data.
     */
-    protected abstract function __update ();
+    protected abstract function __send ($data);
 
     /**
     * Returns the output.

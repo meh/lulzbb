@@ -1,7 +1,7 @@
 <?php
 /**
 * @package PHP5
-* @category Template
+* @category Show
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -21,52 +21,43 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/template/template.class.php');
+require_once(SOURCES_PATH.'/show/show.class.php');
+require_once(SOURCES_PATH.'/template/misc/error-message.template.php');
 
 /**
-* Topic form template class.
+* Shows an error message.
 
 * @author cHoBi
 */
-class TopicFormTemplate extends Template
+class ErrorMessage extends Show
 {
-    private $parent;
+    private $message;
+    private $type;
 
     /**
-    * Create the topic form template.
+    * Initializes the message and the output.
 
-    * @param    string    $magic     The magic token. (Anti XSRF)
-    * @param    int       $parent    The parent where to add the topic.
+    * @param    string    $message    The message that will be shown.
     */
-    public function __construct ($parent)
+    public function __construct ($message)
     {
-        parent::__construct('forms/send-topic-form.tpl');
+        parent::__construct();
 
-        $this->parent = (int) $parent;
+        $this->message = $message;
 
-        $this->__parse();
+        $this->__update();
     }
 
     /**
-    * Parse the template.
-    * @access private
+    * Create the template to be outputted with the message in it.
     */
-    private function __parse ()
+    protected function __update ()
     {
-        $text = $this->output();
+        $message = $this->message;
 
-        $text = preg_replace(
-            '|<%POST-PARENT%>|i',
-            $this->parent,
-            $text
-        );
-        $text = preg_replace(
-            '|<%MAGIC%>|i',
-            $this->magic,
-            $text
-        );
+        $template = new ErrorMessageTemplate($message);
 
-        $this->parsed = $text;
+        $this->output = $template->output();
     }
 }
 ?>

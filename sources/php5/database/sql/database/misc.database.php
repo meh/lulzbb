@@ -21,8 +21,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/database/sql/database.base.class.php');
-require_once(SOURCE_PATH.'/database/sql/query/misc.query.php');
+require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+require_once(SOURCES_PATH.'/database/sql/query/misc.query.php');
 
 /**
 * This class is dedicated to misc stuff.

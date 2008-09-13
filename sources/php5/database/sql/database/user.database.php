@@ -21,11 +21,11 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/database/sql/database.base.class.php');
-require_once(SOURCE_PATH.'/database/sql/database/user/login.database.php');
-require_once(SOURCE_PATH.'/database/sql/database/user/registration.database.php');
-require_once(SOURCE_PATH.'/database/sql/database/user/group.database.php');
-require_once(SOURCE_PATH.'/database/sql/query/user.query.php');
+require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+require_once(SOURCES_PATH.'/database/sql/database/user/login.database.php');
+require_once(SOURCES_PATH.'/database/sql/database/user/registration.database.php');
+require_once(SOURCES_PATH.'/database/sql/database/user/group.database.php');
+require_once(SOURCES_PATH.'/database/sql/query/user.query.php');
 
 /**
 * This class is dedicated to user stuff.

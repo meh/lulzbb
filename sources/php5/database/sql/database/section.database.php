@@ -21,10 +21,10 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/database/sql/database.base.class.php');
-require_once(SOURCE_PATH.'/database/sql/database/section/group.database.php');
-require_once(SOURCE_PATH.'/database/sql/query/section.query.php');
-require_once(SOURCE_PATH.'/cache/section.php');
+require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+require_once(SOURCES_PATH.'/database/sql/database/section/group.database.php');
+require_once(SOURCES_PATH.'/database/sql/query/section.query.php');
+require_once(SOURCES_PATH.'/cache/section.php');
 
 /**
 * This class is dedicated to section stuff.
