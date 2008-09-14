@@ -517,7 +517,7 @@ class SectionTemplate extends Template
             $text
         );
  
-        if (count($topics) == 0) {
+        if (empty($topics)) {
             $text = preg_replace(
                 '|<%LOOP-TOPIC%>|i',
                 $this->template['no_topics'],
@@ -631,7 +631,7 @@ class SectionTemplate extends Template
         global $Config;
         global $Database;
 
-        if (($this->connected || $Config->get('anonymousPosting')) && !$Database['forum']->section->isLocked($this->section['id'])) {
+        if (($this->connected || $Config->get('anonymousPosting')) && !$Database->_('forum')->section->isLocked($this->section['id'])) {
             $template = new SectionTemplate(0,0,0,0);
             $template = $template->getTemplatePart('new_topic');
 

@@ -65,7 +65,7 @@ class Post extends Send
     {
         global $Database;
 
-        $parent   = $Database['forum']->topic->getParent($data['topic_id']);
+        $parent   = $Database->_('forum')->topic->getParent($data['topic_id']);
         $topic_id = $data['topic_id'];
         $title    = $data['title'];
         $content  = $data['content'];
@@ -82,7 +82,7 @@ class Post extends Send
                 break;
 
                 default:
-                $Database['forum']->topic->post->add($topic_id, $title, $content);
+                $Database->_('forum')->topic->post->add($topic_id, $title, $content);
 
                 $message = new InformativeMessage(
                     'post_sent',
@@ -92,10 +92,6 @@ class Post extends Send
                         'post_id'  => 'last'
                     )
                 );
-        
-                rm('/.cache/sections/*');
-                rm("/.cache/topics/{$topic_id}-*.php");
-                rm("/.cache/misc/pages.topic.{$topic_id}.txt");
                 break;
             }
         }

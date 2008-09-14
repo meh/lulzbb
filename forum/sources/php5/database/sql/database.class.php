@@ -49,8 +49,8 @@ class ForumDatabase extends DatabaseBase
     {
         parent::__construct($Database);
 
-        $this->section = new SectionDatabase($this);
-        $this->topic   = new TopicDatabase($this);
+        $this->section = new SectionDatabase($Database);
+        $this->topic   = new TopicDatabase($Database);
     }
 
     /**

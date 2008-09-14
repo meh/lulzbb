@@ -82,7 +82,7 @@ class Topic extends Send
             die('LOLNO');
         }
 
-        if ($Database->section->isLocked($parent)) {
+        if ($Database->_('forum')->section->isLocked($parent)) {
             throw new lulzException('section_not_writeable');
         }
 
@@ -105,12 +105,8 @@ class Topic extends Send
                 break;
 
                 default:
-                $topic_id = $Database['forum']->topic->add($parent, $type, $title, $subtitle, $content, $nick);
+                $topic_id = $Database->_('forum')->topic->add($parent, $type, $title, $subtitle, $content, $nick);
                 $message = new InformativeMessage('topic_sent', array('topic_id' => $topic_id));
-                        
-                rm('/.cache/sections/*');
-                rm("/.cache/misc/pages.section.{$parent}.txt");
-                rm('/.cache/misc/page.topic.*.txt');
                 break;
             }
         }
