@@ -50,7 +50,7 @@ class Section extends Output
             $this->page = 1;
         }
         else if ($page == 'last') {
-            $this->page = $this->Database->section->getPages($section_id);
+            $this->page = $this->Database['forum']->section->getPages($section_id);
         }
             
         $this->page = (int) $page;
@@ -91,8 +91,15 @@ class Section extends Output
         }
 
         $template = new SectionTemplate(
-            $this->section_id,
-            $this->page,
+            array(
+                'id'        => $this->section_id,
+                'title'     => $Database['forum']->section->getTitle($this->section_id),
+                'container' => $Database['forum']->section->isContainer($this->section_id)
+            ),
+            array(
+               'page'   => $this->page,
+               'number' => $Database['forum']->section->getPages($this->section_id)
+            ),
             $groups,
             $topics
         );

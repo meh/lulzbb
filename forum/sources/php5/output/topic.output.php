@@ -64,8 +64,8 @@ class Topic extends Output
         global $Database;
 
         try {
-            if ($Database->topic->exists($this->topic_id)) {
-                $posts = $Database->topic->getPosts($this->topic_id, $this->page);
+            if ($Database['forum']->topic->exists($this->topic_id)) {
+                $posts = $Database['forum']->topic->getPosts($this->topic_id, $this->page);
             }
             else {
                 die("The topic doesn't exist.");

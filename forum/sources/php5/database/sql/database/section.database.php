@@ -22,9 +22,8 @@
 */
 
 require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
-require_once(SOURCES_PATH.'/database/sql/database/section/group.database.php');
-require_once(SOURCES_PATH.'/database/sql/query/section.query.php');
-require_once(SOURCES_PATH.'/cache/section.php');
+require_once($M_SOURCES_PATH.'/database/sql/database/section/group.database.php');
+require_once($M_SOURCES_PATH.'/database/sql/query/section.query.php');
 
 /**
 * This class is dedicated to section stuff.
@@ -65,17 +64,17 @@ class SectionDatabase extends DatabaseBase
             return true;
         }
         else {
-            $cache = new LockCache($section_id);
+/*            $cache = new LockCache($section_id);
 
-            if (!$cache->isCached()) {
+            if (!$cache->isCached()) {*/
                 $this->Database->sendQuery($this->Query->isLocked($section_id));
                 $locked = $this->Database->fetchArray();
 
-                $cache->put($locked);
+/*                $cache->put($locked);
             }
             else {
                 $cache->get();
-            }
+            }*/
 
             return (int) $locked['locked']['RAW'];
         }
@@ -245,9 +244,6 @@ class SectionDatabase extends DatabaseBase
     */
     public function getNavigator ($section_id, $option)
     {
-        global $Config;
-        global $Filter;
-
         $parents = array();
         
         // This variable is used if an option is enabled to check

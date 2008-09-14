@@ -105,7 +105,7 @@ class Topic extends Send
                 break;
 
                 default:
-                $topic_id = $Database->topic->add($parent, $type, $title, $subtitle, $content, $nick);
+                $topic_id = $Database['forum']->topic->add($parent, $type, $title, $subtitle, $content, $nick);
                 $message = new InformativeMessage('topic_sent', array('topic_id' => $topic_id));
                         
                 rm('/.cache/sections/*');

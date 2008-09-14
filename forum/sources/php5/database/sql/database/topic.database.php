@@ -22,8 +22,8 @@
 */
 
 require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
-require_once(SOURCES_PATH.'/database/sql/database/topic/post.database.php');
-require_once(SOURCES_PATH.'/database/sql/query/topic.query.php');
+require_once($M_SOURCES_PATH.'/database/sql/database/topic/post.database.php');
+require_once($M_SOURCES_PATH.'/database/sql/query/topic.query.php');
 
 /**
 * This class is dedicated to topic stuff.
@@ -103,7 +103,7 @@ class TopicDatabase extends DatabaseBase
         );
         $position = mysql_fetch_row($query);
         
-        return ceil($position[0]/$Config->get('elementsPerPage'));
+        return ceil($position[0]/$Config->get('elementsPerPage', 'forum'));
     }
 
     /**
@@ -156,7 +156,7 @@ class TopicDatabase extends DatabaseBase
         }
         else {
             $this->Database->sendQuery($this->Query->addAnonymous(
-                (empty($nick) ? $Config->get('anonymousNick') : $nick),
+                (empty($nick) ? $Config->get('anonymousNick', 'forum') : $nick),
                 $topic_type,
                 $parent,
                 $title,

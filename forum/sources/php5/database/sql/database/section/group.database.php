@@ -22,7 +22,7 @@
 */
 
 require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
-require_once(SOURCES_PATH.'/database/sql/query/section/group.query.php');
+require_once($M_SOURCES_PATH.'/database/sql/query/section/group.query.php');
 
 /**
 * This class is dedicated to section groups stuff.

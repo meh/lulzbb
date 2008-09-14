@@ -31,9 +31,8 @@ require_once($M_SOURCES_PATH.'/template/pager.template.php');
 */
 class SectionTemplate extends Template
 {
-    private $section_id;
+    private $section;
     private $page;
-    private $pagesNumber;
     private $groups;
     private $topics;
 
@@ -44,18 +43,16 @@ class SectionTemplate extends Template
     * @param    array    $sections      The sections data.
     * @param    array    $topics        The topics data.
     */
-    public function __construct ($section_id, $page, $groups, $topics)
+    public function __construct ($section, $page, $groups, $topics)
     {
         parent::__construct('forum/section.tpl');
-        global $Database;
         
-        $this->section_id  = $section_id;
-        $this->page        = $page;
-        $this->pagesNumber = !empty($page) ? $Database->section->getPages($section_id) : 0;
-        $this->groups      = $groups;
-        $this->topics      = $topics;
+        $this->section = $section;
+        $this->page    = $page;
+        $this->groups  = $groups;
+        $this->topics  = $topics;
 
-        $this->data['title'] = $Database->section->getTitle($section_id);
+        $this->data['title'] = $section['title'];
 
         $this->__parse();
     }
@@ -66,8 +63,6 @@ class SectionTemplate extends Template
     */
     private function __parse ()
     {
-        global $Database;
-
         $text = $this->output();
         $text = $this->__loops($text);
 
@@ -85,7 +80,7 @@ class SectionTemplate extends Template
             $text
         );
 
-        if (!$Database->section->isContainer($this->section_id)) {
+        if (!$this->section['container']) {
             $topics = $this->__topics($this->topics);
         }
         else {
@@ -98,7 +93,7 @@ class SectionTemplate extends Template
             $text
         );
 
-        $pager = new PagerTemplate('section', $this->page, $this->pagesNumber);
+        $pager = new PagerTemplate('section', $this->page['page'], $this->page['number']);
         $text = preg_replace(
             '|<%PAGER%>|i',
             $pager->output(),
@@ -107,7 +102,7 @@ class SectionTemplate extends Template
 
         $text = preg_replace(
             '|<%SECTION-URL%>|i',
-            "?forum&section&id={$this->section_id}",
+            "?forum&section&id={$this->section['id']}",
             $text
         );
 
@@ -618,7 +613,7 @@ class SectionTemplate extends Template
     {
         $text = preg_replace(
             '|<%SECTION-ID%>|i',
-            $this->section_id,
+            $this->section['id'],
             $text
         );
 

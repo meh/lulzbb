@@ -65,7 +65,7 @@ class Post extends Send
     {
         global $Database;
 
-        $parent   = $Database->topic->getParent($data['topic_id']);
+        $parent   = $Database['forum']->topic->getParent($data['topic_id']);
         $topic_id = $data['topic_id'];
         $title    = $data['title'];
         $content  = $data['content'];
@@ -82,7 +82,7 @@ class Post extends Send
                 break;
 
                 default:
-                $Database->topic->post->add($topic_id, $title, $content);
+                $Database['forum']->topic->post->add($topic_id, $title, $content);
 
                 $message = new InformativeMessage(
                     'post_sent',
