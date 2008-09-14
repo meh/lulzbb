@@ -105,6 +105,12 @@ class SectionTemplate extends Template
             "?forum&section&id={$this->section['id']}",
             $text
         );
+        
+        $text = preg_replace(
+            '|<%NEW-TOPIC%>|i',
+            $this->__newTopic(),
+            $text
+        );
 
         $this->parsed = $this->__common($text);
     }
@@ -618,6 +624,28 @@ class SectionTemplate extends Template
         );
 
         return $text;
+    }
+    
+    private function __newTopic ()
+    {
+        global $Config;
+        global $Database;
+
+        if (($this->connected || $Config->get('anonymousPosting')) && !$Database['forum']->section->isLocked($this->section['id'])) {
+            $template = new SectionTemplate(0,0,0,0);
+            $template = $template->getTemplatePart('new_topic');
+
+            $template = preg_replace(
+                '|<%POST-SECTION-ID%>|i',
+                $this->section['id'],
+                $template
+            );
+        }
+        else {
+            $template = '';
+        }
+
+        return $template;
     }
 }
 ?>
