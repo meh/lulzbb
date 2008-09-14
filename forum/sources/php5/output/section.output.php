@@ -50,7 +50,7 @@ class Section extends Output
             $this->page = 1;
         }
         else if ($page == 'last') {
-            $this->page = $this->Database['forum']->section->getPages($section_id);
+            $this->page = $this->Database->_('forum')->section->getPages($section_id);
         }
             
         $this->page = (int) $page;
@@ -69,13 +69,13 @@ class Section extends Output
         global $Database;
 
         try {
-            if ($Database['forum']->section->exists($this->section_id)) {
-                $groups = $Database['forum']->section->getGroups($this->section_id);
+            if ($Database->_('forum')->section->exists($this->section_id)) {
+                $groups = $Database->_('forum')->section->getGroups($this->section_id);
                 foreach ($groups as $n => $group) {
-                    $groups[$n]['data'] = $Database['forum']->section->group->getSections($group['id']['RAW']);
+                    $groups[$n]['data'] = $Database->_('forum')->section->group->getSections($group['id']['RAW']);
                 }
                 
-                $topics = $Database['forum']->section->getTopics($this->section_id, $this->page);
+                $topics = $Database->_('forum')->section->getTopics($this->section_id, $this->page);
 
                 if ($this->section_id == 0 && empty($groups) && empty($topics)) {
                     $message = new InformativeMessage('The section is empty.');
@@ -93,12 +93,12 @@ class Section extends Output
         $template = new SectionTemplate(
             array(
                 'id'        => $this->section_id,
-                'title'     => $Database['forum']->section->getTitle($this->section_id),
-                'container' => $Database['forum']->section->isContainer($this->section_id)
+                'title'     => $Database->_('forum')->section->getTitle($this->section_id),
+                'container' => $Database->_('forum')->section->isContainer($this->section_id)
             ),
             array(
                'page'   => $this->page,
-               'number' => $Database['forum']->section->getPages($this->section_id)
+               'number' => $Database->_('forum')->section->getPages($this->section_id)
             ),
             $groups,
             $topics

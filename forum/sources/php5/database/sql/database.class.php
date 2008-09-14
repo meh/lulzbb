@@ -21,9 +21,9 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/database/sql/database.class.php');
-require_once($M_SOURCES_PATH.'/database/sql/database/section.database.php');
-require_once($M_SOURCES_PATH.'/database/sql/database/topic.database.php');
+require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+require_once($M_SOURCES_PATH.'/database/sql/database/section/section.database.php');
+require_once($M_SOURCES_PATH.'/database/sql/database/topic/topic.database.php');
 
 /**
 * XBAWKZ HUEG class for database communication.
@@ -33,7 +33,7 @@ require_once($M_SOURCES_PATH.'/database/sql/database/topic.database.php');
 
 * @author cHoBi
 */
-class ForumDatabase extends Database
+class ForumDatabase extends DatabaseBase
 {
     // Various database methods
     public $section;
@@ -45,9 +45,9 @@ class ForumDatabase extends Database
     
     * @exception    database_connection    On database connection failure.
     */
-    public function __construct ()
+    public function __construct ($Database)
     {
-        parent::__construct();
+        parent::__construct($Database);
 
         $this->section = new SectionDatabase($this);
         $this->topic   = new TopicDatabase($this);
@@ -74,7 +74,7 @@ class ForumDatabase extends Database
             'user_groups'
         );
 
-        $query = $this->sendQuery('SHOW TABLES');
+        $query = $this->Database->sendQuery('SHOW TABLES');
 
         while ($table = mysql_fetch_row($query)) {
             foreach ($tables as $n => $name) {

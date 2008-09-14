@@ -1,7 +1,7 @@
 <?php
 /**
 * @package PHP5
-* @category Send
+* @category Database
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -21,34 +21,38 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/input/input.class.php');
+require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+require_once(SOURCES_PATH.'/database/sql/query/misc.query.php');
 
 /**
-* Logout yay.
+* This class is dedicated to misc stuff.
 
 * @author cHoBi
 */
-class Logout extends Input
+class MiscDatabase extends DatabaseBase
 {
     /**
-    * Logout.
+    * Oh noes, still the same >:3 GET IN THE CAR!
+    
+    * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct ()
-    {    
-        $this->output = $this->__send(0);
-    }
-
-    /**
-    * Delete the user data from the session, so it's a logout :D
-
-    * @return     string    The logout screen.
-    */
-    protected function __send ($data)
+    public function __construct ($Database)
     {
-        $template = new InformativeMessage('logout_successful');
-       
-        destroySession();
-        return $template->output();
+        $query = new MiscQuery();
+        parent::__construct($Database, $query); 
+    }
+    
+    /**
+    * Returns the last topic id.
+    
+    * @return    int    Last topic id.
+    */
+    public function getLastTopic ()
+    {
+        $query = $this->Database->sendQuery($this->Query->getLastTopic());
+
+        $last_topic_id = mysql_fetch_row($query);
+        return $last_topic_id[0];
     }
 }
 ?>

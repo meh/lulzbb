@@ -26,12 +26,12 @@
 switch ($Config->get('dbType')) {
     case 'mysql':
     require_once($M_SOURCES_PATH.'/database/sql/database.class.php');
-    $Database['forum'] = new ForumDatabase;
+    $Database->_add(new ForumDatabase($Database), 'forum');
     break;
 
     case 'text':
     require_once($M_SOURCES_PATH.'/database/text/database.class.php');
-    $Database['forum'] = new ForumDatabase;
+    $Database->_add(new ForumDatabase, 'forum');
     break;
 
     default:

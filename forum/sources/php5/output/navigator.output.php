@@ -75,11 +75,11 @@ class Navigator extends Output
         try {
             switch ($type) {
                 case 'section':
-                $parents = $Database['forum']->section->getNavigator($id, $option);
+                $parents = $Database->_('forum')->section->getNavigator($id, $option);
                 break;
 
                 case 'topic':
-                $parents = $Database['forum']->topic->getNavigator($id, $option);
+                $parents = $Database->_('forum')->topic->getNavigator($id, $option);
                 break;
             }
 
