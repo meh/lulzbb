@@ -1,6 +1,6 @@
 <?php
 /**
-* @package PHP5
+* @package Core-PHP5
 * @category User
 
 * @license AGPLv3
@@ -43,14 +43,14 @@ class User
     public function __construct ($id)
     {
         global $Database;
-        $Database['user']->updateSession($id);
+        $Database->_('core')->user->updateSession($id);
 
         $this->id      = $id;
-        $this->name    = $Database['user']->getName($id);
-        $this->groups  = $Database['user']->group->get($id);
+        $this->name    = $Database->_('core')->user->getName($id);
+        $this->groups  = $Database->_('core')->user->group->get($id);
         $this->session = session_id();
 
-        $this->bbcode = $Database['user']->getBBCode($id);
+        $this->bbcode = $Database->_('core')->user->getBBCode($id);
     }
 
     /**
@@ -121,7 +121,7 @@ class User
         global $Database;
 
         try {
-            $Database->user->group->addUser($this->getName('RAW'), $groupName);
+            $Database->_('core')->user->group->addUser($this->getName('RAW'), $groupName);
         }
         catch (lulzException $e) {
             die($e->getMessage());
@@ -144,7 +144,7 @@ class User
                 unset($this->groups[$n]);
 
                 try {
-                    $Database->user->group->removeUser(
+                    $Database->_('core')->user->group->removeUser(
                         $this->getName('RAW'),
                         $groupName);
                 }

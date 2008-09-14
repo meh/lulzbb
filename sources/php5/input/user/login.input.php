@@ -1,7 +1,7 @@
 <?php
 /**
-* @package PHP5
-* @category Send
+* @package Core-PHP5
+* @category Input
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -94,7 +94,7 @@ class Login extends Input
         global $Database;
         global $User;
     
-        $user = $Database['user']->login->check($username, $password);
+        $user = $Database->_('core')->user->login->check($username, $password);
         if ($user) {
             $User = $_SESSION[SESSION]['user'] = new User($user);
             return true;

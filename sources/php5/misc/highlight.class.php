@@ -1,6 +1,6 @@
 <?php
 /**
-* @package PHP5
+* @package Core-PHP5
 * @category Misc
 
 * @license AGPLv3

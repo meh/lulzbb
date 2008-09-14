@@ -1,6 +1,6 @@
 <?php
 /**
-* @package PHP5
+* @package Core-PHP5
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.

@@ -1,6 +1,6 @@
 <?php
 /**
-* @package PHP5
+* @package Core-PHP5
 * @category Send
 
 * @license AGPLv3
@@ -113,7 +113,7 @@ class Registration extends Input
             $output = 'The username is too long.';
         }
     
-        else if ($Database['core']->user->exists($username)) {
+        else if ($Database->_('core')->user->exists($username)) {
             $output = 'The username already exists.';
         }
     
@@ -157,7 +157,7 @@ class Registration extends Input
             $output = "The email address isn't valid.";
         }
 
-        else if ($Database['core']->user->emailExists($email1)) {
+        else if ($Database->_('core')->user->emailExists($email1)) {
             $output = 'The email address is already in use.';
         }
         else {
@@ -177,13 +177,11 @@ class Registration extends Input
     */
     private function __isBanned ($email)
     {
-        global $M_ROOT_PATH;
-    
         $output = 'Ok.';
         $re_email  = '|^[^\d]\w+(\.\w+)*@\w+(\.\w+)*\.[A-z]{2,4}$|i';
         $re_domain = '|^@\w+(\.\w+)*\.[[:alpha:]]{2,4}$|i';
 
-        $bannedEmails = split("\n", read_file($M_ROOT_PATH.'/config/email_blacklist.php'));
+        $bannedEmails = split("\n", read_file(ROOT_PATH.'/config/email_blacklist.php'));
         foreach($bannedEmails as $banned) {
             $banned = trim($banned);
 
@@ -264,7 +262,7 @@ class Registration extends Input
              && $this->__checkEmail(array('email' => $email) == 'Ok.')
              && $this->__checkPassword(array('password' => $password)) == 'Ok.'
            ) {
-            $Database['core']->user->registration->exec($username, $password, $email);
+            $Database->_('core')->user->registration->exec($username, $password, $email);
             $message = new InformativeMessage(
                 'registration_successful',
                  array(

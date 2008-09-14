@@ -1,6 +1,6 @@
 <?php
 /**
-* @package PHP5
+* @package Core-PHP5
 * @category Database
 
 * @license AGPLv3
@@ -43,7 +43,7 @@ class CoreDatabase extends DatabaseBase
     {
         parent::__construct($Database);
         
-        $this->user = new UserDatabase($this);
+        $this->user = new UserDatabase($Database);
     }
 }
 ?>
