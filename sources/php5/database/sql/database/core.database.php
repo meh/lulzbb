@@ -21,26 +21,29 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+require_once(SOURCES_PATH.'/database/sql/database/user/user.database.php');
+
 /**
-* This is just the base class for the database classes.
+* Database core class.
 
 * @author cHoBi
 */
-class DatabaseBase
+class CoreDatabase extends DatabaseBase
 {
-    protected $Database;
-    protected $Query;
+    public $user;
 
     /**
-    * Just to write less code and use OO programming :>
+    * Create the mysql connection and selects the database from the
+    * configuration file.
     
-    * @param    object    $Database    The Database object.
-    * @param    object    $query       The Query object.
+    * @exception    database_connection    On database connection failure.
     */
-    public function __construct ($Database, $query = null)
+    public function __construct ($Database)
     {
-        $this->Database = $Database;
-        $this->Query    = $query;
+        parent::__construct($Database);
+        
+        $this->user = new UserDatabase($this);
     }
 }
 ?>

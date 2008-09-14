@@ -1,7 +1,7 @@
 <?php
 /**
 * @package PHP5
-* @category Database
+* @category Send
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -21,26 +21,34 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+require_once(SOURCES_PATH.'/input/input.class.php');
+
 /**
-* This is just the base class for the database classes.
+* Logout yay.
 
 * @author cHoBi
 */
-class DatabaseBase
+class Logout extends Input
 {
-    protected $Database;
-    protected $Query;
+    /**
+    * Logout.
+    */
+    public function __construct ()
+    {    
+        $this->output = $this->__send(0);
+    }
 
     /**
-    * Just to write less code and use OO programming :>
-    
-    * @param    object    $Database    The Database object.
-    * @param    object    $query       The Query object.
+    * Delete the user data from the session, so it's a logout :D
+
+    * @return     string    The logout screen.
     */
-    public function __construct ($Database, $query = null)
+    protected function __send ($data)
     {
-        $this->Database = $Database;
-        $this->Query    = $query;
+        $template = new InformativeMessage('logout_successful');
+       
+        destroySession();
+        return $template->output();
     }
 }
 ?>

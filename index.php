@@ -79,17 +79,21 @@ define('MISC_PATH', ROOT_PATH.'/sources/misc');
 
 require('install/functions.php');
 checkInstall();
+
 // Misc sources.
 require_once(MISC_PATH.'/session.php');
 require_once(MISC_PATH.'/filesystem.php');
 require_once(MISC_PATH.'/misc.php');
 
-// Session creation.
+require_once(SOURCES_PATH.'/misc/exception.class.php');
 require_once(SOURCES_PATH.'/misc/config.class.php');
 require_once(SOURCES_PATH.'/misc/filter.class.php');
 require_once(SOURCES_PATH.'/misc/module.class.php');
-require_once(SOURCES_PATH.'/misc/exception.class.php');
+require_once(SOURCES_PATH.'/misc/user.class.php');
 
+/**
+* Session initialization.
+*/
 if (!sessionFileExists()) {
     createSessionFile();
 }
@@ -116,15 +120,16 @@ $Filter = $_SESSION[SESSION]['filter'];
 
 * @global    object    $User
 */
-$User;
+$User = $_SESSION[SESSION]['user'];
 
+require_once(SOURCES_PATH.'/database/database.php');
 /**
 * This global var cointains the Database object, and i think it's obvious
 * why you need it...
 
 * @global    object    $Database
 */
-$Database;
+$Database = new Database;
 
 /**
 * This global var containst the count of sent queries for the page.
@@ -133,14 +138,14 @@ $Database;
 */
 $queries = 0;
 
-initSessionData();
-
 if (isset($_REQUEST['session'])) {
     die;
 }
 
+/**
+* Modules initialization.
+*/
 $modulesList = array();
-
 $modulePaths = glob('modules/*');
 foreach ($modulePaths as $modulePath) {
     if (is_dir($modulePath)) {
@@ -151,11 +156,8 @@ foreach ($modulePaths as $modulePath) {
         $M_SOURCES_PATH    = $M_ROOT_PATH.'/sources/'.SOURCES_VERSION;
         $M_INTERFACES_PATH = $M_ROOT_PATH.'/interfaces';
 
-        if ($module->get('name') == 'user') {
-            require("{$M_SOURCES_PATH}/user.class.php");
-
-            global $User;
-            $User = $_SESSION[SESSION]['user'];
+        if (is_file($M_ROOT_PATH.'/config/configuration.php')) {
+            $Config->parseFile($M_ROOT_PATH.'/config/configuration.php', $MODULE_NAME);
         }
 
         $databasePath = "{$M_SOURCES_PATH}/database/database.php";
@@ -173,6 +175,9 @@ foreach ($modulePaths as $modulePath) {
     }
 }
 
+/**
+* Modules inclusion and execution.
+*/
 foreach ($modulesList as $modules) {
     foreach ($modules as $module) {
         $MODULE_NAME = $module->get('name');
@@ -180,10 +185,6 @@ foreach ($modulesList as $modules) {
         $M_ROOT_PATH       = $module->getPath();
         $M_SOURCES_PATH    = $M_ROOT_PATH.'/sources/'.SOURCES_VERSION;
         $M_INTERFACES_PATH = $M_ROOT_PATH.'/interfaces';
-
-        if (is_file($M_ROOT_PATH.'/config/configuration.php')) {
-            $Config->parseFile($M_ROOT_PATH.'/config/configuration.php', $MODULE_NAME);
-        }
 
         require($M_ROOT_PATH.'/index.php');
 
@@ -198,11 +199,23 @@ foreach ($modulesList as $modules) {
     }
 }
 
+initSessionData();
+
+/**
+* Core functions.
+*/
 if (isset($_GET['out'])) {
-    require(INTERFACES_PATH.'/output/misc.out.php');
+    if (isset($_GET['user'])) {
+        require(INTERFACES_PATH.'/output/user.out.php');
+    }
+    else {
+        require(INTERFACES_PATH.'/output/misc.out.php');
+    }
 }
 else if (isset($_GET['in'])) {
-
+    if (isset($_GET['user'])) {
+        require(INTERFACES_PATH.'/input/user.in.php');
+    }
 }
 else {
     if (!isset($_REQUEST['page'])) {

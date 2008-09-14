@@ -1,7 +1,7 @@
 <?php
 /**
 * @package PHP5
-* @category Database
+* @category Show
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -21,38 +21,22 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
-require_once(SOURCES_PATH.'/database/sql/query/misc.query.php');
+require_once(SOURCES_PATH.'/output/output.class.php');
+require_once(SOURCESPATH.'/template/user/panel/general.panel.template.php');
 
 /**
-* This class is dedicated to misc stuff.
+* User's general panel show class.
 
 * @author cHoBi
 */
-class MiscDatabase extends DatabaseBase
+class UserGeneralPanelShow extends Output
 {
     /**
-    * Oh noes, still the same >:3 GET IN THE CAR!
-    
-    * @param    object    $Database   The Database object, recursive object is recursive.
+    * Gets the user's data and shows it.
     */
-    public function __construct ($Database)
+    public function __construct ()
     {
-        $query = new MiscQuery();
-        parent::__construct($Database, $query); 
-    }
-    
-    /**
-    * Returns the last topic id.
-    
-    * @return    int    Last topic id.
-    */
-    public function getLastTopic ()
-    {
-        $query = $this->Database->sendQuery($this->Query->getLastTopic());
 
-        $last_topic_id = mysql_fetch_row($query);
-        return $last_topic_id[0];
     }
 }
 ?>

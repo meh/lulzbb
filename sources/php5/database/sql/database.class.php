@@ -21,6 +21,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+require_once(SOURCES_PATH.'/database/sql/database/core.database.php');
+
 /**
 * XBAWKZ HUEG class for database communication.
 
@@ -28,9 +30,10 @@
 */
 class Database
 {
-    protected $mysql;
-    protected $Query;
-    protected $query;
+    private $mysql;
+    private $query;
+
+    private $modules;
 
     /**
     * Create the mysql connection and selects the database from the
@@ -53,6 +56,8 @@ class Database
         }
         
         mysql_select_db($Config->get('dbName'), $this->mysql);
+
+        $this->_add(new CoreDatabase($this), 'core');
     }
 
     public function __destruct ()
@@ -82,6 +87,16 @@ class Database
         $queries++;
 
         return $this->query;
+    }
+
+    final public function _add ($Database, $module)
+    {
+        $this->modules[$module] = $Database;
+    }
+
+    final public function _ ($module)
+    {
+        return $this->modules[$module];
     }
 
     /**

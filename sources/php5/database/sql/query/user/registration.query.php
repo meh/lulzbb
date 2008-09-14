@@ -1,7 +1,7 @@
 <?php
 /**
 * @package PHP5
-* @category Database
+* @category Query
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -21,26 +21,42 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
-* This is just the base class for the database classes.
+require_once(SOURCES_PATH.'/database/sql/query.class.php');
 
+/**
+* @ignore
+*
 * @author cHoBi
 */
-class DatabaseBase
-{
-    protected $Database;
-    protected $Query;
+class RegistrationQuery extends Query {
+    public function __construct() {
+        parent::__construct();
+    }
 
-    /**
-    * Just to write less code and use OO programming :>
-    
-    * @param    object    $Database    The Database object.
-    * @param    object    $query       The Query object.
-    */
-    public function __construct ($Database, $query = null)
-    {
-        $this->Database = $Database;
-        $this->Query    = $query;
+    public function exec($username, $password, $email) {
+        global $Filter;
+        $username = $Filter->SQL($username);
+        $password = $Filter->crypt($password);
+        $email    = $Filter->SQL($email);
+
+        return <<<QUERY
+        
+        INSERT
+            INTO {$this->dbPrefix}_users(
+                name,
+                password,
+                email,
+                registration_date
+            )
+            
+            VALUES(
+                "{$username}",
+                "{$password}",
+                "{$email}",
+                NOW()
+            )
+
+QUERY;
     }
 }
 ?>

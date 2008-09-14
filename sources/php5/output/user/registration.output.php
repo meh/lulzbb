@@ -1,7 +1,7 @@
 <?php
 /**
 * @package PHP5
-* @category Database
+* @category Show
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -21,26 +21,35 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+require_once(SOURCES_PATH.'/output/output.class.php');
+
 /**
-* This is just the base class for the database classes.
+* Registration's show class.
 
 * @author cHoBi
 */
-class DatabaseBase
+class Registration extends Output
 {
-    protected $Database;
-    protected $Query;
-
     /**
-    * Just to write less code and use OO programming :>
-    
-    * @param    object    $Database    The Database object.
-    * @param    object    $query       The Query object.
+    * Constructor, if the user is connected kill the thing.
     */
-    public function __construct ($Database, $query = null)
+    public function __construct ()
     {
-        $this->Database = $Database;
-        $this->Query    = $query;
+        if ($this->connected) {
+            die('LOLNO');
+        }
+
+        $this->__update();
+    }
+    
+    /**
+    * Show the registration form.
+    */
+    protected function __update ()
+    {
+        $template = new Template('user/registration.tpl');
+        
+        $this->output = $template->output();
     }
 }
 ?>
