@@ -24,7 +24,13 @@
 
 ini_set('error_reporting', 'E_CORE_ERROR');
 
+if (isset($_GET['PHPSESSID']) or isset($_POST['PHPSESSID'])) {
+    die("You can't set a php session id, sorry.");
+}
+
 define('VERSION', (float) phpversion());
+define('SOURCES_VERSION', 'php'.(int) VERSION);
+
 if ((int) VERSION == 4) {
     die("PHP 4 isn't supported yet");
 }
@@ -32,9 +38,12 @@ if ((int) VERSION == 6) {
     die('LOLNO');
 }
 
-// Paths
 define('ROOT_PATH', realpath('../'));
-define('SOURCE_PATH', ROOT_PATH.'/sources/php'.((int) VERSION));
+define('WEB_PATH', dirname($_SERVER['PHP_SELF']));
+define('MODULES_PATH', ROOT_PATH.'/modules');
+define('INTERFACES_PATH', ROOT_PATH.'/interfaces');
+define('API_PATH', ROOT_PATH.'/sources/api');
+define('SOURCES_PATH', ROOT_PATH.'/sources/'.SOURCES_VERSION);
 define('MISC_PATH', ROOT_PATH.'/sources/misc');
 
 require_once(ROOT_PATH.'/install/functions.php');
@@ -44,20 +53,16 @@ require_once(MISC_PATH.'/session.php');
 require_once(MISC_PATH.'/filesystem.php');
 
 // Session creation.
-require_once(SOURCE_PATH.'/misc/config.class.php');
-require_once(SOURCE_PATH.'/misc/filter.class.php');
+require_once(SOURCES_PATH.'/misc/config.class.php');
+require_once(SOURCES_PATH.'/misc/filter.class.php');
 
 startSession('../');
 
 $Config   = new Config;
 $Filter   = new Filter;
 
-require_once(SOURCE_PATH.'/database/database.php');
-$Database = new Database();
-
-if ($Database->exists()) {
-    die('The installation has already been done.');
-}
+require_once(SOURCES_PATH.'/database/database.php');
+$Database = new Database;
 
 $dbPrefix = $Config->get('dbPrefix');
 
@@ -78,8 +83,8 @@ weight INT,
 title TINYTEXT,
 subtitle TINYTEXT,
 
-locked BOOL NOT NULL DEFAULT TRUE,
-container BOOL NOT NULL DEFAULT TRUE,
+locked BOOL NOT NULL DEFAULT FALSE,
+container BOOL NOT NULL DEFAULT FALSE,
 
 count_topics INT UNSIGNED NOT NULL DEFAULT 0,
 count_posts INT UNSIGNED NOT NULL DEFAULT 0,

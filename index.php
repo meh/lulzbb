@@ -112,6 +112,13 @@ $Config = $_SESSION[SESSION]['config'];
 $Filter = $_SESSION[SESSION]['filter'];
 
 /**
+* This global var contains the User object, obvious object is obviou.
+
+* @global    object    $User
+*/
+$User;
+
+/**
 * This global var cointains the Database object, and i think it's obvious
 * why you need it...
 
@@ -132,7 +139,7 @@ if (isset($_REQUEST['session'])) {
     die;
 }
 
-$modules = array();
+$modulesList = array();
 
 $modulePaths = glob('modules/*');
 foreach ($modulePaths as $modulePath) {
@@ -147,11 +154,7 @@ foreach ($modulePaths as $modulePath) {
         if ($module->get('name') == 'user') {
             require("{$M_SOURCES_PATH}/user.class.php");
 
-            /**
-            * This global var contains the User object, obvious object is obviou.
-
-            * @global    object    $User
-            */
+            global $User;
             $User = $_SESSION[SESSION]['user'];
         }
 
@@ -160,31 +163,46 @@ foreach ($modulePaths as $modulePath) {
             include($databasePath);
         }
 
-        array_push($modules, $module);
+        $priority = $module->get('priority');
+
+        if (!isset($modulesList[$priority])) {
+            $modulesList[$priority] = array();
+        }
+
+        array_push($modulesList[$priority], $module);
     }
 }
 
-foreach ($modules as $module) {
-    $MODULE_NAME = $module->get('name');
+foreach ($modulesList as $modules) {
+    foreach ($modules as $module) {
+        $MODULE_NAME = $module->get('name');
 
-    $M_ROOT_PATH       = $module->getPath();
-    $M_SOURCES_PATH    = $M_ROOT_PATH.'/sources/'.SOURCES_VERSION;
-    $M_INTERFACES_PATH = $M_ROOT_PATH.'/interfaces';
+        $M_ROOT_PATH       = $module->getPath();
+        $M_SOURCES_PATH    = $M_ROOT_PATH.'/sources/'.SOURCES_VERSION;
+        $M_INTERFACES_PATH = $M_ROOT_PATH.'/interfaces';
 
-    if (is_file($M_ROOT_PATH.'/config/configuration.php')) {
-        $Config->parseFile($M_ROOT_PATH.'/config/configuration.php', $MODULE_NAME);
-    }
+        if (is_file($M_ROOT_PATH.'/config/configuration.php')) {
+            $Config->parseFile($M_ROOT_PATH.'/config/configuration.php', $MODULE_NAME);
+        }
 
-    require($M_ROOT_PATH.'/index.php');
+        require($M_ROOT_PATH.'/index.php');
 
-    if (ob_get_length() > 0) {
-        ob_end_flush();
-        die();
+    /// This could be useful but i don't know, if a module needs to do something
+    /// without outputting anything meh, i don't know, i think i should do something like
+    /// an order for modules, so it's win etc. yes, i agree with this :)
+
+        if (ob_get_length() > 0) {
+            ob_end_flush();
+            die();
+        }
     }
 }
 
 if (isset($_GET['out'])) {
     require(INTERFACES_PATH.'/output/misc.out.php');
+}
+else if (isset($_GET['in'])) {
+
 }
 else {
     if (!isset($_REQUEST['page'])) {

@@ -28,7 +28,7 @@ require_once(SOURCES_PATH.'/output/misc/informative-message.output.php');
 
 * @author cHoBi
 */
-abstract class Send
+abstract class Input
 {
     protected $data;
     protected $output;
