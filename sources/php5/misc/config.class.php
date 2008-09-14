@@ -47,7 +47,7 @@ class Config
 
     * @param    string    $fileName    The file to read.
     */
-    public function parseFile ($fileName, $porcoddio = 'general')
+    public function parseFile ($fileName, $domain = 'general')
     {
         if ($this->isParsed($fileName)) {
             return;
@@ -56,10 +56,10 @@ class Config
         array_push($this->parsedFiles, realpath($fileName));
 
         $file = read_file($fileName);
-        $this->parseString($file, $porcoddio);
+        $this->parseString($file, $domain);
     }
 
-    public function parseString ($string, $porcoddio = 'general')
+    public function parseString ($string, $domain = 'general')
     {
         $dom = dom_import_simplexml(simplexml_load_string($string))->ownerDocument;
 
@@ -69,7 +69,7 @@ class Config
             $element = $configuration->childNodes->item($i);
 
             if ($element->nodeType == XML_ELEMENT_NODE) {
-                $this->config[$porcoddio][$element->nodeName] = $element->nodeValue;
+                $this->config[$domain][$element->nodeName] = $element->nodeValue;
             }
         }
     }
@@ -92,10 +92,10 @@ class Config
 
     * @return    mixed    The value.
     */
-    public function get ($config, $porcoddio = 'general')
+    public function get ($config, $domain = 'general')
     {
-        if (isset($this->config[$porcoddio][$config])) {
-            switch ($this->config[$porcoddio][$config]) {
+        if (isset($this->config[$domain][$config])) {
+            switch ($this->config[$domain][$config]) {
                 case 'true':
                 return true;
                 break;
@@ -105,7 +105,7 @@ class Config
                 break;
 
                 default:
-                return $this->config[$porcoddio][$config];
+                return $this->config[$domain][$config];
                 break;
             }
         }

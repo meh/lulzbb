@@ -77,19 +77,19 @@ define('SOURCES_PATH', ROOT_PATH.'/sources/'.SOURCES_VERSION);
 */
 define('MISC_PATH', ROOT_PATH.'/sources/misc');
 
-require('install/functions.php');
+include('install/functions.php');
 checkInstall();
 
 // Misc sources.
-require_once(MISC_PATH.'/session.php');
-require_once(MISC_PATH.'/filesystem.php');
-require_once(MISC_PATH.'/misc.php');
+include(MISC_PATH.'/session.php');
+include(MISC_PATH.'/filesystem.php');
+include(MISC_PATH.'/misc.php');
 
-require_once(SOURCES_PATH.'/misc/exception.class.php');
-require_once(SOURCES_PATH.'/misc/config.class.php');
-require_once(SOURCES_PATH.'/misc/filter.class.php');
-require_once(SOURCES_PATH.'/misc/module.class.php');
-require_once(SOURCES_PATH.'/misc/user.class.php');
+include(SOURCES_PATH.'/misc/exception.class.php');
+include(SOURCES_PATH.'/misc/config.class.php');
+include(SOURCES_PATH.'/misc/filter.class.php');
+include(SOURCES_PATH.'/misc/module.class.php');
+include(SOURCES_PATH.'/misc/user.class.php');
 
 /**
 * Session initialization.
@@ -122,7 +122,7 @@ $Filter = $_SESSION[SESSION]['filter'];
 */
 $User = $_SESSION[SESSION]['user'];
 
-require_once(SOURCES_PATH.'/database/database.php');
+include(SOURCES_PATH.'/database/database.php');
 /**
 * This global var cointains the Database object, and i think it's obvious
 * why you need it...
@@ -186,7 +186,7 @@ foreach ($modulesList as $modules) {
         $M_SOURCES_PATH    = $M_ROOT_PATH.'/sources/'.SOURCES_VERSION;
         $M_INTERFACES_PATH = $M_ROOT_PATH.'/interfaces';
 
-        require($M_ROOT_PATH.'/index.php');
+        include($M_ROOT_PATH.'/index.php');
 
     /// This could be useful but i don't know, if a module needs to do something
     /// without outputting anything meh, i don't know, i think i should do something like
@@ -206,22 +206,22 @@ initSessionData();
 */
 if (isset($_GET['out'])) {
     if (isset($_GET['user'])) {
-        require(INTERFACES_PATH.'/output/user.out.php');
+        include(INTERFACES_PATH.'/output/user.out.php');
     }
     else {
-        require(INTERFACES_PATH.'/output/misc.out.php');
+        include(INTERFACES_PATH.'/output/misc.out.php');
     }
 }
 else if (isset($_GET['in'])) {
     if (isset($_GET['user'])) {
-        require(INTERFACES_PATH.'/input/user.in.php');
+        include(INTERFACES_PATH.'/input/user.in.php');
     }
 }
 else {
     if (!isset($_REQUEST['page'])) {
         $_REQUEST['page'] = $Config->get('homePage');
     }
-    require(INTERFACES_PATH.'/output/home.out.php');
+    include(INTERFACES_PATH.'/output/home.out.php');
 }
 
 ?>
