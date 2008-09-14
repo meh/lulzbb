@@ -138,9 +138,14 @@ $modulePaths = glob('modules/*');
 foreach ($modulePaths as $modulePath) {
     if (is_dir($modulePath)) {
         $module = new Module($modulePath);
+        $MODULE_NAME = $module->get('name');
+
+        $M_ROOT_PATH       = $module->getPath();
+        $M_SOURCES_PATH    = $M_ROOT_PATH.'/sources/'.SOURCES_VERSION;
+        $M_INTERFACES_PATH = $M_ROOT_PATH.'/interfaces';
 
         if ($module->get('name') == 'user') {
-            require($module->getPath().'/sources/'.SOURCES_VERSION.'/user.class.php');
+            require("{$M_SOURCES_PATH}/user.class.php");
 
             /**
             * This global var contains the User object, obvious object is obviou.
@@ -150,13 +155,16 @@ foreach ($modulePaths as $modulePath) {
             $User = $_SESSION[SESSION]['user'];
         }
 
+        $databasePath = "{$M_SOURCES_PATH}/database/database.php";
+        if (is_file($databasePath)) {
+            include($databasePath);
+        }
+
         array_push($modules, $module);
     }
 }
 
 foreach ($modules as $module) {
-    $modulePath = $module->getPath();
-
     $MODULE_NAME = $module->get('name');
 
     $M_ROOT_PATH       = $module->getPath();
