@@ -1,4 +1,4 @@
-<?php/*
+<?php die(); /*
 ; This is the list of banned email addresses, if you know other
 ; disposable email services post them in the forum and they will
 ; be added to the default black list.

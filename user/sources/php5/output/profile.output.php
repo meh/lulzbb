@@ -21,15 +21,15 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/show/show.class.php');
-require_once(SOURCE_PATH.'/template/user/profile.template.php');
+require_once(SOURCES_PATH.'/output/output.class.php');
+require_once($M_SOURCES_PATH.'/template/user/profile.template.php');
 
 /**
 * User's profile show class.
 
 * @author cHoBi
 */
-class UserProfileShow extends Show
+class UserProfileShow extends Output
 {
     /**
     * Gets the data from the user.
@@ -47,7 +47,7 @@ class UserProfileShow extends Show
     protected function __update ()
     {
         global $Database;
-        $template = new UserProfileTemplate($Database->user->getInfos($this->id));
+        $template = new UserProfileTemplate($Database['user']->getInfos($this->id));
         
         $this->output = $template->output();
     }

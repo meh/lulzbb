@@ -1,7 +1,7 @@
 <?php
 /**
-* @package PHP5
-* @category Send
+* @package User
+* @category Database
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -19,36 +19,24 @@
 *
 * You should have received a copy of the GNU Affero General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-require_once(SOURCES_PATH.'/input/input.class.php');
-
-/**
-* Logout yay.
 
 * @author cHoBi
 */
-class Logout extends Input
-{
-    /**
-    * Logout.
-    */
-    public function __construct ()
-    {    
-        $this->output = $this->__send(0);
-    }
 
-    /**
-    * Delete the user data from the session, so it's a logout :D
+switch ($Config->get('dbType')) {
+    case 'mysql':
+    require_once($M_SOURCES_PATH.'/database/sql/database.class.php');
+    $Database['user'] = new UserDatabase;
+    break;
 
-    * @return     string    The logout screen.
-    */
-    protected function __send ($data)
-    {
-        $template = new InformativeMessage('logout_successful');
-       
-        destroySession();
-        return $template->output();
-    }
+    case 'text':
+    require_once($M_SOURCES_PATH.'/database/text/database.class.php');
+    $Database['user'] = new UserDatabase;
+    break;
+
+    default:
+    die("Something went wrong with the database type.");
+    break;
 }
+
 ?>

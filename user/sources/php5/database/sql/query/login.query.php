@@ -1,7 +1,7 @@
 <?php
 /**
 * @package PHP5
-* @category Send
+* @category Query
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -21,34 +21,37 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/input/input.class.php');
+require_once(SOURCES_PATH.'/database/sql/query.class.php');
 
 /**
-* Logout yay.
-
+* @ignore
+*
 * @author cHoBi
 */
-class Logout extends Input
-{
-    /**
-    * Logout.
-    */
-    public function __construct ()
-    {    
-        $this->output = $this->__send(0);
+class LoginQuery extends Query {
+    public function __construct() {
+        parent::__construct();
     }
 
-    /**
-    * Delete the user data from the session, so it's a logout :D
+    public function check($username, $password) {
+        global $Filter;
+        $username = $Filter->SQL(trim($username));
+        $password = $Filter->crypt($password);
 
-    * @return     string    The logout screen.
-    */
-    protected function __send ($data)
-    {
-        $template = new InformativeMessage('logout_successful');
+        return <<<QUERY
+        
+        SELECT
+            {$this->dbPrefix}_users.id
        
-        destroySession();
-        return $template->output();
+        FROM
+            {$this->dbPrefix}_users
+            
+        WHERE
+            {$this->dbPrefix}_users.name = "{$username}"
+          AND
+            {$this->dbPrefix}_users.password = "{$password}"
+
+QUERY;
     }
 }
 ?>

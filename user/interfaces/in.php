@@ -25,7 +25,7 @@ if (!isset($Config)) {
 }
 
 if (isset($_GET['login'])) {
-    require_once(SOURCE_PATH.'/send/user/login.send.php');
+    require_once($M_SOURCES_PATH.'/input/login.input.php');
 
     $DATA['username'] = $_REQUEST['username'];
     $DATA['password'] = $_REQUEST['password'];
@@ -35,14 +35,14 @@ if (isset($_GET['login'])) {
 }
 
 if (isset($_GET['logout'])) {
-    require_once(SOURCE_PATH.'/send/user/logout.send.php');
+    require_once($M_SOURCES_PATH.'/input/logout.input.php');
 
     $logout = new Logout();
     echo $logout->output();
 }
 
 if (isset($_GET['register'])) {
-    require_once(SOURCE_PATH.'/send/user/registration.send.php');
+    require_once($M_SOURCES_PATH.'/input/registration.input.php');
 
     if (isset($_GET['check'])) {
         if (isset($_GET['username'])) {

@@ -21,14 +21,14 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/show/show.class.php');
+require_once(SOURCES_PATH.'/output/output.class.php');
 
 /**
 * Registration's show class.
 
 * @author cHoBi
 */
-class Registration extends Show
+class Registration extends Output
 {
     /**
     * Constructor, if the user is connected kill the thing.

@@ -24,11 +24,11 @@
 
 if (isset($_GET[$MODULE_NAME])) {
     if (isset($_GET['out'])) {
-        require($M_INTERFACES_PATH.'/output.php');
+        require($M_INTERFACES_PATH.'/out.php');
     }
 
     else if (isset($_GET['in'])) {
-        require ($M_INTERFACES_PATH.'/input.php');
+        require ($M_INTERFACES_PATH.'/in.php');
     }
 
     else if (isset($_GET['api'])) {

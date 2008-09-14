@@ -21,14 +21,14 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/send/send.class.php');
+require_once(SOURCES_PATH.'/input/input.class.php');
 
 /**
 * Login class.
 
 * @author cHoBi
 */
-class Login extends Send
+class Login extends Input
 {
     /**
     * Do the login.
@@ -94,7 +94,7 @@ class Login extends Send
         global $Database;
         global $User;
     
-        $user = $Database->user->login->check($username, $password);
+        $user = $Database['user']->login->check($username, $password);
         if ($user) {
             $User = $_SESSION[SESSION]['user'] = new User($user);
             return true;

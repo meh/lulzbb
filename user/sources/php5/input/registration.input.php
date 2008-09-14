@@ -21,14 +21,14 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/send/send.class.php');
+require_once(SOURCES_PATH.'/input/input.class.php');
 
 /**
 * Registration class.
 
 * @author cHoBi
 */
-class Registration extends Send
+class Registration extends Input
 {
     /**
     * Initialize and send the registration or check the data.
@@ -113,7 +113,7 @@ class Registration extends Send
             $output = 'The username is too long.';
         }
     
-        else if ($Database->user->exists($username)) {
+        else if ($Database['user']->exists($username)) {
             $output = 'The username already exists.';
         }
     
@@ -157,7 +157,7 @@ class Registration extends Send
             $output = "The email address isn't valid.";
         }
 
-        else if ($Database->user->emailExists($email1)) {
+        else if ($Database['user']->emailExists($email1)) {
             $output = 'The email address is already in use.';
         }
         else {
@@ -177,11 +177,13 @@ class Registration extends Send
     */
     private function __isBanned ($email)
     {
+        global $M_ROOT_PATH;
+    
         $output = 'Ok.';
         $re_email  = '|^[^\d]\w+(\.\w+)*@\w+(\.\w+)*\.[A-z]{2,4}$|i';
         $re_domain = '|^@\w+(\.\w+)*\.[[:alpha:]]{2,4}$|i';
 
-        $bannedEmails = file(ROOT_PATH.'/config/email_blacklist.php');
+        $bannedEmails = split("\n", read_file($M_ROOT_PATH.'/config/email_blacklist.php'));
         foreach($bannedEmails as $banned) {
             $banned = trim($banned);
 
@@ -262,7 +264,7 @@ class Registration extends Send
              && $this->__checkEmail(array('email' => $email) == 'Ok.')
              && $this->__checkPassword(array('password' => $password)) == 'Ok.'
            ) {
-            $Database->user->registration->exec($username, $password, $email);
+            $Database['user']->registration->exec($username, $password, $email);
             $message = new InformativeMessage(
                 'registration_successful',
                  array(

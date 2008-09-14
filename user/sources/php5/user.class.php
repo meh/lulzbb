@@ -43,14 +43,14 @@ class User
     public function __construct ($id)
     {
         global $Database;
-        $Database->user->updateSession($id);
+        $Database['user']->updateSession($id);
 
         $this->id      = $id;
-        $this->name    = $Database->user->getName($id);
-        $this->groups  = $Database->user->group->get($id);
+        $this->name    = $Database['user']->getName($id);
+        $this->groups  = $Database['user']->group->get($id);
         $this->session = session_id();
 
-        $this->bbcode = $Database->user->getLulzCode($id);
+        $this->bbcode = $Database['user']->getBBCode($id);
     }
 
     /**

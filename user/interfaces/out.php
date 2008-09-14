@@ -26,7 +26,7 @@ if (!isset($Config)) {
 
 if (isset($_GET['profile'])) {
     if (isset($_GET['show'])) {
-        require_once(SOURCE_PATH.'/output/user/profile.output.php');
+        require_once($M_SOURCES_PATH.'/output/profile.output.php');
 
         $DATA['user_id'] = $_REQUEST['id'];
 
@@ -40,13 +40,13 @@ if (isset($_GET['profile'])) {
 }
 
 else if (isset($_GET['login'])) {
-    require_once(SOURCE_PATH.'/show/user/login.show.php');
+    require_once($M_SOURCES_PATH.'/output/login.output.php');
     $login = new Login();
     echo $login->output();
 }
 
 else if (isset($_GET['register'])) {
-    require_once(SOURCE_PATH.'/show/user/registration.show.php');
+    require_once($M_SOURCES_PATH.'/output/registration.output.php');
     $registration = new Registration();
     echo $registration->output();
 }

@@ -21,15 +21,15 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCE_PATH.'/show/show.class.php');
-require_once(SOURCE_PATH.'/show/misc/informative-message.show.php');
+require_once(SOURCES_PATH.'/output/output.class.php');
+require_once(SOURCES_PATH.'/output/misc/informative-message.output.php');
 
 /**
 * Login show class.
 
 * @author cHoBi
 */
-class Login extends Show
+class Login extends Output
 {
     /**
     * Create and show the template.
