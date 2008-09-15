@@ -22,7 +22,7 @@
 */
 
 include_once(SOURCES_PATH.'/database/sql/database.base.class.php');
-include_once(SOURCES_PATH.'/database/sql/query/misc.query.php');
+include_once($M_SOURCES_PATH.'/database/sql/query/misc.query.php');
 
 /**
 * This class is dedicated to misc stuff.
