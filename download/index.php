@@ -23,7 +23,7 @@
 */
 
 if (isset($_GET['download'])) {
-    require(MODULE_PATH.'/interfaces/output/download.out.php');
+    include_once(MODULE_PATH.'/interfaces/output/download.out.php');
     exit();
 }
 

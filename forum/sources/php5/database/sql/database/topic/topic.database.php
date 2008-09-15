@@ -21,9 +21,9 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
-require_once($M_SOURCES_PATH.'/database/sql/database/topic/post.database.php');
-require_once($M_SOURCES_PATH.'/database/sql/query/topic.query.php');
+include_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+include_once($M_SOURCES_PATH.'/database/sql/database/topic/post.database.php');
+include_once($M_SOURCES_PATH.'/database/sql/query/topic/topic.query.php');
 
 /**
 * This class is dedicated to topic stuff.
@@ -136,7 +136,7 @@ class TopicDatabase extends DatabaseBase
     {
         global $Config;
 
-        if (!$this->Database->section->exists($parent)) {
+        if (!$this->Database->_('forum')->section->exists($parent)) {
             throw new lulzException('section_not_existent');
         }
 
@@ -151,8 +151,8 @@ class TopicDatabase extends DatabaseBase
                 $subtitle
             ));
         
-            $topic_id = $this->Database->misc->getLastTopic();
-            $this->Database->topic->post->add($topic_id, $title, $content);
+            $topic_id = $this->Database->_('forum')->misc->getLastTopic();
+            $this->Database->_('forum')->topic->post->add($topic_id, $title, $content);
         }
         else {
             $this->Database->sendQuery($this->Query->addAnonymous(
@@ -163,11 +163,11 @@ class TopicDatabase extends DatabaseBase
                 $subtitle
             ));
 
-            $topic_id = $this->Database->misc->getLastTopic();
-            $this->Database->topic->post->add($topic_id, $title, $content, $nick);
+            $topic_id = $this->Database->_('forum')->misc->getLastTopic();
+            $this->Database->_('forum')->topic->post->add($topic_id, $title, $content, $nick);
         }
         
-        $this->Database->section->increaseTopicsCount($parent);
+        $this->Database->_('forum')->section->increaseTopicsCount($parent);
 
         return $topic_id;
     }
@@ -243,7 +243,7 @@ class TopicDatabase extends DatabaseBase
 
         $parent = $parents[1];
         while (true) {
-            $parent = $this->Database->section->getParentInfo($parent['id']);
+            $parent = $this->Database->_('forum')->section->getParentInfo($parent['id']);
             array_push($parents, $parent);
 
             if ($parent['id'] == 0) {
@@ -332,8 +332,7 @@ class TopicDatabase extends DatabaseBase
     */
     public function increasePostsCount ($topic_id)
     {
-        $query = $this->Query->increasePostsCount($topic_id);
-        $this->Database->sendQuery($query);
+        $this->Database->sendQuery($this->Query->increasePostsCount($topic_id));
     }
 
     /**
@@ -343,8 +342,7 @@ class TopicDatabase extends DatabaseBase
     */
     public function increaseViewsCount ($topic_id)
     {
-        $query = $this->Query->increaseViewsCount($topic_id);
-        $this->Database->sendQuery($query);
+        $this->Database->sendQuery($this->Query->increaseViewsCount($topic_id));
     }
 
     /**

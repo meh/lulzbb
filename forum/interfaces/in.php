@@ -26,7 +26,7 @@ if (!isset($Config)) {
 
 if (isset($_GET['topic'])) {
     if (isset($_GET['send'])) {
-        require_once($M_SOURCES_PATH.'/input/forum/topic.input.php');
+        include_once($M_SOURCES_PATH.'/input/topic.input.php');
 
         $DATA['magic']    = $_REQUEST['magic'];
         $DATA['parent']   = $_REQUEST['parent'];
@@ -51,7 +51,7 @@ if (isset($_GET['topic'])) {
 
 if (isset($_GET['post'])) {
     if (isset($_GET['send'])) {
-        require_once($M_SOURCES_PATH.'/input/forum/post.input.php');
+        include_once($M_SOURCES_PATH.'/input/post.input.php');
 
         $DATA['magic']    = $_REQUEST['magic'];
         $DATA['topic_id'] = $_REQUEST['topic_id'];

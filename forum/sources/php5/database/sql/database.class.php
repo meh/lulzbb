@@ -21,9 +21,10 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
-require_once($M_SOURCES_PATH.'/database/sql/database/section/section.database.php');
-require_once($M_SOURCES_PATH.'/database/sql/database/topic/topic.database.php');
+include_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+include_once($M_SOURCES_PATH.'/database/sql/database/section/section.database.php');
+include_once($M_SOURCES_PATH.'/database/sql/database/topic/topic.database.php');
+include_once($M_SOURCES_PATH.'/database/sql/database/misc.database.php');
 
 /**
 * XBAWKZ HUEG class for database communication.
@@ -38,6 +39,7 @@ class ForumDatabase extends DatabaseBase
     // Various database methods
     public $section;
     public $topic;
+    public $misc;
 
     /**
     * Create the mysql connection and selects the database from the
@@ -51,6 +53,7 @@ class ForumDatabase extends DatabaseBase
 
         $this->section = new SectionDatabase($Database);
         $this->topic   = new TopicDatabase($Database);
+        $this->misc    = new MiscDatabase($Database);
     }
 
     /**

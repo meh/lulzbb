@@ -21,9 +21,9 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
-require_once($M_SOURCES_PATH.'/database/sql/database/section/group.database.php');
-require_once($M_SOURCES_PATH.'/database/sql/query/section.query.php');
+include_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+include_once($M_SOURCES_PATH.'/database/sql/database/section/group.database.php');
+include_once($M_SOURCES_PATH.'/database/sql/query/section/section.query.php');
 
 /**
 * This class is dedicated to section stuff.
@@ -409,7 +409,7 @@ class SectionDatabase extends DatabaseBase
     public function getLastPost ($section_id)
     {
         $topic = $this->getLastTopic($section_id);
-        $post  = $this->Database->topic->getLastPost($topic['topic_id']);
+        $post  = $this->Database->_('forum')->topic->getLastPost($topic['topic_id']);
 
         return $post;
     }

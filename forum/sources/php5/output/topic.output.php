@@ -21,9 +21,9 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/output/output.class.php');
-require_once($M_SOURCES_PATH.'/template/topic.template.php');
-require_once($M_SOURCES_PATH.'/misc/bbcode.class.php');
+include_once(SOURCES_PATH.'/output/output.class.php');
+include_once($M_SOURCES_PATH.'/template/topic.template.php');
+include_once($M_SOURCES_PATH.'/misc/bbcode.class.php');
 
 /**
 * Topic show class.
@@ -44,14 +44,29 @@ class Topic extends Output
     * @param    int    $topic_id    The topic id.
     * @param    int    $post_id     The post id.
     */
-    public function __construct ($parent, $topic_id, $page, $post_id)
+    public function __construct ($topic_id, $page, $post_id)
     {
+        global $Database;
         parent::__construct();
+        
+        $infos = $Database->_('forum')->topic->getInfos($topic_id);
 
-        $this->parent    = (int) $parent;
-        $this->topic_id  = (int) $topic_id;
-        $this->page      = (int) $page;
-        $this->post_id   = (int) $post_id;
+        $this->topic_id = (int) $topic_id;
+        $this->post_id  = (int) $post_id;
+        
+        if ($page == 'first') {
+            $this->page = 1;
+        }
+        else if ($page == 'last') {
+            $this->page = $Database->_('forum')->topic->getPages($topic_id);
+        }
+
+        $this->page = (int) $this->page;
+        if ($this->page < 1) {
+            $this->page = 1;
+        }
+
+        $this->parent = (int) $infos['parent']['RAW'];
 
         $this->__update();
     }
@@ -64,8 +79,9 @@ class Topic extends Output
         global $Database;
 
         try {
-            if ($Database['forum']->topic->exists($this->topic_id)) {
-                $posts = $Database['forum']->topic->getPosts($this->topic_id, $this->page);
+            if ($Database->_('forum')->topic->exists($this->topic_id)) {
+                $posts = $Database->_('forum')->topic->getPosts($this->topic_id, $this->page);
+                $Database->_('forum')->topic->increaseViewsCount($this->topic_id);
             }
             else {
                 die("The topic doesn't exist.");
@@ -74,18 +90,27 @@ class Topic extends Output
         catch (lulzException $e) {
             die($e->getMessage());
         }
-
+/*
         foreach ($posts as $n => $post) {
             if ($post['bbcode']) {
-                $post['content'] = BBCode::arrayParse($post['content']);
+                $posts[$n]['content'] = BBCode::arrayParse($post['content']);
             }
         }
-
+*/
         $template = new TopicTemplate(
-            $this->topic_id,
-            $this->page,
-            $this->post_id,
-            $posts
+            array(
+                'id'     => $this->topic_id,
+                'title'  => $Database->_('forum')->topic->getTitle($this->topic_id)
+#                'locked' => $Database->_('forum')->topic->isLocked($this->topic_id),
+            ),
+            array(
+                'page'   => $this->page,
+                'number' => $Database->_('forum')->topic->getPages($this->topic_id)
+            ),
+            array(
+                'id'    => $this->post_id,
+                'posts' => $posts
+            )
         );
 
         $this->output = $template->output();

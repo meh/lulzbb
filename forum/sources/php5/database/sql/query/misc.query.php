@@ -1,7 +1,7 @@
 <?php
 /**
-* @package Forum
-* @category Database
+* @package Core-PHP5
+* @category Query
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -19,24 +19,30 @@
 *
 * You should have received a copy of the GNU Affero General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-* @author cHoBi
 */
 
-switch ($Config->get('dbType')) {
-    case 'mysql':
-    include_once($M_SOURCES_PATH.'/database/sql/database.class.php');
-    $Database->_add(new ForumDatabase($Database), 'forum');
-    break;
+include_once(SOURCES_PATH.'/database/sql/query.class.php');
 
-    case 'text':
-    include_once($M_SOURCES_PATH.'/database/text/database.class.php');
-    $Database->_add(new ForumDatabase, 'forum');
-    break;
+/**
+* @ignore
+*
+* @author cHoBi
+*/
+class MiscQuery extends Query {
+    public function __construct() {
+        parent::__construct();
+    }
 
-    default:
-    die("Something went wrong with the database type.");
-    break;
+    public function getLastTopic() {
+        return <<<QUERY
+
+            SELECT
+                MAX({$this->dbPrefix}_topics.id)
+    
+            FROM
+                {$this->dbPrefix}_topics
+            
+QUERY;
+    }
 }
-
 ?>

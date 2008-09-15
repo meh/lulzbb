@@ -21,8 +21,9 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/template/template.class.php');
-require_once($M_SOURCES_PATH.'/template/forms/send-post.template.php');
+include_once(SOURCES_PATH.'/template/template.class.php');
+include_once($M_SOURCES_PATH.'/template/forms/send-post.template.php');
+include_once($M_SOURCES_PATH.'/template/pager.template.php');
 
 /**
 * Topic template class.
@@ -31,32 +32,26 @@ require_once($M_SOURCES_PATH.'/template/forms/send-post.template.php');
 */
 class TopicTemplate extends Template
 {
-    private $topic_id;
-    private $post_id;
+    private $topic;
     private $page;
-    private $pagesNumber;
-    private $posts;
-    private $title;
+    private $post;
 
     /**
     * Create the topic template.
 
     * @param    string    $magic       The magic token. (Anti XSRF)
-    * @param    int       $topic_id    The topic id.
+    * @param    int       $topic       The topic id.
     * @param    int       $post_id     The post id.
     * @param    array     $posts       The posts data.
     */
-    public function __construct ($topic_id, $page, $post_id, $posts)
+    public function __construct ($topic, $page, $post)
     {
         parent::__construct('forum/topic.tpl');
         global $Database;
 
-        $this->topic_id    = (int) $topic_id;
-        $this->page        = (int) $page;
-        $this->pagesNumber = $Database->topic->getPages($topic_id);
-        $this->post_id     = isset($post_id) ? $post_id : '';
-        $this->posts       = $posts;
-        $this->title       = $Database->topic->getTitle($topic_id);
+        $this->topic = $topic;
+        $this->page  = $page;
+        $this->post  = $post;
 
         $this->__parse();
     }
@@ -71,8 +66,8 @@ class TopicTemplate extends Template
         $text = $this->__loops($text);
 
         $posts = '';
-        foreach ($this->posts as $n => $post) {
-            if ($n == count($this->posts)-1) {
+        foreach ($this->post['posts'] as $n => $post) {
+            if ($n == count($this->post['posts'])-1) {
                 $posts .= $this->__post($post, 'last');
             }
             else {
@@ -88,11 +83,11 @@ class TopicTemplate extends Template
 
         $text = preg_replace(
             '|<%POST-ID%>|i',
-            $this->post_id,
+            $this->post['id'],
             $text
         );
 
-        $pager = new PagerTemplate('topic', $this->page, $this->pagesNumber);
+        $pager = new PagerTemplate('topic', $this->page['page'], $this->page['number']);
         $text = preg_replace(
             '|<%PAGER%>|i',
             $pager->output(),
@@ -101,9 +96,11 @@ class TopicTemplate extends Template
 
         $text = preg_replace(
             '|<%TOPIC-URL%>|i',
-            "?forum&topic&id={$this->topic_id}",
+            "?forum&topic&id={$this->topic['id']}",
             $text
         );
+
+        $text = $this->__formPost($text);
 
         $this->parsed = $this->__common($text);
     }
@@ -229,10 +226,35 @@ class TopicTemplate extends Template
     {
         $text = preg_replace(
             '|<%TOPIC-ID%>|i',
-            $this->topic_id,
+            $this->topic['id'],
             $text
         );
 
+        return $text;
+    }
+    
+    private function __formPost ($text)
+    {
+        global $Config;
+
+        if ($this->connected || $Config->get('anonymousPosting')) {
+            $form = new PostFormTemplate(
+                $this->magic,
+                $this->topic['id'],
+                $this->topic['title']['RAW']
+            );
+            $form = $form->output();
+        }
+        else {
+            $form = '';
+        }
+        
+        $text = preg_replace(
+            '|<%SEND-POST-FORM%>|i',
+            $form,
+            $text
+        );
+        
         return $text;
     }
 }

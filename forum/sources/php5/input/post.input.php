@@ -21,14 +21,14 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once($M_SOURCES_PATH.'/input/send.class.php');
+include_once(SOURCES_PATH.'/input/input.class.php');
 
 /**
 * Post send class.
 
 * @author cHoBi
 */
-class Post extends Send
+class Post extends Input
 {
     /**
     * Initialize the data and send it.

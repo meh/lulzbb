@@ -21,8 +21,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
-require_once($M_SOURCES_PATH.'/database/sql/query/topic/post.query.php');
+include_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+include_once($M_SOURCES_PATH.'/database/sql/query/topic/post.query.php');
 
 /**
 * This class is dedicated to post stuff.
@@ -53,12 +53,12 @@ class PostDatabase extends DatabaseBase
     {
         global $Config;
 
-        if (!$this->Database->topic->exists($topic_id)) {
+        if (!$this->Database->_('forum')->topic->exists($topic_id)) {
             throw new lulzException('topic_not_existent');
         }
         
-        $parent  = $this->Database->topic->getParent($topic_id);
-        $post_id = $this->Database->topic->getLastPostId($topic_id) + 1;
+        $parent  = $this->Database->_('forum')->topic->getParent($topic_id);
+        $post_id = $this->Database->_('forum')->topic->getLastPostId($topic_id) + 1;
 
         if (isset($_SESSION[SESSION]['user'])) {
             $User = $_SESSION[SESSION]['user'];
@@ -83,10 +83,10 @@ class PostDatabase extends DatabaseBase
             ));
         }
 
-        $this->Database->topic->updateLastInfo($topic_id);
-        $this->Database->topic->increasePostsCount($topic_id);
-        $this->Database->section->updateLastInfo($parent['id']);
-        $this->Database->section->increasePostsCount($parent['id']);
+        $this->Database->_('forum')->topic->updateLastInfo($topic_id);
+        $this->Database->_('forum')->topic->increasePostsCount($topic_id);
+        $this->Database->_('forum')->section->updateLastInfo($parent['id']);
+        $this->Database->_('forum')->section->increasePostsCount($parent['id']);
     }
     
     /**

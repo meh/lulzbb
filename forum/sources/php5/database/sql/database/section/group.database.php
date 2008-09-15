@@ -21,8 +21,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
-require_once($M_SOURCES_PATH.'/database/sql/query/section/group.query.php');
+include_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+include_once($M_SOURCES_PATH.'/database/sql/query/section/group.query.php');
 
 /**
 * This class is dedicated to section groups stuff.

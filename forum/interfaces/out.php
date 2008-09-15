@@ -27,7 +27,7 @@ if (!isset($Config)) {
 $DATA['id'] = $_REQUEST['id'];
 
 // Navigator
-require_once($M_SOURCES_PATH.'/output/navigator.output.php');
+include_once($M_SOURCES_PATH.'/output/navigator.output.php');
 
 if (isset($_GET['section'])) {
     $navigator = new Navigator('section', $DATA['id']);
@@ -44,7 +44,7 @@ else if (isset($_GET['topic'])) {
 echo $navigator->output();
 
 if (isset($_GET['section'])) {
-    require_once($M_SOURCES_PATH.'/output/section.output.php');
+    include_once($M_SOURCES_PATH.'/output/section.output.php');
     $DATA['section_id'] = $DATA['id'];
     $DATA['page']       = $_REQUEST['page'];
 
@@ -56,7 +56,7 @@ if (isset($_GET['section'])) {
 
 else if (isset($_GET['topic'])) {
     if (isset($_GET['show'])) {
-        require_once($M_SOURCES_PATH.'/output/topic.output.php');
+        include_once($M_SOURCES_PATH.'/output/topic.output.php');
         
         $DATA['topic_id'] = $DATA['id'];
         $DATA['page']     = $_REQUEST['page'];
@@ -73,7 +73,7 @@ else if (isset($_GET['topic'])) {
     }
 
     else if (isset($_GET['send'])) {
-        require_once($M_SOURCES_PATH.'/template/forms/send-topic.template.php');
+        include_once($M_SOURCES_PATH.'/template/forms/send-topic.template.php');
 
         $DATA['parent'] = $_REQUEST['parent'];
 

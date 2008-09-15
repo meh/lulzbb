@@ -24,15 +24,15 @@
 
 if (isset($_GET[$MODULE_NAME])) {
     if (isset($_GET['out'])) {
-        require($M_INTERFACES_PATH.'/out.php');
+        include_once($M_INTERFACES_PATH.'/out.php');
     }
 
     else if (isset($_GET['in'])) {
-        require ($M_INTERFACES_PATH.'/in.php');
+        include_once ($M_INTERFACES_PATH.'/in.php');
     }
 
     else if (isset($_GET['api'])) {
-        require ($M_INTERFACES_PATH.'/api.php');
+        include_once ($M_INTERFACES_PATH.'/api.php');
     }
 
     else {
