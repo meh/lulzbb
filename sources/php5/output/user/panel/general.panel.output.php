@@ -21,8 +21,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/output/output.class.php');
-require_once(SOURCESPATH.'/template/user/panel/general.panel.template.php');
+include_once(SOURCES_PATH.'/output/output.class.php');
+include_once(SOURCESPATH.'/template/user/panel/general.panel.template.php');
 
 /**
 * User's general panel show class.

@@ -21,8 +21,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
-require_once(SOURCES_PATH.'/database/sql/query/user/registration.query.php');
+include_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+include_once(SOURCES_PATH.'/database/sql/query/user/registration.query.php');
 
 /**
 * Registration database class.

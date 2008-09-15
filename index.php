@@ -79,7 +79,6 @@ define('MISC_PATH', ROOT_PATH.'/sources/misc');
 
 include('install/functions.php');
 checkInstall();
-
 // Misc sources.
 include(MISC_PATH.'/session.php');
 include(MISC_PATH.'/filesystem.php');
@@ -98,6 +97,13 @@ if (!sessionFileExists()) {
     createSessionFile();
 }
 startSession();
+
+/**
+* Init the session if there's no session.
+*/
+if (!isset($_SESSION[SESSION]['config'])) {
+    initSessionData();
+}
 
 /**
 * This global var contains the Config object, so it's useful to get
@@ -199,6 +205,9 @@ foreach ($modulesList as $modules) {
     }
 }
 
+/**
+* Reset the session in case of homepage viewing.
+*/
 initSessionData();
 
 /**

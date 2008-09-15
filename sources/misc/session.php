@@ -135,7 +135,7 @@ function destroySession()
     session_destroy();
     
     $_REQUEST['session'] = true;
-    require_once(ROOT_PATH.'/index.php');
+    include_once(ROOT_PATH.'/index.php');
 }
 
 /**
@@ -146,7 +146,9 @@ function initSessionData()
     global $Config;
     global $Filter;
 
-    $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
+    if (!isset($_SESSION[SESSION]['magic'])) {
+        $_SESSION[SESSION]['magic'] = md5(rand().rand().time());
+    }
 
     $Config = $_SESSION[SESSION]['config'] = new Config;
     $Filter = $_SESSION[SESSION]['filter'] = new Filter;

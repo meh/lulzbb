@@ -31,7 +31,7 @@ if (!isset($User) or !$User->isIn('administrator')) {
 $command = $_REQUEST['c'];
 switch ($command) {
     case 'add_group':
-    require_once(API_PATH.'/forum/section/group.section.php');
+    include(API_PATH.'/forum/section/group.section.php');
 
     $DATA['parent'] = $_REQUEST['parent'];
     $DATA['weight'] = $_REQUEST['weight'];
@@ -41,7 +41,7 @@ switch ($command) {
     break;
 
     case 'add_section':
-    require_once(API_PATH.'/forum/section.forum.php');
+    include(API_PATH.'/forum/section.forum.php');
 
     $DATA['parent'] = $_REQUEST['parent'];
     $DATA['weight']   = $_REQUEST['weight'];
@@ -52,7 +52,7 @@ switch ($command) {
     break;
 
     case 'add_user_to_group':
-    require_once(API_PATH.'/user/group.user.php');
+    include(API_PATH.'/user/group.user.php');
 
     $DATA['user']   = $_REQUEST['user'];
     $DATA['group']  = $_REQUEST['group'];

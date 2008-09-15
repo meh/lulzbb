@@ -21,9 +21,9 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/output/output.class.php');
-require_once(SOURCES_PATH.'/template/misc/home.template.php');
-require_once(SOURCES_PATH.'/template/misc/page.template.php');
+include_once(SOURCES_PATH.'/output/output.class.php');
+include_once(SOURCES_PATH.'/template/misc/home.template.php');
+include_once(SOURCES_PATH.'/template/misc/page.template.php');
 
 /**
 * Shows the home with data inside.

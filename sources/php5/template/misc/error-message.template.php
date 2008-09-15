@@ -21,7 +21,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/template/template.class.php');
+include_once(SOURCES_PATH.'/template/template.class.php');
 
 /**
 * Creates the template for an error message.

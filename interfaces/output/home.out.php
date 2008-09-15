@@ -24,7 +24,7 @@ if (!isset($Config)) {
     die("You can't access this directly.");
 }
 
-require_once(SOURCES_PATH.'/output/misc/home.output.php');
+include(SOURCES_PATH.'/output/misc/home.output.php');
 
 if (isset($_GET['raw'])) {
     $page = new Home($_REQUEST['page'], 'raw');

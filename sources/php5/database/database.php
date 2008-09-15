@@ -25,11 +25,11 @@
 
 switch ($Config->get('dbType')) {
     case 'mysql':
-    require_once(SOURCES_PATH.'/database/sql/database.class.php');
+    include_once(SOURCES_PATH.'/database/sql/database.class.php');
     break;
 
     case 'text':
-    require_once(SOURCES_PATH.'/database/text/database.class.php');
+    include_once(SOURCES_PATH.'/database/text/database.class.php');
     break;
 
     default:

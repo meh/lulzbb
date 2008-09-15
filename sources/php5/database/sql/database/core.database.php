@@ -21,8 +21,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/database/sql/database.base.class.php');
-require_once(SOURCES_PATH.'/database/sql/database/user/user.database.php');
+include_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+include_once(SOURCES_PATH.'/database/sql/database/user/user.database.php');
 
 /**
 * Database core class.

@@ -21,8 +21,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(SOURCES_PATH.'/template/template.class.php');
-require_once(SOURCES_PATH.'/misc/highlight.class.php');
+include_once(SOURCES_PATH.'/template/template.class.php');
+include_once(SOURCES_PATH.'/misc/highlight.class.php');
 
 /**
 * Page template.
