@@ -23,7 +23,7 @@
 
 include_once(SOURCES_PATH.'/output/output.class.php');
 include_once($M_SOURCES_PATH.'/template/topic.template.php');
-include_once($M_SOURCES_PATH.'/misc/bbcode.class.php');
+include_once($M_SOURCES_PATH.'/misc/lulzcode.class.php');
 
 /**
 * Topic show class.
@@ -93,7 +93,7 @@ class Topic extends Output
 /*
         foreach ($posts as $n => $post) {
             if ($post['bbcode']) {
-                $posts[$n]['content'] = BBCode::arrayParse($post['content']);
+                $posts[$n]['content'] = lulzCode::arrayParse($post['content']);
             }
         }
 */

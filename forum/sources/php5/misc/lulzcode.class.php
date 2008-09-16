@@ -1,5 +1,7 @@
 <?php
 /**
+* @package Forum
+
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
 * Copyright (C) 2008 lulzGroup
@@ -18,17 +20,24 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+include_once($M_SOURCES_PATH.'/misc/bbcode.class.php');
+
 /**
-* BBCode implementation.
+* BBCode for lulzBB implementation.
 
 * @author cHoBi
 */
-class BBCode
+class lulzCode extends BBCode
 {
-
-    public function parse ($string)
+    public function arrayParse ($data)
     {
-        $parsed = $string;
+        global $Filter;
+
+        $string = $data['RAW'];
+
+        $parsed['RAW']  = self::parse($string);
+        $parsed['HTML'] = $Filter->HTML($parsed['RAW']);
+        $parsed['POST'] = $Filter->POST($parsed['RAW']);
 
         return $parsed;
     }
