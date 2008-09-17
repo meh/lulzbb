@@ -84,6 +84,14 @@ class UserGroupDatabase extends DatabaseBase
         return $groups;
     }
 
+    public function getId ($group)
+    {
+        $this->Database->sendQuery($this->Query->getId($group));
+        $id = $this->Database->fetchArray();
+
+        return (int) $id['id']['RAW'];
+    }
+
     /**
     * Adds a group.
     
@@ -105,14 +113,14 @@ class UserGroupDatabase extends DatabaseBase
     */
     public function addUser ($username, $group)
     {
-        if (!$this->Database->user->group->exists($group)) {
+        if (!$this->Database->_('core')->user->group->exists($group)) {
             return false;
         }
-        if (!$this->Database->user->exists($username)) {
+        if (!$this->Database->_('core')->user->exists($username)) {
             return false;
         }
 
-        $user_id  = $this->getId($username);
+        $user_id  = $this->Database->_('core')->user->getId($username);
         $group_id = $this->getId($group);
 
         $this->Database->sendQuery($this->Query->addUser($user_id, $group_id));

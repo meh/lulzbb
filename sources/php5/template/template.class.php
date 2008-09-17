@@ -71,7 +71,7 @@ class Template
                 $this->plain_text = file_get_contents("http://{$_SERVER['HTTP_HOST']}".WEB_PATH."/pages/{$file}");
             }
             else {
-                $this->plain_text = file_get_contents(ROOT_PATH."/page/{$file}");
+                $this->plain_text = file_get_contents(ROOT_PATH."/pages/{$file}");
             }
         }
         else {
