@@ -1,0 +1,596 @@
+* {
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+a:link, a:visited {
+    color: #555555;
+    font-weight: bold;
+    font-size: 11px;
+    font-family: verdana;
+}
+a:hover {
+    color: #777777;
+    font-weight: bold;
+}
+
+a.nav:link, a.nav:visited {
+    color: #555555;
+    font-weight: bold;
+    text-decoration: none;
+}
+a.nav:hover {
+    color: #777777;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#menu a:link, #menu a:visited, #menu a:hover {
+    text-decoration: none;
+}
+
+table.topics a:link, table.topics a:visited {
+    text-decoration: none;
+}
+table.topics a:hover {
+    text-decoration: italic;
+}
+
+table {
+    border-spacing: 0;
+    clear: both;
+}
+
+textarea {
+    background-color: #000000;
+    color: #666666;
+    border: 1px solid #444444;
+    margin-bottom: 5px;
+}
+
+textarea:focus {
+    background-color: #000000;
+}
+
+input {
+    background-color: #000000;
+    border: 1px solid #444444;
+    color: #888888;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="button"]:hover,
+input[type="submit"]:hover {
+    background-color: #000000;
+    border: 1px solid #444444;
+    color: #666666;
+}
+
+pre, code {
+    position: relative;
+    left: -3px;
+    background-color: #000000;
+    padding-left: 4px;
+    padding-right: 5px;
+    border-top: 1px solid #444444;
+    border-bottom: 1px solid #444444;
+}
+
+/* Base layout */
+body {
+    width: 100%;
+    background-color: #000000;
+    color: #999999;
+    font-family: verdana;
+    text-align: center;
+    font-size: 10px;
+}
+
+#container {
+    width: 760px;
+    margin: 10px auto;
+    border: 1px solid #333333;
+}
+
+#top {
+    width: 760px;
+}
+
+#middle {
+    width: 760px;
+}
+
+#bottom {
+    width: 760px;
+}
+
+/* Base style */
+div.header {
+    width: 760px;
+    height: 100px;
+    border-bottom: 1px solid #333333;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+div.content {
+    width: 760px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding-left: 3px;
+    text-align: left;
+}
+
+div.footer {
+    width: 760px;
+    border-top: 1px solid #333333;
+    position: relative;
+    left: -2px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* Menu */
+#menu {
+    width: 100%;
+    border-bottom: 1px solid #333333;
+}
+
+#menu td {
+    border-right: 1px solid #333333;
+    padding-left: 4px;
+    padding-right: 5px;
+    font-size: 11px;
+}
+
+#menu div.user {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-left: 1px solid #333333;
+    font-size: 10px;
+}
+
+#menu div.user div {
+    float: left;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#menu div.user div.login {
+    border-right: 1px solid #333333;
+}
+
+#menu div.user .nickname {
+    font-weight: bold; 
+    font-size: 10px;
+}
+
+#informative-message {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 10px;
+}
+
+#error-message {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 10px;
+}
+
+/* Login */
+#login-screen {
+    margin-top: 8px;
+    margin-bottom: 3px;
+}
+
+#login-screen input {
+    margin-bottom: 5px;
+}
+
+/* Register */
+#register-screen {
+    font-size: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+#register-screen table {
+    margin: 0 auto;
+    margin-bottom: 8px;
+    text-align: left;
+    border: 1px solid #333333;
+    border-bottom: 0;
+}
+
+#register-screen td {
+    border-bottom: 1px solid #333333;
+    padding: 4px;
+}
+
+#register-screen .error-message {
+    width: 210px;
+    border-left: 1px solid #333333;
+    font-size: 10px;
+}
+
+/* Parameters */
+.parameter {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* Navigator */
+.navigator {
+    width: 642px;
+    margin: 0 auto;
+    border: 1px solid #333333;
+    border-top: 0;
+    padding-left: 2px;
+    padding-right: 2px;
+    font-size: 10px;
+    text-align: left;
+    white-space: pre;
+}
+
+#forum {
+    margin-bottom: 8px;
+}
+
+/* Sections style */
+#forum div.group {
+    width: 646px;
+    margin: 0 auto;
+    margin-top: 8px;
+    border: 1px solid #333333;
+    border-bottom: 0;
+    text-align: left;
+}
+
+#forum div.group div.group-title {
+    font-size: 10px;
+    font-weight: bold; 
+    padding: 3px;
+    padding-top: 1px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #333333;
+    
+}
+
+#forum div.topics div.group div.group-title {
+    padding: 0;
+    border: 0;
+}
+
+#forum table.sections {
+    width: 100%;
+}
+
+#forum table.sections tr.description td {
+    padding-left: 3px;
+    padding-right: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
+    text-align: center;
+}
+
+#forum table.sections tr.description td.last-post {
+    border-right: 0;
+}
+
+#forum table.sections td.section {
+    width: 300px;
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
+    padding: 3px;
+    padding-top: 1px;
+    padding-bottom: 2px;
+    text-align: left;
+}
+#forum table.sections td.section div.section-title { font-size: 11px; white-space: pre; }
+#forum table.sections td.section span.section-subtitle { font-size: 10px; white-space: pre; }
+
+#forum table.sections td.count-topics {
+    width: 30px;
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
+    padding: 3px;
+    padding-top: 1px;
+    padding-bottom: 2px;
+    font-size: 10px;
+    text-align: center;
+}
+
+#forum table.sections td.count-posts {
+    width: 30px;
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
+    padding: 3px;
+    padding-top: 1px;
+    padding-bottom: 2px;
+    font-size: 10px;
+    text-align: center;
+}
+
+#forum table.sections td.last-post {
+    border-bottom: 1px solid #333333;
+    padding: 3px;
+    padding-top: 1px;
+    padding-bottom: 2px;
+    font-size: 10px;
+    text-align: center;
+}
+
+/* Topics in general view style */
+#forum div.topics {
+    width: 100%;
+    margin-top: 8px;
+    font-size: 10px;
+    text-align: center;
+}
+
+#forum table.topics {
+    width: 650px;
+    margin: 0 auto;
+    border: 1px solid #333333;
+    border-bottom: 0;
+    text-align: left;
+}
+
+#forum table.topics tr.header td {
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#forum table.topics tr.header td.last-post {
+    border-right: 0;
+}
+
+#forum div.topics div.group {
+    width: 642px;
+    margin: 0 auto;
+    border: 1px solid #333333;
+    border-bottom: 0;
+    padding: 3px;
+    padding-top: 1px;
+    padding-bottom: 2px;
+    text-align: left;
+}
+
+#forum div.topics div.group div.group-title {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+#forum table.topics tr.normal td {
+    
+    height: 35px;
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
+    padding-left: 3px;
+    font-size: 11px;
+}
+
+#forum table.topics tr.normal td.no-topics {
+    height: 20px;
+    border-bottom: 1px solid #333333;
+    border-right: 0;
+    text-align: center;
+}
+
+#forum table.topics tr.normal td.topic {
+    width: 300px;
+}
+
+#forum table.topics tr.normal td.author {
+    font-weight: bold;
+    text-align: center;
+}
+
+#forum table.topics tr.normal td.posts {
+    text-align: center;
+}
+
+#forum table.topics tr.normal td.views {
+    text-align: center;
+}
+
+#forum table.topics tr.normal td.last-post {
+    border-right: 0;
+    font-size: 10px;
+    text-align: center;
+}
+
+#forum table.topics tr.normal td.last-post div {
+    font-weight: bold;
+}
+
+#forum table.topics td.subtitle {
+    
+}
+
+#forum table.topics span.topic-title {
+    font-size: 11px;
+    white-space: pre;
+}
+
+#forum table.topics span.topic-subtitle {
+    font-size: 10px;
+    font-style: italic;
+    white-space: pre;
+}
+
+/* Topic style */
+#topic {
+    width: 648px;
+    margin: 0 auto;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+#topic div.post {
+    border: 1px solid #333333;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    position: relative;
+    font-size: 10px;
+}
+
+#topic div.post td.info {
+    width: 200px;
+    border: 0;
+    text-align: center;
+}
+
+#topic div.post td.info div.user {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+#topic div.post td.info div.time {
+    width: 200px;
+    height: 15px;
+    position: absolute; bottom: 0;
+    margin-top: 5px;
+    border-top: 1px solid #333333;
+    font-size: 10px;
+}
+
+#topic div.post td.post {
+    width: 442px;
+    border-left: 1px solid #333333;
+}
+
+#topic div.post td.post div.post-title {
+    width: 444px;
+    height: 15px;
+    position: absolute; top: 0;
+    padding-left: 2px;
+    border-bottom: 1px solid #333333;
+    font-size: 10px;
+    text-align: left;
+}
+
+#topic div.post td.post div.post-content {
+    margin-top: 15px;
+    padding-top: 1px;
+    font-size: 10px;
+}
+
+#topic div.post td.post div.post-content div {
+    padding-left: 2px;
+    text-align: left;
+}
+
+#topic div.post td.post div.post-content div.signature hr {
+    width: 99%;
+    position: relative;
+    left: 1px;
+    margin-top: 4px;
+    border: 0;
+    border-top: 1px solid #333333;
+}
+
+/* Writing topic form */
+div.write-topic {
+    width: 621px;
+    margin: 0 auto;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 10px;
+    padding-right: 15px;
+    border: 1px solid #333333;
+    text-align: left;
+}
+
+div.write-topic td {
+    padding-right: 10px;
+}
+
+div.write-topic #write-title {
+
+}
+
+div.write-topic #write-content {
+    width: 100%;
+    height: 150px;
+    margin-top: 5px;
+}
+
+/* Writing post form */
+div.write-post {
+    width: 619px;
+    margin: 0 auto;
+    padding: 10px;
+    padding-right: 15px;
+    border: 1px solid #333333;
+    text-align: left;
+}
+
+div.write-post #write-content {
+    width: 100%;
+    height: 150px;
+}
+
+form.buttons {
+    width: 650px;
+    margin: 0 auto;
+    margin-top: 4px;
+    text-align: left;
+}
+
+#stats {
+    display: none;
+    width: 300px;
+    margin: 0 auto;
+    border: 1px solid #333333;
+    border-bottom: 0;
+    text-align: center;
+}
+#url {
+    margin: 0 auto;
+    border-top: 1px solid #333333;
+    text-align: center;
+}
+
+div.group div.pager {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
+div.pager a {
+    text-decoration: none;
+}
+
+div.group div.pager span.pages {
+    float: center;
+}
+
+span.page {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+span.previous, span.next {
+    font-size: 8px;
+    font-weight: bold;
+}
+
+span.first, span.last {
+    font-weight: bold;
+}
+
+span.url {
+    font-size: 10px;
+}
+span.url a {
+    text-decoration: none;
+}
