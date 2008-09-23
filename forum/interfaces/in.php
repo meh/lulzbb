@@ -1,6 +1,6 @@
 <?php
 /**
-* @package Interfaces
+* @package Forum
 * @category Input
 
 * @license AGPLv3

@@ -43,7 +43,7 @@ class Post extends Input
         global $Config;
         parent::__construct();
 
-        if ($this->connected || $Config->get('anonymousPosting')) {
+        if ($this->connected || $Config->get('anonymousPosting', 'forum')) {
             $this->output = $this->__send(array(
                 'magic'    => $magic,
                 'topic_id' => $topic_id,
@@ -115,8 +115,8 @@ class Post extends Input
     {
         global $Config;
         
-        $titleMinLength   = $Config->get('titleMinLength');
-        $contentMinLength = $Config->get('contentMinLength');
+        $titleMinLength   = $Config->get('titleMinLength', 'forum');
+        $contentMinLength = $Config->get('contentMinLength', 'forum');
 
         $scontent = trim(str_replace("\n", '', $content));
 

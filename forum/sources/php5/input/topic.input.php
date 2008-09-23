@@ -45,7 +45,7 @@ class Topic extends Input
         global $Config;
         parent::__construct();
         
-        if ($this->connected || $Config->get('anonymousPosting')) {
+        if ($this->connected || $Config->get('anonymousPosting', 'forum')) {
             $this->output = $this->__send(array(
                 'magic'    => $magic,
                 'parent'   => $parent,
@@ -131,8 +131,8 @@ class Topic extends Input
     private function __checkData ($parent, $title, $subtitle, $content)
     {
         global $Config;
-        $titleMinLength   = $Config->get('titleMinLength');
-        $contentMinLength = $Config->get('contentMinLength');
+        $titleMinLength   = $Config->get('titleMinLength', 'forum');
+        $contentMinLength = $Config->get('contentMinLength', 'forum');
 
         $title   = trim($title);
         $content = str_replace("\n", '', trim($content));
