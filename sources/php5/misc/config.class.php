@@ -47,7 +47,7 @@ class Config
 
     * @param    string    $fileName    The file to read.
     */
-    public function parseFile ($fileName, $domain = 'general')
+    public function parseFile ($fileName)
     {
         if ($this->isParsed($fileName)) {
             return;
@@ -59,11 +59,16 @@ class Config
         $this->parseString($file, $domain);
     }
 
-    public function parseString ($string, $domain = 'general')
+    public function parseString ($string)
     {
         $dom = dom_import_simplexml(simplexml_load_string($string))->ownerDocument;
 
         $configuration = $dom->firstChild;
+        $domain        = $configuration->getAttribute('domain');
+
+        if (empty($domain)) {
+            $domain = 'core';
+        }
 
         for ($i = 0; $i < $configuration->childNodes->length; $i++) {
             $element = $configuration->childNodes->item($i);
@@ -92,7 +97,7 @@ class Config
 
     * @return    mixed    The value.
     */
-    public function get ($config, $domain = 'general')
+    public function get ($config, $domain = 'core')
     {
         if (isset($this->config[$domain][$config])) {
             switch ($this->config[$domain][$config]) {

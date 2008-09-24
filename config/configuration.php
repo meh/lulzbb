@@ -1,5 +1,5 @@
 <?php die();/*
-<configuration>
+<configuration domain="core">
 <!--
 This is the configuration file for Misc
 Remember to modify the informations about db connection and site name
