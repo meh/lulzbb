@@ -46,7 +46,7 @@ table.topics a:link, table.topics a:visited {
     text-decoration: none;
 }
 table.topics a:hover {
-    text-decoration: italic;
+    font-style: italic;
 }
 
 table {
@@ -579,10 +579,6 @@ div.group div.pager {
 
 div.pager a {
     text-decoration: none;
-}
-
-div.group div.pager span.pages {
-    float: center;
 }
 
 span.page {
