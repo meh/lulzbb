@@ -1,11 +1,8 @@
 <?php
 /**
-* @package Forum
+* @package Log
 
 * @license AGPLv3
-* Just a simple module for lulzBB.
-* Copyright (C) 2008 lulzGroup
-
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Affero General Public License as
 * published by the Free Software Foundation, either version 3 of the
@@ -22,25 +19,11 @@
 * @author cHoBi
 */
 
-if (!isset($Config)) {
-    die("You can't access this directly.");
-}
+class Log
+{
+    public static function execute ()
+    {
 
-if (isset($_GET[$MODULE_NAME])) {
-    if (isset($_GET['out'])) {
-        include_once($M_INTERFACES_PATH.'/out.php');
-    }
-
-    else if (isset($_GET['in'])) {
-        include_once ($M_INTERFACES_PATH.'/in.php');
-    }
-
-    else if (isset($_GET['api'])) {
-        include_once ($M_INTERFACES_PATH.'/api.php');
-    }
-
-    else {
-        die('WAT');
     }
 }
 

@@ -1,6 +1,6 @@
 <?php
 /**
-* @package Forum
+* @package Log
 
 * @license AGPLv3
 * Just a simple module for lulzBB.
@@ -26,22 +26,10 @@ if (!isset($Config)) {
     die("You can't access this directly.");
 }
 
+include_once ($M_INTERFACES_PATH.'/in.php');
+
 if (isset($_GET[$MODULE_NAME])) {
-    if (isset($_GET['out'])) {
-        include_once($M_INTERFACES_PATH.'/out.php');
-    }
-
-    else if (isset($_GET['in'])) {
-        include_once ($M_INTERFACES_PATH.'/in.php');
-    }
-
-    else if (isset($_GET['api'])) {
-        include_once ($M_INTERFACES_PATH.'/api.php');
-    }
-
-    else {
-        die('WAT');
-    }
+    include_once ($M_INTERFACES_PATH.'/out.php');
 }
 
 ?>
