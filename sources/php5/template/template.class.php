@@ -45,10 +45,10 @@ class Template
     {
         global $Config;
         
-        $this->template['language']   = $Config->get('language');
+        $this->template['language']  = $Config->get('language');
         $this->template['siteName']  = $Config->get('siteName');
         $this->template['siteTitle'] = $Config->get('siteTitle');
-        $this->template['name']       = $Config->get('template');
+        $this->template['name']      = $Config->get('template');
 
         if (!is_dir(ROOT_PATH."/templates/{$this->template['name']}")) {
             die("The template doesn't exist.");
@@ -68,14 +68,14 @@ class Template
             $file = preg_replace('|^/pages/|', '', $file);
 
             if (ini_get('allow_url_fopen')) {
-                $this->plain_text = file_get_contents("http://{$_SERVER['HTTP_HOST']}".WEB_PATH."/pages/{$file}");
+                $this->plain_text = file_get_contents("http://{$_SERVER['HTTP_HOST']}".WEB_PATH."/content/pages/{$file}");
             }
             else {
-                $this->plain_text = file_get_contents(ROOT_PATH."/pages/{$file}");
+                $this->plain_text = file_get_contents(CONTENT_PATH."/pages/{$file}");
             }
         }
         else {
-            $this->plain_text = file_get_contents(ROOT_PATH."/templates/{$this->template['name']}/$file");
+            $this->plain_text = file_get_contents(ROOT_PATH."/templates/{$this->template['name']}/{$file}");
         }
         
         $this->__parse();

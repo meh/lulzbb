@@ -77,6 +77,11 @@ define('SOURCES_PATH', ROOT_PATH.'/sources/'.SOURCES_VERSION);
 */
 define('MISC_PATH', ROOT_PATH.'/sources/misc');
 
+/**
+* The path to the contents.
+*/
+define('CONTENT_PATH', ROOT_PATH'/content');
+
 include('install/functions.php');
 checkInstall();
 // Misc sources.

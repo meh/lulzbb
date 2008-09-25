@@ -7,3 +7,30 @@ Anonymous posting. (fix the query, the problem is there [the join])
 URLs finding and enable the possibility to use automatically anonym.to
 
 Improve the menu.
+
+
+------------
+HAR, menus.
+
+In short, /content/pages /content/menu
+
+menu.group.php
+
+--
+<?php die();/*
+<menu>
+    <group_of_menus>
+        <menu href="url" onclick="whatever">TEXT</menu>
+    </group_of_menus>
+</menu>
+*/?>
+--
+
+Parse the file, $root->firstChild->childNodes->geteverything then put everything into an array
+and remember to getAttributes and parse everything and put it into an array or some shit, 
+or just create the direct link, it would be fukken easy.
+
+Then the template just has to get that array with the groups etc, parse something like
+<%MENU-GROUP-(\w+)%> and then check if it has an array with menus, if it has the array it 
+replaces the things by looping etc, like usual, if it doesn't it just replaces it with ''.
+
