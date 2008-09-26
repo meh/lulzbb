@@ -1,25 +1,19 @@
+<General>
 <table><tr>
-    <td class="home">
-        <a href="#" onclick="
-            showPage('middle', 'home.php');">
-        Home</a>
+    <Loop>
+    <td class="<%MENU-NAME%>">
+        <%MENU-URL%>
     </td>
-    <td class="forum">
-        <a href="#" onclick="
-            showSection('middle', 0);">
-        Forum</a>
-    </td>
+    </Loop>
 </tr></table>
+</General>
 
+<User>
 <div class="user">
-    <div class="login">
-        <a href="#" onclick="
-            showLogin('middle');">
-        Login</a>
+    <Loop>
+    <div class="<%MENU-NAME%>">
+        <%MENU-URL%>
     </div>
-    <div class="register">
-        <a href="#" onclick="
-            showRegistration('middle');">
-        Register</a>
-    </div>
+    </Loop>
 </div>
+</User>
