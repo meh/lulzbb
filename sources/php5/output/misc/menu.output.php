@@ -78,15 +78,33 @@ class Menu extends Output
 
                     if ($menuDom->nodeType == XML_ELEMENT_NODE) {
                         $level   = $menuDom->getAttribute('level');
-                        $content = $menuDom->firstChild->nodeValue;
-
-                        $menus[$name][$level] = $content;
+                        $menus[$name][$level]['url']   = $this->__getLink($menuDom);
+                        $menus[$name][$level]['name'] = $menuDom->getAttribute('name');
                     }
                 }
             }
         }
 
         return $menus;
+    }
+
+    private function __getLink ($element)
+    {
+        $attrsList = array(
+            'href', 'style', 'id', 'class', 'title', 'target',
+            'onclick', 'onmouseover'
+        );
+
+        $link = '<a';
+        foreach ($attrsList as $attrName) {
+            $attr = $element->getAttribute($attrName);
+            if (!empty($attr)) {
+                $link .= " {$attrName}=\"{$attr}\"";
+            }
+        }
+        $link .= ">{$element->nodeValue}</a>";
+
+        return $link;
     }
 }
 ?>

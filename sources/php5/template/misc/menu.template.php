@@ -42,9 +42,6 @@ class MenuTemplate extends Template
     {
         parent::__construct('misc/menu.tpl');
 
-        print_r($groups);
-        die("LOL");
-
         $this->groups = $groups;
 
         $this->__parse();
@@ -57,8 +54,88 @@ class MenuTemplate extends Template
     private function __parse ()
     {
         $text = $this->output();
+        $text = $this->__loops($text);
+
+        foreach ($this->groups as $groupName => $group) {
+            $text = preg_replace(
+                "|<%MENU-{$groupName}%>|ims",
+                $this->__parseGroup($groupName, $group),
+                $text
+            );
+        }
 
         $this->parsed = $text;
+    }
+
+    private function __loops ($text)
+    {
+        foreach ($this->groups as $group => $null) {
+            if (preg_match_all(
+                    "|<{$group}>(.*?)</{$group}>|ims",
+                    $text,
+                    $groupMatch) != 1) {
+                die("Something's wrong in the template.");
+            }
+            $this->template["{$group}"] = $groupMatch[1][0];
+
+            preg_match(
+                '|<Loop>(.*?)</Loop>|ims',
+                $this->template["{$group}"],
+                $groupMatch
+            );
+            $this->template["{$group}_loop"] = $groupMatch[0];
+
+            $this->template["{$group}"] = preg_replace(
+                '|<Loop>.*?</Loop>|ims',
+                '<%MENU-LOOP%>',
+                $this->template["{$group}"]
+            );
+
+            $text = preg_replace(
+                "|<{$group}>.*?</{$group}>|ims",
+                "<%MENU-{$group}%>",
+                $text
+            );
+        }
+
+        return $text;
+    }
+
+    private function __parseGroup ($groupName, $group)
+    {
+        $text = $this->template["{$groupName}"];
+
+        $loop = '';
+        foreach ($group as $menu) {
+            $loop .= $this->__parseMenu($groupName, $menu);
+        }
+
+        $text = preg_replace(
+            '|<%MENU-LOOP%>|ims',
+            $loop,
+            $text
+        );
+
+        return $text;
+    }
+
+    private function __parseMenu ($groupName, $menu)
+    {
+        $text = $this->template["{$groupName}_loop"];
+
+        $text = preg_replace(
+            '|<%MENU-NAME%>|i',
+            $menu['name'],
+            $text
+        );
+
+        $text = preg_replace(
+            '|<%MENU-URL%>|i',
+            $menu['url'],
+            $text
+        );
+
+        return $text;
     }
 }
 ?>
