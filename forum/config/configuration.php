@@ -1,5 +1,5 @@
 <?php die();/*
-<configuration>
+<configuration domain="forum">
 
     <!-- Misc info -->
     <titleMinLength>3</titleMinLength>

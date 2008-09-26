@@ -1,5 +1,5 @@
 <?php die();/*
-<configuration>
+<configuration domain="download">
     
     
 

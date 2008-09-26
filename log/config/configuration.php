@@ -1,5 +1,5 @@
 <?php die();/*
-<configuration>
+<configuration domain="log">
 
     <saveTo>mysql</saveTo>
     <levelRequired>9001</levelRequired>
