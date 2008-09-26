@@ -56,7 +56,7 @@ class Config
         array_push($this->parsedFiles, realpath($fileName));
 
         $file = read_file($fileName);
-        $this->parseString($file, $domain);
+        $this->parseString($file);
     }
 
     public function parseString ($string)

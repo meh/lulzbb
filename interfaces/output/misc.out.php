@@ -26,6 +26,7 @@ if (!isset($Config)) {
 
 if (isset($_GET['menu'])) {
     include(SOURCES_PATH.'/output/misc/menu.output.php');
+
     $menu = new Menu();
     echo $menu->output();
 }

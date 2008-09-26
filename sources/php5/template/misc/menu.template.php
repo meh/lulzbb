@@ -30,7 +30,7 @@ include_once(SOURCES_PATH.'/template/template.class.php');
 */
 class MenuTemplate extends Template
 {
-    private $group;
+    private $groups;
 
     /**
     * Sets the file to get and parse it.
@@ -38,11 +38,14 @@ class MenuTemplate extends Template
     * @param    string    $file    The file to get.
     * @param    string    $mode    The page view mode.
     */
-    public function __construct ($group)
+    public function __construct ($groups)
     {
         parent::__construct('misc/menu.tpl');
 
-        $this->group = $group;
+        print_r($groups);
+        die("LOL");
+
+        $this->groups = $groups;
 
         $this->__parse();
     }

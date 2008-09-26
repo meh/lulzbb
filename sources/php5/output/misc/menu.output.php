@@ -1,7 +1,7 @@
 <?php
 /**
 * @package Core-PHP5
-* @category Show
+* @category Output
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
@@ -22,12 +22,11 @@
 */
 
 include_once(SOURCES_PATH.'/output/output.class.php');
-include_once(SOURCES_PATH.'/template/template.class.php');
+include_once(SOURCES_PATH.'/template/misc/menu.template.php');
 
 /**
 * Menu class.
 
-* @todo Admin, moderation etc menus.
 * @author cHoBi
 */
 class Menu extends Output
@@ -47,33 +46,47 @@ class Menu extends Output
     protected function __update ()
     {
         if ($this->connected) {
-            $output = $this->__user();
+            global $User;
+
+            $menus    = $this->__parseMenu($User->highestGroup);
+            $template = new MenuTemplate($menus);
         }
         else {
-            $output = $this->__guest();
+            $menus    = $this->__parseMenu('guest');
+            $template = new MenuTemplate($menus);
         }
         
-        $this->output = $output;
-    }
-    
-    /**
-    * The guest menu.
-    * @access private
-    */
-    private function __guest ()
-    {
-        $template = new Template('menu/menu.guest.tpl');
-        return $template->output();
+        $this->output = $template->output();
     }
 
-    /**
-    * The normal user menu.
-    * @access private
-    */
-    private function __user ()
+    private function __parseMenu($group)
     {
-        $template = new Template('menu/menu.user.tpl');
-        return $template->output();
+        $text = read_file(CONTENT_PATH."/menu/{$group}.php");
+        $dom  = dom_import_simplexml(simplexml_load_string($text))->ownerDocument;
+
+        $menus    = array();
+        $menusDom = $dom->firstChild;
+
+        for ($i = 0; $i < $menusDom->childNodes->length; $i++) {
+            $element = $menusDom->childNodes->item($i);
+
+            if ($element->nodeType == XML_ELEMENT_NODE) {
+                $name = $element->nodeName;
+                
+                for ($h = 0; $h < $element->childNodes->length; $h++) {
+                    $menuDom = $element->childNodes->item($h);
+
+                    if ($menuDom->nodeType == XML_ELEMENT_NODE) {
+                        $level   = $menuDom->getAttribute('level');
+                        $content = $menuDom->firstChild->nodeValue;
+
+                        $menus[$name][$level] = $content;
+                    }
+                }
+            }
+        }
+
+        return $menus;
     }
 }
 ?>
