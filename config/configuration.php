@@ -21,5 +21,8 @@ Remember to modify the informations about db connection and site name
     <dbName>The db name to be used</dbName>
     <dbPrefix>The database prefix</dbPrefix>
 
+    <!-- Misc info -->
+    <emailConfirmation>false</emailConfirmation>
+
 </configuration>
 */?>

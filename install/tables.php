@@ -190,11 +190,7 @@ VALUES ("Unconfirmed", "LOLOL, THEY HAVE TO CONFIRM, FOR SRS", -1)');
 
 $Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups
        (name, description, level)
-VALUES ("Anonymous", "Because non of us is as cruel as all of us.", 0)');
-
-$Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups
-       (name, description, level)
-VALUES ("Users", "Namefag here.", 1)');
+VALUES ("User", "Namefag here.", 1)');
 
 $Database->sendQuery('INSERT INTO '.$dbPrefix.'_user_groups
        (name, description, level)

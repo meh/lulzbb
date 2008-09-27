@@ -91,6 +91,23 @@ class User
         }
     }
 
+    public function highestGroup ()
+    {
+        $highest = array();
+
+        foreach ($this->groups as $group) {
+            if ($group['level'] > $highest['level']) {
+                $highest = $group;
+            }
+        }
+
+        $highest['id']    = (int) $highest['id']['RAW'];
+        $highest['name']  = $highest['name']['RAW'];
+        $highest['level'] = (int) $highest['level']['RAW'];
+
+        return $highest;
+    }
+
     /**
     * Checks if the user is in the group.
 
@@ -161,7 +178,7 @@ class User
 
     * @return    bool
     */
-    public function getLulzCode ()
+    public function getBBCode ()
     {
         return $this->bbcode;
     }
@@ -171,7 +188,7 @@ class User
 
     * @param    bool    $state    The bbcode status.
     */
-    public function setLulzCode ($state)
+    public function setBBCode ($state)
     {
         global $Database;
         $Database->user->setLulzCode($this->id, $state);

@@ -111,7 +111,7 @@ class UserGroupDatabase extends DatabaseBase
 
     * @return    bool    True if it added the user, false if it didn't.
     */
-    public function addUser ($username, $group)
+    public function addUser ($username, $group, $level = 0)
     {
         if (!$this->Database->_('core')->user->group->exists($group)) {
             return false;
@@ -123,7 +123,7 @@ class UserGroupDatabase extends DatabaseBase
         $user_id  = $this->Database->_('core')->user->getId($username);
         $group_id = $this->getId($group);
 
-        $this->Database->sendQuery($this->Query->addUser($user_id, $group_id));
+        $this->Database->sendQuery($this->Query->addUser($user_id, $group_id, $level));
 
         return true;
     }

@@ -48,7 +48,8 @@ class Menu extends Output
         if ($this->connected) {
             global $User;
 
-            $menus    = $this->__parseMenu($User->highestGroup);
+            $group    = $User->highestGroup();
+            $menus    = $this->__parseMenu($group['name']);
             $template = new MenuTemplate($menus);
         }
         else {
@@ -61,6 +62,8 @@ class Menu extends Output
 
     private function __parseMenu($group)
     {
+        $group = strtolower($group);
+
         $text = read_file(CONTENT_PATH."/menu/{$group}.php");
         $dom  = dom_import_simplexml(simplexml_load_string($text))->ownerDocument;
 
