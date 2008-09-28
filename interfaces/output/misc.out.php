@@ -31,6 +31,13 @@ if (isset($_GET['menu'])) {
     echo $menu->output();
 }
 
+else if (isset($_GET['home'])) {
+    include(SOURCES_PATH.'/template/misc/page.template.php');
+
+    $page = new PageTemplate($Config->get('homePage'));
+    echo $page->output();
+}
+
 else if (isset($_GET['page'])) {
     include(SOURCES_PATH.'/template/misc/page.template.php');
 

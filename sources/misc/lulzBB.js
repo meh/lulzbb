@@ -110,6 +110,12 @@ function showMenu (show_id)
 {
     GET(show_id, '?out&menu');
 }
+
+function showHome (show_id)
+{
+    GET(show_id, '?out&home');
+}
+
 function showPage (show_id, page)
 {
     GET(show_id, '?out&page='+page);
