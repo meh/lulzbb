@@ -67,7 +67,7 @@ class PostDatabase extends DatabaseBase
                 $User->getId(),
                 $topic_id,
                 $post_id,
-                $User->getLulzCode(),
+                $User->getBBCode(),
                 $title,
                 $content
             ));
