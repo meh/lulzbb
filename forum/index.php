@@ -32,15 +32,15 @@ if (isset($_GET[$MODULE_NAME])) {
     }
 
     else if (isset($_GET['in'])) {
-        include_once ($M_INTERFACES_PATH.'/in.php');
+        include_once($M_INTERFACES_PATH.'/in.php');
     }
 
     else if (isset($_GET['api'])) {
-        include_once ($M_INTERFACES_PATH.'/api.php');
+        include_once($M_INTERFACES_PATH.'/api.php');
     }
 
     else {
-        die('WAT');
+        include_once($M_INTERFACES_PATH.'/home.php');
     }
 }
 
