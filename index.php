@@ -89,7 +89,6 @@ include(MISC_PATH.'/session.php');
 include(MISC_PATH.'/filesystem.php');
 include(MISC_PATH.'/misc.php');
 
-include(SOURCES_PATH.'/misc/exception.class.php');
 include(SOURCES_PATH.'/misc/config.class.php');
 include(SOURCES_PATH.'/misc/filter.class.php');
 include(SOURCES_PATH.'/misc/module.class.php');
@@ -117,6 +116,13 @@ if (!isset($_SESSION[SESSION]['config'])) {
 * @global    object    $Config
 */
 $Config = $_SESSION[SESSION]['config'];
+
+/**
+* The template path.
+*/
+define('TEMPLATE_PATH', ROOT_PATH.'/templates/'.$Config->get('template'));
+
+include(SOURCES_PATH.'/misc/exception.class.php');
 
 /**
 * This global var contains the Filter object, so you need it to filter

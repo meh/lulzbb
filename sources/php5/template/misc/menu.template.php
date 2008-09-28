@@ -38,9 +38,16 @@ class MenuTemplate extends Template
     * @param    string    $file    The file to get.
     * @param    string    $mode    The page view mode.
     */
-    public function __construct ($groups)
+    public function __construct ($userGroup, $groups)
     {
-        parent::__construct('misc/menu.tpl');
+        $userGroup = strtolower($userGroup);
+
+        if (is_file(TEMPLATE_PATH."/menu/{$userGroup}")) {
+            parent::__construct("menu/{$userGroup}.tpl");
+        }
+        else {
+            parent::__construct('menu/user.tpl');
+        }
 
         $this->groups = $groups;
 

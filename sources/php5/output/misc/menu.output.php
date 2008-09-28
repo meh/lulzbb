@@ -50,11 +50,11 @@ class Menu extends Output
 
             $group    = $User->highestGroup();
             $menus    = $this->__parseMenu($group['name']);
-            $template = new MenuTemplate($menus);
+            $template = new MenuTemplate($group['name'], $menus);
         }
         else {
             $menus    = $this->__parseMenu('guest');
-            $template = new MenuTemplate($menus);
+            $template = new MenuTemplate('guest', $menus);
         }
         
         $this->output = $template->output();

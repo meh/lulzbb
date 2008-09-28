@@ -22,6 +22,7 @@
 */
 
 include_once(SOURCES_PATH.'/template/template.class.php');
+include_once(SOURCES_PATH.'/output/misc/menu.output.php');
 
 /**
 * The home template.
@@ -39,13 +40,10 @@ class HomeTemplate extends Template
     {
         parent::__construct('misc/home.tpl');
 
-        if (empty($content)) {
-            $this->data['init'] = 'true';
-        }
-        else {
-            $this->data['init']    = 'false';
-            $this->data['content'] = $content;
-        }
+        $this->data['content'] = $content;
+
+        $menu               = new Menu;
+        $this->data['menu'] = $menu->output();
 
         $this->__parse();
     }
@@ -57,36 +55,61 @@ class HomeTemplate extends Template
     private function __parse ()
     {
         $text = $this->output();
+
+        $text = preg_replace(
+            '|<%MENU%>|i',
+            $this->data['menu'],
+            $text
+        );
+
+        $text = preg_replace(
+            '|<%CONTENT%>|i',
+            $this->data['content'],
+            $text
+        );
     
-        $top = new Template('misc/top.tpl');
         $text = preg_replace(
-            '|<%TOP%>|i',
-            $top->output(),
+            '|<%TEMPLATE-SCRIPTS%>|i',
+            $this->__scripts(),
             $text
         );
-
-        $bottom = new Template('misc/bottom.tpl');
         $text = preg_replace(
-            '|<%BOTTOM%>|i',
-            $bottom->output(),
+            '|<%TEMPLATE-STYLES%>|i',
+            $this->__styles(),
             $text
         );
-
-        $text = preg_replace(
-            '|<%INIT-OR-NOT%>|i',
-            $this->data['init'],
-            $text
-        );
-
-        if ($this->data['init'] == 'false') {
-            $text = preg_replace(
-                '|<%CONTENT%>|i',
-                $this->data['content'],
-                $text
-            );
-        }
 
         $this->parsed = $text;
+    }
+
+    private function __scripts ()
+    {
+        $scripts = glob(TEMPLATE_PATH.'/scripts/*');
+
+        $text = '';
+        foreach ($scripts as $script) {
+            $script = preg_replace('|^.+/|i', '', $script);
+
+            $text .= "<script src='templates/{$this->template['name']}/scripts/{$script}'";
+            $text .= "type='text/javascript'></script>\n";
+        }
+
+        return $text;
+    }
+
+    private function __styles ()
+    {
+        $styles = glob(TEMPLATE_PATH.'/styles/*');
+
+        $text = '';
+        foreach ($styles as $style) {
+            $style = preg_replace('|^.+/|i', '', $style);
+
+            $text .= "<link href='templates/{$this->template['name']}/styles/{$style}'";
+            $text .= "rel='stylesheet' type='text/css'/>\n";
+        }
+
+        return $text;
     }
 }
 ?>

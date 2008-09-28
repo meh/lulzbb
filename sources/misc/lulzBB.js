@@ -37,17 +37,6 @@ var section_page = 'first';
 
 include("sources/misc/unFocus-History-p.js");
 
-function init ()
-{
-    argv = init.arguments;
-
-    showMenu('menu');
-
-    if (argv[0] == true) {
-        showSection('middle', 0);
-    }
-}
-
 // Base functions
 function GET (show_id, url)
 {

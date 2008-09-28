@@ -75,7 +75,7 @@ class Template
             }
         }
         else {
-            $this->plain_text = file_get_contents(ROOT_PATH."/templates/{$this->template['name']}/{$file}");
+            $this->plain_text = file_get_contents(TEMPLATE_PATH."/{$file}");
         }
         
         $this->__parse();
@@ -132,7 +132,7 @@ class Template
         else {
             $text = preg_replace(
                 '|<%USERNAME%>|i',
-                'Anonymous',
+                '',
                 $text
             );
         }
