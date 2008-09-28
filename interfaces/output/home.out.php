@@ -24,18 +24,24 @@ if (!isset($Config)) {
     die("You can't access this directly.");
 }
 
-include(SOURCES_PATH.'/output/misc/home.output.php');
+include_once(SOURCES_PATH.'/output/misc/home.output.php');
+include_once(SOURCES_PATH.'/template/misc/page.template.php');
 
-if (isset($_GET['raw'])) {
-    $page = new Home($_REQUEST['page'], 'raw');
-}
-else if (isset($_GET['highlight'])) {
-    $page = new Home($_REQUEST['page'], 'highlight');
-}
-else {
-    $page = new Home($_REQUEST['page']);
+if (isset($_GET['page'])) {
+    if (isset($_GET['raw'])) {
+        $page = new PageTemplate($_REQUEST['page'], 'raw');
+        $home = new Home($page->output());
+    }
+    else if (isset($_GET['highlight'])) {
+        $page = new PageTemplate($_REQUEST['page'], 'highlight');
+        $home = new Home($page->output());
+    }
+    else {
+        $page = new PageTemplate($_REQUEST['page']);
+        $home = new Home($page->output());
+    }
 }
 
-echo $page->output();
+echo $home->output();
 
 ?>

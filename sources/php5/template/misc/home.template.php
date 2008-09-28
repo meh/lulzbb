@@ -36,7 +36,7 @@ class HomeTemplate extends Template
 
     * @param    string    $content    The content to put inside the home.
     */
-    public function __construct ($content = '')
+    public function __construct ($content)
     {
         parent::__construct('misc/home.tpl');
 

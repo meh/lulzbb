@@ -34,7 +34,7 @@ include_once(SOURCES_PATH.'/template/misc/page.template.php');
 */
 class Home extends Output
 {
-    private $file;
+    private $content;
 
     /**
     * Initialize the file and the data.
@@ -42,12 +42,12 @@ class Home extends Output
     * @param    string    $file    The file to load inside the home.
     * @param    array     $data    The data that the page needs.
     */
-    public function __construct ($file, $data = array())
+    public function __construct ($content = '', $data = array())
     {
         parent::__construct();
 
-        $this->data = $data;
-        $this->file = $file;
+        $this->content = $content;
+        $this->data    = $data;
 
         $this->__update();
     }
@@ -57,12 +57,11 @@ class Home extends Output
     */
     protected function __update ()
     {
-        if (empty($this->file)) {
+        if (empty($this->content)) {
             $template = new HomeTemplate();
         }
         else {
-            $content  = new PageTemplate($this->file, $this->data);
-            $template = new HomeTemplate($content->output());
+            $template = new HomeTemplate($this->content);
         }
 
         $this->output = $template->output();
