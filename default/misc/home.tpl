@@ -4,18 +4,30 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <title><%FORUM-TITLE%></title>
 
-    <link href="<%TEMPLATE-PATH%>/stylesheet.css" rel="stylesheet" type="text/css">
     <script src="sources/misc/lulzBB.js" type="text/javascript"></script>
-    <script src="<%TEMPLATE-PATH%>/scripts/effects.js" type="text/javascript"></script>
+
+    <%TEMPLATE-SCRIPTS%>
+    <%TEMPLATE-STYLES%>
 </head>
 
-<body onload="init(<%INIT-OR-NOT%>);">
+<body>
     <div id="container">
-        <div id="top"><%TOP%></div>
+        <div id="top">
+            <div class="header">
+                <%FORUM-NAME%><br/><br/>
+            </div>
+        
+            <div id="menu"><%MENU%></div>
+        </div>
+        
         <div id="middle"><%CONTENT%></div>
-        <div id="bottom"><%BOTTOM%></div>
+        
+        <div id="bottom">
+            <div class="footer">
+                Powered by <a href="http://lulzbb.endofinternet.net">lulzBB</a> &copy; lulzGroup
+            </div>
+        </div>
     </div>
-    <div id="hidden" style="display: none;"></div>
 </body>
 </html>
 
