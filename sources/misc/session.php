@@ -77,11 +77,14 @@ function setSessionCookieParams()
 {
     $year = 60*60*24*365;
 
-    if (VERSION == 4) {
-        session_set_cookie_params($year);
-    }
-    else if (VERSION >= 5.2) {
-        session_set_cookie_params($year, '/', '', true, true);
+    if (!isset($_COOKIE['PHPSESSID'])) {
+#        if (VERSION < 5.2) {
+            session_set_cookie_params($year, WEB_PATH);
+
+#        }
+#        else {
+#            session_set_cookie_params($year, '/', '', true, true);
+#        }
     }
 }
 
@@ -103,9 +106,7 @@ function startSession($relativePath = './')
 {
     define('SESSION', getSessionConstant($relativePath));
 
-    if ($relativePath == './') {
-    #    setSessionCookieParams();
-    }
+    setSessionCookieParams();
 
     session_start();
 }

@@ -96,7 +96,7 @@ class User
         $highest = array();
 
         foreach ($this->groups as $group) {
-            if ($group['level'] > $highest['level']) {
+            if ($group['level']['RAW'] > $highest['level']['RAW']) {
                 $highest = $group;
             }
         }

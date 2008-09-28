@@ -6,8 +6,7 @@
     </general>
 
     <user>
-        <menu level="1" name="login" href="#" onclick="showLogin('middle');">Login</menu>
-        <menu level="2" name="registration" href="#" onclick="showRegistration('middle');">Registration</menu>
+        <menu level="1" name="logout" href="#" onclick="logout('middle');">Logout</menu>
     </user>
 </menu>
 */?>
