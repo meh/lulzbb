@@ -42,7 +42,7 @@ class MenuTemplate extends Template
     {
         $userGroup = strtolower($userGroup);
 
-        if (is_file(TEMPLATE_PATH."/menu/{$userGroup}")) {
+        if (is_file(TEMPLATE_PATH."/menu/{$userGroup}.tpl")) {
             parent::__construct("menu/{$userGroup}.tpl");
         }
         else {
