@@ -105,7 +105,7 @@ startSession();
 /**
 * Init the session if there's no session.
 */
-if (!isset($_SESSION[SESSION]['config'])) {
+if (!isset($_REQUEST['out']) && !isset($_REQUEST['in']) && !isset($_REQUEST['api'])) {
     initSessionData();
 }
 
@@ -213,11 +213,6 @@ foreach ($modulesList as $modules) {
         }
     }
 }
-
-/**
-* Reset the session in case of homepage viewing.
-*/
-initSessionData();
 
 /**
 * Core functions.
