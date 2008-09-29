@@ -38,23 +38,24 @@ class Database
     /**
     * Create the mysql connection and selects the database from the
     * configuration file.
-    
+
     * @exception    database_connection    On database connection failure.
     */
-    public function __construct ()
+    public function __construct ($host = false, $port = false, $username = false, $password = false)
     {
         global $Config;
-        
-        $this->mysql = mysql_connect(
-            $Config->get('dbHost').':'.$Config->get('dbPort'),
-            $Config->get('dbUsername'),
-            $Config->get('dbPassword')
-        );
+
+        $host     = (($host)     ? $host     : $Config->get('dbHost'));
+        $port     = (($port)     ? $port     : $Config->get('dbPort'));
+        $username = (($username) ? $username : $Config->get('dbUsername'));
+        $password = (($password) ? $password : $Config->get('dbPassword'));
+
+        $this->mysql = mysql_connect("{$host}:{$port}", $username, $password);
 
         if (!$this->mysql) {
             die("There's an error with the MySQL database, check your configuration and the server.");
         }
-        
+
         mysql_select_db($Config->get('dbName'), $this->mysql);
 
         $this->_add(new CoreDatabase($this), 'core');
@@ -67,22 +68,22 @@ class Database
 
     /**
     * It sends the query and store the content in $this->query
-    
+
     * @param    string    $query    The SQL query to send to the database.
-    
+
     * @exception    database_query    On query failure.
-    
+
     * @return    resource    The response from the mysql database.
     * @todo Remove the mysql_error();
     */
     public function sendQuery ($query)
     {
         $this->query = mysql_query($query) or die(nl2br($query).mysql_error());
-        
+
         if (!$this->query) {
             throw new lulzException('database_query');
         }
-        
+
         global $queries;
         $queries++;
 
@@ -103,17 +104,17 @@ class Database
     * Fetch the data from the query, filter it and put it in separated arrays,
     * RAW is the slash stripped output, HTML is HTML filtered and POST is filtered
     * with rawurlencode.
-    
+
     * @return    array    (RAW => stripslash, HTML => htmlentities, POST => rawurlencode)
     */
     public function fetchArray ()
     {
         global $Filter;
-    
+
         if (!($array = mysql_fetch_array($this->query, MYSQL_ASSOC))) {
             return false;
         }
-        
+
         foreach($array as $key => $element) {
             $result[$key]['RAW']  = $Filter->SQLclean($element);
             $result[$key]['HTML'] = $Filter->HTML($element);

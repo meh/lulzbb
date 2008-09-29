@@ -39,6 +39,10 @@ class DatabaseBase
     */
     public function __construct ($Database, $query = null)
     {
+        if (!$Database) {
+            global $Database;
+        }
+        
         $this->Database = $Database;
         $this->Query    = $query;
     }

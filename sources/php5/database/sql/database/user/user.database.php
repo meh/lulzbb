@@ -48,10 +48,9 @@ class UserDatabase extends DatabaseBase
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct ($Database)
+    public function __construct ($Database = false)
     {
-        $Query = new UserQuery();
-        parent::__construct($Database, $Query);
+        parent::__construct($Database, new UserQuery);
        
         // Initiate login and registration databases.
         $this->login        = new LoginDatabase($Database);

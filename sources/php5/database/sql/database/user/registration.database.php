@@ -36,10 +36,9 @@ class RegistrationDatabase extends DatabaseBase
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct ($Database)
+    public function __construct ($Database = false)
     {
-        $query = new RegistrationQuery();
-        parent::__construct($Database, $query);
+        parent::__construct($Database, new RegistrationQuery);
     }
     
     /**

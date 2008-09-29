@@ -39,7 +39,7 @@ class CoreDatabase extends DatabaseBase
     
     * @exception    database_connection    On database connection failure.
     */
-    public function __construct ($Database)
+    public function __construct ($Database = false)
     {
         parent::__construct($Database);
         

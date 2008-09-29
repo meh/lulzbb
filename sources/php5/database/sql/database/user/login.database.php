@@ -38,8 +38,7 @@ class LoginDatabase extends DatabaseBase
     */
     public function __construct ($Database)
     {
-        $query = new LoginQuery();
-        parent::__construct($Database, $query);
+        parent::__construct($Database, new LoginQuery);
     }
     
     /**

@@ -198,6 +198,7 @@ foreach ($modulePaths as $modulePath) {
 foreach ($modulesList as $modules) {
     foreach ($modules as $module) {
         $MODULE_NAME = $module->get('name');
+        $MODULE_CALL = $module->get('call');
 
         $M_ROOT_PATH       = $module->getPath();
         $M_SOURCES_PATH    = $M_ROOT_PATH.'/sources/'.SOURCES_VERSION;
@@ -205,10 +206,7 @@ foreach ($modulesList as $modules) {
 
         include($M_ROOT_PATH.'/index.php');
 
-    /// This could be useful but i don't know, if a module needs to do something
-    /// without outputting anything meh, i don't know, i think i should do something like
-    /// an order for modules, so it's win etc. yes, i agree with this :)
-
+        // If a module outputted something, kill it with fire.
         if (ob_get_length() > 0) {
             ob_end_flush();
             die();
