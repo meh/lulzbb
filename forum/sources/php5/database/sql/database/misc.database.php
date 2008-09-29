@@ -36,10 +36,9 @@ class MiscDatabase extends DatabaseBase
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct ($Database)
+    public function __construct ($Database = false)
     {
-        $query = new MiscQuery();
-        parent::__construct($Database, $query); 
+        parent::__construct($Database, new MiscQuery); 
     }
     
     /**
@@ -49,6 +48,7 @@ class MiscDatabase extends DatabaseBase
     */
     public function getLastTopic ()
     {
+    
         $query = $this->Database->sendQuery($this->Query->getLastTopic());
 
         $last_topic_id = mysql_fetch_row($query);

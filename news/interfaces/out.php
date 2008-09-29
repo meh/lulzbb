@@ -1,12 +1,9 @@
 <?php
 /**
-* @package Forum
-* @category Database
+* @package News
+* @category Output
 
 * @license AGPLv3
-* lulzBB is a CMS for the lulz but it's also serious business.
-* Copyright (C) 2008 lulzGroup
-*
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Affero General Public License as
 * published by the Free Software Foundation, either version 3 of the
@@ -23,20 +20,10 @@
 * @author cHoBi
 */
 
-switch ($Config->get('dbType')) {
-    case 'mysql':
-    include_once($M_SOURCES_PATH.'/database/sql/database.class.php');
-    $Database->_add(new ForumDatabase, 'forum');
-    break;
-
-    case 'text':
-    include_once($M_SOURCES_PATH.'/database/text/database.class.php');
-    $Database->_add(new ForumDatabase, 'forum');
-    break;
-
-    default:
-    die("Something went wrong with the database type.");
-    break;
+if (!isset($Config)) {
+    die("You can't access this directly.");
 }
+
+$DATA['id'] = $_REQUEST['id'];
 
 ?>

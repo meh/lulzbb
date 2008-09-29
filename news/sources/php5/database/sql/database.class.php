@@ -1,6 +1,6 @@
 <?php
 /**
-* @package Forum
+* @package News
 * @category Database
 
 * @license AGPLv3
@@ -19,24 +19,25 @@
 *
 * You should have received a copy of the GNU Affero General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+include_once(SOURCES_PATH.'/database/sql/database.base.class.php');
+
+/**
+* News database class.
 
 * @author cHoBi
 */
+class NewsDatabase extends DatabaseBase
+{
+    /**
+    * Init the class.
 
-switch ($Config->get('dbType')) {
-    case 'mysql':
-    include_once($M_SOURCES_PATH.'/database/sql/database.class.php');
-    $Database->_add(new ForumDatabase, 'forum');
-    break;
-
-    case 'text':
-    include_once($M_SOURCES_PATH.'/database/text/database.class.php');
-    $Database->_add(new ForumDatabase, 'forum');
-    break;
-
-    default:
-    die("Something went wrong with the database type.");
-    break;
+    * @exception    database_connection    On database connection failure.
+    */
+    public function __construct ($Database = false)
+    {
+        parent::__construct($Database);
+    }
 }
-
 ?>

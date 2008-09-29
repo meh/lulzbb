@@ -27,10 +27,11 @@ include_once($M_SOURCES_PATH.'/database/sql/database/topic/topic.database.php');
 include_once($M_SOURCES_PATH.'/database/sql/database/misc.database.php');
 
 /**
-* XBAWKZ HUEG class for database communication.
+* Main database class.
 
 * @property    object    $section    The section database.
 * @property    object    $topic      The topic database.
+* @property    object    $misc       The misc database.
 
 * @author cHoBi
 */
@@ -47,7 +48,7 @@ class ForumDatabase extends DatabaseBase
     
     * @exception    database_connection    On database connection failure.
     */
-    public function __construct ($Database)
+    public function __construct ($Database = false)
     {
         parent::__construct($Database);
 

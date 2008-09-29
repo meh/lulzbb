@@ -1,6 +1,6 @@
 <?php
 /**
-* @package Forum
+* @package News
 * @category Database
 
 * @license AGPLv3
@@ -26,12 +26,12 @@
 switch ($Config->get('dbType')) {
     case 'mysql':
     include_once($M_SOURCES_PATH.'/database/sql/database.class.php');
-    $Database->_add(new ForumDatabase, 'forum');
+    $Database->_add(new NewsDatabase, 'news');
     break;
 
     case 'text':
     include_once($M_SOURCES_PATH.'/database/text/database.class.php');
-    $Database->_add(new ForumDatabase, 'forum');
+    $Database->_add(new NewsDatabase, 'news');
     break;
 
     default:

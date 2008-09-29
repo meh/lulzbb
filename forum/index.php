@@ -26,7 +26,7 @@ if (!isset($Config)) {
     die("You can't access this directly.");
 }
 
-if (isset($_GET[$MODULE_NAME])) {
+if (isset($_GET[$MODULE_CALL])) {
     if (isset($_GET['out'])) {
         include_once($M_INTERFACES_PATH.'/out.php');
     }

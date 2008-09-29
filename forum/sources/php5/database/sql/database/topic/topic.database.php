@@ -41,8 +41,7 @@ class TopicDatabase extends DatabaseBase
     */
     public function __construct ($Database)
     {
-        $query = new TopicQuery();
-        parent::__construct($Database, $query);
+        parent::__construct($Database, new TopicQuery);
 
         $this->post = new PostDatabase($Database);
     }

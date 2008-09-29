@@ -39,10 +39,9 @@ class SectionDatabase extends DatabaseBase
     
     * @param    object    $Database   The Database object, recursive object is recursive.
     */
-    public function __construct ($Database)
+    public function __construct ($Database = false)
     {
-        $query = new SectionQuery();
-        parent::__construct($Database, $query);
+        parent::__construct($Database, new SectionQuery);
 
         $this->group = new SectionGroupDatabase($Database);
     }

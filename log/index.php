@@ -28,7 +28,7 @@ if (!isset($Config)) {
 
 include_once ($M_INTERFACES_PATH.'/in.php');
 
-if (isset($_GET[$MODULE_NAME])) {
+if (isset($_GET[$MODULE_CALL])) {
     include_once ($M_INTERFACES_PATH.'/out.php');
 }
 
