@@ -57,13 +57,7 @@ class Home extends Output
     */
     protected function __update ()
     {
-        if (empty($this->content)) {
-            $template = new HomeTemplate();
-        }
-        else {
-            $template = new HomeTemplate($this->content);
-        }
-
+        $template     = new HomeTemplate($this->content);
         $this->output = $template->output();
     }
 }

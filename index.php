@@ -238,8 +238,8 @@ else if (isset($_GET['in'])) {
     }
 }
 else {
-    if (!isset($_REQUEST['page'])) {
-        $_REQUEST['page'] = $Config->get('homePage');
+    if (!isset($_GET['page'])) {
+        $_REQUEST['page'] = $_GET['page'] = $Config->get('homePage');
     }
     include(INTERFACES_PATH.'/output/home.out.php');
 }
