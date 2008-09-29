@@ -59,7 +59,10 @@ if (isset($_GET['section'])) {
 }
 
 else if (isset($_GET['topic'])) {
-    if (isset($_GET['show'])) {
+    if (isset($_GET['send'])) {
+
+    }
+    else {
         include_once($M_SOURCES_PATH.'/output/topic.output.php');
         
         $DATA['topic_id'] = $DATA['id'];
@@ -73,15 +76,6 @@ else if (isset($_GET['topic'])) {
         );
         $content .= $topic->output();
         $content .= stats();
-    }
-
-    else if (isset($_GET['send'])) {
-        include_once($M_SOURCES_PATH.'/template/forms/send-topic.template.php');
-
-        $DATA['parent'] = $_REQUEST['parent'];
-
-        $form = new TopicFormTemplate($DATA['parent']);
-        $content .= $form->output();
     }
 }
 
