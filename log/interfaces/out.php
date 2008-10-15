@@ -20,7 +20,7 @@
 * @author cHoBi
 */
 
-if (!isset($Config)) {
+if (!isset(LULZ)) {
     die("You can't access this directly.");
 }
 
