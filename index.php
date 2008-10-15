@@ -43,6 +43,11 @@ if ((int) VERSION == 6) {
 }
 
 /**
+* For checks.
+*/
+define('LULZ', 'THE GAME');
+
+/**
 * The root path of the forum.
 */
 define('ROOT_PATH', dirname(__FILE__));

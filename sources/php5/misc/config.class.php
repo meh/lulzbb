@@ -61,7 +61,7 @@ class Config
 
     public function parseString ($string)
     {
-        $dom = dom_import_simplexml(simplexml_load_string($string))->ownerDocument;
+        $dom = DOMDocument::loadXML($string);
 
         $configuration = $dom->firstChild;
         $domain        = $configuration->getAttribute('domain');

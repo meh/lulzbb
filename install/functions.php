@@ -33,7 +33,7 @@ function installed ()
 
     $file = fopen(ROOT_PATH.'/index.php', 'w');
     foreach ($index as $line) {
-        if (!(      preg_match("|require\('install/functions.php'\);|", $line)
+        if (!(      preg_match("|'install/functions.php'|", $line)
                  or preg_match("|checkInstall\(\);|", $line))) {
             fwrite($file, $line);
         }

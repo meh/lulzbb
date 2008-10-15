@@ -1,7 +1,7 @@
 <?php
 /**
 * @package Core-PHP5
-* @category Show
+* @category Output
 
 * @license AGPLv3
 * lulzBB is a CMS for the lulz but it's also serious business.
