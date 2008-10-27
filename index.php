@@ -179,7 +179,7 @@ foreach ($modulePaths as $modulePath) {
         $M_INTERFACES_PATH = $M_ROOT_PATH.'/interfaces';
 
         if (is_file($M_ROOT_PATH.'/config/configuration.php')) {
-            $Config->parseFile($M_ROOT_PATH.'/config/configuration.php', $MODULE_NAME);
+            $Config->parseFile($M_ROOT_PATH.'/config/configuration.php');
         }
 
         $databasePath = "{$M_SOURCES_PATH}/database/database.php";
