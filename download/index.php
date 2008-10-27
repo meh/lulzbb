@@ -22,6 +22,10 @@
 * @author cHoBi
 */
 
+if (!defined('LULZ')) {
+    die("You can't access this directly.");
+}
+
 if (isset($_GET['download'])) {
     include_once(MODULE_PATH.'/interfaces/output/download.out.php');
     exit();

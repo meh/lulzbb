@@ -22,7 +22,7 @@
 * @author cHoBi
 */
 
-if (!isset(LULZ)) {
+if (!defined('LULZ')) {
     die("You can't access this directly.");
 }
 
