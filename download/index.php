@@ -28,7 +28,6 @@ if (!defined('LULZ')) {
 
 if (isset($_GET['download'])) {
     include_once(MODULE_PATH.'/interfaces/output/download.out.php');
-    exit();
 }
 
 ?>
