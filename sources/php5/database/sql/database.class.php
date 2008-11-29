@@ -124,22 +124,14 @@ class Database
         return $result;
     }
 
-    /**
-    * Sets the counter @i to a certain value.
-
-    * @param    int    $number    The value that @i will be set to.
-    */
-    public function setCounter ($number)
+    public function executeSource ($source)
     {
-        $number = (int) $number;
-        $this->sendQuery("SET @i = {$number}");
-    }
+        $source  = preg_replace('/%DB_PREFIX%/i', $this->dbPrefix);
+        $queries = preg_split('/;$/m', $source);
 
-    public function getCounter ()
-    {
-        $number = mysql_fetch_row($this->sendQuery("SELECT @i"));
-
-        return $number[0];
+        foreach ($queries as $query) {
+            $this->sendQuery($query);
+        }
     }
 }
 ?>
